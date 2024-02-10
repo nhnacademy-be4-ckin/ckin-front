@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- header -->
+<div th:replace="/fragments/admin-header.html :: admin-fragment-header"></div>
+
+<!-- body -->
+<body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
+<div th:replace="/fragments/admin-nav.html :: admin-fragment-nav"></div>
+<div th:replace="/fragments/admin-sidebar.html :: admin-fragment-sidebar"></div>
+
+<!-- 본문 내용 -->
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4" style="margin-bottom: 50px;">포인트 정책 수정 페이지</h1>
+
+                <!-- 포인트 정책 수정 폼 -->
+                <form method="post">
+                    <input type="hidden" name="_method" value="put">
+
+                    <div class="w-25 col" style="margin-bottom: 10px;">
+                        포인트 정책 ID : 100
+                    </div>
+
+                    <div class="w-25 col">
+                        <input style="padding: 10px" type="text" class="form-control"
+                               placeholder="정책 이름"
+                               aria-label="pointPolicyName" required>
+                    </div>
+                    <br/>
+
+                    <div class="w-25 col">
+                        <input style="padding: 10px" type="text" class="form-control"
+                               placeholder="적립 금액"
+                               aria-label="pointPolicyReserve" required>
+                    </div>
+                    <br/>
+
+                    <button class="btn btn-outline-primary" type="submit">수정</button>
+                </form>
+            </div>
+        </main>
+
+
+        <!-- footer -->
+        <footer th:replace="/fragments/admin-footer.html :: admin-fragment-footer"></footer>
+    </div>
+</div>
+</body>
+</html>
