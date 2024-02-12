@@ -17,18 +17,29 @@
                 <h1 class="mt-4" style="margin-bottom: 50px;">포인트 정책 등록 페이지</h1>
 
                 <!-- 포인트 정책 등록 폼 -->
-                <form method="post">
-                    <div class="w-25 col">
+                <form method="post" th:action="@{/admin/policy/point/register}">
+
+                    <div class="w-25 col" style="margin-bottom: 10px;">
                         <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="정책 이름"
-                               aria-label="pointPolicyName" required>
+                               placeholder="포인트 정책 ID"
+                               aria-label="pointPolicyId"
+                               th:name="pointPolicyId" required>
                     </div>
                     <br/>
 
                     <div class="w-25 col">
                         <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="적립 금액"
-                               aria-label="pointPolicyReserve" required>
+                               placeholder="정책 이름"
+                               aria-label="pointPolicyName"
+                               th:name="pointPolicyName" required>
+                    </div>
+                    <br/>
+
+                    <div class="w-25 col">
+                        <input style="padding: 10px" type="number" class="form-control"
+                               placeholder="포인트 적립 금액"
+                               aria-label="pointPolicyReserve"
+                               th:name="pointPolicyReserve" required>
                     </div>
                     <br/>
 
