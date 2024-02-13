@@ -30,4 +30,9 @@ public class PointPolicyServiceImpl implements PointPolicyService {
     public List<PointPolicyResponseDto> getPointPolicies() {
         return pointPolicyAdapter.requestPointPolicies();
     }
+
+    @Override
+    public void deletePointPolicy(Long id) {
+        pointPolicyAdapter.requestDeletePointPolicy(id);
+    }
 }

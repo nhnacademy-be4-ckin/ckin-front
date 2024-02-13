@@ -55,6 +55,18 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         return exchange.getBody();
     }
 
+    @Override
+    public void requestDeletePointPolicy(Long id) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        restTemplate.exchange(
+                portProperties.getApiAddress() + "/api/point-policies/{id}",
+                HttpMethod.DELETE,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                }, id);
+    }
+
     private static HttpHeaders getHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

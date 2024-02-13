@@ -31,19 +31,23 @@
                         <th scope="col">포인트 정책 ID</th>
                         <th scope="col">포인트 정책 이름</th>
                         <th scope="col">포인트 적립 금액</th>
-                        <th scope="col">수정/삭제</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="pointPolicy : ${pointPolicies}">
-                        <td th:text="${pointPolicy.pointPolicyId}"></td>
+                        <td id="pointPolicyId" th:text="${pointPolicy.pointPolicyId}"></td>
                         <td th:text="${pointPolicy.pointPolicyName}"></td>
                         <td th:text="${pointPolicy.pointPolicyReserve}"></td>
                         <td>
-                            <button type="button" class="btn btn-outline-warning">
+                            <button style="margin-bottom: 5px;" type="button" class="btn btn-outline-warning">
                                 수정
                             </button>
-                            <button type="button" class="btn btn-outline-danger">삭제</button>
+                            <form action="#" th:action="@{'/admin/policy/point/{id}'(id=${pointPolicy.pointPolicyId})}"
+                                  th:method="delete">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-outline-danger">삭제</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>
