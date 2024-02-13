@@ -28,7 +28,7 @@ public class PointPolicyController {
         return "admin/point-policy/main";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/create")
     public String getPointPolicyCreateForm() {
         return "admin/point-policy/create";
     }
