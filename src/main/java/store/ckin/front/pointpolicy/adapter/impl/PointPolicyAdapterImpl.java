@@ -32,8 +32,10 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
     public void requestCreatePointPolicy(CreatePointPolicyRequestDto request) {
         HttpEntity<CreatePointPolicyRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getApiAddress(), HttpMethod.POST, requestEntity,
-                new ParameterizedTypeReference<>() {
+        restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies/",
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
                 });
     }
 

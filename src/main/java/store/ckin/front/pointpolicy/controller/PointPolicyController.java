@@ -35,7 +35,6 @@ public class PointPolicyController {
 
     @PostMapping
     public String createPointPolicy(@Valid CreatePointPolicyRequestDto createPointPolicy) {
-
         pointPolicyService.createPointPolicy(createPointPolicy);
         return "redirect:/admin/policy/point";
     }
