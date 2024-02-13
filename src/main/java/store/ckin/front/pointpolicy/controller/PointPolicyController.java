@@ -24,21 +24,19 @@ public class PointPolicyController {
     private final PointPolicyService pointPolicyService;
 
     @GetMapping
-    public String getPointPolicyMain() {
+    public String getPointPolicy() {
         return "admin/point-policy/main";
     }
 
     @GetMapping("/register")
-    public String getPointPolicyRegister() {
+    public String getPointPolicyCreateForm() {
         return "admin/point-policy/register";
     }
 
     @PostMapping
-    public String createPointPolicyRegister(@Valid CreatePointPolicyRequestDto createPointPolicy) {
+    public String createPointPolicy(@Valid CreatePointPolicyRequestDto createPointPolicy) {
 
         pointPolicyService.createPointPolicy(createPointPolicy);
         return "redirect:/admin/policy/point";
     }
-
-
 }
