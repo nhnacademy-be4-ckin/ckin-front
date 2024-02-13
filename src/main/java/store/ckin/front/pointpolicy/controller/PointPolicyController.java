@@ -30,7 +30,7 @@ public class PointPolicyController {
 
     @GetMapping("/register")
     public String getPointPolicyCreateForm() {
-        return "admin/point-policy/register";
+        return "admin/point-policy/create";
     }
 
     @PostMapping
