@@ -1,12 +1,15 @@
 package store.ckin.front.pointpolicy.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.pointpolicy.dto.request.CreatePointPolicyRequestDto;
+import store.ckin.front.pointpolicy.dto.response.PointPolicyResponseDto;
 import store.ckin.front.pointpolicy.service.PointPolicyService;
 
 /**
@@ -24,7 +27,10 @@ public class PointPolicyController {
     private final PointPolicyService pointPolicyService;
 
     @GetMapping
-    public String getPointPolicy() {
+    public String getPointPolicy(Model model) {
+        List<PointPolicyResponseDto> pointPolicies = pointPolicyService.getPointPolicies();
+
+        model.addAttribute("pointPolicies", pointPolicies);
         return "admin/point-policy/main";
     }
 

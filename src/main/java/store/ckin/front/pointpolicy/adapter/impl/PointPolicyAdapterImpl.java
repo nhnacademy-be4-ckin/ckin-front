@@ -7,11 +7,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.PortProperties;
 import store.ckin.front.pointpolicy.adapter.PointPolicyAdapter;
 import store.ckin.front.pointpolicy.dto.request.CreatePointPolicyRequestDto;
+import store.ckin.front.pointpolicy.dto.response.PointPolicyResponseDto;
 
 /**
  * 포인트 정책 어댑터 구현 클래스입니다.
@@ -32,11 +34,25 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
     public void requestCreatePointPolicy(CreatePointPolicyRequestDto request) {
         HttpEntity<CreatePointPolicyRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies/",
+        restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies",
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
                 });
+    }
+
+    @Override
+    public List<PointPolicyResponseDto> requestPointPolicies() {
+        HttpEntity<PointPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<List<PointPolicyResponseDto>> exchange =
+                restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies",
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
     }
 
     private static HttpHeaders getHttpHeaders() {

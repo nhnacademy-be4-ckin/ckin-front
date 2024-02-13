@@ -1,9 +1,11 @@
 package store.ckin.front.pointpolicy.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.pointpolicy.adapter.PointPolicyAdapter;
 import store.ckin.front.pointpolicy.dto.request.CreatePointPolicyRequestDto;
+import store.ckin.front.pointpolicy.dto.response.PointPolicyResponseDto;
 import store.ckin.front.pointpolicy.service.PointPolicyService;
 
 /**
@@ -22,5 +24,10 @@ public class PointPolicyServiceImpl implements PointPolicyService {
     @Override
     public void createPointPolicy(CreatePointPolicyRequestDto request) {
         pointPolicyAdapter.requestCreatePointPolicy(request);
+    }
+
+    @Override
+    public List<PointPolicyResponseDto> getPointPolicies() {
+        return pointPolicyAdapter.requestPointPolicies();
     }
 }
