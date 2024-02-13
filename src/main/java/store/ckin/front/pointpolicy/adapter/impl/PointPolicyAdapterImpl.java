@@ -6,11 +6,10 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import store.ckin.front.config.PortProperties;
 import store.ckin.front.pointpolicy.adapter.PointPolicyAdapter;
 import store.ckin.front.pointpolicy.dto.request.CreatePointPolicyRequestDto;
 
@@ -26,23 +25,16 @@ import store.ckin.front.pointpolicy.dto.request.CreatePointPolicyRequestDto;
 public class PointPolicyAdapterImpl implements PointPolicyAdapter {
 
     private final RestTemplate restTemplate;
-    private static final String POINT_POLICY_SERVICE_URL = "http://localhost:8081/api/point-policy";
+
+    private final PortProperties portProperties;
 
     @Override
     public void requestCreatePointPolicy(CreatePointPolicyRequestDto request) {
         HttpEntity<CreatePointPolicyRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
-        ResponseEntity<Void> exchange = restTemplate.exchange(
-                POINT_POLICY_SERVICE_URL + "/create",
-                HttpMethod.POST,
-                requestEntity,
+        restTemplate.exchange(portProperties.getApiAddress(), HttpMethod.POST, requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
-
-        // TODO 예외 처리 어떻게 해야될지 고민해보기
-        if (exchange.getStatusCode() != HttpStatus.CREATED) {
-            throw new RuntimeException("포인트 정책 생성 실패");
-        }
     }
 
     private static HttpHeaders getHttpHeaders() {
