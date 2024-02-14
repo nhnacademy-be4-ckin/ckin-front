@@ -6,17 +6,19 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
- * 포인트 정책 생성 요청 DTO.
+ * 포인트 정책 수정 요청 DTO.
  *
  * @author 정승조
  * @version 2024. 02. 12.
  */
 
+@ToString
 @Getter
 @AllArgsConstructor
-public class CreatePointPolicyRequestDto {
+public class PointPolicyUpdateRequestDto {
 
     @NotNull(message = "포인트 정책 ID를 입력해주세요.")
     private Long pointPolicyId;
