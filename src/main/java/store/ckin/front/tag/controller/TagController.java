@@ -1,4 +1,4 @@
-package store.ckin.front.controller;
+package store.ckin.front.tag.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
