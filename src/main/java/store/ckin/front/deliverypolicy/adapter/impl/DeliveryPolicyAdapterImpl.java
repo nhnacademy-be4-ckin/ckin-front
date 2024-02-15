@@ -32,6 +32,11 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
 
     private static final String DELIVERY_POLICY_URL = "/api/delivery-policies";
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return 배송비 정책 응답 DTO 리스트
+     */
     @Override
     public List<DeliveryPolicyResponseDto> requestDeliveryPolicies() {
 
@@ -47,8 +52,13 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param request 생성할 배송비 정책 요청 DTO
+     */
     @Override
-    public void requestDeliveryPolicyCreate(DeliveryPolicyCreateRequestDto request) {
+    public void requestCreateDeliveryPolicy(DeliveryPolicyCreateRequestDto request) {
 
         HttpEntity<DeliveryPolicyCreateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 

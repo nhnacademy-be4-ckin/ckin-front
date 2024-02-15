@@ -21,13 +21,23 @@ public class DeliveryServiceImpl implements DeliveryPolicyService {
 
     private final DeliveryPolicyAdapter deliveryPolicyAdapter;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return 배송비 정책 응답 DTO 리스트
+     */
     @Override
     public List<DeliveryPolicyResponseDto> getDeliveryPolicies() {
         return deliveryPolicyAdapter.requestDeliveryPolicies();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param request 생성할 배송비 정책 DTO
+     */
     @Override
     public void createDeliveryPolicy(DeliveryPolicyCreateRequestDto request) {
-        deliveryPolicyAdapter.requestDeliveryPolicyCreate(request);
+        deliveryPolicyAdapter.requestCreateDeliveryPolicy(request);
     }
 }

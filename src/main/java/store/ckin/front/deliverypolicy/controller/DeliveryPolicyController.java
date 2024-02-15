@@ -28,8 +28,11 @@ public class DeliveryPolicyController {
 
     private final DeliveryPolicyService deliveryPolicyService;
 
-
-
+    /**
+     * 배송비 정책 메인 페이지 요청하는 메서드입니다.
+     *
+     * @return 배송비 정책 메인 View
+     */
     @GetMapping
     public String getDeliveryPolicies(Model model) {
         List<DeliveryPolicyResponseDto> deliveryPolicies = deliveryPolicyService.getDeliveryPolicies();
@@ -39,11 +42,22 @@ public class DeliveryPolicyController {
     }
 
 
+    /**
+     * 배송비 정책 생성 폼을 요청하는 메서드입니다.
+     *
+     * @return 배송비 생성 폼 View
+     */
     @GetMapping("/create")
     public String getDeliveryPolicyCreateForm() {
         return "admin/delivery-policy/create";
     }
 
+    /**
+     * 배송비 정책 생성을 요청하는 메서드입니다.
+     *
+     * @param createDeliveryPolicy 생성 요청된 배송비 정책 DTO
+     * @return 배송비 정책 메인 View
+     */
     @PostMapping
     public String createDeliveryPolicy(@Valid DeliveryPolicyCreateRequestDto createDeliveryPolicy) {
         log.info("createDeliveryPolicy = {}", createDeliveryPolicy);
