@@ -2,6 +2,7 @@ package store.ckin.front.deliverypolicy.adapter;
 
 import java.util.List;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
+import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 
 /**
@@ -27,4 +28,6 @@ public interface DeliveryPolicyAdapter {
     void requestCreateDeliveryPolicy(DeliveryPolicyCreateRequestDto request);
 
     DeliveryPolicyResponseDto requestDeliveryPolicy(Long id);
+
+    void requestUpdateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy);
 }

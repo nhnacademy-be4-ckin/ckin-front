@@ -17,7 +17,7 @@
                 <h1 class="mt-4" style="margin-bottom: 50px;">배송비 정책 수정 페이지</h1>
 
                 <!-- 배송비 정책 수정 폼 -->
-                <form action="#" th:action="@{/admin/policy/delivery}" method="post" th:object="${deliveryPolicy}">
+                <form action="#" th:action="@{/admin/policy/delivery/{id}(id=${deliveryPolicy.deliveryPolicyId})}" method="post" th:object="${deliveryPolicy}">
                     <input type="hidden" name="_method" value="put">
                     <input type="hidden" th:name="deliveryPolicyId" th:value="*{deliveryPolicyId}" required>
 

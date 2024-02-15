@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
+import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 
@@ -72,6 +74,16 @@ public class DeliveryPolicyController {
     public String createDeliveryPolicy(@Valid DeliveryPolicyCreateRequestDto createDeliveryPolicy) {
         log.info("createDeliveryPolicy = {}", createDeliveryPolicy);
         deliveryPolicyService.createDeliveryPolicy(createDeliveryPolicy);
+
+        return "redirect:/admin/policy/delivery";
+    }
+
+    @PutMapping("{id}")
+    public String updateDeliveryPolicy(@PathVariable("id") Long id,
+                                      @Valid DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
+
+        log.info("updateDeliveryPolicy = {}", updateDeliveryPolicy);
+        deliveryPolicyService.updateDeliveryPolicy(id, updateDeliveryPolicy);
 
         return "redirect:/admin/policy/delivery";
     }

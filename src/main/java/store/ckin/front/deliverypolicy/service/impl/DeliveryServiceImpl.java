@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
+import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 
@@ -44,5 +45,10 @@ public class DeliveryServiceImpl implements DeliveryPolicyService {
     @Override
     public DeliveryPolicyResponseDto getDeliveryPolicy(Long id) {
         return deliveryPolicyAdapter.requestDeliveryPolicy(id);
+    }
+
+    @Override
+    public void updateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
+        deliveryPolicyAdapter.requestUpdateDeliveryPolicy(id, updateDeliveryPolicy);
     }
 }

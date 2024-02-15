@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.PortProperties;
 import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
+import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 
 /**
@@ -66,7 +67,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL,
                 HttpMethod.POST,
                 requestEntity,
-                new ParameterizedTypeReference<>() {
+                new ParameterizedTypeReference<Void>() {
                 });
     }
 
@@ -83,5 +84,17 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
                         }, id);
 
         return exchange.getBody();
+    }
+
+    @Override
+    public void requestUpdateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
+
+        HttpEntity<DeliveryPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(updateDeliveryPolicy, getHttpHeaders());
+
+        restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL + "/{id}",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                }, id);
     }
 }
