@@ -25,4 +25,6 @@ public interface DeliveryPolicyService {
      * @param request 생성할 배송비 정책 DTO
      */
     void createDeliveryPolicy(DeliveryPolicyCreateRequestDto request);
+
+    DeliveryPolicyResponseDto getDeliveryPolicy(Long id);
 }

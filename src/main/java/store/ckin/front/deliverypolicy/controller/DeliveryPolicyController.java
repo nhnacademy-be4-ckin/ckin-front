@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
@@ -39,6 +40,15 @@ public class DeliveryPolicyController {
 
         model.addAttribute("deliveryPolicies", deliveryPolicies);
         return "admin/delivery-policy/main";
+    }
+
+    @GetMapping("{id}")
+    public String getDeliveryPolicyUpdateForm(@PathVariable("id") Long id,
+                                    Model model) {
+        DeliveryPolicyResponseDto deliveryPolicy = deliveryPolicyService.getDeliveryPolicy(id);
+
+        model.addAttribute("deliveryPolicy", deliveryPolicy);
+        return "admin/delivery-policy/update";
     }
 
 

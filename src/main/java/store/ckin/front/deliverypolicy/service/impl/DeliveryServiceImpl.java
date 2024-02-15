@@ -40,4 +40,9 @@ public class DeliveryServiceImpl implements DeliveryPolicyService {
     public void createDeliveryPolicy(DeliveryPolicyCreateRequestDto request) {
         deliveryPolicyAdapter.requestCreateDeliveryPolicy(request);
     }
+
+    @Override
+    public DeliveryPolicyResponseDto getDeliveryPolicy(Long id) {
+        return deliveryPolicyAdapter.requestDeliveryPolicy(id);
+    }
 }

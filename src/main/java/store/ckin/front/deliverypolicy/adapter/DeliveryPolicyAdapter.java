@@ -25,4 +25,6 @@ public interface DeliveryPolicyAdapter {
      * @param request 생성할 배송비 정책 요청 DTO
      */
     void requestCreateDeliveryPolicy(DeliveryPolicyCreateRequestDto request);
+
+    DeliveryPolicyResponseDto requestDeliveryPolicy(Long id);
 }

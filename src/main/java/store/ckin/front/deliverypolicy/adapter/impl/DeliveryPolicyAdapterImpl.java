@@ -69,4 +69,19 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
                 new ParameterizedTypeReference<>() {
                 });
     }
+
+    @Override
+    public DeliveryPolicyResponseDto requestDeliveryPolicy(Long id) {
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<DeliveryPolicyResponseDto> exchange =
+                restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL + "/{id}",
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        }, id);
+
+        return exchange.getBody();
+    }
 }
