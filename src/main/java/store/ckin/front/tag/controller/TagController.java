@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
+import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
 import store.ckin.front.tag.service.TagService;
 
@@ -38,12 +39,39 @@ public class TagController {
         return "admin/tag/index";
     }
 
-    @PostMapping
+    /**
+     * 태그 추가 로직 호출
+     *
+     * @param tagCreateRequestDto 태그 추가 DTO
+     * @param bindingResult       Validation을 위한 parameter
+     * @return 태그 관리 페이지
+     */
+    @PostMapping("/create")
     public String createTag(@Valid TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            throw new RuntimeException();
-            // todo exception 정하기
+        if (bindingResult.hasErrors()) {
+            // todo do something
+            return "redirect:/admin/tag";
         }
+        tagService.createTag(tagCreateRequestDto);
         return "redirect:/admin/tag";
     }
+
+    /**
+     * 태그 수정 로직 호출
+     *
+     * @param tagUpdateRequestDto 태그 수정 DTO
+     * @param bindingResult       Validation을 위한 parameter
+     * @return
+     */
+    @PostMapping("/update")
+    public String updateTag(@Valid TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // todo do something
+            return "redirect:/admin/tag";
+        }
+        tagService.updateTag(tagUpdateRequestDto);
+        return "redirect:/admin/tag";
+    }
+
+
 }
