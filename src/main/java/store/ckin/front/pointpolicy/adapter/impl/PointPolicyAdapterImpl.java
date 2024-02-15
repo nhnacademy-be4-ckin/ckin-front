@@ -1,12 +1,12 @@
 package store.ckin.front.pointpolicy.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +30,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
     private final RestTemplate restTemplate;
 
     private final PortProperties portProperties;
+    private static final String POINT_POLICY_URL = "/api/point-policies";
 
     /**
      * {@inheritDoc}
@@ -40,7 +41,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
     public void requestCreatePointPolicy(PointPolicyCreateRequestDto request) {
         HttpEntity<PointPolicyCreateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies",
+        restTemplate.exchange(portProperties.getApiAddress() + POINT_POLICY_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
@@ -57,7 +58,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<PointPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<List<PointPolicyResponseDto>> exchange =
-                restTemplate.exchange(portProperties.getApiAddress() + "/api/point-policies",
+                restTemplate.exchange(portProperties.getApiAddress() + POINT_POLICY_URL,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -78,7 +79,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<PointPolicyResponseDto> exchange = restTemplate.exchange(
-                portProperties.getApiAddress() + "/api/point-policies/{id}",
+                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -97,7 +98,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         restTemplate.exchange(
-                portProperties.getApiAddress() + "/api/point-policies/{id}",
+                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.DELETE,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
@@ -114,23 +115,10 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<PointPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
         restTemplate.exchange(
-                portProperties.getApiAddress() + "/api/point-policies/{id}",
+                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
                 }, request.getPointPolicyId());
-    }
-
-
-    /**
-     * 헤더 생성 메서드입니다.
-     *
-     * @return Http 헤더
-     */
-    private static HttpHeaders getHttpHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        return httpHeaders;
     }
 }
