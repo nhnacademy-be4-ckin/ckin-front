@@ -14,27 +14,27 @@ import store.ckin.front.tag.dto.response.TagResponseDto;
  */
 public interface TagAdaptor {
     /**
-     * 태그를 생성하는 메서드
+     * 태그를 생성 메서드
      *
      * @param tagCreateRequestDto 태그 생성 요청 DTO
      */
     void insertTag(TagCreateRequestDto tagCreateRequestDto);
 
     /**
-     * 전체 태그 목록을 가져오는 메서드
+     * 전체 태그 목록 반환 메서드
      *
      * @return 현재까지 저장된 태그 목록
      */
     List<TagResponseDto> selectTagList();
 
     /**
-     * 태그를 업데이트하는 메서드
+     * 태그 업데이트 메서드
      * @param tagUpdateRequestDto 태그 수정 요청 DTO
      */
     void updateTag(TagUpdateRequestDto tagUpdateRequestDto);
 
     /**
-     * 태그 삭제하는 메서드
+     * 태그 삭제 메서드
      *
      * @param tagDeleteRequestDto 태그 삭제 요청 DTO
      */
