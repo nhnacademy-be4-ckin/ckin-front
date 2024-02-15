@@ -1,7 +1,9 @@
 package store.ckin.front.couponpolicy.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @version : 2024. 02. 08
  */
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class CreateCouponPolicyRequestDto {
     @NotNull(message = "쿠폰 코드를 입력해주세요")
     private Long couponCodeId;

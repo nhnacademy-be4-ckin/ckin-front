@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.PortProperties;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
+import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
     /**
      * {@inheritDoc}
      *
-     * @return 포인트 정책 응답 DTO 리스트
+     * @return 쿠폰 정책 응답 DTO 리스트
      */
     @Override
     public List<GetCouponPolicyResponseDto> getCouponPolicies() {
@@ -48,6 +49,23 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
                         });
 
         return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     */
+    @Override
+    public void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto) {
+        HttpEntity<CreateCouponPolicyRequestDto> requestEntity = new HttpEntity<>(couponPolicyRequestDto, getHttpHeaders());
+
+
+        ResponseEntity<Void> exchange =
+                restTemplate.exchange(portProperties.getCouponAddress() + "/couponPolicy",
+                        HttpMethod.POST,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
     }
 
 

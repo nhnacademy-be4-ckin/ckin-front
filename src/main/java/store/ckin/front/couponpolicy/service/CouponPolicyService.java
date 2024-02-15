@@ -1,6 +1,7 @@
 package store.ckin.front.couponpolicy.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 
 import java.util.List;
@@ -20,6 +21,5 @@ public interface CouponPolicyService {
      */
     List<GetCouponPolicyResponseDto> getCouponPolicies();
 
-
-
+    void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto);
 }

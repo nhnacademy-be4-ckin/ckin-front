@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
+import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
 
@@ -26,6 +27,11 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
     @Override
     public List<GetCouponPolicyResponseDto> getCouponPolicies() {
         return couponPolicyAdapter.getCouponPolicies();
+    }
+
+    @Override
+    public void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto) {
+        couponPolicyAdapter.createCouponPolicy(couponPolicyRequestDto);
     }
 
 }
