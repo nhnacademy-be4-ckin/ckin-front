@@ -25,4 +25,7 @@ public class PortProperties {
 
     @NotBlank
     private String couponAddress;
+
+    @NotBlank
+    private String gatewayAddress;
 }
