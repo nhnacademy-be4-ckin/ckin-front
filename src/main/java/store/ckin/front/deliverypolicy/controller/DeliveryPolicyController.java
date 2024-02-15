@@ -3,7 +3,6 @@ package store.ckin.front.deliverypolicy.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,6 @@ import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
  * @version 2024. 02. 09.
  */
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/policy/delivery")
@@ -46,7 +44,7 @@ public class DeliveryPolicyController {
 
     @GetMapping("{id}")
     public String getDeliveryPolicyUpdateForm(@PathVariable("id") Long id,
-                                    Model model) {
+                                              Model model) {
         DeliveryPolicyResponseDto deliveryPolicy = deliveryPolicyService.getDeliveryPolicy(id);
 
         model.addAttribute("deliveryPolicy", deliveryPolicy);
@@ -72,19 +70,23 @@ public class DeliveryPolicyController {
      */
     @PostMapping
     public String createDeliveryPolicy(@Valid DeliveryPolicyCreateRequestDto createDeliveryPolicy) {
-        log.info("createDeliveryPolicy = {}", createDeliveryPolicy);
-        deliveryPolicyService.createDeliveryPolicy(createDeliveryPolicy);
 
+        deliveryPolicyService.createDeliveryPolicy(createDeliveryPolicy);
         return "redirect:/admin/policy/delivery";
     }
 
+    /**
+     * 배송비 정책 수정을 요청하는 메서드입니다.
+     *
+     * @param id 수정할 배송비 정책 ID
+     * @param updateDeliveryPolicy 수정 요청된 배송비 정책 DTO
+     * @return 배송비 정책 메인 View
+     */
     @PutMapping("{id}")
     public String updateDeliveryPolicy(@PathVariable("id") Long id,
-                                      @Valid DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
+                                       @Valid DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
 
-        log.info("updateDeliveryPolicy = {}", updateDeliveryPolicy);
         deliveryPolicyService.updateDeliveryPolicy(id, updateDeliveryPolicy);
-
         return "redirect:/admin/policy/delivery";
     }
 

@@ -71,6 +71,12 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param id 조회할 배송비 정책 ID
+     * @return 배송비 정책 응답 DTO
+     */
     @Override
     public DeliveryPolicyResponseDto requestDeliveryPolicy(Long id) {
 
@@ -86,10 +92,17 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param id                   수정할 배송비 정책 ID
+     * @param updateDeliveryPolicy 수정 배송비 정책 DTO
+     */
     @Override
     public void requestUpdateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
 
-        HttpEntity<DeliveryPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(updateDeliveryPolicy, getHttpHeaders());
+        HttpEntity<DeliveryPolicyUpdateRequestDto> requestEntity =
+                new HttpEntity<>(updateDeliveryPolicy, getHttpHeaders());
 
         restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL + "/{id}",
                 HttpMethod.PUT,

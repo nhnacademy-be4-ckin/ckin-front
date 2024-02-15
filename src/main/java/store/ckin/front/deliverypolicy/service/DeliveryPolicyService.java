@@ -27,7 +27,19 @@ public interface DeliveryPolicyService {
      */
     void createDeliveryPolicy(DeliveryPolicyCreateRequestDto request);
 
+    /**
+     * 배송비 정책을 조회하는 메서드입니다.
+     *
+     * @param id 조회할 배송비 정책 ID
+     * @return 조회된 배송비 정책 응답 DTO
+     */
     DeliveryPolicyResponseDto getDeliveryPolicy(Long id);
 
+    /**
+     * 배송비 정책을 수정하는 메서드입니다.
+     *
+     * @param id 수정할 배송비 정책 ID
+     * @param updateDeliveryPolicy 배송비 정책 요청 DTO
+     */
     void updateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy);
 }
