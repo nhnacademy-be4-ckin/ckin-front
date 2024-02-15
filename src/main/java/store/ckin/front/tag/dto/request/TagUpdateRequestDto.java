@@ -2,6 +2,7 @@ package store.ckin.front.tag.dto.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Getter;
  * @version 2024. 02. 15
  */
 @Getter
+@AllArgsConstructor
 public class TagUpdateRequestDto {
     @NotNull
     private Long tagId;
