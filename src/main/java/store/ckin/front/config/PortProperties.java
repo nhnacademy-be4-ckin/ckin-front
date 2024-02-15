@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 포트 번호를 관리하기 위한 프로퍼티 클래스입니다.
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Setter
-@Configuration
 @ConfigurationProperties(prefix = "port")
 public class PortProperties {
 
