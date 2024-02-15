@@ -3,6 +3,7 @@ package store.ckin.front.tag.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import store.ckin.front.tag.service.TagService;
  * @author 김준현
  * @version 2024. 02. 15.
  */
+@Slf4j
 @Controller
 @RequestMapping("/admin/tag")
 @RequiredArgsConstructor
@@ -34,7 +36,13 @@ public class TagController {
      */
     @GetMapping
     public String getTagMain(Model model) {
-        List<TagResponseDto> tagList = tagService.readTagList();
+//        List<TagResponseDto> tagList = tagService.readTagList();
+        List<TagResponseDto> tagList = List.of(
+                new TagResponseDto(1L, "태그 테스트1"),
+                new TagResponseDto(2L, "태그 테스트2"),
+                new TagResponseDto(3L, "태그 테스트3"),
+                new TagResponseDto(4L, "태그 테스트4")
+        );
         model.addAttribute("tagList", tagList);
         return "admin/tag/index";
     }
@@ -48,6 +56,7 @@ public class TagController {
      */
     @PostMapping("/create")
     public String createTag(@Valid TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
+        log.info("createTag(): called with name -> {}", tagCreateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
             // todo do something
             return "redirect:/admin/tag";
@@ -65,6 +74,8 @@ public class TagController {
      */
     @PostMapping("/update")
     public String updateTag(@Valid TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
+        log.info("updateTag(): called with id -> {}, name -> {}", tagUpdateRequestDto.getTagId(),
+                tagUpdateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
             // todo do something
             return "redirect:/admin/tag";
