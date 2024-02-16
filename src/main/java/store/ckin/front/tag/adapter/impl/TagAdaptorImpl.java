@@ -81,6 +81,11 @@ public class TagAdaptorImpl implements TagAdaptor {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param tagDeleteRequestDto 태그 삭제 요청 DTO
+     */
     @Override
     public void deleteTag(TagDeleteRequestDto tagDeleteRequestDto) {
         HttpEntity<TagDeleteRequestDto> requestEntity = new HttpEntity<>(tagDeleteRequestDto, getHttpHeaders());

@@ -59,6 +59,7 @@ public class TagController {
         log.info("createTag(): called with name -> {}", tagCreateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
             // todo do something
+            log.info("createTag(): bindingResult -> {}", bindingResult.hasErrors());
             return "redirect:/admin/tag";
         }
         tagService.createTag(tagCreateRequestDto);

@@ -30,6 +30,7 @@ function executeModal() {
     if (tagName !== '') {
         // 여기에 태그 추가하는 로직을 작성
         // 이미 존재하는 태그라면? Ajax 써야함
+        // exist한 이름인지 확인
         document.forms['modalForm'].submit();
         console.log(document.forms['modalForm'].action)
 
