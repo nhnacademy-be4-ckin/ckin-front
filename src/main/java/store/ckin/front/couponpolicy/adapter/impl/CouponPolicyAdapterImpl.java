@@ -8,7 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import store.ckin.front.config.PortProperties;
+import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
@@ -28,7 +28,7 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
 
     private final RestTemplate restTemplate;
 
-    private final PortProperties portProperties;
+    private final GatewayProperties portProperties;
 
 
     /**
@@ -42,7 +42,7 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
 
 
         ResponseEntity<List<GetCouponPolicyResponseDto>> exchange =
-                restTemplate.exchange(portProperties.getCouponAddress() + "/couponPolicy",
+                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/couponPolicy",
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -61,7 +61,7 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
 
 
         ResponseEntity<Void> exchange =
-                restTemplate.exchange(portProperties.getCouponAddress() + "/couponPolicy",
+                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/couponPolicy",
                         HttpMethod.POST,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
