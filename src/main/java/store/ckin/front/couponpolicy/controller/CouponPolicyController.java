@@ -27,20 +27,19 @@ import java.util.List;
 @RequestMapping("/admin/policy/coupon")
 public class CouponPolicyController {
 
-    private final CouponPolicyService pointPolicyService;
+    private final CouponPolicyService couponPolicyService;
     @GetMapping
     public String getCouponPolicies(Model model) {
-        List<GetCouponPolicyResponseDto> couponPolicies = pointPolicyService.getCouponPolicies();
+        List<GetCouponPolicyResponseDto> couponPolicies = couponPolicyService.getCouponPolicies();
 
         model.addAttribute("couponPolicies", couponPolicies);
         return "admin/coupon-policy/main";
     }
 
     @PostMapping
-    public String createCouponPolicy(@Valid CreateCouponPolicyRequestDto couponPolicyRequestDto,
-                                     Model model) {
+    public String createCouponPolicy(@Valid CreateCouponPolicyRequestDto couponPolicyRequestDto) {
 
-        pointPolicyService.createCouponPolicy(couponPolicyRequestDto);
+        couponPolicyService.createCouponPolicy(couponPolicyRequestDto);
 
         return "redirect:/admin/policy/coupon";
     }

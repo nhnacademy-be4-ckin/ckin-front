@@ -16,10 +16,10 @@ import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import java.util.List;
 
 /**
- * 포인트 정책 어댑터 구현 클래스입니다.
+ * 쿠폰 정책 어댑터 구현 클래스입니다.
  *
- * @author 정승조
- * @version 2024. 02. 12.
+ * @author 이가은
+ * @version 2024. 02. 15.
  */
 
 @Component
