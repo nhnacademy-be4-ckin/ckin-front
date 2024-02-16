@@ -30,6 +30,11 @@ public class PointPolicyController {
 
     private final PointPolicyService pointPolicyService;
 
+    @GetMapping("/create")
+    public String getPointPolicyCreateForm() {
+        return "admin/point-policy/create";
+    }
+
     @PostMapping
     public String createPointPolicy(@Valid PointPolicyCreateRequestDto createPointPolicy) {
         pointPolicyService.createPointPolicy(createPointPolicy);
@@ -54,10 +59,6 @@ public class PointPolicyController {
         return "admin/point-policy/update";
     }
 
-    @GetMapping("/create")
-    public String getPointPolicyCreateForm() {
-        return "admin/point-policy/create";
-    }
 
     @PutMapping
     public String updatePointPolicy(@Valid PointPolicyUpdateRequestDto updatePointPolicy) {
