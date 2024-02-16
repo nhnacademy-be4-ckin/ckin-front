@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
+import store.ckin.front.tag.exception.ValidationFailedException;
 import store.ckin.front.tag.service.TagService;
 
 /**
@@ -48,15 +50,12 @@ public class TagController {
      * 태그 추가 로직 호출
      *
      * @param tagCreateRequestDto 태그 추가 DTO
-     * @param bindingResult       Validation을 위한 parameter
      * @return 태그 관리 페이지
      */
     @PostMapping("/create")
     public String createTag(@Valid @ModelAttribute TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            log.info("createTag(): bindingResult -> {}", bindingResult.hasErrors());
-            // todo do something
-            return REDIRECT_TAG_URL;
+        if(bindingResult.hasErrors()) {
+            throw new ValidationFailedException();
         }
         tagService.createTag(tagCreateRequestDto);
         return REDIRECT_TAG_URL;
@@ -66,15 +65,12 @@ public class TagController {
      * 태그 수정 로직 호출
      *
      * @param tagUpdateRequestDto 태그 수정 DTO
-     * @param bindingResult       Validation을 위한 parameter
      * @return
      */
     @PostMapping("/update")
     public String updateTag(@Valid @ModelAttribute TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            log.info("updateTag(): bindingResult -> {}", bindingResult.hasErrors());
-            // todo do something
-            return REDIRECT_TAG_URL;
+        if(bindingResult.hasErrors()) {
+            throw new ValidationFailedException();
         }
         tagService.updateTag(tagUpdateRequestDto);
         return REDIRECT_TAG_URL;
@@ -84,15 +80,12 @@ public class TagController {
      * 태그 삭제 로직 호출
      *
      * @param tagDeleteRequestDto 태그 삭제 DTO
-     * @param bindingResult Validation을 위한 parameter
      * @return
      */
     @PostMapping("/delete")
     public String deleteTag(@Valid @ModelAttribute TagDeleteRequestDto tagDeleteRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            log.info("deleteTag(): bindingResult -> {}", bindingResult.hasErrors());
-            // todo do something
-            return REDIRECT_TAG_URL;
+        if(bindingResult.hasErrors()) {
+            throw new ValidationFailedException();
         }
         tagService.deleteTag(tagDeleteRequestDto);
         return REDIRECT_TAG_URL;
