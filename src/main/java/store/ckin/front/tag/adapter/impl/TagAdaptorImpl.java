@@ -49,7 +49,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     /**
      * {@inheritDoc}
      *
-     * @return
+     * @return 현재까지 저장된 태그 목록을 가져옴
      */
     @Override
     public List<TagResponseDto> selectTagList() {
@@ -74,7 +74,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     public void updateTag(TagUpdateRequestDto tagUpdateRequestDto) {
         HttpEntity<TagUpdateRequestDto> requestEntity = new HttpEntity<>(tagUpdateRequestDto, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getGatewayAddress(),
+        restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -90,7 +90,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     public void deleteTag(TagDeleteRequestDto tagDeleteRequestDto) {
         HttpEntity<TagDeleteRequestDto> requestEntity = new HttpEntity<>(tagDeleteRequestDto, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getGatewayAddress(),
+        restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
                 HttpMethod.DELETE,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
