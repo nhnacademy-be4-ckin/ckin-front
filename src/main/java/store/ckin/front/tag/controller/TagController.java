@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
+import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
 import store.ckin.front.tag.service.TagService;
@@ -36,13 +38,7 @@ public class TagController {
      */
     @GetMapping
     public String getTagMain(Model model) {
-//        List<TagResponseDto> tagList = tagService.readTagList();
-        List<TagResponseDto> tagList = List.of(
-                new TagResponseDto(1L, "태그 테스트1"),
-                new TagResponseDto(2L, "태그 테스트2"),
-                new TagResponseDto(3L, "태그 테스트3"),
-                new TagResponseDto(4L, "태그 테스트4")
-        );
+        List<TagResponseDto> tagList = tagService.readTagList();
         model.addAttribute("tagList", tagList);
         return "admin/tag/index";
     }
@@ -55,7 +51,7 @@ public class TagController {
      * @return 태그 관리 페이지
      */
     @PostMapping("/create")
-    public String createTag(@Valid TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
+    public String createTag(@Valid @ModelAttribute TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
         log.info("createTag(): called with name -> {}", tagCreateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
             // todo do something
@@ -74,7 +70,7 @@ public class TagController {
      * @return
      */
     @PostMapping("/update")
-    public String updateTag(@Valid TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
+    public String updateTag(@Valid @ModelAttribute TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
         log.info("updateTag(): called with id -> {}, name -> {}", tagUpdateRequestDto.getTagId(),
                 tagUpdateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
@@ -85,5 +81,14 @@ public class TagController {
         return "redirect:/admin/tag";
     }
 
+    @PostMapping("/delete")
+    public String deleteTag(@Valid @ModelAttribute TagDeleteRequestDto tagDeleteRequestDto, BindingResult bindingResult) {
+        log.info("deleteTag(): tagId -> {}", tagDeleteRequestDto.getTagId());
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin/tag";
+        }
+        tagService.deleteTag(tagDeleteRequestDto);
+        return "redirect:/admin/tag";
+    }
 
 }
