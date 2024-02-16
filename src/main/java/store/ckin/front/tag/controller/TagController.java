@@ -29,6 +29,7 @@ import store.ckin.front.tag.service.TagService;
 @RequiredArgsConstructor
 public class TagController {
     private final TagService tagService;
+    private static final String REDIRECT_TAG_URL = "redirect:/admin/tag";
 
     /**
      * 태그 관리 페이지 호출
@@ -52,14 +53,13 @@ public class TagController {
      */
     @PostMapping("/create")
     public String createTag(@Valid @ModelAttribute TagCreateRequestDto tagCreateRequestDto, BindingResult bindingResult) {
-        log.info("createTag(): called with name -> {}", tagCreateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
-            // todo do something
             log.info("createTag(): bindingResult -> {}", bindingResult.hasErrors());
-            return "redirect:/admin/tag";
+            // todo do something
+            return REDIRECT_TAG_URL;
         }
         tagService.createTag(tagCreateRequestDto);
-        return "redirect:/admin/tag";
+        return REDIRECT_TAG_URL;
     }
 
     /**
@@ -71,24 +71,31 @@ public class TagController {
      */
     @PostMapping("/update")
     public String updateTag(@Valid @ModelAttribute TagUpdateRequestDto tagUpdateRequestDto, BindingResult bindingResult) {
-        log.info("updateTag(): called with id -> {}, name -> {}", tagUpdateRequestDto.getTagId(),
-                tagUpdateRequestDto.getTagName());
         if (bindingResult.hasErrors()) {
+            log.info("updateTag(): bindingResult -> {}", bindingResult.hasErrors());
             // todo do something
-            return "redirect:/admin/tag";
+            return REDIRECT_TAG_URL;
         }
         tagService.updateTag(tagUpdateRequestDto);
-        return "redirect:/admin/tag";
+        return REDIRECT_TAG_URL;
     }
 
+    /**
+     * 태그 삭제 로직 호출
+     *
+     * @param tagDeleteRequestDto 태그 삭제 DTO
+     * @param bindingResult Validation을 위한 parameter
+     * @return
+     */
     @PostMapping("/delete")
     public String deleteTag(@Valid @ModelAttribute TagDeleteRequestDto tagDeleteRequestDto, BindingResult bindingResult) {
-        log.info("deleteTag(): tagId -> {}", tagDeleteRequestDto.getTagId());
         if (bindingResult.hasErrors()) {
-            return "redirect:/admin/tag";
+            log.info("deleteTag(): bindingResult -> {}", bindingResult.hasErrors());
+            // todo do something
+            return REDIRECT_TAG_URL;
         }
         tagService.deleteTag(tagDeleteRequestDto);
-        return "redirect:/admin/tag";
+        return REDIRECT_TAG_URL;
     }
 
 }

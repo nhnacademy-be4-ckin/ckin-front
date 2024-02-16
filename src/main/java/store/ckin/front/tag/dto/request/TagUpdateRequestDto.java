@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * description
+ * 태그 업데이트 요청 Dto
  *
  * @author 김준현
  * @version 2024. 02. 15

@@ -30,16 +30,28 @@ public class TagServiceImpl implements TagService {
         tagAdaptor.insertTag(tagCreateRequestDto);
     }
 
+    /**
+     * {@inheritDoc}
+     * @return 현재까지 저장된 태그 dto 리스트
+     */
     @Override
     public List<TagResponseDto> readTagList() {
         return tagAdaptor.selectTagList();
     }
 
+    /**
+     * {@inheritDoc}
+     * @param tagUpdateRequestDto 태그 수정 요청 DTO
+     */
     @Override
     public void updateTag(TagUpdateRequestDto tagUpdateRequestDto) {
         tagAdaptor.updateTag(tagUpdateRequestDto);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param tagDeleteRequestDto 태그 삭제 요청 DTO
+     */
     @Override
     public void deleteTag(TagDeleteRequestDto tagDeleteRequestDto) {
         tagAdaptor.deleteTag(tagDeleteRequestDto);
