@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.config.PortProperties;
+import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
@@ -29,7 +29,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
 
     private final RestTemplate restTemplate;
 
-    private final PortProperties portProperties;
+    private final GatewayProperties gatewayProperties;
 
     private static final String DELIVERY_POLICY_URL = "/api/delivery-policies";
 
@@ -44,7 +44,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         HttpEntity<DeliveryPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<List<DeliveryPolicyResponseDto>> exchange =
-                restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL,
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -64,7 +64,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         HttpEntity<DeliveryPolicyCreateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
 
-        restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
@@ -83,7 +83,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<DeliveryPolicyResponseDto> exchange =
-                restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL + "/{id}",
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL + "/{id}",
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -104,7 +104,7 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
         HttpEntity<DeliveryPolicyUpdateRequestDto> requestEntity =
                 new HttpEntity<>(updateDeliveryPolicy, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getApiAddress() + DELIVERY_POLICY_URL + "/{id}",
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL + "/{id}",
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {

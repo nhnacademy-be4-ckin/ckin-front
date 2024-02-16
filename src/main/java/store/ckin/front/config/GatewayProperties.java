@@ -1,6 +1,5 @@
 package store.ckin.front.config;
 
-import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,14 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "port")
-public class PortProperties {
+public class GatewayProperties {
 
-    @NotBlank
-    private String apiAddress;
-
-    @NotBlank
-    private String authAddress;
-
-    @NotBlank
-    private String couponAddress;
+    private String gatewayUri;
 }
