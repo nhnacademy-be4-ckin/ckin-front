@@ -45,8 +45,8 @@ public class PointPolicyController {
     }
 
     @GetMapping("/{id}")
-    public String getPointPolicy(@PathVariable("id") Long id,
-                                 Model model) {
+    public String getPointPolicyUpdateForm(@PathVariable("id") Long id,
+                                           Model model) {
         PointPolicyResponseDto pointPolicy = pointPolicyService.getPointPolicy(id);
 
         model.addAttribute("pointPolicyId", id);
