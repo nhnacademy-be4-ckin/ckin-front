@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.config.PortProperties;
+import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.pointpolicy.adapter.PointPolicyAdapter;
 import store.ckin.front.pointpolicy.dto.request.PointPolicyCreateRequestDto;
 import store.ckin.front.pointpolicy.dto.request.PointPolicyUpdateRequestDto;
@@ -29,7 +29,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
 
     private final RestTemplate restTemplate;
 
-    private final PortProperties portProperties;
+    private final GatewayProperties gatewayProperties;
     private static final String POINT_POLICY_URL = "/api/point-policies";
 
     /**
@@ -41,7 +41,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
     public void requestCreatePointPolicy(PointPolicyCreateRequestDto request) {
         HttpEntity<PointPolicyCreateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getApiAddress() + POINT_POLICY_URL,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + POINT_POLICY_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
@@ -58,7 +58,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<PointPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<List<PointPolicyResponseDto>> exchange =
-                restTemplate.exchange(portProperties.getApiAddress() + POINT_POLICY_URL,
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + POINT_POLICY_URL,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -79,7 +79,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<PointPolicyResponseDto> exchange = restTemplate.exchange(
-                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
+                gatewayProperties.getGatewayUri() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -98,7 +98,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         restTemplate.exchange(
-                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
+                gatewayProperties.getGatewayUri() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.DELETE,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
@@ -115,7 +115,7 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<PointPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
         restTemplate.exchange(
-                portProperties.getApiAddress() + POINT_POLICY_URL + "/{id}",
+                gatewayProperties.getGatewayUri() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
