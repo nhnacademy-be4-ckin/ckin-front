@@ -14,16 +14,16 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4" style="margin-bottom: 50px;">포인트 정책 등록 페이지</h1>
+                <h1 class="mt-4" style="margin-bottom: 50px;">쿠폰 정책 등록 페이지</h1>
 
-                <!-- 포인트 정책 등록 폼 -->
-                <form method="post" th:action="@{/admin/policy/point}">
+                <!-- 쿠폰 정책 등록 폼 -->
+                <form method="post" th:action="@{/admin/policy/coupon}">
 
                     <div class="w-25 col" style="margin-bottom: 10px;">
                         <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="포인트 정책 ID"
-                               aria-label="pointPolicyId"
-                               th:name="pointPolicyId" required>
+                               placeholder="쿠폰 정책 ID"
+                               aria-label="couponPolicyId"
+                               th:name="couponPolicyId" required>
                     </div>
                     <br/>
 

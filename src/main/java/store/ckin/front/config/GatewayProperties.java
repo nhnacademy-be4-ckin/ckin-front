@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 포트 번호를 관리하기 위한 프로퍼티 클래스입니다.
+ * 게이트웨이 포트 번호를 관리하기 위한 클래스입니다.
  *
  * @author 정승조
  * @version 2024. 02. 13.
@@ -17,4 +17,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class GatewayProperties {
 
     private String gatewayUri;
+
 }
