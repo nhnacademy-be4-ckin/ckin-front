@@ -42,7 +42,7 @@ public class DeliveryPolicyController {
         return "admin/delivery-policy/main";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public String getDeliveryPolicyUpdateForm(@PathVariable("id") Long id,
                                               Model model) {
         DeliveryPolicyResponseDto deliveryPolicy = deliveryPolicyService.getDeliveryPolicy(id);
@@ -82,7 +82,7 @@ public class DeliveryPolicyController {
      * @param updateDeliveryPolicy 수정 요청된 배송비 정책 DTO
      * @return 배송비 정책 메인 View
      */
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public String updateDeliveryPolicy(@PathVariable("id") Long id,
                                        @Valid DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
 
