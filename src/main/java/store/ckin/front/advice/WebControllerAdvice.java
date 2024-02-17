@@ -2,7 +2,6 @@ package store.ckin.front.advice;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * @version 2024. 02. 13.
  */
 
-@Slf4j
 @ControllerAdvice
 public class WebControllerAdvice {
 
@@ -29,5 +27,4 @@ public class WebControllerAdvice {
         model.addAttribute("errors", errors);
         return "error";
     }
-
 }
