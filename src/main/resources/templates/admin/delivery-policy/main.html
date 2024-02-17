@@ -42,12 +42,6 @@
                                     th:onclick="|location.href='/admin/policy/delivery/${deliveryPolicy.deliveryPolicyId}'|">
                                 수정
                             </button>
-                            <form action="#"
-                                  th:action="@{'/admin/policy/delivery/{id}'(id=${deliveryPolicy.deliveryPolicyId})}"
-                                  th:method="delete">
-                                <input type="hidden" name="_method" value="delete">
-                                <button type="submit" class="btn btn-outline-danger">삭제</button>
-                            </form>
                         </td>
                     </tr>
                     </tbody>
