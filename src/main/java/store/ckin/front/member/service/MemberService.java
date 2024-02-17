@@ -1,5 +1,6 @@
 package store.ckin.front.member.service;
 
+import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 
 /**
@@ -10,4 +11,6 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  */
 public interface MemberService {
     boolean createMember(MemberCreateRequestDto memberCreateRequestDto);
+
+    boolean doLogin(LoginRequestDto loginRequestDto);
 }

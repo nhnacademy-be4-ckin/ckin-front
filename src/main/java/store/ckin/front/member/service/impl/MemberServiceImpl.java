@@ -3,6 +3,7 @@ package store.ckin.front.member.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.member.adapter.MemberAdapter;
+import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 import store.ckin.front.member.service.MemberService;
 
@@ -20,5 +21,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean createMember(MemberCreateRequestDto memberCreateRequestDto) {
         return memberAdapter.createMember(memberCreateRequestDto);
+    }
+
+    @Override
+    public boolean doLogin(LoginRequestDto loginRequestDto) {
+        //TODO: Auth 작업 후 처리
+        return true;
     }
 }
