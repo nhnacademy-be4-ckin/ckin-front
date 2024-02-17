@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.config.PortProperties;
+import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 import store.ckin.front.util.AdapterHeaderUtil;
@@ -27,7 +27,7 @@ import store.ckin.front.util.AdapterHeaderUtil;
 public class MemberAdapterImpl implements MemberAdapter {
     private final RestTemplate restTemplate;
 
-    private final PortProperties portProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Override
     public boolean createMember(MemberCreateRequestDto memberCreateRequestDto) {
@@ -37,7 +37,7 @@ public class MemberAdapterImpl implements MemberAdapter {
 
         try {
             ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    portProperties.getApiAddress() + "/member/create",
+                    gatewayProperties.getGatewayUri() + "/member/create",
                     HttpMethod.POST,
                     requestEntity,
                     new ParameterizedTypeReference<>() {
