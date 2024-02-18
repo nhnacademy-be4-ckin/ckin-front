@@ -79,37 +79,19 @@
                     </div>
                     <div class="modal-body">
                         <!-- 폼 및 입력 필드 작성 -->
-                        <form th:action="@{/admin/policy/coupon}" method="post" id="couponPolicyForm">
+                        <form th:action="@{/admin/coupon/template/book}" method="post" id="couponPolicyForm">
                             <!-- 필요한 입력 필드들을 작성 -->
                             <div class="form-group">
                                 <label>쿠폰 정책</label>
-                                <select name="couponCodeId" class="form-select">
-                                    <option value="1">정률</option>
-                                    <option value="2">정액</option>
+                                <select name="policyId" class="form-select">
+                                    <option th:each="policy : ${couponPolicyList}" th:value="${policy.id}" th:text="'최소 주문 금액:' + ${policy.minOrderPrice} + ' 할인 금액: ' + ${policy.discountPrice} + ' 할인률: ' + ${policy.discountRate} + ' 최대 할인 금액: ' + ${policy.maxDiscountPrice}"></option>
                                 </select>
                             </div>
+
                             <br>
                             <div class="form-group">
-                                <label for="discountPrice">할인가격(정액인 경우)</label>
-                                <input type="number" class="form-control" id="discountPrice" placeholder="할인가격" name="discountPrice" pattern="^(0|[1-9]+[0-9]*)$" >
-                                <div class="valid-feedback">완료</div>
-                                <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="discountRate">할인률(정률인 경우)</label>
-                                <input type="number" class="form-control" id="discountRate" placeholder="할인률" name="discountRate" pattern="^(0|[1-9]+[0-9]*)$" >
-                                <div class="valid-feedback">완료</div>
-                                <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="minOrderPrice">최소주문금액</label>
-                                <input type="number" class="form-control" id="minOrderPrice" placeholder="최소주문금액" name="minOrderPrice" required="">
-                                <div class="valid-feedback">완료</div>
-                                <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="maxDiscountPrice">최대 할인 금액</label>
-                                <input type="number" class="form-control" id="maxDiscountPrice" placeholder="최대할인금액" name="maxDiscountPrice">
+                                <label for="bookId">도서 번호</label>
+                                <input type="number" class="form-control" id="bookId" placeholder="도서 아이디를 입력해주세요" name="bookId" pattern="^(0|[1-9]+[0-9]*)$" >
                                 <div class="valid-feedback">완료</div>
                                 <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
                             </div>

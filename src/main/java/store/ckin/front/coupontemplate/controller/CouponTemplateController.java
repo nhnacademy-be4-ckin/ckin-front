@@ -57,6 +57,8 @@ public class CouponTemplateController {
         PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getBookCouponTemplateList(pageable);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
+        //TODO: 도서 이름 목록 반환..? 하기에는 너무 많으니까 그냥 아이디로만 받을까..
+
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
         model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
         model.addAttribute("totalPages", couponTemplateList.getTotalPages());
@@ -83,12 +85,22 @@ public class CouponTemplateController {
 
 
     @PostMapping("/birth")
-    public String createCouponPolicy(@RequestParam("policyId") Long policyId,
+    public String createBirthCouponTemplate(@RequestParam("policyId") Long policyId,
                                      @RequestParam("targetMonth") Long targetMonth) {
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, null, targetMonth + "월 생일 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
         return "redirect:/admin/coupon/template/birth";
+    }
+
+    @PostMapping("/book")
+    public String createBookCouponTemplate(@RequestParam("policyId") Long policyId,
+                                     @RequestParam("bookId") Long bookId) {
+        String bookName = ""; //TODO: 도서 아이디로 이름 조회
+        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, null, "[" + bookName + "] 도서쿠폰", 0L);
+        couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
+
+        return "redirect:/admin/coupon/template/book";
     }
 
 }
