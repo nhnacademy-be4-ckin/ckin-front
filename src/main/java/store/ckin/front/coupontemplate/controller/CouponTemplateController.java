@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
@@ -81,12 +82,13 @@ public class CouponTemplateController {
     }
 
 
-    @PostMapping
-    public String createCouponPolicy(@Valid CreateCouponTemplateRequestDto couponPolicyRequestDto) {
+    @PostMapping("/birth")
+    public String createCouponPolicy(@RequestParam("policyId") Long policyId,
+                                     @RequestParam("targetMonth") Long targetMonth) {
+        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, null, targetMonth + "월 생일 쿠폰", 0L);
+        couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        couponTemplateService.createCouponTemplate(couponPolicyRequestDto);
-
-        return "redirect:/admin/coupon/coupon-template";
+        return "redirect:/admin/coupon/template/birth";
     }
 
 }
