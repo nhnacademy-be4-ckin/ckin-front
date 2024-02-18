@@ -35,10 +35,10 @@ public class CouponTemplateController {
     private final CouponTemplateService couponTemplateService;
     private final CouponPolicyService couponPolicyService;
 
-    @GetMapping
-    public String getCouponPolicies(Pageable pageable,
+    @GetMapping("/birth")
+    public String getBirthCouponTemplate(Pageable pageable,
                                     Model model) {
-        PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getCouponTemplateList(pageable);
+        PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getBirthCouponTemplateList(pageable);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
@@ -49,6 +49,22 @@ public class CouponTemplateController {
         model.addAttribute("couponPolicyList", couponPolicyList);
         return "admin/coupon/birth-template";
     }
+
+    @GetMapping("/book")
+    public String getBookCouponTemplate(Pageable pageable,
+                                         Model model) {
+        PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getBookCouponTemplateList(pageable);
+        List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
+
+        model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
+        model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
+        model.addAttribute("totalPages", couponTemplateList.getTotalPages());
+        model.addAttribute("currentPage", couponTemplateList.getNumber());
+        model.addAttribute("couponTemplateList", couponTemplateList.getContent());
+        model.addAttribute("couponPolicyList", couponPolicyList);
+        return "admin/coupon/book-template";
+    }
+
 
     @PostMapping
     public String createCouponPolicy(@Valid CreateCouponTemplateRequestDto couponPolicyRequestDto) {

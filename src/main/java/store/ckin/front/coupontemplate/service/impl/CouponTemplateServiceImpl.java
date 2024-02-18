@@ -25,8 +25,14 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     private final CouponTemplateAdapter couponTemplateAdapter;
 
     @Override
-    public PageDto<GetCouponTemplateResponseDto> getCouponTemplateList(Pageable pageable) {
+    public PageDto<GetCouponTemplateResponseDto> getBirthCouponTemplateList(Pageable pageable) {
         return couponTemplateAdapter.getBirthCouponTemplateList(pageable);
+    }
+
+    @Override
+    public PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable) {
+        return couponTemplateAdapter.getBookCouponTemplateList(pageable);
+
     }
 
     @Override

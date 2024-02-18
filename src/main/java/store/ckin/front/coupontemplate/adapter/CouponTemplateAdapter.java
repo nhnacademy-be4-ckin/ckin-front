@@ -28,4 +28,6 @@ public interface CouponTemplateAdapter {
      *
      */
     void createCouponTemplate(CreateCouponTemplateRequestDto couponPolicyRequestDto);
+
+    PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable);
 }

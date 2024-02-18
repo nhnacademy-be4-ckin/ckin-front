@@ -22,7 +22,8 @@ public interface CouponTemplateService {
      *
      * @return 쿠폰 정책 리스트
      */
-    PageDto<GetCouponTemplateResponseDto> getCouponTemplateList(Pageable pageable);
+    PageDto<GetCouponTemplateResponseDto> getBirthCouponTemplateList(Pageable pageable);
+    PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable);
 
     void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto);
 }

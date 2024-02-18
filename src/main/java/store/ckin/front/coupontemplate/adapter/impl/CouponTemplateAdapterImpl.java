@@ -58,6 +58,29 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
 
         return exchange.getBody();
     }
+    /**
+     * {@inheritDoc}
+     *
+     */
+    @Override
+    public PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/couponTemplate/book")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<GetCouponTemplateResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
 
     /**
      * {@inheritDoc}
