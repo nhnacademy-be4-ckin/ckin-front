@@ -37,7 +37,7 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
     /**
      * {@inheritDoc}
      *
-     * @return 쿠폰 정책 응답 DTO 리스트
+     * @return 생일 쿠폰 템플릿 응답 DTO 리스트
      */
     @Override
     public PageDto<GetCouponTemplateResponseDto> getBirthCouponTemplateList(Pageable pageable) {
@@ -61,12 +61,37 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
     /**
      * {@inheritDoc}
      *
+     * @return 도서 쿠폰 템플릿 응답 DTO 리스트
      */
     @Override
     public PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
 
         String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/couponTemplate/book")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<GetCouponTemplateResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * @return 카테고리 쿠폰 템플릿 응답 DTO 리스트
+     */
+    @Override
+    public PageDto<GetCouponTemplateResponseDto> getCategoryCouponTemplateList(Pageable pageable) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/couponTemplate/category")
                 .queryParam("page", pageable.getPageNumber())
                 .queryParam("size", pageable.getPageSize())
                 .encode()

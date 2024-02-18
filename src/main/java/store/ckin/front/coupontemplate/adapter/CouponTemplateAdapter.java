@@ -17,17 +17,27 @@ import java.util.List;
 public interface CouponTemplateAdapter {
 
     /**
-     * 쿠폰 정책 리스트 조회를 요청하는 메서드입니다.
+     * 생일 쿠폰 템플릿 리스트 조회를 요청하는 메서드입니다.
      *
-     * @return 쿠폰 정책 리스트
+     * @return 생일 쿠폰 템플릿 리스트
      */
     PageDto<GetCouponTemplateResponseDto> getBirthCouponTemplateList(Pageable pageable);
+    /**
+     * 도서 쿠폰 템플릿 리스트 조회를 요청하는 메서드입니다.
+     *
+     * @return 도서 쿠폰 템플릿 리스트
+     */
+    PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable);
+    /**
+     * 카테고리 쿠폰 템플릿 리스트 조회를 요청하는 메서드입니다.
+     *
+     * @return 카테고리 쿠폰 템플릿 리스트
+     */
+    PageDto<GetCouponTemplateResponseDto> getCategoryCouponTemplateList(Pageable pageable);
 
     /**
      * 쿠폰을 등록하는 메서드입니다.
      *
      */
     void createCouponTemplate(CreateCouponTemplateRequestDto couponPolicyRequestDto);
-
-    PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable);
 }

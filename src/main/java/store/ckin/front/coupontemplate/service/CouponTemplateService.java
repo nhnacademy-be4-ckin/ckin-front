@@ -24,7 +24,8 @@ public interface CouponTemplateService {
      */
     PageDto<GetCouponTemplateResponseDto> getBirthCouponTemplateList(Pageable pageable);
     PageDto<GetCouponTemplateResponseDto> getBookCouponTemplateList(Pageable pageable);
-
+    PageDto<GetCouponTemplateResponseDto> getCategoryCouponTemplateList(Pageable pageable);
     void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto);
+
 }
 

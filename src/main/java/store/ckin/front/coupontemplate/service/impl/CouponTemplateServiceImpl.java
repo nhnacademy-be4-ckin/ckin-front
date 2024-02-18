@@ -36,6 +36,12 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     }
 
     @Override
+    public PageDto<GetCouponTemplateResponseDto> getCategoryCouponTemplateList(Pageable pageable) {
+        return couponTemplateAdapter.getCategoryCouponTemplateList(pageable);
+
+    }
+
+    @Override
     public void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto) {
         couponTemplateAdapter.createCouponTemplate(couponTemplateRequestDto);
     }

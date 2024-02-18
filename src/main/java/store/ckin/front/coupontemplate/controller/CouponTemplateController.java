@@ -65,6 +65,21 @@ public class CouponTemplateController {
         return "admin/coupon/book-template";
     }
 
+    @GetMapping("/category")
+    public String getCategoryCouponTemplate(Pageable pageable,
+                                        Model model) {
+        PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getCategoryCouponTemplateList(pageable);
+        List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
+
+        model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
+        model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
+        model.addAttribute("totalPages", couponTemplateList.getTotalPages());
+        model.addAttribute("currentPage", couponTemplateList.getNumber());
+        model.addAttribute("couponTemplateList", couponTemplateList.getContent());
+        model.addAttribute("couponPolicyList", couponPolicyList);
+        return "admin/coupon/category-template";
+    }
+
 
     @PostMapping
     public String createCouponPolicy(@Valid CreateCouponTemplateRequestDto couponPolicyRequestDto) {
