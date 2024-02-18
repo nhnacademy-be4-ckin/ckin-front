@@ -96,11 +96,23 @@ public class CouponTemplateController {
     @PostMapping("/book")
     public String createBookCouponTemplate(@RequestParam("policyId") Long policyId,
                                      @RequestParam("bookId") Long bookId) {
+        //TODO: bookId가 널인지 확인
         String bookName = ""; //TODO: 도서 아이디로 이름 조회
-        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, null, "[" + bookName + "] 도서쿠폰", 0L);
+        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, null, "[" + bookName + "] 도서 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
         return "redirect:/admin/coupon/template/book";
+    }
+
+    @PostMapping("/category")
+    public String createCategoryCouponTemplate(@RequestParam("policyId") Long policyId,
+                                           @RequestParam("categoryId") Long categoryId) {
+        //TODO: categoryId 널인지 확인
+        String categoryName = ""; //TODO: categoryId 이름 조회
+        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, categoryId, "[" + categoryName + "] 카테고리 쿠폰", 0L);
+        couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
+
+        return "redirect:/admin/coupon/template/category";
     }
 
 }
