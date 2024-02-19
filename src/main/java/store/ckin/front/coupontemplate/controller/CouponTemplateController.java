@@ -113,10 +113,17 @@ public class CouponTemplateController {
     }
 
     @PostMapping("/birth/{templateId}")
-    public String deleteCouponTemplate(@PathVariable("templateId") Long templateId) {
+    public String deleteBirthCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
         return "redirect:/admin/coupon/template/birth";
+    }
+
+    @PostMapping("/book/{templateId}")
+    public String deleteBookCouponTemplate(@PathVariable("templateId") Long templateId) {
+        couponTemplateService.deleteCouponTemplate(templateId);
+
+        return "redirect:/admin/coupon/template/book";
     }
 
 }
