@@ -20,7 +20,7 @@ import store.ckin.front.cicd.actuator.ApplicationStatus;
 @RequestMapping("/actuator/status")
 public class ApplicationStatusController {
 
-    private ApplicationStatus applicationStatus;
+    private final ApplicationStatus applicationStatus;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
