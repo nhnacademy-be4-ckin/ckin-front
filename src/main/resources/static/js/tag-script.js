@@ -27,7 +27,7 @@ function openUpdateModal(button) {
 function executeModal() {
     const tagName = document.getElementById('tagInputName').value.trim();
 
-    if (tagName !== '') {
+    if (tagName !== '' && tagName.length > 1 && tagName.length <= 10) {
         // 여기에 태그 추가하는 로직을 작성
         // 이미 존재하는 태그라면? Ajax 써야함
         // exist한 이름인지 확인
