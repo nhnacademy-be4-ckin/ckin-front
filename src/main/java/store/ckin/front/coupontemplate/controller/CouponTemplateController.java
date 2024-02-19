@@ -41,7 +41,7 @@ public class CouponTemplateController {
 
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
         model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponTemplateList.getTotalPages());
+        model.addAttribute("totalPages", couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
@@ -58,7 +58,7 @@ public class CouponTemplateController {
 
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
         model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponTemplateList.getTotalPages());
+        model.addAttribute("totalPages", couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
@@ -73,7 +73,7 @@ public class CouponTemplateController {
 
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
         model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponTemplateList.getTotalPages());
+        model.addAttribute("totalPages", couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
