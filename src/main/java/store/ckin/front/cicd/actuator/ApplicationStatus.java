@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationStatus {
 
-    private AtomicBoolean status = new AtomicBoolean(true);
+    private final AtomicBoolean status = new AtomicBoolean(true);
 
     public void stopService() {
         this.status.set(false);
