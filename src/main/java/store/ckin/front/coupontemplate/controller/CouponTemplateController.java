@@ -126,5 +126,12 @@ public class CouponTemplateController {
         return "redirect:/admin/coupon/template/book";
     }
 
+    @PostMapping("/category/{templateId}")
+    public String deleteCategoryCouponTemplate(@PathVariable("templateId") Long templateId) {
+        couponTemplateService.deleteCouponTemplate(templateId);
+
+        return "redirect:/admin/coupon/template/category";
+    }
+
 }
 
