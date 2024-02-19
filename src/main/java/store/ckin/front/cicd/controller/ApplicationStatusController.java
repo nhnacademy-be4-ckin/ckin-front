@@ -17,7 +17,7 @@ import store.ckin.front.cicd.actuator.ApplicationStatus;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/actuator/status")
+@RequestMapping("/health/status")
 public class ApplicationStatusController {
 
     private final ApplicationStatus applicationStatus;

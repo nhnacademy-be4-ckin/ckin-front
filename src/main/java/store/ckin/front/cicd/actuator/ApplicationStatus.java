@@ -1,5 +1,6 @@
 package store.ckin.front.cicd.actuator;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,13 +13,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationStatus {
 
-    private boolean status = true;
+    private AtomicBoolean status = new AtomicBoolean(true);
 
     public void stopService() {
-        this.status = false;
+        this.status.set(false);
     }
 
     public boolean getStatus() {
-        return this.status;
+        return this.status.get();
     }
 }
