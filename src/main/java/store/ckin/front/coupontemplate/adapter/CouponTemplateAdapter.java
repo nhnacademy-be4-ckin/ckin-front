@@ -40,4 +40,6 @@ public interface CouponTemplateAdapter {
      *
      */
     void createCouponTemplate(CreateCouponTemplateRequestDto couponPolicyRequestDto);
+
+    void deleteCouponTemplate(Long templateId);
 }

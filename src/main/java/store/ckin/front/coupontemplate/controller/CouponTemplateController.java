@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
@@ -113,6 +110,13 @@ public class CouponTemplateController {
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
         return "redirect:/admin/coupon/template/category";
+    }
+
+    @PostMapping("/birth/{templateId}")
+    public String deleteCouponTemplate(@PathVariable("templateId") Long templateId) {
+        couponTemplateService.deleteCouponTemplate(templateId);
+
+        return "redirect:/admin/coupon/template/birth";
     }
 
 }

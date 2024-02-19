@@ -32,6 +32,7 @@
                         <th scope="col">카테고리 ID</th>
                         <th scope="col">쿠폰 템플릿 이름</th>
                         <th scope="col">현재 수량</th>
+                        <th scope="col">삭제</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,12 @@
                         <td th:text="${couponTemplate.categoryId}"></td>
                         <td th:text="${couponTemplate.name}"></td>
                         <td th:text="${couponTemplate.amount}"></td>
+                        <td>
+                            <form th:action="@{'/admin/coupon/template/birth/' + ${couponTemplate.id}}" method="post">
+<!--                                <input type="hidden" name="_method" value="delete" />-->
+                                <button type="submit" class="btn btn-danger">삭제</button>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

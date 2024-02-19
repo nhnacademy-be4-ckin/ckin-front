@@ -46,5 +46,10 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         couponTemplateAdapter.createCouponTemplate(couponTemplateRequestDto);
     }
 
+    @Override
+    public void deleteCouponTemplate(Long templateId) {
+        couponTemplateAdapter.deleteCouponTemplate(templateId);
+    }
+
 
 }

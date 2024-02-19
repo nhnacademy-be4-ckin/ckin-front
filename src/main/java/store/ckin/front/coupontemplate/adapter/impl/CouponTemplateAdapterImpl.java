@@ -124,6 +124,18 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
                         });
     }
 
+    @Override
+    public void deleteCouponTemplate(Long templateId) {
+        HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
+
+        ResponseEntity<Void> exchange =
+                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId,
+                        HttpMethod.DELETE,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+    }
+
 
     /**
      * 헤더 생성 메서드입니다.
