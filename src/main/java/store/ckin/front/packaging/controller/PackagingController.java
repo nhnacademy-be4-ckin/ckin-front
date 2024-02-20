@@ -1,12 +1,15 @@
 package store.ckin.front.packaging.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
+import store.ckin.front.packaging.dto.response.PackagingResponseDto;
 import store.ckin.front.packaging.service.PackagingService;
 
 /**
@@ -23,11 +26,6 @@ public class PackagingController {
 
     private final PackagingService packagingService;
 
-    @GetMapping
-    public String getPackagingPolicies() {
-        return "admin/packaging-policy/main";
-    }
-
     @GetMapping("/create")
     public String getPackagingPolicyCreateForm() {
         return "admin/packaging-policy/create";
@@ -37,5 +35,14 @@ public class PackagingController {
     public String createPackagingPolicy(@Valid PackagingCreateRequestDto requestDto) {
         packagingService.createPackagingPolicy(requestDto);
         return "redirect:/admin/policy/packaging";
+    }
+
+    @GetMapping
+    public String getPackagingPolicies(Model model) {
+
+        List<PackagingResponseDto> packagingList = packagingService.getPackagingPolicies();
+
+        model.addAttribute("packagingList", packagingList);
+        return "admin/packaging-policy/main";
     }
 }
