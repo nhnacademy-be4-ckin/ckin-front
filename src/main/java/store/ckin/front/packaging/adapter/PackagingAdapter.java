@@ -2,6 +2,7 @@ package store.ckin.front.packaging.adapter;
 
 import java.util.List;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
+import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
 
 /**
@@ -40,4 +41,11 @@ public interface PackagingAdapter {
      * @return 포장 정책 응답 DTO
      */
     PackagingResponseDto requestGetPackagingPolicy(Long id);
+
+    /**
+     * 포장 정책 수정 요청 메서드입니다.
+     *
+     * @param requestDto 포장 정책 수정 요청 DTO
+     */
+    void requestUpdatePackagingPolicy(PackagingUpdateRequestDto requestDto);
 }

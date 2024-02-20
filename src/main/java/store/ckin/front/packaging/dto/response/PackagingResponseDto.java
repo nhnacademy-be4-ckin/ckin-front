@@ -2,7 +2,6 @@ package store.ckin.front.packaging.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * 포장 정책 응답 DTO.
@@ -11,7 +10,6 @@ import lombok.ToString;
  * @version 2024. 02. 20.
  */
 
-@ToString
 @Getter
 @AllArgsConstructor
 public class PackagingResponseDto {

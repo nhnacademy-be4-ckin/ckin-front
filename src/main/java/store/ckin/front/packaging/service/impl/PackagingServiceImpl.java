@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.packaging.adapter.PackagingAdapter;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
+import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
 import store.ckin.front.packaging.service.PackagingService;
 
@@ -34,6 +35,17 @@ public class PackagingServiceImpl implements PackagingService {
     /**
      * {@inheritDoc}
      *
+     * @param id 조회할 포장 정책 ID
+     * @return 포장 정책 응답 DTO
+     */
+    @Override
+    public PackagingResponseDto getPackagingPolicy(Long id) {
+        return packagingAdapter.requestGetPackagingPolicy(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @return 포장 정책 응답 DTO 리스트
      */
     @Override
@@ -44,21 +56,20 @@ public class PackagingServiceImpl implements PackagingService {
     /**
      * {@inheritDoc}
      *
-     * @param id 삭제할 포장 정책 ID
+     * @param requestDto 포장 정책 수정 요청 DTO
      */
     @Override
-    public void deletePackagingPolicy(Long id) {
-        packagingAdapter.requestDeletePackagingPolicy(id);
+    public void updatePackagingPolicy(PackagingUpdateRequestDto requestDto) {
+        packagingAdapter.requestUpdatePackagingPolicy(requestDto);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param id 조회할 포장 정책 ID
-     * @return 포장 정책 응답 DTO
+     * @param id 삭제할 포장 정책 ID
      */
     @Override
-    public PackagingResponseDto getPackagingPolicy(Long id) {
-        return packagingAdapter.requestGetPackagingPolicy(id);
+    public void deletePackagingPolicy(Long id) {
+        packagingAdapter.requestDeletePackagingPolicy(id);
     }
 }
