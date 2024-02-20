@@ -73,4 +73,20 @@ public class PackagingAdapterImpl implements PackagingAdapter {
                 new ParameterizedTypeReference<Void>() {
                 }, id);
     }
+
+    @Override
+    public PackagingResponseDto requestGetPackagingPolicy(Long id) {
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+
+        ResponseEntity<PackagingResponseDto> exchange =
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + PACKAGING_URL + "/{id}",
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        }, id);
+
+        return exchange.getBody();
+    }
 }

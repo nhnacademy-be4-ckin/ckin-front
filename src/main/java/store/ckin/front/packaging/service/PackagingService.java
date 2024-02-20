@@ -33,4 +33,12 @@ public interface PackagingService {
      * @param id 삭제할 포장 정책 ID
      */
     void deletePackagingPolicy(Long id);
+
+    /**
+     * 포장 정책 조회 메서드입니다.
+     *
+     * @param id 조회할 포장 정책 ID
+     * @return 포장 정책 응답 DTO
+     */
+    PackagingResponseDto getPackagingPolicy(Long id);
 }

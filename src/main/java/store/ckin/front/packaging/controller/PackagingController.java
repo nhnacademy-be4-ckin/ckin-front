@@ -3,6 +3,7 @@ package store.ckin.front.packaging.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import store.ckin.front.packaging.service.PackagingService;
  * @version 2024. 02. 09.
  */
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/policy/packaging")
@@ -53,4 +55,16 @@ public class PackagingController {
         packagingService.deletePackagingPolicy(id);
         return "redirect:/admin/policy/packaging";
     }
+
+    @GetMapping("/{id}")
+    public String getPackagingPolicyUpdateForm(@PathVariable("id") Long id,
+                                               Model model) {
+        PackagingResponseDto packaging = packagingService.getPackagingPolicy(id);
+
+        log.info("packaging: {}", packaging);
+
+        model.addAttribute("packaging", packaging);
+        return "admin/packaging-policy/update";
+    }
+
 }
