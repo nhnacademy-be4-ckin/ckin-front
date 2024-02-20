@@ -14,24 +14,24 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4" style="margin-bottom: 50px;">포장지 정책 페이지</h1>
+                <h1 class="mt-4" style="margin-bottom: 50px;">포장 정책 페이지</h1>
 
                 <!-- 포장지 정책 등록 폼 -->
                 <form method="post" th:action="@{/admin/policy/packaging}">
 
                     <div class="w-25 col" style="margin-bottom: 10px;">
-                        <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="포장지 타입"
-                               aria-label="packagingType"
-                               th:name="packagingType">
+                        <input aria-label="packagingType" class="form-control" placeholder="포장지 타입"
+                               style="padding: 10px"
+                               th:name="packagingType"
+                               type="text">
                     </div>
                     <br/>
 
                     <div class="w-25 col">
-                        <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="포장지 가격"
-                               aria-label="packagingPrice"
-                               th:name="packagingPrice" required>
+                        <input aria-label="packagingPrice" class="form-control" placeholder="포장지 가격"
+                               required
+                               style="padding: 10px"
+                               th:name="packagingPrice" type="text">
                     </div>
                     <br/>
 
