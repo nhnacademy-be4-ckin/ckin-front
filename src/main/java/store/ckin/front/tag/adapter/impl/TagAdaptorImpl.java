@@ -2,6 +2,8 @@ package store.ckin.front.tag.adapter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
+import java.awt.print.Pageable;
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.config.PortProperties;
 import store.ckin.front.tag.adapter.TagAdaptor;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
@@ -52,11 +56,16 @@ public class TagAdaptorImpl implements TagAdaptor {
      * @return 현재까지 저장된 태그 목록을 가져옴
      */
     @Override
-    public List<TagResponseDto> selectTagList() {
+    public PagedResponse<List<TagResponseDto>> selectTagList(Pageable pageable) {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
-        ResponseEntity<List<TagResponseDto>> exchange =
-                restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
+        URI uri = UriComponentsBuilder
+                .fromUriString(portProperties.getGatewayAddress())
+                .path(TAG_URL)
+                .queryParam("page", pageable.getNumberOfPages())
+                .encode().build().toUri();
+        ResponseEntity<PagedResponse<List<TagResponseDto>>> exchange =
+                restTemplate.exchange(uri,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {

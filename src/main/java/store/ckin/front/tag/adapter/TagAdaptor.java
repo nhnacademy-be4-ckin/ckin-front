@@ -1,6 +1,8 @@
 package store.ckin.front.tag.adapter;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
@@ -25,7 +27,7 @@ public interface TagAdaptor {
      *
      * @return 현재까지 저장된 태그 목록
      */
-    List<TagResponseDto> selectTagList();
+    PagedResponse<List<TagResponseDto>> selectTagList(Pageable pageable);
 
     /**
      * 태그 업데이트 메서드

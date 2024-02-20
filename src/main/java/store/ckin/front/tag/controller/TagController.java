@@ -1,5 +1,6 @@
 package store.ckin.front.tag.controller;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class TagController {
      */
     @GetMapping
     public String getTagMain(Model model) {
-        List<TagResponseDto> tagList = tagService.readTagList();
+        List<TagResponseDto> tagList = tagService.readTagList(pageable);
         model.addAttribute("tagList", tagList);
         return "admin/tag/index";
     }
