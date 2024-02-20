@@ -40,4 +40,14 @@ public class PackagingServiceImpl implements PackagingService {
     public List<PackagingResponseDto> getPackagingPolicies() {
         return packagingAdapter.requestGetPackagingPolicies();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param id 삭제할 포장 정책 ID
+     */
+    @Override
+    public void deletePackagingPolicy(Long id) {
+        packagingAdapter.requestDeletePackagingPolicy(id);
+    }
 }

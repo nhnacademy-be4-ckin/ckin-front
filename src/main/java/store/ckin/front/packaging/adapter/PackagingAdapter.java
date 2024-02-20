@@ -25,4 +25,11 @@ public interface PackagingAdapter {
      * @return 포장 정책 응답 DTO 리스트
      */
     List<PackagingResponseDto> requestGetPackagingPolicies();
+
+    /**
+     * 포장 정책 삭제 요청 메서드입니다.
+     *
+     * @param id 삭제할 포장 정책 ID
+     */
+    void requestDeletePackagingPolicy(Long id);
 }

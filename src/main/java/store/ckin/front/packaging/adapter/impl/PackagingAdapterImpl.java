@@ -61,4 +61,16 @@ public class PackagingAdapterImpl implements PackagingAdapter {
 
         return exchange.getBody();
     }
+
+    @Override
+    public void requestDeletePackagingPolicy(Long id) {
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + PACKAGING_URL + "/{id}",
+                HttpMethod.DELETE,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                }, id);
+    }
 }
