@@ -1,6 +1,8 @@
 package store.ckin.front.member.adapter;
 
 import org.springframework.http.ResponseEntity;
+import store.ckin.front.member.domain.MemberAuthRequestDto;
+import store.ckin.front.member.domain.MemberAuthResponseDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 
 /**
@@ -11,4 +13,6 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  */
 public interface MemberAdapter {
     ResponseEntity<Void> createMember(MemberCreateRequestDto memberCreateRequestDto);
+
+    MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);
 }

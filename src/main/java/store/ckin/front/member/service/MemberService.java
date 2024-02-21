@@ -11,6 +11,4 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  */
 public interface MemberService {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
-
-    boolean doLogin(LoginRequestDto loginRequestDto);
 }

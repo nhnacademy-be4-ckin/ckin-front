@@ -3,13 +3,9 @@ package store.ckin.front.member.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
-import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
 /**
