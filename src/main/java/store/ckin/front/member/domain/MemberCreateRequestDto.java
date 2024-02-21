@@ -35,4 +35,8 @@ public class MemberCreateRequestDto {
 
     @NotNull
     private LocalDate birth;
+
+    public void setEncodedPassword(String encoded) {
+        this.password = encoded;
+    }
 }

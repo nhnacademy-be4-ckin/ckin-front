@@ -5,11 +5,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
@@ -30,28 +27,16 @@ public class MemberAdapterImpl implements MemberAdapter {
     private final GatewayProperties gatewayProperties;
 
     @Override
-    public boolean createMember(MemberCreateRequestDto memberCreateRequestDto) {
+    public ResponseEntity<Void> createMember(MemberCreateRequestDto memberCreateRequestDto) {
         HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
 
         HttpEntity<MemberCreateRequestDto> requestEntity = new HttpEntity<>(memberCreateRequestDto, headers);
 
-        try {
-            ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    gatewayProperties.getGatewayUri() + "/member/create",
-                    HttpMethod.POST,
-                    requestEntity,
-                    new ParameterizedTypeReference<>() {
-                    });
-
-            return responseEntity.getStatusCode() == HttpStatus.CREATED;
-        } catch (HttpClientErrorException e) {
-            if (e.getRawStatusCode() == HttpStatus.CONFLICT.value()) {
-                return false;
-            }
-        } catch (HttpServerErrorException e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members",
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
     }
 }

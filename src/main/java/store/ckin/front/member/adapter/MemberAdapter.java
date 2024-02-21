@@ -1,5 +1,6 @@
 package store.ckin.front.member.adapter;
 
+import org.springframework.http.ResponseEntity;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 
 /**
@@ -9,5 +10,5 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  * @version : 2024. 02. 16.
  */
 public interface MemberAdapter {
-    boolean createMember(MemberCreateRequestDto memberCreateRequestDto);
+    ResponseEntity<Void> createMember(MemberCreateRequestDto memberCreateRequestDto);
 }

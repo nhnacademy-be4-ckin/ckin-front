@@ -10,7 +10,7 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  * @version : 2024. 02. 16.
  */
 public interface MemberService {
-    boolean createMember(MemberCreateRequestDto memberCreateRequestDto);
+    void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     boolean doLogin(LoginRequestDto loginRequestDto);
 }

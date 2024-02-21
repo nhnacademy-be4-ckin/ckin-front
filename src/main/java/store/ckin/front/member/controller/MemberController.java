@@ -3,11 +3,13 @@ package store.ckin.front.member.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
+import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
 /**
@@ -22,9 +24,9 @@ public class MemberController {
     private final MemberService memberService;
 
     /**
-     * Gets create member.
+     * [GET] 회원가입 페이지.
      *
-     * @return the create member
+     * @return 회원가입 View 페이지
      */
     @GetMapping("/member/create")
     public String getCreateMember() {
@@ -32,7 +34,7 @@ public class MemberController {
     }
 
     /**
-     * Member 를 생성하는 Controller Method 입니다.
+     * [POST] 회원가입.
      *
      * @param memberCreateRequestDto Member 생성 요청 DTO
      * @return 생성 성공 시 홈으로 Redirect
@@ -45,27 +47,12 @@ public class MemberController {
     }
 
     /**
-     * Gets login.
+     * [GET] 로그인 페이지.
      *
-     * @return the login
+     * @return 로그인 View 페이지
      */
     @GetMapping("/login")
     public String getLogin() {
         return "member/login";
     }
-
-
-    /**
-     * 로그인을 처리하는 Controller Method 입니다.
-     *
-     * @param loginRequestDto 로그인 요청 DTO
-     * @return 로그인 성공시 홈으로 Redirect
-     */
-    @PostMapping("/login")
-    public String postLogin(@Valid LoginRequestDto loginRequestDto) {
-        memberService.doLogin(loginRequestDto);
-
-        return "redirect:/";
-    }
-
 }

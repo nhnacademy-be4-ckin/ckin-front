@@ -1,10 +1,14 @@
 package store.ckin.front.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
+import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
 /**
@@ -18,9 +22,18 @@ import store.ckin.front.member.service.MemberService;
 public class MemberServiceImpl implements MemberService {
     private final MemberAdapter memberAdapter;
 
+    private final BCryptPasswordEncoder bcryptPasswordEncoder;
+
     @Override
-    public boolean createMember(MemberCreateRequestDto memberCreateRequestDto) {
-        return memberAdapter.createMember(memberCreateRequestDto);
+    public void createMember(MemberCreateRequestDto memberCreateRequestDto) {
+        String encodedPwd = bcryptPasswordEncoder.encode(memberCreateRequestDto.getPassword());
+        memberCreateRequestDto.setEncodedPassword(encodedPwd);
+
+        ResponseEntity<Void> responseEntity = memberAdapter.createMember(memberCreateRequestDto);
+
+        if (responseEntity.getStatusCode() == HttpStatus.CONFLICT) {
+            throw new MemberAlreadyExistsException();
+        }
     }
 
     @Override
