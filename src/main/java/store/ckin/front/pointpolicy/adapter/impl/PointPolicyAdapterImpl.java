@@ -112,14 +112,14 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
      * @param request 변경할 포인트 정책 요청 DTO
      */
     @Override
-    public void requestUpdatePointPolicy(PointPolicyUpdateRequestDto request) {
+    public void requestUpdatePointPolicy(Long id, PointPolicyUpdateRequestDto request) {
         HttpEntity<PointPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
         restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + POINT_POLICY_URL,
+                gatewayProperties.getGatewayUri() + POINT_POLICY_URL + "/{id}",
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
-                });
+                }, id);
     }
 }
