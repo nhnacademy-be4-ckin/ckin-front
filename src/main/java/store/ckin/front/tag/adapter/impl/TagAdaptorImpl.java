@@ -2,7 +2,6 @@ package store.ckin.front.tag.adapter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
-import java.awt.print.Pageable;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
