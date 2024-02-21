@@ -18,8 +18,14 @@ public class WebControllerAdvice {
         return "error";
     }
 
-    @ExceptionHandler(Exception.class)
-    public String generalExceptionHandler() {
+    @ExceptionHandler(BindException.class)
+    public String handleBindingResultException(BindException e, Model model) {
+
+        List<String> errors = e.getAllErrors().stream()
+                .map(error -> error.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        model.addAttribute("errors", errors);
         return "error";
     }
 }

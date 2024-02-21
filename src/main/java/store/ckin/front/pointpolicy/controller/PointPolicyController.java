@@ -30,6 +30,11 @@ public class PointPolicyController {
 
     private final PointPolicyService pointPolicyService;
 
+    @GetMapping("/create")
+    public String getPointPolicyCreateForm() {
+        return "admin/point-policy/create";
+    }
+
     @PostMapping
     public String createPointPolicy(@Valid PointPolicyCreateRequestDto createPointPolicy) {
         pointPolicyService.createPointPolicy(createPointPolicy);
@@ -45,8 +50,8 @@ public class PointPolicyController {
     }
 
     @GetMapping("/{id}")
-    public String getPointPolicy(@PathVariable("id") Long id,
-                                 Model model) {
+    public String getPointPolicyUpdateForm(@PathVariable("id") Long id,
+                                           Model model) {
         PointPolicyResponseDto pointPolicy = pointPolicyService.getPointPolicy(id);
 
         model.addAttribute("pointPolicyId", id);
@@ -54,10 +59,6 @@ public class PointPolicyController {
         return "admin/point-policy/update";
     }
 
-    @GetMapping("/create")
-    public String getPointPolicyCreateForm() {
-        return "admin/point-policy/create";
-    }
 
     @PutMapping
     public String updatePointPolicy(@Valid PointPolicyUpdateRequestDto updatePointPolicy) {
