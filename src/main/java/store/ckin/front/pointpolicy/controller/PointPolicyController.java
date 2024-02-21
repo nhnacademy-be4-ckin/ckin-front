@@ -62,9 +62,9 @@ public class PointPolicyController {
     }
 
 
-    @PutMapping
-    public String updatePointPolicy(@Valid PointPolicyUpdateRequestDto updatePointPolicy) {
-        pointPolicyService.updatePointPolicy(updatePointPolicy);
+    @PutMapping("/{id}")
+    public String updatePointPolicy(@PathVariable("id") Long id, @Valid PointPolicyUpdateRequestDto updatePointPolicy) {
+        pointPolicyService.updatePointPolicy(id, updatePointPolicy);
         return REDIRECT_POINT_POLICY_URL;
     }
 
