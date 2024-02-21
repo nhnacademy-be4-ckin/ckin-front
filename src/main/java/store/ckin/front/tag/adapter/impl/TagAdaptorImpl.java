@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.common.dto.PagedResponse;
-import store.ckin.front.config.PortProperties;
+import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.tag.adapter.TagAdaptor;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
@@ -31,7 +31,7 @@ import store.ckin.front.tag.dto.response.TagResponseDto;
 @RequiredArgsConstructor
 public class TagAdaptorImpl implements TagAdaptor {
     private final RestTemplate restTemplate;
-    private final PortProperties portProperties;
+    private final GatewayProperties gatewayProperties;
     private static final String TAG_URL = "/api/tags";
 
     /**
@@ -43,7 +43,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     public void insertTag(TagCreateRequestDto tagCreateRequestDto) {
         HttpEntity<TagCreateRequestDto> requestEntity = new HttpEntity<>(tagCreateRequestDto, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + TAG_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -60,7 +60,7 @@ public class TagAdaptorImpl implements TagAdaptor {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         URI uri = UriComponentsBuilder
-                .fromUriString(portProperties.getGatewayAddress())
+                .fromUriString(gatewayProperties.getGatewayUri())
                 .path(TAG_URL)
                 .queryParam("page", page)
                 .queryParam("size", size)
@@ -84,7 +84,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     public void updateTag(TagUpdateRequestDto tagUpdateRequestDto) {
         HttpEntity<TagUpdateRequestDto> requestEntity = new HttpEntity<>(tagUpdateRequestDto, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + TAG_URL,
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -100,7 +100,7 @@ public class TagAdaptorImpl implements TagAdaptor {
     public void deleteTag(TagDeleteRequestDto tagDeleteRequestDto) {
         HttpEntity<TagDeleteRequestDto> requestEntity = new HttpEntity<>(tagDeleteRequestDto, getHttpHeaders());
 
-        restTemplate.exchange(portProperties.getGatewayAddress() + TAG_URL,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + TAG_URL,
                 HttpMethod.DELETE,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
