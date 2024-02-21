@@ -33,9 +33,14 @@ public class CouponTemplateController {
     private final CouponTemplateService couponTemplateService;
     private final CouponPolicyService couponPolicyService;
 
+    /**
+     * 생일 쿠폰 템플릿 목록을 가져오는 메서드 입니다.
+     *
+     * @author : gaeun
+     * @version : 2024. 02. 19.
+     */
     @GetMapping("/birth")
-    public String getBirthCouponTemplate(Pageable pageable,
-                                    Model model) {
+    public String getBirthCouponTemplate(Pageable pageable, Model model) {
         PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getBirthCouponTemplateList(pageable);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
@@ -45,12 +50,16 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon/birth-template";
+        return "admin/coupon-template/birth-template";
     }
 
+    /**
+     * 도서 쿠폰 템플릿 목록을 가져오는 메서드 입니다.
+     *
+     *
+     */
     @GetMapping("/book")
-    public String getBookCouponTemplate(Pageable pageable,
-                                         Model model) {
+    public String getBookCouponTemplate(Pageable pageable, Model model) {
         PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getBookCouponTemplateList(pageable);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
@@ -62,12 +71,17 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon/book-template";
+        return "admin/coupon-template/book-template";
     }
 
+    /**
+     * 카테고리 쿠폰 템플릿 목록을 가져오는 메서드 입니다.
+     *
+     * @author : gaeun
+     * @version : 2024. 02. 19.
+     */
     @GetMapping("/category")
-    public String getCategoryCouponTemplate(Pageable pageable,
-                                        Model model) {
+    public String getCategoryCouponTemplate(Pageable pageable, Model model) {
         PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getCategoryCouponTemplateList(pageable);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
@@ -77,60 +91,57 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon/category-template";
+        return "admin/coupon-template/category-template";
     }
 
 
     @PostMapping("/birth")
-    public String createBirthCouponTemplate(@RequestParam("policyId") Long policyId,
-                                     @RequestParam("targetMonth") Long targetMonth) {
+    public String createBirthCouponTemplate(@RequestParam("policyId") Long policyId, @RequestParam("targetMonth") Long targetMonth) {
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, null, targetMonth + "월 생일 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon/template/birth";
+        return "redirect:/admin/coupon-template/template/birth";
     }
 
     @PostMapping("/book")
-    public String createBookCouponTemplate(@RequestParam("policyId") Long policyId,
-                                     @RequestParam("bookId") Long bookId) {
+    public String createBookCouponTemplate(@RequestParam("policyId") Long policyId, @RequestParam("bookId") Long bookId) {
         //TODO: bookId가 널인지 확인
         String bookName = ""; //TODO: 도서 아이디로 이름 조회
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, null, "[" + bookName + "] 도서 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon/template/book";
+        return "redirect:/admin/coupon-template/template/book";
     }
 
     @PostMapping("/category")
-    public String createCategoryCouponTemplate(@RequestParam("policyId") Long policyId,
-                                           @RequestParam("categoryId") Long categoryId) {
+    public String createCategoryCouponTemplate(@RequestParam("policyId") Long policyId, @RequestParam("categoryId") Long categoryId) {
         //TODO: categoryId 널인지 확인
         String categoryName = ""; //TODO: categoryId 이름 조회
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, categoryId, "[" + categoryName + "] 카테고리 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon/template/category";
+        return "redirect:/admin/coupon-template/template/category";
     }
 
     @PostMapping("/birth/{templateId}")
     public String deleteBirthCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon/template/birth";
+        return "redirect:/admin/coupon-template/template/birth";
     }
 
     @PostMapping("/book/{templateId}")
     public String deleteBookCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon/template/book";
+        return "redirect:/admin/coupon-template/template/book";
     }
 
     @PostMapping("/category/{templateId}")
     public String deleteCategoryCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon/template/category";
+        return "redirect:/admin/coupon-template/template/category";
     }
 
 }

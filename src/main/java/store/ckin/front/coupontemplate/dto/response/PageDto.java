@@ -1,5 +1,6 @@
 package store.ckin.front.coupontemplate.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 
 @Getter
+@AllArgsConstructor
 public class PageDto<T> {
     private List<T> content;
     private int number;

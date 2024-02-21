@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 포인트 정책 페이지를 호출하는 컨트롤러입니다.
  *
- * @author 정승조
+ * @author 이가은
  * @version 2024. 02. 08.
  */
 @Slf4j

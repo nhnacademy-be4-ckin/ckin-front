@@ -15,7 +15,7 @@
         <main>
             <div class="container-fluid px-4">
                 <h1 class="mt-4">생일 쿠폰 템플릿</h1>
-
+ `
                 <div>
                     <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         쿠폰 템플릿 추가
@@ -56,16 +56,16 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/admin/coupon/template/birth(page=${currentPage - 1})}">Previous</a>
+                               th:href="@{/templates/admin/coupon-template/template/birth(page=${currentPage - 1})}">Previous</a>
                         </li>
                         <th:block th:with="start=1, end=${totalPages}">
                             <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                                <a class="page-link" th:href="@{/admin/coupon/template/birth(page=${page - 1})}"
+                                <a class="page-link" th:href="@{/templates/admin/coupon-template/template/birth(page=${page - 1})}"
                                    th:text="${page}"></a></li>
                         </th:block>
                         <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/admin/coupon/template/birth(page=${currentPage+1})}">Next</a>
+                               th:href="@{/templates/admin/coupon-template/template/birth(page=${currentPage+1})}">Next</a>
                         </li>
                     </ul>
                 </nav>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- 폼 및 입력 필드 작성 -->
-                        <form th:action="@{/admin/coupon/template/birth}" method="post" id="couponPolicyForm">
+                        <form th:action="@{/templates/admin/coupon-template/template/birth}" method="post" id="couponPolicyForm">
                             <!-- 필요한 입력 필드들을 작성 -->
                             <div class="form-group">
                                 <label>쿠폰 정책</label>
