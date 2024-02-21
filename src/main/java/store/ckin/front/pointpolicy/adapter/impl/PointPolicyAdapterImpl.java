@@ -27,10 +27,11 @@ import store.ckin.front.pointpolicy.dto.response.PointPolicyResponseDto;
 @RequiredArgsConstructor
 public class PointPolicyAdapterImpl implements PointPolicyAdapter {
 
+    private static final String POINT_POLICY_URL = "/api/point-policies";
+
     private final RestTemplate restTemplate;
 
     private final GatewayProperties gatewayProperties;
-    private static final String POINT_POLICY_URL = "/api/point-policies";
 
     /**
      * {@inheritDoc}
@@ -115,10 +116,10 @@ public class PointPolicyAdapterImpl implements PointPolicyAdapter {
         HttpEntity<PointPolicyUpdateRequestDto> requestEntity = new HttpEntity<>(request, getHttpHeaders());
 
         restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + POINT_POLICY_URL + "/{id}",
+                gatewayProperties.getGatewayUri() + POINT_POLICY_URL,
                 HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
-                }, request.getPointPolicyId());
+                });
     }
 }
