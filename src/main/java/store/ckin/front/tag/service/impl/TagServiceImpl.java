@@ -1,9 +1,9 @@
 package store.ckin.front.tag.service.impl;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.adapter.TagAdaptor;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
@@ -36,8 +36,8 @@ public class TagServiceImpl implements TagService {
      * @return 현재까지 저장된 태그 dto 리스트
      */
     @Override
-    public List<TagResponseDto> readTagList(Pageable pageable) {
-        return tagAdaptor.selectTagList(pageable);
+    public PagedResponse<List<TagResponseDto>> readTagList(int page, int size) {
+        return tagAdaptor.selectTagList(page, size);
     }
 
     /**

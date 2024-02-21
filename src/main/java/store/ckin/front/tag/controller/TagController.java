@@ -1,8 +1,8 @@
 package store.ckin.front.tag.controller;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
@@ -38,9 +40,10 @@ public class TagController {
      * @return 태그 관리 페이지
      */
     @GetMapping
-    public String getTagMain(Model model) {
-        List<TagResponseDto> tagList = tagService.readTagList(pageable);
-        model.addAttribute("tagList", tagList);
+    public String getTagMain(Model model, @Positive @RequestParam(defaultValue = "1") int page, @Positive @RequestParam(required = false, defaultValue = "10") int size) {
+        PagedResponse<List<TagResponseDto>> tagPagedResponse = tagService.readTagList(page-1, size);
+        model.addAttribute("tagList", tagPagedResponse.getData());
+        model.addAttribute("pageInfo", tagPagedResponse.getPageInfo());
         return "admin/tag/index";
     }
 
@@ -51,7 +54,7 @@ public class TagController {
      * @return 태그 관리 페이지
      */
     @PostMapping("/create")
-    public String createTag(@Valid @ModelAttribute TagCreateRequestDto tagCreateRequestDto) {
+    public String createTag(@Valid @ModelAttribute TagCreateRequestDto tagCreateRequestDto, Model model) {
         tagService.createTag(tagCreateRequestDto);
         return REDIRECT_TAG_URL;
     }

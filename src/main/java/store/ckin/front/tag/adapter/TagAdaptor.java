@@ -27,7 +27,7 @@ public interface TagAdaptor {
      *
      * @return 현재까지 저장된 태그 목록
      */
-    PagedResponse<List<TagResponseDto>> selectTagList(Pageable pageable);
+    PagedResponse<List<TagResponseDto>> selectTagList(int page, int size);
 
     /**
      * 태그 업데이트 메서드

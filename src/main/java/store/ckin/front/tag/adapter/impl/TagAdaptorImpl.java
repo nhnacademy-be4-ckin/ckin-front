@@ -56,13 +56,14 @@ public class TagAdaptorImpl implements TagAdaptor {
      * @return 현재까지 저장된 태그 목록을 가져옴
      */
     @Override
-    public PagedResponse<List<TagResponseDto>> selectTagList(Pageable pageable) {
+    public PagedResponse<List<TagResponseDto>> selectTagList(int page, int size) {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         URI uri = UriComponentsBuilder
                 .fromUriString(portProperties.getGatewayAddress())
                 .path(TAG_URL)
-                .queryParam("page", pageable.getNumberOfPages())
+                .queryParam("page", page)
+                .queryParam("size", size)
                 .encode().build().toUri();
         ResponseEntity<PagedResponse<List<TagResponseDto>>> exchange =
                 restTemplate.exchange(uri,
