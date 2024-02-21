@@ -28,6 +28,8 @@ import store.ckin.front.pointpolicy.service.PointPolicyService;
 @RequestMapping("/admin/policy/point")
 public class PointPolicyController {
 
+    private static final String REDIRECT_POINT_POLICY_URL = "redirect:/admin/policy/point";
+
     private final PointPolicyService pointPolicyService;
 
     @GetMapping("/create")
@@ -38,7 +40,7 @@ public class PointPolicyController {
     @PostMapping
     public String createPointPolicy(@Valid PointPolicyCreateRequestDto createPointPolicy) {
         pointPolicyService.createPointPolicy(createPointPolicy);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 
     @GetMapping
@@ -63,13 +65,13 @@ public class PointPolicyController {
     @PutMapping
     public String updatePointPolicy(@Valid PointPolicyUpdateRequestDto updatePointPolicy) {
         pointPolicyService.updatePointPolicy(updatePointPolicy);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 
 
     @DeleteMapping("/{id}")
     public String deletePointPolicy(@PathVariable("id") Long id) {
         pointPolicyService.deletePointPolicy(id);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 }
