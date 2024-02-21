@@ -28,6 +28,7 @@ import store.ckin.front.packaging.service.PackagingService;
 @RequestMapping("/admin/policy/packaging")
 public class PackagingController {
 
+    private static final String REDIRECT_PACKAGING_MAIN = "redirect:/admin/policy/packaging";
     private final PackagingService packagingService;
 
     /**
@@ -49,7 +50,7 @@ public class PackagingController {
     @PostMapping
     public String createPackagingPolicy(@Valid PackagingCreateRequestDto requestDto) {
         packagingService.createPackagingPolicy(requestDto);
-        return "redirect:/admin/policy/packaging";
+        return REDIRECT_PACKAGING_MAIN;
     }
 
     /**
@@ -76,7 +77,7 @@ public class PackagingController {
     @DeleteMapping("/{id}")
     public String deletePackagingPolicy(@PathVariable("id") Long id) {
         packagingService.deletePackagingPolicy(id);
-        return "redirect:/admin/policy/packaging";
+        return REDIRECT_PACKAGING_MAIN;
     }
 
     /**
@@ -103,7 +104,7 @@ public class PackagingController {
     @PutMapping
     public String updatePackagingPolicy(@Valid PackagingUpdateRequestDto requestDto) {
         packagingService.updatePackagingPolicy(requestDto);
-        return "redirect:/admin/policy/packaging";
+        return REDIRECT_PACKAGING_MAIN;
     }
 
 }
