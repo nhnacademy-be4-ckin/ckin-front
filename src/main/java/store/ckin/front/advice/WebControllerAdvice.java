@@ -1,21 +1,22 @@
 package store.ckin.front.advice;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 /**
- * Controller Advice 입니다.
+ * description
  *
- * @author 정승조
- * @version 2024. 02. 13.
+ * @author 김준현
+ * @version 2024. 02. 20
  */
-
 @ControllerAdvice
 public class WebControllerAdvice {
+    @ExceptionHandler({HttpClientErrorException.class, HttpServerErrorException.class})
+    public String httpErrorExceptionHandler() {
+        return "error";
+    }
 
     @ExceptionHandler(BindException.class)
     public String handleBindingResultException(BindException e, Model model) {
