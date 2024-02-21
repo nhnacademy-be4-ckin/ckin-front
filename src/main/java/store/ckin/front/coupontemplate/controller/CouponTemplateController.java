@@ -50,7 +50,7 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon-template/birth-template";
+        return "admin/coupon/template/birth";
     }
 
     /**
@@ -71,7 +71,7 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon-template/book-template";
+        return "admin/coupon/template/book";
     }
 
     /**
@@ -91,7 +91,7 @@ public class CouponTemplateController {
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
-        return "admin/coupon-template/category-template";
+        return "admin/coupon/template/category";
     }
 
 
@@ -100,7 +100,7 @@ public class CouponTemplateController {
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, null, targetMonth + "월 생일 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon-template/template/birth";
+        return "redirect:/admin/coupon/template/birth";
     }
 
     @PostMapping("/book")
@@ -110,7 +110,7 @@ public class CouponTemplateController {
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, null, "[" + bookName + "] 도서 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon-template/template/book";
+        return "redirect:/admin/coupon/template/book";
     }
 
     @PostMapping("/category")
@@ -120,28 +120,28 @@ public class CouponTemplateController {
         CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, categoryId, "[" + categoryName + "] 카테고리 쿠폰", 0L);
         couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
 
-        return "redirect:/admin/coupon-template/template/category";
+        return "redirect:/admin/coupon/template/category";
     }
 
     @PostMapping("/birth/{templateId}")
     public String deleteBirthCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon-template/template/birth";
+        return "redirect:/admin/coupon/template/birth";
     }
 
     @PostMapping("/book/{templateId}")
     public String deleteBookCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon-template/template/book";
+        return "redirect:/admin/coupon/template/book";
     }
 
     @PostMapping("/category/{templateId}")
     public String deleteCategoryCouponTemplate(@PathVariable("templateId") Long templateId) {
         couponTemplateService.deleteCouponTemplate(templateId);
 
-        return "redirect:/admin/coupon-template/template/category";
+        return "redirect:/admin/coupon/template/category";
     }
 
 }

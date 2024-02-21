@@ -33,7 +33,7 @@ public class CouponPolicyController {
         List<GetCouponPolicyResponseDto> couponPolicies = couponPolicyService.getCouponPolicies();
 
         model.addAttribute("couponPolicies", couponPolicies);
-        return "admin/coupon-policy/main";
+        return "admin/policy/coupon/main";
     }
 
     @PostMapping
