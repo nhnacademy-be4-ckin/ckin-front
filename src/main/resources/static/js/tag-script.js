@@ -9,6 +9,7 @@ function openCreateModal() {
 function closeModal() {
     document.getElementById('modal').classList.remove('show');
     document.getElementById('modal').style.display = 'none';
+    document.getElementById('modalDeleteBtn').hidden = true;
     // inputbox 및 action 초기화
 }
 
@@ -22,6 +23,7 @@ function openUpdateModal(button) {
     const selectedTagName = button.parentNode.parentNode.querySelector('#tagName').innerText;
     document.getElementById('tagInputId').value = selectedTagId;
     document.getElementById('tagInputName').value = selectedTagName;
+    document.getElementById('modalDeleteBtn').hidden = false;
 }
 
 function executeModal() {
