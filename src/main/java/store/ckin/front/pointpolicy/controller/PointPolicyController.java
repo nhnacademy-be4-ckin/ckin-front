@@ -28,17 +28,19 @@ import store.ckin.front.pointpolicy.service.PointPolicyService;
 @RequestMapping("/admin/policy/point")
 public class PointPolicyController {
 
+    private static final String REDIRECT_POINT_POLICY_URL = "redirect:/admin/policy/point";
+
     private final PointPolicyService pointPolicyService;
 
     @GetMapping("/create")
     public String getPointPolicyCreateForm() {
-        return "admin/point-policy/create";
+        return "admin/policy/point/create";
     }
 
     @PostMapping
     public String createPointPolicy(@Valid PointPolicyCreateRequestDto createPointPolicy) {
         pointPolicyService.createPointPolicy(createPointPolicy);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 
     @GetMapping
@@ -46,7 +48,7 @@ public class PointPolicyController {
         List<PointPolicyResponseDto> pointPolicies = pointPolicyService.getPointPolicies();
 
         model.addAttribute("pointPolicies", pointPolicies);
-        return "admin/point-policy/main";
+        return "admin/policy/point/main";
     }
 
     @GetMapping("/{id}")
@@ -56,20 +58,20 @@ public class PointPolicyController {
 
         model.addAttribute("pointPolicyId", id);
         model.addAttribute("pointPolicy", pointPolicy);
-        return "admin/point-policy/update";
+        return "admin/policy/point/update";
     }
 
 
     @PutMapping
     public String updatePointPolicy(@Valid PointPolicyUpdateRequestDto updatePointPolicy) {
         pointPolicyService.updatePointPolicy(updatePointPolicy);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 
 
     @DeleteMapping("/{id}")
     public String deletePointPolicy(@PathVariable("id") Long id) {
         pointPolicyService.deletePointPolicy(id);
-        return "redirect:/admin/policy/point";
+        return REDIRECT_POINT_POLICY_URL;
     }
 }

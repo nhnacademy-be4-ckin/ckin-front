@@ -27,6 +27,8 @@ import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 @RequestMapping("/admin/policy/delivery")
 public class DeliveryPolicyController {
 
+    private static final String REDIRECT_DELIVERY_POLICY_URL = "redirect:/admin/policy/delivery";
+
     private final DeliveryPolicyService deliveryPolicyService;
 
     /**
@@ -39,7 +41,7 @@ public class DeliveryPolicyController {
         List<DeliveryPolicyResponseDto> deliveryPolicies = deliveryPolicyService.getDeliveryPolicies();
 
         model.addAttribute("deliveryPolicies", deliveryPolicies);
-        return "admin/delivery-policy/main";
+        return "admin/policy/delivery/main";
     }
 
     @GetMapping("/{id}")
@@ -48,7 +50,7 @@ public class DeliveryPolicyController {
         DeliveryPolicyResponseDto deliveryPolicy = deliveryPolicyService.getDeliveryPolicy(id);
 
         model.addAttribute("deliveryPolicy", deliveryPolicy);
-        return "admin/delivery-policy/update";
+        return "admin/policy/delivery/update";
     }
 
 
@@ -59,7 +61,7 @@ public class DeliveryPolicyController {
      */
     @GetMapping("/create")
     public String getDeliveryPolicyCreateForm() {
-        return "admin/delivery-policy/create";
+        return "admin/policy/delivery/create";
     }
 
     /**
@@ -72,13 +74,13 @@ public class DeliveryPolicyController {
     public String createDeliveryPolicy(@Valid DeliveryPolicyCreateRequestDto createDeliveryPolicy) {
 
         deliveryPolicyService.createDeliveryPolicy(createDeliveryPolicy);
-        return "redirect:/admin/policy/delivery";
+        return REDIRECT_DELIVERY_POLICY_URL;
     }
 
     /**
      * 배송비 정책 수정을 요청하는 메서드입니다.
      *
-     * @param id 수정할 배송비 정책 ID
+     * @param id                   수정할 배송비 정책 ID
      * @param updateDeliveryPolicy 수정 요청된 배송비 정책 DTO
      * @return 배송비 정책 메인 View
      */
@@ -87,7 +89,7 @@ public class DeliveryPolicyController {
                                        @Valid DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
 
         deliveryPolicyService.updateDeliveryPolicy(id, updateDeliveryPolicy);
-        return "redirect:/admin/policy/delivery";
+        return REDIRECT_DELIVERY_POLICY_URL;
     }
 
 }

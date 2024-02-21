@@ -17,6 +17,6 @@ public class PackagingController {
 
     @GetMapping
     public String getPackagingPolicyMain() {
-        return "admin/packaging-policy/main";
+        return "admin/policy/packaging/main";
     }
 }
