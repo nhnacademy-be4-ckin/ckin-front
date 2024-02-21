@@ -2,12 +2,12 @@
 <html lang="ko">
 
 <!-- header -->
-<div th:replace="/fragments/admin-header.html :: admin-fragment-header"></div>
+<div th:replace="fragments/admin-header :: admin-fragment-header"></div>
 
 <!-- body -->
 <body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
-<div th:replace="/fragments/admin-nav.html :: admin-fragment-nav"></div>
-<div th:replace="/fragments/admin-sidebar.html :: admin-fragment-sidebar"></div>
+<div th:replace="fragments/admin-nav :: admin-fragment-nav"></div>
+<div th:replace="fragments/admin-sidebar :: admin-fragment-sidebar"></div>
 
 <!-- 본문 내용 -->
 <div id="layoutSidenav">
@@ -48,7 +48,7 @@
 
 
         <!-- footer -->
-        <footer th:replace="/fragments/admin-footer.html :: admin-fragment-footer"></footer>
+        <footer th:replace="fragments/admin-footer.html :: admin-fragment-footer"></footer>
     </div>
 </div>
 </body>

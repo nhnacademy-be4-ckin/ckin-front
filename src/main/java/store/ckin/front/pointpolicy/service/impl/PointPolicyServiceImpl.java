@@ -65,6 +65,11 @@ public class PointPolicyServiceImpl implements PointPolicyService {
     }
 
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param request 수정될 포인트 정책 요청 DTO
+     */
     @Override
     public void updatePointPolicy(PointPolicyUpdateRequestDto request) {
         pointPolicyAdapter.requestUpdatePointPolicy(request);
