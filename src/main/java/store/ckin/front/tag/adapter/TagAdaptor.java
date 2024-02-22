@@ -1,6 +1,5 @@
 package store.ckin.front.tag.adapter;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
@@ -31,6 +30,7 @@ public interface TagAdaptor {
 
     /**
      * 태그 업데이트 메서드
+     *
      * @param tagUpdateRequestDto 태그 수정 요청 DTO
      */
     void updateTag(TagUpdateRequestDto tagUpdateRequestDto);

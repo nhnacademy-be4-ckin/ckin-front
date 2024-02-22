@@ -1,7 +1,5 @@
 package store.ckin.front.tag.adapter.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import store.ckin.front.tag.adapter.TagAdaptor;
