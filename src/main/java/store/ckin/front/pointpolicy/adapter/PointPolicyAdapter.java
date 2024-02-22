@@ -46,7 +46,8 @@ public interface PointPolicyAdapter {
     /**
      * 포인트 정책 수정을 요청하는 메서드입니다.
      *
+     * @param id      수정할 포인트 정책 ID
      * @param request 수정될 포인트 정책 요청 DTO
      */
-    void requestUpdatePointPolicy(PointPolicyUpdateRequestDto request);
+    void requestUpdatePointPolicy(Long id, PointPolicyUpdateRequestDto request);
 }

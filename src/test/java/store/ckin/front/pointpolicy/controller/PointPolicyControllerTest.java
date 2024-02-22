@@ -105,7 +105,7 @@ class PointPolicyControllerTest {
     @DisplayName("포인트 정책 수정")
     void testUpdatePointPolicy() throws Exception {
 
-        mockMvc.perform(put("/admin/policy/point")
+        mockMvc.perform(put("/admin/policy/point/{id}", 1L)
                         .param("pointPolicyId", "100")
                         .param("pointPolicyName", "회원가입")
                         .param("pointPolicyReserve", "5000"))

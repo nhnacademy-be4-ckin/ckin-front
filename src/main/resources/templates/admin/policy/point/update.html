@@ -1,55 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
 
-<!-- header -->
-<div th:replace="fragments/admin-header :: admin-fragment-header"></div>
-
-<!-- body -->
-<body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
-<div th:replace="fragments/admin-nav :: admin-fragment-nav"></div>
-<div th:replace="fragments/admin-sidebar :: admin-fragment-sidebar"></div>
 
 <!-- 본문 내용 -->
-<div id="layoutSidenav">
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4" style="margin-bottom: 50px;">포인트 정책 수정 페이지</h1>
+<div layout:fragment="admin-content" id="layoutSidenav_content">
 
-                <!-- 포인트 정책 수정 폼 -->
-                <form action="#" th:action="@{/admin/policy/point}" method="post" th:object="${pointPolicy}">
-                    <input type="hidden" name="_method" value="put">
-                    <input type="hidden" th:name="pointPolicyId" th:value="*{pointPolicyId}" required>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4" style="margin-bottom: 50px;">포인트 정책 수정 페이지</h1>
 
-                    <div class="w-25 col">
-                        <span>포인트 정책 이름</span>
-                        <input style="padding: 10px" type="text" class="form-control"
-                               th:value="*{pointPolicyName}"
-                               placeholder="정책 이름"
-                               aria-label="pointPolicyName"
-                               th:name="pointPolicyName" required>
-                    </div>
-                    <br/>
+        <!-- 포인트 정책 수정 폼 -->
+        <form action="#" method="post" th:action="@{/admin/policy/point/{id}(id=${pointPolicy.pointPolicyId})}"
+              th:object="${pointPolicy}">
+            <input name="_method" type="hidden" value="put">
 
-                    <div class="w-25 col">
-                        <span>포인트 적립 금액</span>
-                        <input style="padding: 10px" type="number" class="form-control"
-                               th:value="*{pointPolicyReserve}"
-                               placeholder="포인트 적립 금액"
-                               aria-label="pointPolicyReserve"
-                               th:name="pointPolicyReserve" required>
-                    </div>
-                    <br/>
-
-                    <button class="btn btn-outline-primary" type="submit">수정</button>
-                </form>
+            <div class="w-25 col">
+                <span>포인트 정책 이름</span>
+                <input aria-label="pointPolicyName" class="form-control" placeholder="정책 이름"
+                       required
+                       style="padding: 10px"
+                       th:name="pointPolicyName"
+                       th:value="*{pointPolicyName}" type="text">
             </div>
-        </main>
+            <br/>
 
+            <div class="w-25 col">
+                <span>포인트 적립 금액</span>
+                <input aria-label="pointPolicyReserve" class="form-control" placeholder="포인트 적립 금액"
+                       required
+                       style="padding: 10px"
+                       th:name="pointPolicyReserve"
+                       th:value="*{pointPolicyReserve}" type="number">
+            </div>
+            <br/>
 
-        <!-- footer -->
-        <footer th:replace="fragments/admin-footer.html :: admin-fragment-footer"></footer>
+            <button class="btn btn-outline-primary" type="submit">수정</button>
+        </form>
     </div>
 </div>
-</body>
 </html>
