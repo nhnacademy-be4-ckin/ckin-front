@@ -28,6 +28,13 @@ import java.util.List;
 public class CouponPolicyController {
 
     private final CouponPolicyService couponPolicyService;
+
+    /**
+     * 쿠폰 정책 목록을 가져오는 메서드 입니다.
+     *
+     * @author : gaeun
+     * @version : 2024. 02. 22.
+     */
     @GetMapping
     public String getCouponPolicies(Model model) {
         List<GetCouponPolicyResponseDto> couponPolicies = couponPolicyService.getCouponPolicies();
@@ -36,6 +43,12 @@ public class CouponPolicyController {
         return "admin/policy/coupon/main";
     }
 
+    /**
+     * 쿠폰 정책을 등록하는 메서드 입니다.
+     *
+     * @author : gaeun
+     * @version : 2024. 02. 22.
+     */
     @PostMapping
     public String createCouponPolicy(@Valid CreateCouponPolicyRequestDto couponPolicyRequestDto) {
 

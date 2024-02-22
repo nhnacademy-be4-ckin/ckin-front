@@ -1,4 +1,5 @@
 package store.ckin.front.couponpolicy.service;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
@@ -21,5 +22,10 @@ public interface CouponPolicyService {
      */
     List<GetCouponPolicyResponseDto> getCouponPolicies();
 
+    /**
+     * 쿠폰 정책을 등록하는 메서드입니다.
+     *
+     * @param couponPolicyRequestDto 쿠폰 정책 요청 DTO
+     */
     void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto);
 }

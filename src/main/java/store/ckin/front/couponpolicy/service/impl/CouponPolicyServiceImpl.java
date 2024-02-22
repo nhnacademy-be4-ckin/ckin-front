@@ -24,11 +24,17 @@ public class CouponPolicyServiceImpl implements CouponPolicyService {
 
     private final CouponPolicyAdapter couponPolicyAdapter;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<GetCouponPolicyResponseDto> getCouponPolicies() {
         return couponPolicyAdapter.getCouponPolicies();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto) {
         couponPolicyAdapter.createCouponPolicy(couponPolicyRequestDto);

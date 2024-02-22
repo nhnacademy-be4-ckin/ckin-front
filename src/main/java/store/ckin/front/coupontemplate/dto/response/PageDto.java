@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.List;
 
 /**
- * description:
+ * 페이지네이션을 위한 페이지 정보 DTO
  *
  * @author : gaeun
  * @version : 2024. 02. 18

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * GetCouponPolicyResponseDto
+ * 쿠폰 응답 DTO
  *
  * @author : gaeun
  * @version 2024. 02. 20.
@@ -22,6 +22,7 @@ public class GetCouponResponseDto {
     private Long policyId;
     private Long bookId;
     private Long categoryId;
+    private Long typeId;
     private String name;
     private Date expirationDate;
     private Date issueDate;

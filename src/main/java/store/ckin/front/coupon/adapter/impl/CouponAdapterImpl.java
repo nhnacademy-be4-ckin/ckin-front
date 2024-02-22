@@ -1,6 +1,7 @@
 package store.ckin.front.coupon.adapter.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
@@ -9,11 +10,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.coupon.adapter.CouponAdapter;
-import store.ckin.front.coupon.dto.request.CreateCouponRequestDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
 import java.util.List;
+
 
 /**
  * 쿠폰 정책 어댑터 구현 클래스입니다.
@@ -21,7 +22,7 @@ import java.util.List;
  * @author 이가은
  * @version 2024. 02. 20.
  */
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CouponAdapterImpl implements CouponAdapter {
@@ -33,8 +34,6 @@ public class CouponAdapterImpl implements CouponAdapter {
 
     /**
      * {@inheritDoc}
-     *
-     * @return 쿠폰 정책 응답 DTO 리스트
      */
     @Override
     public PageDto<GetCouponResponseDto> getCouponAllList(Pageable pageable) {
@@ -55,6 +54,9 @@ public class CouponAdapterImpl implements CouponAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GetCouponResponseDto getCouponByCouponId(Long couponId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
@@ -69,14 +71,18 @@ public class CouponAdapterImpl implements CouponAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PageDto<GetCouponResponseDto> getBirthCouponList(Pageable pageable) {
+    public PageDto<GetCouponResponseDto> getCouponList(Pageable pageable, Long typeId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/birth")
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon?typeId=" + typeId)
                 .queryParam("page", pageable.getPageNumber())
                 .queryParam("size", pageable.getPageSize())
                 .encode()
                 .toUriString();
+        log.info("getCouponList");
 
         ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
                 restTemplate.exchange(url,
@@ -88,44 +94,9 @@ public class CouponAdapterImpl implements CouponAdapter {
         return exchange.getBody();
     }
 
-    @Override
-    public PageDto<GetCouponResponseDto> getBookCouponList(Pageable pageable) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/book")
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .encode()
-                .toUriString();
-
-        ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
-                restTemplate.exchange(url,
-                        HttpMethod.GET,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
-
-        return exchange.getBody();
-    }
-
-    @Override
-    public PageDto<GetCouponResponseDto> getCategoryCouponList(Pageable pageable) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/category")
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .encode()
-                .toUriString();
-
-        ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
-                restTemplate.exchange(url,
-                        HttpMethod.GET,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
-
-        return exchange.getBody();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());

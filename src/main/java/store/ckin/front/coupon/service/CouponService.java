@@ -1,4 +1,5 @@
 package store.ckin.front.coupon.service;
+
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupon.dto.request.CreateCouponRequestDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
@@ -15,18 +16,40 @@ import java.util.List;
 public interface CouponService {
 
     /**
-     * 쿠폰 정책 리스트를 조회하는 메서드입니다.
+     * 쿠폰 목록을 가져오는 메서드 입니다.
      *
-     * @return 쿠폰 정책 리스트
+     * @param pageable
+     *
+     * @return 쿠폰 목록 리스트
      */
     PageDto<GetCouponResponseDto> getCouponAllList(Pageable pageable);
+
+    /**
+     * 쿠폰 ID에 해당하는 쿠폰 목록을 가져오는 메서드 입니다.
+     *
+     * @param couponId 쿠폰 아이디를 가지는 경우 해당 쿠폰 아이디만 보여줍니다.
+     *
+     * @return 쿠폰 목록 리스트
+     */
     GetCouponResponseDto getCouponByCouponId(Long couponId);
 
-    PageDto<GetCouponResponseDto> getBirthCouponList(Pageable pageable);
+    /**
+     * 쿠폰 목록을 타입별로 가져오는 메서드 입니다.
+     *
+     * @param pageable
+     * @param typeId   쿠폰 템플릿 타입 아이디
+     *
+     * @return 쿠폰 목록 DTO
+     */
+    PageDto<GetCouponResponseDto> getCouponList(Pageable pageable, Long typeId);
 
-    PageDto<GetCouponResponseDto> getBookCouponList(Pageable pageable);
-
-    PageDto<GetCouponResponseDto> getCategoryCouponList(Pageable pageable);
-
+    /**
+     * 쿠폰 목록을 멤버별로 가져오는 메서드 입니다.
+     *
+     * @param pageable
+     * @param memberId 회원 ID
+     *
+     * @return 쿠폰 목록 DTO
+     */
     PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId);
 }

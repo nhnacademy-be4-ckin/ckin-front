@@ -44,7 +44,7 @@
                         <td th:text="${couponTemplate.name}"></td>
                         <td th:text="${couponTemplate.amount}"></td>
                         <td>
-                            <form th:action="@{'/admin/coupon/template/book/' + ${couponTemplate.id}}" method="post">
+                            <form th:action="@{'/admin/coupon/template/2/' + ${couponTemplate.id}}" method="post">
                                 <button type="submit" class="btn btn-danger">삭제</button>
                             </form>
                         </td>
@@ -56,16 +56,16 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/templates/admin/coupon-template/template/book(page=${currentPage - 1})}">Previous</a>
+                               th:href="@{/admin/coupon/template/2(page=${currentPage - 1})}">Previous</a>
                         </li>
                         <th:block th:with="start=1, end=${totalPages}">
                             <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                                <a class="page-link" th:href="@{/templates/admin/coupon-template/template/book(page=${page - 1})}"
+                                <a class="page-link" th:href="@{/admin/coupon/template/2(page=${page - 1})}"
                                    th:text="${page}"></a></li>
                         </th:block>
                         <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
                             <a class="page-link"
-                               th:href="@{/templates/admin/coupon-template/template/book(page=${currentPage+1})}">Next</a>
+                               th:href="@{/admin/coupon/template/2(page=${currentPage+1})}">Next</a>
                         </li>
                     </ul>
                 </nav>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- 폼 및 입력 필드 작성 -->
-                        <form th:action="@{/templates/admin/coupon-template/template/book}" method="post" id="couponPolicyForm">
+                        <form th:action="@{/admin/coupon/template/2}" method="post" id="couponPolicyForm">
                             <!-- 필요한 입력 필드들을 작성 -->
                             <div class="form-group">
                                 <label>쿠폰 정책</label>
@@ -97,7 +97,7 @@
                             <br>
                             <div class="form-group">
                                 <label for="bookId">도서 번호</label>
-                                <input type="number" class="form-control" id="bookId" placeholder="도서 아이디를 입력해주세요" name="bookId" pattern="^(0|[1-9]+[0-9]*)$" >
+                                <input type="number" class="form-control" id="bookId" placeholder="도서 아이디를 입력해주세요" name="value" pattern="^(0|[1-9]+[0-9]*)$" >
                                 <div class="valid-feedback">완료</div>
                                 <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
                             </div>

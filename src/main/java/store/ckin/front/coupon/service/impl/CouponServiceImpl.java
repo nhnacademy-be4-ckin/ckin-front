@@ -24,32 +24,34 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponAdapter couponAdapter;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageDto<GetCouponResponseDto> getCouponAllList(Pageable pageable) {
         return couponAdapter.getCouponAllList(pageable);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GetCouponResponseDto getCouponByCouponId(Long couponId) {
         return couponAdapter.getCouponByCouponId(couponId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PageDto<GetCouponResponseDto> getBirthCouponList(Pageable pageable) {
-        return couponAdapter.getBirthCouponList(pageable);
+    public PageDto<GetCouponResponseDto> getCouponList(Pageable pageable, Long typeId) {
+        return couponAdapter.getCouponList(pageable, typeId);
     }
 
-    @Override
-    public PageDto<GetCouponResponseDto> getBookCouponList(Pageable pageable) {
-        return couponAdapter.getBookCouponList(pageable);
-    }
 
-    @Override
-    public PageDto<GetCouponResponseDto> getCategoryCouponList(Pageable pageable) {
-        return couponAdapter.getCategoryCouponList(pageable);
-
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId) {
         return couponAdapter.getCouponByMemberId(pageable, memberId);
