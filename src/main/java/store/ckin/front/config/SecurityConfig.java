@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.member.service.MemberService;
+import store.ckin.front.token.service.TokenService;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.
@@ -26,6 +28,8 @@ import store.ckin.front.member.service.MemberDetailsService;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final MemberDetailsService memberDetailsService;
+
+    private final TokenService tokenService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,7 +57,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() {
-        CustomLoginFilter customLoginFilter =  new CustomLoginFilter();
+        CustomLoginFilter customLoginFilter =  new CustomLoginFilter(tokenService);
         customLoginFilter.setUsernameParameter("email");
         customLoginFilter.setPasswordParameter("password");
 

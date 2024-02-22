@@ -1,5 +1,6 @@
 package store.ckin.front.member.adapter.impl;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -43,11 +44,11 @@ public class MemberAdapterImpl implements MemberAdapter {
     }
 
     @Override
-    public MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto) {
+    public Optional<MemberAuthResponseDto> getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto) {
         HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
 
         HttpEntity<MemberAuthRequestDto> requestEntity = new HttpEntity<>(memberAuthRequestDto, headers);
-        ResponseEntity<MemberAuthResponseDto> responseEntity =  restTemplate.exchange(
+        ResponseEntity<Optional<MemberAuthResponseDto>> responseEntity =  restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/api/login",
                 HttpMethod.POST,
                 requestEntity,
@@ -56,4 +57,6 @@ public class MemberAdapterImpl implements MemberAdapter {
 
         return responseEntity.getBody();
     }
+
+
 }
