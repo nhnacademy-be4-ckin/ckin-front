@@ -29,6 +29,7 @@ import store.ckin.front.packaging.service.PackagingService;
 public class PackagingController {
 
     private static final String REDIRECT_PACKAGING_MAIN = "redirect:/admin/policy/packaging";
+
     private final PackagingService packagingService;
 
     /**
@@ -38,7 +39,7 @@ public class PackagingController {
      */
     @GetMapping("/create")
     public String getPackagingPolicyCreateForm() {
-        return "admin/packaging-policy/create";
+        return "admin/policy/packaging/create";
     }
 
     /**
@@ -65,7 +66,7 @@ public class PackagingController {
         List<PackagingResponseDto> packagingList = packagingService.getPackagingPolicies();
 
         model.addAttribute("packagingList", packagingList);
-        return "admin/packaging-policy/main";
+        return "admin/policy/packaging/main";
     }
 
     /**
@@ -92,7 +93,7 @@ public class PackagingController {
                                                Model model) {
         PackagingResponseDto packaging = packagingService.getPackagingPolicy(id);
         model.addAttribute("packaging", packaging);
-        return "admin/packaging-policy/update";
+        return "admin/policy/packaging/update";
     }
 
     /**
