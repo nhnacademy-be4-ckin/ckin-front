@@ -1,65 +1,52 @@
 <!DOCTYPE html>
-<html lang="ko">
-
-<!-- header -->
-<div th:replace="fragments/admin-header :: admin-fragment-header"></div>
-
-<!-- body -->
-<body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
-<div th:replace="fragments/admin-nav :: admin-fragment-nav"></div>
-<div th:replace="fragments/admin-sidebar :: admin-fragment-sidebar"></div>
+<html lang="ko"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
 
 <!-- 본문 내용 -->
-<div id="layoutSidenav">
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">포인트 정책 페이지</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">회원가입</li>
-                    <li class="breadcrumb-item active">리뷰 작성</li>
-                </ol>
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">포인트 정책 페이지</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">회원가입</li>
+            <li class="breadcrumb-item active">리뷰 작성</li>
+        </ol>
 
-                <button type="button" class="btn btn-outline-dark" style="float: right; margin-bottom: 30px;"
-                        th:onclick="|location.href='/admin/policy/point/create'|">
-                    정책 추가
-                </button>
+        <button type="button" class="btn btn-outline-dark" style="float: right; margin-bottom: 30px;"
+                th:onclick="|location.href='/admin/policy/point/create'|">
+            정책 추가
+        </button>
 
-                <table class="table table-hover" style="text-align: center; vertical-align: middle;">
-                    <thead>
-                    <tr>
-                        <th scope="col">포인트 정책 ID</th>
-                        <th scope="col">포인트 정책 이름</th>
-                        <th scope="col">포인트 적립 금액</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="pointPolicy : ${pointPolicies}">
-                        <td id="pointPolicyId" th:text="${pointPolicy.pointPolicyId}"></td>
-                        <td th:text="${pointPolicy.pointPolicyName}"></td>
-                        <td th:text="${pointPolicy.pointPolicyReserve}"></td>
-                        <td>
-                            <button style="margin-bottom: 5px;" type="button" class="btn btn-outline-warning"
-                                    th:onclick="|location.href='/admin/policy/point/${pointPolicy.pointPolicyId}'|">
-                                수정
-                            </button>
-                            <form action="#" th:action="@{'/admin/policy/point/{id}'(id=${pointPolicy.pointPolicyId})}"
-                                  th:method="delete">
-                                <input type="hidden" name="_method" value="delete">
-                                <button type="submit" class="btn btn-outline-danger">삭제</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-
-
-        <!-- footer -->
-        <footer th:replace="fragments/admin-footer :: admin-fragment-footer"></footer>
+        <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+            <thead>
+            <tr>
+                <th scope="col">포인트 정책 ID</th>
+                <th scope="col">포인트 정책 이름</th>
+                <th scope="col">포인트 적립 금액</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pointPolicy : ${pointPolicies}">
+                <td id="pointPolicyId" th:text="${pointPolicy.pointPolicyId}"></td>
+                <td th:text="${pointPolicy.pointPolicyName}"></td>
+                <td th:text="${pointPolicy.pointPolicyReserve}"></td>
+                <td>
+                    <button style="margin-bottom: 5px;" type="button" class="btn btn-outline-warning"
+                            th:onclick="|location.href='/admin/policy/point/${pointPolicy.pointPolicyId}'|">
+                        수정
+                    </button>
+                    <form action="#"
+                          th:action="@{'/admin/policy/point/{id}'(id=${pointPolicy.pointPolicyId})}"
+                          th:method="delete">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-outline-danger">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-</body>
 </html>
