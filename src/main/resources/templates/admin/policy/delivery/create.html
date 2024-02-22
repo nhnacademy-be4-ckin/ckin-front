@@ -1,61 +1,49 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
 
-<!-- header -->
-<div th:replace="fragments/admin-header.html :: admin-fragment-header"></div>
-
-<!-- body -->
-<body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
-<div th:replace="fragments/admin-nav.html :: admin-fragment-nav"></div>
-<div th:replace="fragments/admin-sidebar.html :: admin-fragment-sidebar"></div>
 
 <!-- 본문 내용 -->
-<div id="layoutSidenav">
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4" style="margin-bottom: 50px;">배송비 정책 등록 페이지</h1>
+<div layout:fragment="admin-content" id="layoutSidenav_content">
 
-                <!-- 배송비 정책 등록 폼 -->
-                <form method="post" th:action="@{/admin/policy/delivery}">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4" style="margin-bottom: 50px;">배송비 정책 등록 페이지</h1>
 
-                    <div class="w-25 col" style="margin-bottom: 10px;">
-                        <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="배송비"
-                               aria-label="deliveryPolicyFee"
-                               th:name="deliveryPolicyFee" required>
-                    </div>
-                    <br/>
+        <!-- 배송비 정책 등록 폼 -->
+        <form method="post" th:action="@{/admin/policy/delivery}">
 
-                    <div class="w-25 col">
-                        <input style="padding: 10px" type="text" class="form-control"
-                               placeholder="배송비 무료 조건 금액"
-                               aria-label="deliveryPolicyCondition"
-                               th:name="deliveryPolicyCondition" required>
-                    </div>
-                    <br/>
-
-                    <div class="w-25 col">
-                        <p>정책 사용 여부</p>
-                        <input type="radio" th:value="true" id="YES" th:name="deliveryPolicyState"
-                               aria-label="deliveryPolicyState">
-                        <label for="YES">YES</label>
-
-                        <input type="radio" th:value="false" id="NO" th:name="deliveryPolicyState"
-                               aria-label="deliveryPolicyState">
-                        <label for="NO">NO</label>
-                    </div>
-                    <br/>
-
-                    <button class="btn btn-outline-primary" type="submit">등록</button>
-                </form>
+            <div class="w-25 col" style="margin-bottom: 10px;">
+                <input style="padding: 10px" type="text" class="form-control"
+                       placeholder="배송비"
+                       aria-label="deliveryPolicyFee"
+                       th:name="deliveryPolicyFee" required>
             </div>
-        </main>
+            <br/>
 
+            <div class="w-25 col">
+                <input style="padding: 10px" type="text" class="form-control"
+                       placeholder="배송비 무료 조건 금액"
+                       aria-label="deliveryPolicyCondition"
+                       th:name="deliveryPolicyCondition" required>
+            </div>
+            <br/>
 
-        <!-- footer -->
-        <footer th:replace="fragments/admin-footer.html :: admin-fragment-footer"></footer>
+            <div class="w-25 col">
+                <p>정책 사용 여부</p>
+                <input type="radio" th:value="true" id="YES" th:name="deliveryPolicyState"
+                       aria-label="deliveryPolicyState">
+                <label for="YES">YES</label>
+
+                <input type="radio" th:value="false" id="NO" th:name="deliveryPolicyState"
+                       aria-label="deliveryPolicyState">
+                <label for="NO">NO</label>
+            </div>
+            <br/>
+
+            <button class="btn btn-outline-primary" type="submit">등록</button>
+        </form>
     </div>
 </div>
-</body>
 </html>
