@@ -1,12 +1,19 @@
 package store.ckin.front.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import store.ckin.front.member.auth.CustomAuthenticationProvider;
+import store.ckin.front.member.filter.CustomLoginFilter;
+import store.ckin.front.member.service.MemberDetailsService;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.
@@ -16,13 +23,10 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    /**
-     * 인증 / 인가를 처리하는 클래스 입니다.
-     *
-     * @param http HttpSecurity
-     * @return SecurityFilterChain
-     */
+    private final MemberDetailsService memberDetailsService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -36,13 +40,39 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
-                        .requestMatchers("/", "/login").permitAll());
+                        .requestMatchers("/", "/login").permitAll())
+                .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    /**
+     * CustomLoginFilter 에 파라미터를 설정 후 Bean 으로 등록.
+     *
+     * @return CustomLoginFilter
+     */
     @Bean
-    public BCryptPasswordEncoder encoder() {
+    public CustomLoginFilter customLoginFilter() {
+        CustomLoginFilter customLoginFilter =  new CustomLoginFilter();
+        customLoginFilter.setUsernameParameter("email");
+        customLoginFilter.setPasswordParameter("password");
+
+        return customLoginFilter;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bcryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+        throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public CustomAuthenticationProvider customAuthenticationProvider() {
+        return new CustomAuthenticationProvider(memberDetailsService, bcryptPasswordEncoder());
     }
 }
