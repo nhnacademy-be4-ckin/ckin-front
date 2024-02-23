@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+
+<!-- 본문 내용 -->
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4" style="margin-bottom: 50px;">포장 정책 수정 페이지</h1>
+
+        <!-- 포인트 정책 수정 폼 -->
+        <form action="#" method="post" th:action="@{/admin/policy/packaging}" th:object="${packaging}">
+            <input name="_method" type="hidden" value="put">
+            <input required th:name="packagingId" th:value="*{packagingId}" type="hidden">
+
+            <div class="w-25 col">
+                <span>포장지 종류</span>
+                <input aria-label="pointPolicyName" class="form-control" placeholder="정책 이름"
+                       required
+                       style="padding: 10px"
+                       th:name="packagingType"
+                       th:value="*{packagingType}" type="text">
+            </div>
+            <br/>
+
+            <div class="w-25 col">
+                <span>포장지 가격</span>
+                <input aria-label="pointPolicyReserve" class="form-control" placeholder="포인트 적립 금액"
+                       required
+                       style="padding: 10px"
+                       th:name="packagingPrice"
+                       th:value="*{packagingPrice}" type="number">
+            </div>
+            <br/>
+
+            <button class="btn btn-outline-primary" type="submit">수정</button>
+        </form>
+    </div>
+</div>
+</html>
