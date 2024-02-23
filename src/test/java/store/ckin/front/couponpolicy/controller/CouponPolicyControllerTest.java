@@ -1,30 +1,26 @@
 package store.ckin.front.couponpolicy.controller;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
-
-import java.util.List;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * description:
@@ -59,7 +55,7 @@ class CouponPolicyControllerTest {
 
         mockMvc.perform(get("/admin/policy/coupon"))
                 .andExpect(model().attribute("couponPolicies", request))
-                .andExpect(view().name("admin/coupon-policy/main"))
+                .andExpect(view().name("admin/policy/coupon/main"))
                 .andExpect(status().isOk());
     }
 
@@ -85,7 +81,7 @@ class CouponPolicyControllerTest {
                         .param("minOrderPrice", "10000")
                         .param("discountPrice", "3000")
                         .param("maxDiscountPrice", "10000"))
-                .andExpect(status().is4xxClientError())
+                .andExpect(view().name("error"))
                 .andDo(print());
     }
 }
