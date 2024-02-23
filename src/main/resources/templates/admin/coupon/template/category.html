@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- header -->
+<div th:replace="fragments/admin-header.html :: admin-fragment-header"></div>
+
+<!-- body -->
+<body class="sb-nav-fixed" style="font-family: 'Noto Sans KR', sans-serif;">
+<div th:replace="fragments/admin-nav.html :: admin-fragment-nav"></div>
+<div th:replace="fragments/admin-sidebar.html :: admin-fragment-sidebar"></div>
+
+<!-- 본문 내용 -->
+<div id="layoutSidenav">
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">카테고리 쿠폰 템플릿</h1>
+
+                <div>
+                    <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        쿠폰 템플릿 추가
+                    </button>
+                </div>
+
+
+                <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+                    <thead>
+                    <tr>
+                        <th scope="col">쿠폰 템플릿 ID</th>
+                        <th scope="col">쿠폰 정책 ID</th>
+                        <th scope="col">도서 ID</th>
+                        <th scope="col">카테고리 ID</th>
+                        <th scope="col">쿠폰 템플릿 이름</th>
+                        <th scope="col">현재 수량</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="couponTemplate : ${couponTemplateList}">
+                        <td id="pointPolicyId" th:text="${couponTemplate.id}"></td>
+                        <td th:text="${couponTemplate.policyId}"></td>
+                        <td th:text="${couponTemplate.bookId}"></td>
+                        <td th:text="${couponTemplate.categoryId}"></td>
+                        <td th:text="${couponTemplate.name}"></td>
+                        <td th:text="${couponTemplate.amount}"></td>
+                        <td>
+                            <form th:action="@{'/admin/coupon/template/3/' + ${couponTemplate.id}}" method="post">
+                                <button type="submit" class="btn btn-danger">삭제</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
+                            <a class="page-link"
+                               th:href="@{/admin/coupon/template/3(page=${currentPage - 1})}">Previous</a>
+                        </li>
+                        <th:block th:with="start=1, end=${totalPages}">
+                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                                <a class="page-link" th:href="@{/admin/coupon/template/3(page=${page - 1})}"
+                                   th:text="${page}"></a></li>
+                        </th:block>
+                        <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
+                            <a class="page-link"
+                               th:href="@{/admin/coupon/template/3(page=${currentPage+1})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+
+        </main>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">쿠폰 템플릿 등록</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 폼 및 입력 필드 작성 -->
+                        <form th:action="@{/admin/coupon/template/3}" method="post" id="couponPolicyForm">
+                            <!-- 필요한 입력 필드들을 작성 -->
+                            <div class="form-group">
+                                <label>쿠폰 정책</label>
+                                <select name="policyId" class="form-select">
+                                    <option th:each="policy : ${couponPolicyList}" th:value="${policy.id}" th:text="'최소 주문 금액:' + ${policy.minOrderPrice} + ' 할인 금액: ' + ${policy.discountPrice} + ' 할인률: ' + ${policy.discountRate} + ' 최대 할인 금액: ' + ${policy.maxDiscountPrice}"></option>
+                                </select>
+                            </div>
+
+                            <br>
+                            <div class="form-group">
+                                <label for="categoryId">카테고리 번호</label>
+                                <input type="number" class="form-control" id="categoryId" placeholder="카테고리 아이디를 입력해주세요" name="value" pattern="^(0|[1-9]+[0-9]*)$" >
+                                <div class="valid-feedback">완료</div>
+                                <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">등록</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- footer -->
+        <footer th:replace="fragments/admin-footer.html :: admin-fragment-footer"></footer>
+    </div>
+</div>
+</body>
+</html>
