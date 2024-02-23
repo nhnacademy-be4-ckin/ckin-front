@@ -2,18 +2,19 @@ package store.ckin.front.couponpolicy.adapter.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 
 import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 쿠폰 정책 어댑터 구현 클래스입니다.
@@ -53,7 +54,6 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public void createCouponPolicy(CreateCouponPolicyRequestDto couponPolicyRequestDto) {
@@ -68,16 +68,4 @@ public class CouponPolicyAdapterImpl implements CouponPolicyAdapter {
                         });
     }
 
-
-    /**
-     * 헤더 생성 메서드입니다.
-     *
-     * @return Http 헤더
-     */
-    private static HttpHeaders getHttpHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        return httpHeaders;
-    }
 }

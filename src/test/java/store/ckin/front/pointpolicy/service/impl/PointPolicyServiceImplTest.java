@@ -103,11 +103,11 @@ class PointPolicyServiceImplTest {
     @Test
     @DisplayName("포인트 정책 수정")
     void testUpdatePointPolicy() {
-        PointPolicyUpdateRequestDto pointPolicy = new PointPolicyUpdateRequestDto(1L, "정책1", 300);
+        PointPolicyUpdateRequestDto pointPolicy = new PointPolicyUpdateRequestDto("정책1", 300);
 
-        pointPolicyService.updatePointPolicy(pointPolicy);
+        pointPolicyService.updatePointPolicy(1L, pointPolicy);
 
-        verify(pointPolicyAdapter, times(1)).requestUpdatePointPolicy(any());
+        verify(pointPolicyAdapter, times(1)).requestUpdatePointPolicy(anyLong(), any());
     }
 
 }

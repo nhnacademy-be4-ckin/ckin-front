@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="ko"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+
+
+<!-- 본문 내용 -->
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">쿠폰 정책 페이지</h1>
+
+        <div>
+            <button type="button" class="btn btn-primary" style="float: right; margin-bottom: 30px;"
+                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                정책 추가
+            </button>
+        </div>
+
+
+        <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+            <thead>
+            <tr>
+                <th scope="col">쿠폰 정책 ID</th>
+                <th scope="col">최소 주문 금액</chl></th>
+                <th scope="col">할인 가격</th>
+                <th scope="col">할인률</th>
+                <th scope="col">최대 할인 금액</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="couponPolicy : ${couponPolicies}">
+                <td id="pointPolicyId" th:text="${couponPolicy.id}"></td>
+                <td th:text="${couponPolicy.minOrderPrice}"></td>
+                <td th:text="${couponPolicy.discountPrice}"></td>
+                <td th:text="${couponPolicy.discountRate}"></td>
+                <td th:text="${couponPolicy.maxDiscountPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">쿠폰 정책 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 폼 및 입력 필드 작성 -->
+                    <form th:action="@{/admin/policy/coupon}" method="post" id="couponPolicyForm">
+                        <!-- 필요한 입력 필드들을 작성 -->
+                        <div class="form-group">
+                            <label>정액여부</label>
+                            <select name="couponCodeId" class="form-select">
+                                <option value="1">정률</option>
+                                <option value="2">정액</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="discountPrice">할인가격(정액인 경우)</label>
+                            <input type="number" class="form-control" id="discountPrice" placeholder="할인가격"
+                                   name="discountPrice" pattern="^(0|[1-9]+[0-9]*)$">
+                            <div class="valid-feedback">완료</div>
+                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="discountRate">할인률(정률인 경우)</label>
+                            <input type="number" class="form-control" id="discountRate" placeholder="할인률"
+                                   name="discountRate" pattern="^(0|[1-9]+[0-9]*)$">
+                            <div class="valid-feedback">완료</div>
+                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="minOrderPrice">최소주문금액</label>
+                            <input type="number" class="form-control" id="minOrderPrice" placeholder="최소주문금액"
+                                   name="minOrderPrice" required="">
+                            <div class="valid-feedback">완료</div>
+                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxDiscountPrice">최대 할인 금액</label>
+                            <input type="number" class="form-control" id="maxDiscountPrice" placeholder="최대할인금액"
+                                   name="maxDiscountPrice">
+                            <div class="valid-feedback">완료</div>
+                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * GetCouponPolicyResponseDto
+ * 쿠폰 정책 응답 DTO
  *
  * @author : gaeun
  * @version : 2024. 02. 12
