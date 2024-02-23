@@ -13,7 +13,6 @@ import java.util.Date;
  * @version 2024. 02. 20.
  */
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class GetCouponResponseDto {
     private Long id;

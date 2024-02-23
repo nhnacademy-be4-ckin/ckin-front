@@ -22,7 +22,6 @@ import java.util.List;
  * @author 이가은
  * @version 2024. 02. 20.
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CouponAdapterImpl implements CouponAdapter {
@@ -82,7 +81,6 @@ public class CouponAdapterImpl implements CouponAdapter {
                 .queryParam("size", pageable.getPageSize())
                 .encode()
                 .toUriString();
-        log.info("getCouponList");
 
         ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
                 restTemplate.exchange(url,
