@@ -2,7 +2,6 @@ package store.ckin.front.coupon.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 

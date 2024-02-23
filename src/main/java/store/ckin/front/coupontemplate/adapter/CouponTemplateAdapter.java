@@ -1,12 +1,9 @@
 package store.ckin.front.coupontemplate.adapter;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
 
 /**
  * CouponTemplateAdapter

@@ -1,8 +1,6 @@
 package store.ckin.front.couponpolicy.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;

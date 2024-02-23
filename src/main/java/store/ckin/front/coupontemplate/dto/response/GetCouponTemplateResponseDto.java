@@ -1,6 +1,6 @@
 package store.ckin.front.coupontemplate.dto.response;
 
-import lombok.*;
+import lombok.Getter;
 
 /**
  * 쿠폰 템플릿 응답 DTO

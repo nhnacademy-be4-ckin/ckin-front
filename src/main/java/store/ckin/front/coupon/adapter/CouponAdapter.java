@@ -1,7 +1,6 @@
 package store.ckin.front.coupon.adapter;
 
 import org.springframework.data.domain.Pageable;
-import store.ckin.front.coupon.dto.request.CreateCouponRequestDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 

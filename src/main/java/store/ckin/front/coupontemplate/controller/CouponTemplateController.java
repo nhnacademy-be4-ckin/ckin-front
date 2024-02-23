@@ -2,7 +2,6 @@ package store.ckin.front.coupontemplate.controller;
 
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

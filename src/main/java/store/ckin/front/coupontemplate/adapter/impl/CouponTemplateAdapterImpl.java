@@ -2,10 +2,10 @@ package store.ckin.front.coupontemplate.adapter.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,8 +15,7 @@ import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDt
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
-import java.net.URL;
-import java.util.List;
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * CouponTemplateAdapterImpl
@@ -89,19 +88,6 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
                         requestEntity,
                         new ParameterizedTypeReference<>() {
                         });
-    }
-
-
-    /**
-     * 헤더 생성 메서드입니다.
-     *
-     * @return Http 헤더
-     */
-    private static HttpHeaders getHttpHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        return httpHeaders;
     }
 }
 

@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import store.ckin.front.coupon.adapter.CouponAdapter;
-import store.ckin.front.coupon.dto.request.CreateCouponRequestDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
 
 /**
  * CouponPolicyServiceImpl

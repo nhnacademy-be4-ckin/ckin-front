@@ -1,7 +1,6 @@
 package store.ckin.front.coupon.adapter.impl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
@@ -12,8 +11,7 @@ import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.coupon.adapter.CouponAdapter;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
+import static store.ckin.front.util.AdapterHeaderUtil.*;
 
 
 /**
@@ -112,19 +110,6 @@ public class CouponAdapterImpl implements CouponAdapter {
                         });
 
         return exchange.getBody();
-    }
-
-
-    /**
-     * 헤더 생성 메서드입니다.
-     *
-     * @return Http 헤더
-     */
-    private static HttpHeaders getHttpHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        return httpHeaders;
     }
 
 }
