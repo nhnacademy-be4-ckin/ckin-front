@@ -57,7 +57,7 @@ class PointPolicyControllerTest {
     void testGetPointPolicyCreateForm() throws Exception {
         mockMvc.perform(get("/admin/policy/point/create"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/point-policy/create"));
+                .andExpect(view().name("admin/policy/point/create"));
     }
 
     @Test
@@ -80,7 +80,7 @@ class PointPolicyControllerTest {
 
         mockMvc.perform(get("/admin/policy/point"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("admin/point-policy/main"));
+                .andExpect(view().name("admin/policy/point/main"));
 
         verify(pointPolicyService, times(1)).getPointPolicies();
     }
@@ -98,7 +98,7 @@ class PointPolicyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("pointPolicyId", 1L))
                 .andExpect(model().attribute("pointPolicy", pointPolicy))
-                .andExpect(view().name("admin/point-policy/update"));
+                .andExpect(view().name("admin/policy/point/update"));
     }
 
     @Test
