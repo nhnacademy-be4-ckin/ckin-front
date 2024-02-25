@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
+import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.service.TokenService;
@@ -44,10 +45,17 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
-                        .requestMatchers("/", "/login").permitAll())
+                        .requestMatchers("/", "/login, /signup").permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public JwtFilter jwtFilter() {
+        return new JwtFilter(tokenService);
     }
 
     /**
@@ -56,12 +64,13 @@ public class SecurityConfig {
      * @return CustomLoginFilter
      */
     @Bean
-    public CustomLoginFilter customLoginFilter() {
-        CustomLoginFilter customLoginFilter =  new CustomLoginFilter(tokenService);
-        customLoginFilter.setUsernameParameter("email");
-        customLoginFilter.setPasswordParameter("password");
+    public CustomLoginFilter customLoginFilter() throws Exception {
+        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
+        filter.setAuthenticationManager(authenticationManager(null));
+        filter.setUsernameParameter("email");
+        filter.setPasswordParameter("password");
 
-        return customLoginFilter;
+        return filter;
     }
 
     @Bean

@@ -2,8 +2,10 @@ package store.ckin.front.member.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -51,9 +53,14 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         LoginRequestDto loginRequestDto =
                 new LoginRequestDto(authorizedMemberDetails.getUsername(), authorizedMemberDetails.getPassword());
 
-        ResponseEntity<String> responseEntity = tokenService.getToken(loginRequestDto);
-        //TODO : Access Token, Refresh Token 을 만들어서 제공
-        //TODO : Token 을 어떤 곳에 저장할 것인지?
+        ResponseEntity<Void> responseEntity = tokenService.getToken(loginRequestDto);
+        String accessToken = Objects.requireNonNull(responseEntity.getHeaders()
+                .get("Authorization"))
+                .get(0);
+        Cookie cookie = new Cookie("accessToken", accessToken);
+        cookie.setMaxAge(-1);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         response.sendRedirect("/");
     }
