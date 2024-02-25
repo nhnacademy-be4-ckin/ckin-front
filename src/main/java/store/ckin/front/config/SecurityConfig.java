@@ -15,7 +15,6 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -32,6 +31,13 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
+
+    /**
+     * SecurityFilterChain 을 설정하는 메서드 입니다.
+     *
+     * @param http HttpSecurity
+     * @return SecurityFilterChain
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

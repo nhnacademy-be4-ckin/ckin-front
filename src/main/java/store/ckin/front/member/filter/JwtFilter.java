@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -20,6 +21,7 @@ import store.ckin.front.token.service.TokenService;
  * @author : jinwoolee
  * @version : 2024. 02. 23.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
@@ -31,7 +33,12 @@ public class JwtFilter extends OncePerRequestFilter {
         String email = request.getParameter("email");
 
         if (Objects.isNull(accessToken) || Objects.isNull(email)) {
-            throw new TokenAuthenticationFailedException("Cannot found token or email");
+            log.debug("JwtFilter : Cannot found token or email");
+
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            request.getRequestDispatcher("/login").forward(request, response);
+
+            return;
         }
 
         TokenAuthRequest tokenAuthRequest = new TokenAuthRequest(accessToken, email);
