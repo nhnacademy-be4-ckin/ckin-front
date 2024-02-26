@@ -18,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SaleController {
 
     @GetMapping
-    public String getSale() {
+    public String getSaleForm() {
         return "sale/main";
     }
 
-    @GetMapping("/coupon")
-    public String getSaleCoupon() {
-        return "sale/sale-coupon";
-    }
 }
