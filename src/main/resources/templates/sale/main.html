@@ -13,11 +13,11 @@
                         <div class="wrap-table-shopping-cart">
                             <table class="table-shopping-cart">
                                 <tr class="table_head">
-                                    <th class="column-1">Product</th>
-                                    <th class="column-2"></th>
-                                    <th class="column-3">Price</th>
-                                    <th class="column-4">Quantity</th>
-                                    <th class="column-5">Total</th>
+                                    <th class="column-1"></th>
+                                    <th class="column-2">상품명</th>
+                                    <th class="column-3">판매가</th>
+                                    <th class="column-4">수량</th>
+                                    <th class="column-5">주문금액</th>
                                 </tr>
 
                                 <tr class="table_row">
@@ -29,9 +29,9 @@
                                     </td>
 
                                     <td class="column-2">어린왕자</td>
-                                    <td class="column-3">$ 36.00</td>
-                                    <td class="column-4"> 1</td>
-                                    <td class="column-5">$ 36.00</td>
+                                    <td class="column-3">7600 원</td>
+                                    <td class="column-4"> 1 </td>
+                                    <td class="column-5">7600 원</td>
                                 </tr>
 
                                 <tr class="table_row">
@@ -41,21 +41,24 @@
                                                  alt="IMG">
                                         </div>
                                     </td>
-                                    <td class="column-2">자바 ORM 표준 JPA 프로그래밍</td>
-                                    <td class="column-3">$ 16.00</td>
+                                    <td class="column-2">자바 ORM - JPA 프로그래밍</td>
+                                    <td class="column-3">37000 원</td>
                                     <td class="column-4"> 2</td>
-                                    <td class="column-5">$ 32.00</td>
+                                    <td class="column-5">74000 원</td>
                                 </tr>
                             </table>
                         </div>
 
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                            <button class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                                쿠폰 적용
-                            </button>
-                            <p class="stext-111 cl6 p-t-2" style="color: #760c0c">
-                                쿠폰을 사용하여 구매할 경우 환불할 때 쿠폰은 환불되지 않습니다.
+                            <p class="stext-111 p-t-2" style="color: #760c0c">
+                                회원 - 쿠폰을 사용하여 구매할 경우 환불할 때 쿠폰은 환불되지 않습니다. <br/>
+                                비회원 - 비회원은 쿠폰을 사용할 수 없습니다.
                             </p>
+
+                            <a class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                             th:href="@{/sale/coupon}" target="_blank">
+                                쿠폰 적용
+                            </a>
                         </div>
 
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
