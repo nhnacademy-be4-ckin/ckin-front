@@ -5,7 +5,7 @@
 
 <!-- 본문 내용 -->
 <div layout:fragment="content">
-    <form class="bg0 p-t-75 p-b-85">
+    <form action="#" th:action="@{/}" class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -62,6 +62,44 @@
                             <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                                 Update Cart
                             </div>
+                            <p class="stext-111 cl6 p-t-2">
+                                쿠폰을 사용하여 구매할 경우 환불할 때 쿠폰은 환불되지 않습니다.
+                            </p>
+                        </div>
+
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                            <h4>주문자 정보</h4>
+
+                            <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
+                                   placeholder="주문자 이름을 입력해주세요." name="saleOrderName"
+                                   aria-placeholder="주문자 이름" aria-label="주문자 이름">
+
+                            <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
+                                   placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleOrderContact"
+                                   aria-placeholder="주문자 연락처" aria-label="주문자 연락처">
+
+                        </div>
+
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                            <h4>수령자 정보</h4>
+
+                            <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
+                                   placeholder="수령자 이름을 입력해주세요." name="saleReceiverName"
+                                   aria-placeholder="수령자 이름" aria-label="수령자 이름">
+
+                            <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
+                                   placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleReceiverContact"
+                                   aria-placeholder="수령자 연락처" aria-label="수령자 연락처">
+                        </div>
+
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                            <h4>배송 예약일</h4>
+                            <span class="stext-111 cl6 p-t-2"> 예약일을 지정하지 않으면 2일 뒤로 지정됩니다. </span>
+
+                            <input type="date" class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-" name="saleDeliveryDate" id="saleDeliveryDate" aria-label="배송 예약일">
                         </div>
                     </div>
                 </div>
@@ -140,27 +178,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-            <h3>주문자 정보</h3>
-            <input type="text" class="form-control" placeholder="주문자 이름을 입력해주세요." name="saleOrderName"
-                   aria-placeholder="주문자 이름" aria-label="주문자 이름">
-
-            <input type="text" class="form-control" placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleOrderContact"
-                   aria-placeholder="주문자 연락처" aria-label="주문자 연락처">
-
-            <br/>
-
-            <h3>수령자 정보</h3>
-
-            <input type="text" class="form-control" placeholder="수령자 이름을 입력해주세요." name="saleReceiverName"
-                   aria-placeholder="수령자 이름" aria-label="수령자 이름">
-
-            <input type="text" class="form-control" placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleReceiverContact"
-                   aria-placeholder="수령자 연락처" aria-label="수령자 연락처">
-
-            <br/>
-        </div>
     </form>
 
     <!-- Daum 주소 -->
@@ -191,14 +208,40 @@
             return yyyy + '-' + mm + '-' + dd;
         }
 
-        // 배송 날짜 input 요소의 최소 날짜를 설정하는 함수
+        function getMaxDeliveryDate() {
+            var today = new Date();
+            var deliveryDate = new Date(today);
+
+            // 최대 예약 배송일자는 현재 날짜 + 59일
+            deliveryDate.setDate(deliveryDate.getDate() + 59);
+
+            var dd = deliveryDate.getDate();
+            var mm = deliveryDate.getMonth() + 1;
+            var yyyy = deliveryDate.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            return yyyy + '-' + mm + '-' + dd;
+        }
+
+
+        // 배송 날짜 input 요소의 최소, 최대 날짜를 설정하는 함수
         function setMinDeliveryDate() {
             var deliveryDateInput = document.getElementById('saleDeliveryDate');
             if (deliveryDateInput) {
                 deliveryDateInput.value = getDefaultDeliveryDate();
                 deliveryDateInput.min = getDefaultDeliveryDate();
+                deliveryDateInput.max = getMaxDeliveryDate();
             }
         }
+
+
 
         // 문서가 로드되면 최소 배송 날짜를 설정합니다.
         window.onload = function () {
