@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Member 생성 요청을 위한 DTO 입니다.
@@ -15,25 +16,25 @@ import org.hibernate.validator.constraints.Length;
  * @version : 2024. 02. 16.
  */
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class MemberCreateRequestDto {
     @Email
     @NotBlank
     private String email;
 
     @NotBlank
-    @Length(min = 8, max = 20)
     private String password;
 
     @NotBlank
-    @Length(min = 2, max = 10)
+    @Size(min = 2, max = 10)
     private String name;
 
     @NotBlank
-    @Length(min = 10, max = 11)
+    @Size(min = 10, max = 11)
     private String contact;
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;
 
     public void setEncodedPassword(String encoded) {

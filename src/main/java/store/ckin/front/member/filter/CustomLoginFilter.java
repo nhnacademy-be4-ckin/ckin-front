@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,12 +26,15 @@ import store.ckin.front.token.service.TokenService;
  * @author : jinwoolee
  * @version : 2024. 02. 21.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final TokenService tokenService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        log.debug("CustomLoginFilter : Try Login Authentication");
+
         ObjectMapper objectMapper = new ObjectMapper();
         LoginRequestDto loginRequestDto;
 

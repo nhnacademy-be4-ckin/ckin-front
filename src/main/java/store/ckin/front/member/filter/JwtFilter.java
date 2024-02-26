@@ -31,26 +31,28 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String accessToken = request.getHeader("Authorization");
         String email = request.getParameter("email");
+        try {
+            if (Objects.isNull(accessToken) || Objects.isNull(email)) {
+                log.debug("JwtFilter : Cannot found token or email");
 
-        if (Objects.isNull(accessToken) || Objects.isNull(email)) {
-            log.debug("JwtFilter : Cannot found token or email");
+                filterChain.doFilter(request, response);
 
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            request.getRequestDispatcher("/login").forward(request, response);
+                return;
+            }
 
-            return;
+            TokenAuthRequest tokenAuthRequest = new TokenAuthRequest(accessToken, email);
+            ResponseEntity<Void> responseEntity = tokenService.checkTokenAuth(tokenAuthRequest);
+
+            if (responseEntity.getStatusCode() != HttpStatus.OK) {
+                throw new TokenAuthenticationFailedException(
+                        "JwtFilter : Token Authentication failed (HttpStatusCode = "
+                                + responseEntity.getStatusCode()
+                                + ")");
+            }
+
+            filterChain.doFilter(request, response);
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
         }
-
-        TokenAuthRequest tokenAuthRequest = new TokenAuthRequest(accessToken, email);
-        ResponseEntity<Void> responseEntity = tokenService.checkTokenAuth(tokenAuthRequest);
-
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
-            throw new TokenAuthenticationFailedException(
-                    "JwtFilter : Token Authentication failed (HttpStatusCode = "
-                            + responseEntity.getStatusCode()
-                            + ")");
-        }
-
-        filterChain.doFilter(request, response);
     }
 }

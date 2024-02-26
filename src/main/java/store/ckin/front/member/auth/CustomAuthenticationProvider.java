@@ -1,6 +1,7 @@
 package store.ckin.front.member.auth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import store.ckin.front.member.service.MemberDetailsService;
  * @author : jinwoolee
  * @version : 2024. 02. 22.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final MemberDetailsService memberDetailsService;
@@ -24,6 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        log.debug("CustomAuthenticationProvider : Try Authentication");
         // 인증 전의 Authentication 객체
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
 

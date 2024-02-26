@@ -49,9 +49,9 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .logout().disable()
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/home", "/login", "/signup").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
-                        .requestMatchers("/", "/login, /signup").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -75,6 +75,7 @@ public class SecurityConfig {
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");
+        filter.setFilterProcessesUrl("/login");
 
         return filter;
     }

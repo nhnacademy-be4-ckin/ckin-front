@@ -2,6 +2,7 @@ package store.ckin.front.member.controller;
 
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import store.ckin.front.member.service.MemberService;
  * @author : jinwoolee
  * @version : 2024. 02. 16.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -24,7 +26,7 @@ public class MemberController {
      *
      * @return 회원가입 View 페이지
      */
-    @GetMapping("/member/create")
+    @GetMapping("/signup")
     public String getCreateMember() {
         return "member/create";
     }
@@ -35,7 +37,7 @@ public class MemberController {
      * @param memberCreateRequestDto Member 생성 요청 DTO
      * @return 생성 성공 시 홈으로 Redirect
      */
-    @PostMapping("/member/create")
+    @PostMapping("/signup")
     public String postCreateMember(@Valid MemberCreateRequestDto memberCreateRequestDto) {
         memberService.createMember(memberCreateRequestDto);
 
