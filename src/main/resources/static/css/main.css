@@ -1906,24 +1906,34 @@ input.num-product::-webkit-inner-spin-button {
 .table-shopping-cart .column-3 {
     width: 120px;
     font-size: 16px;
+    padding-left: 10px;
+    padding-right: 5px;
     text-align: center;
 }
 
 .table-shopping-cart .column-4 {
-    width: 145px;
+    width: 80px;
     text-align: center;
 }
 
 .table-shopping-cart .column-5 {
-    width: 172px;
-    padding-right: 30px;
+    width: 130px;
+    padding-left: 10px;
+    padding-right: 10px;
     text-align: center;
     font-size: 16px;
 }
 
 .table-shopping-cart .column-6 {
     width: 172px;
-    padding-right: 50px;
+    padding-right: 30px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.table-shopping-cart .column-7 {
+    width: 172px;
+    padding-right: 30px;
     text-align: center;
     font-size: 16px;
 }

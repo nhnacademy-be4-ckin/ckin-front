@@ -19,6 +19,7 @@
                                     <th class="column-4">수량</th>
                                     <th class="column-5">쿠폰</th>
                                     <th class="column-6">주문금액</th>
+                                    <th class="column-7">🎁 포장지</th>
                                 </tr>
 
                                 <tr class="table_row">
@@ -34,7 +35,7 @@
                                     <td class="column-4"> 1</td>
                                     <td class="column-5">
                                         <button type="button"
-                                                class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                                                class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal" data-target="#exampleModalCenter">
                                             쿠폰 적용
                                         </button>
@@ -45,13 +46,16 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">적용 가능 쿠폰 리스트</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">적용 가능 쿠폰
+                                                            리스트</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table class="table" style="text-align: center; vertical-align: middle;">
+                                                        <table class="table"
+                                                               style="text-align: center; vertical-align: middle;">
                                                             <thead>
                                                             <tr>
                                                                 <th scope="col">선택</th>
@@ -63,7 +67,8 @@
                                                             <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    <input style="margin-left: 45%; margin-top: 10%" type="radio"
+                                                                    <input style="margin-left: 45%; margin-top: 10%"
+                                                                           type="radio"
                                                                            name="coupon" value="1">
                                                                 </td>
                                                                 <td>회원가입 축하 쿠폰</td>
@@ -74,7 +79,9 @@
                                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">취소
+                                                        </button>
                                                         <button type="button" class="btn btn-dark">쿠폰 선택</button>
                                                     </div>
                                                 </div>
@@ -82,7 +89,17 @@
                                         </div>
                                     </td>
                                     <td class="column-6">7600 원</td>
+                                    <td class="column-7">
+                                        <select class="packaging form-control form-control-sm">
+                                            <option selected value="0">선택 X</option>
+                                            <option th:each="packaging : ${packagingList}"
+                                                    th:value="${packaging.packagingId}"
+                                                    th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
+                                            </option>
+                                        </select>
+                                    </td>
                                 </tr>
+
 
                                 <tr class="table_row">
                                     <td class="column-1">
@@ -96,7 +113,7 @@
                                     <td class="column-4"> 2</td>
                                     <td class="column-5">
                                         <button type="button"
-                                                class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                                                class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal" data-target="#couponModal">
                                             쿠폰 적용
                                         </button>
@@ -144,6 +161,15 @@
                                         </div>
                                     </td>
                                     <td class="column-6">74000 원</td>
+                                    <td class="column-7">
+                                        <select class="packaging form-control form-control-sm">
+                                            <option selected value="0">선택 X</option>
+                                            <option th:each="packaging : ${packagingList}"
+                                                    th:value="${packaging.packagingId}"
+                                                    th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
+                                            </option>
+                                        </select>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -255,7 +281,7 @@
 
                             <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									$79.65
+									<span id="totalPrice">0</span>원
 								</span>
                             </div>
                         </div>
@@ -269,8 +295,6 @@
         </div>
     </form>
 
-    <!-- 쿠폰 적용 -->
-    <script src="/js/sale-coupon.js"></script>
     <!-- Daum 주소 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/address.js"></script>
@@ -337,7 +361,52 @@
         window.onload = function () {
             setMinDeliveryDate();
         };
+
+
     </script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let packagingPrices = new Map();
+        packagingPrices.set(0, 0);
+        /*[# th:each="packaging : ${packagingList}"]*/
+        packagingPrices.set([[${packaging.packagingId}]], [[${packaging.packagingPrice}]]);
+        /*[/]*/
+        /*]]>*/
+
+        let prevPackagingId = 0; // 이전 포장지의 ID를 저장할 변수
+
+        let totalPrice = 0;
+        const selectedPackagingId = document.querySelectorAll('select.packaging');
+        console.log(selectedPackagingId);
+
+        // 초기 totalPrice 계산
+        selectedPackagingId.forEach(selectElement => {
+            totalPrice += packagingPrices.get(parseInt(selectElement.value));
+        });
+
+        selectedPackagingId.forEach(selectElement => {
+            selectElement.addEventListener('change', function (event) {
+                // 변경될 때마다 totalPrice 초기화
+                totalPrice = 0;
+                // 변경된 각 요소의 값을 totalPrice에 더함
+                selectedPackagingId.forEach(selectElement => {
+                    totalPrice += packagingPrices.get(parseInt(selectElement.value));
+                });
+                updateTotalPrice(totalPrice);
+            });
+        });
+
+
+        // 포장지 선택 시 total 금액을 업데이트하는 함수
+        function updateTotalPrice(totalPrice) {
+            console.log('total : ' + totalPrice);
+            let totalPriceElement = document.getElementById('totalPrice');
+            totalPriceElement.textContent = totalPrice.toFixed(0);
+
+        }
+    </script>
+
 </div>
 
 
