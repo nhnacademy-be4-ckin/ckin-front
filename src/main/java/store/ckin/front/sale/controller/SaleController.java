@@ -21,4 +21,9 @@ public class SaleController {
     public String getSale() {
         return "sale/main";
     }
+
+    @GetMapping("/coupon")
+    public String getSaleCoupon() {
+        return "sale/sale-coupon";
+    }
 }
