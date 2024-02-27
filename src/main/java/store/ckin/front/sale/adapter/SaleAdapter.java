@@ -12,5 +12,5 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 
 public interface SaleAdapter {
 
-    List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId);
+    List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId, List<Long> bookId);
 }
