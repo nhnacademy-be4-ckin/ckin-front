@@ -39,9 +39,9 @@
 
                                     <td class="column-2">어린왕자</td>
                                     <td class="column-3">7600 원</td>
-                                    <td class="column-4"> 1</td>
+                                    <td class="column-4">1</td>
                                     <td class="column-5">
-                                        <button type="button" id="couponBtn"
+                                        <button type="button" id="couponBtn" value="1"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal" data-target="#applyCouponBtn">
                                             쿠폰 적용
@@ -99,7 +99,7 @@
                                     <td class="column-7">
                                         <select class="packaging form-control form-control-sm">
                                             <option selected value="0">선택 X</option>
-                                            <option th:each="packaging : ${packagingList}"
+                                            <option th:each="packaging : ${policyList.getPackagingPolicies()}"
                                                     th:value="${packaging.packagingId}"
                                                     th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
                                             </option>
@@ -177,7 +177,7 @@
                                     <td class="column-7">
                                         <select class="packaging form-control form-control-sm">
                                             <option selected value="0">선택 X</option>
-                                            <option th:each="packaging : ${packagingList}"
+                                            <option th:each="packaging : ${policyList.getPackagingPolicies()}"
                                                     th:value="${packaging.packagingId}"
                                                     th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
                                             </option>
@@ -285,10 +285,41 @@
                             </div>
                         </div>
 
-                        <div class="flex-w flex-t p-t-27 p-b-33">
+
+
+                        <div class="flex-w flex-t p-t-27 p-b-10">
+                            <div class="size-208">
+                                <span class="mtext-101 cl2">
+                                    배송비:
+                                </span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+								<span class="mtext-110 cl2">
+									<span id="deliveryPrice" th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span>원
+								</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-w flex-t p-t-10 p-b-10">
+                            <div class="size-208">
+                                <span class="mtext-101 cl2">
+                                    쿠폰 할인:
+                                </span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+                                <span class="mtext-110 cl2">
+									<span id="couponDiscount">0</span>원
+								</span>
+                            </div>
+
+                        </div>
+
+                        <div class="flex-w flex-t p-t-10 p-b-33">
                             <div class="size-208">
 								<span class="mtext-101 cl2">
-									Total:
+									결제할 금액:
 								</span>
                             </div>
 
@@ -298,6 +329,7 @@
 								</span>
                             </div>
                         </div>
+
 
                         <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                             🧙🏻‍ 주문하기
@@ -382,7 +414,7 @@
         /*<![CDATA[*/
         let packagingPrices = new Map();
         packagingPrices.set(0, 0);
-        /*[# th:each="packaging : ${packagingList}"]*/
+        /*[# th:each="packaging : ${policyList.getPackagingPolicies()}"]*/
         packagingPrices.set([[${packaging.packagingId}]], [[${packaging.packagingPrice}]]);
         /*[/]*/
         /*]]>*/
@@ -424,6 +456,5 @@
     <script src="/js/coupon.js"></script>
 
 </div>
-
 
 </html>
