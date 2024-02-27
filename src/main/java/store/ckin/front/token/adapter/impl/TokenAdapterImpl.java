@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.GatewayProperties;
-import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.token.adapter.TokenAdapter;
-import store.ckin.front.token.domain.TokenAuthRequest;
+import store.ckin.front.token.domain.TokenAuthRequestDto;
+import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.util.AdapterHeaderUtil;
 
 /**
@@ -28,10 +28,10 @@ public class TokenAdapterImpl implements TokenAdapter {
     private final GatewayProperties gatewayProperties;
 
     @Override
-    public ResponseEntity<Void> getToken(LoginRequestDto loginRequestDto) {
+    public ResponseEntity<Void> getToken(TokenRequestDto tokenRequestDto) {
         HttpHeaders headers = AdapterHeaderUtil.getHttpHeaders();
 
-        HttpEntity<LoginRequestDto> requestEntity = new HttpEntity<>(loginRequestDto, headers);
+        HttpEntity<TokenRequestDto> requestEntity = new HttpEntity<>(tokenRequestDto, headers);
 
         return restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/auth/login",
@@ -42,9 +42,9 @@ public class TokenAdapterImpl implements TokenAdapter {
     }
 
     @Override
-    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequest tokenAuthRequest) {
-        String accessToken = tokenAuthRequest.getAccessToken();
-        String email = tokenAuthRequest.getEmail();
+    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequestDto tokenAuthRequestDto) {
+        String accessToken = tokenAuthRequestDto.getAccessToken();
+        String email = tokenAuthRequestDto.getEmail();
         HttpHeaders headers = AdapterHeaderUtil.getHttpHeaders();
         headers.set("Authorization", accessToken);
 

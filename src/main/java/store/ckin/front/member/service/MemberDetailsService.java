@@ -37,7 +37,7 @@ public class MemberDetailsService implements UserDetailsService {
             Collection<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(memberInfo::getRole);
 
-            return new User(memberInfo.getEmail(), memberInfo.getPassword(), authorities);
+            return new User(memberInfo.getId().toString(), memberInfo.getPassword(), authorities);
         }
 
         throw new UsernameNotFoundException(email + " : email 에 대한 정보가 없어 인증에 실패 하였습니다.");

@@ -1,6 +1,9 @@
 package store.ckin.front.config;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
                         .anyRequest().authenticated())
-                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -75,7 +78,6 @@ public class SecurityConfig {
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");
-        filter.setFilterProcessesUrl("/login");
 
         return filter;
     }
@@ -94,5 +96,11 @@ public class SecurityConfig {
     @Bean
     public CustomAuthenticationProvider customAuthenticationProvider() {
         return new CustomAuthenticationProvider(memberDetailsService, bcryptPasswordEncoder());
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
+        return (serverFactory) -> serverFactory.addContextCustomizers(
+                (context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
     }
 }

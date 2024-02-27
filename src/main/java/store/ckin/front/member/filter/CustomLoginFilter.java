@@ -1,8 +1,6 @@
 package store.ckin.front.member.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -10,14 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import store.ckin.front.member.domain.LoginRequestDto;
+import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -35,32 +30,22 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         log.debug("CustomLoginFilter : Try Login Authentication");
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        LoginRequestDto loginRequestDto;
-
-        try {
-            loginRequestDto = objectMapper.readValue(request.getInputStream(), LoginRequestDto.class);
-        } catch (IOException ex) {
-            throw new BadCredentialsException("LoginRequestDTO parsing failed", ex);
-        }
-
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+                new UsernamePasswordAuthenticationToken(obtainUsername(request), obtainPassword(request));
 
         return getAuthenticationManager().authenticate(token);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        UserDetails authorizedMemberDetails =  (UserDetails) authResult.getPrincipal();
+        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
 
-        LoginRequestDto loginRequestDto =
-                new LoginRequestDto(authorizedMemberDetails.getUsername(), authorizedMemberDetails.getPassword());
+        String id = authenticationToken.getName();
 
-        ResponseEntity<Void> responseEntity = tokenService.getToken(loginRequestDto);
-        String accessToken = Objects.requireNonNull(responseEntity.getHeaders()
-                .get("Authorization"))
-                .get(0);
+        TokenRequestDto tokenRequestDto = new TokenRequestDto(id);
+
+        String accessToken = tokenService.getToken(tokenRequestDto);
+
         Cookie cookie = new Cookie("accessToken", accessToken);
         cookie.setMaxAge(-1);
         cookie.setPath("/");

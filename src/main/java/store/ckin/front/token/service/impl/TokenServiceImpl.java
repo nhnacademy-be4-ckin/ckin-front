@@ -3,9 +3,9 @@ package store.ckin.front.token.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import store.ckin.front.member.domain.LoginRequestDto;
 import store.ckin.front.token.adapter.TokenAdapter;
-import store.ckin.front.token.domain.TokenAuthRequest;
+import store.ckin.front.token.domain.TokenAuthRequestDto;
+import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -20,13 +20,13 @@ public class TokenServiceImpl implements TokenService {
     private final TokenAdapter tokenAdapter;
 
     @Override
-    public ResponseEntity<Void> getToken(LoginRequestDto loginRequestDto) {
+    public String getToken(TokenRequestDto tokenRequestDto) {
         //TODO : 예외처리 필요
-        return tokenAdapter.getToken(loginRequestDto);
+        return tokenAdapter.getToken(tokenRequestDto).getHeaders().getFirst("Authorization");
     }
 
     @Override
-    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequest tokenAuthRequest) {
-        return tokenAdapter.checkTokenAuth(tokenAuthRequest);
+    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequestDto tokenAuthRequestDto) {
+        return tokenAdapter.checkTokenAuth(tokenAuthRequestDto);
     }
 }

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.filter.OncePerRequestFilter;
-import store.ckin.front.token.domain.TokenAuthRequest;
+import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
 import store.ckin.front.token.service.TokenService;
 
@@ -40,8 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
 
-            TokenAuthRequest tokenAuthRequest = new TokenAuthRequest(accessToken, email);
-            ResponseEntity<Void> responseEntity = tokenService.checkTokenAuth(tokenAuthRequest);
+            TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(accessToken, email);
+            ResponseEntity<Void> responseEntity = tokenService.checkTokenAuth(tokenAuthRequestDto);
 
             if (responseEntity.getStatusCode() != HttpStatus.OK) {
                 throw new TokenAuthenticationFailedException(
@@ -52,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error(ex.getClass().getName() + ex.getMessage());
         }
     }
 }
