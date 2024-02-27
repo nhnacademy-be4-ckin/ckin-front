@@ -1,9 +1,13 @@
-let bookId = 1;
+let memberId = 1;
+
+let bookId = [];
+bookId.push(1);
+bookId.push(2);
 
 $(document).ready(function () {
     $('#couponBtn').click(function () {
         $.ajax({
-            url: '/sale/coupon/member/1',
+            url: '/sale/coupon?memberId=' + memberId + '&' + bookId.map(id => 'bookId=' + id).join('&'),
             method: 'GET',
             success: function (coupons) {
                 renderCoupons(coupons, bookId);
@@ -44,7 +48,7 @@ function renderCoupons(coupons, bookId) {
     let disabledCoupons = [];
 
     $.each(coupons, function (index, coupon) {
-        let row;
+        console.log("coupon = " + coupon);
         if (coupon.couponTemplateId !== 1 && coupon.bookId !== bookId) {
             console.log('not append coupon : ' + coupon);
             // 선택 불가능한 쿠폰은 disabledCoupons 배열에 추가합니다.
@@ -58,7 +62,7 @@ function renderCoupons(coupons, bookId) {
     });
 
     // 선택 가능한 쿠폰을 먼저 추가합니다.
-    selectableCoupons.forEach(function(coupon) {
+    selectableCoupons.forEach(function (coupon) {
         let row =
             '<tr>' +
             '<td><input type="radio" name="coupon" value="' + coupon.id + '"></td>' +
@@ -70,7 +74,7 @@ function renderCoupons(coupons, bookId) {
     });
 
     // 선택 불가능한 쿠폰을 추가합니다.
-    disabledCoupons.forEach(function(coupon) {
+    disabledCoupons.forEach(function (coupon) {
         let row =
             '<tr>' +
             '<td><input type="radio" name="coupon" value="' + coupon.id + '" disabled></td>' +
@@ -81,7 +85,6 @@ function renderCoupons(coupons, bookId) {
         couponTableBody.append(row);
     });
 }
-
 
 
 function displayDiscountInfo(discountInfo) {
