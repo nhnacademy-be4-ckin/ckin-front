@@ -2,13 +2,12 @@ package store.ckin.front.sale.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
-import store.ckin.front.sale.adapter.SaleAdapter;
+import store.ckin.front.sale.service.SaleService;
 
 /**
  * 주문 RestController 클래스입니다.
@@ -17,20 +16,17 @@ import store.ckin.front.sale.adapter.SaleAdapter;
  * @version 2024. 02. 27.
  */
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class SaleRestController {
 
-    private final SaleAdapter saleAdapter;
+    private final SaleService saleService;
 
-    @GetMapping("/sale/coupon/member/{memberId}")
-    public ResponseEntity<List<GetCouponResponseDto>> getCouponListByMemberId(@PathVariable("memberId") Long id) {
-        log.info("memberID = {}", id);
+    @GetMapping("/sale/coupon")
+    public ResponseEntity<List<GetCouponResponseDto>> getCouponListByMemberId(@RequestParam("memberId") Long memberId,
+                                                                              @RequestParam("bookId") List<Long> bookId) {
 
-        List<GetCouponResponseDto> getCouponResponseDtos = saleAdapter.requestCouponsByMemberId(id);
-        log.info("dto = {}", getCouponResponseDtos);
-
-        return ResponseEntity.ok(getCouponResponseDtos);
+        List<GetCouponResponseDto> getCouponResponseList = saleService.requestCouponsByMemberId(memberId, bookId);
+        return ResponseEntity.ok(getCouponResponseList);
     }
 }
