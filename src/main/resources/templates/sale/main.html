@@ -3,6 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
 
+<style>
+    input[name="coupon"]:disabled {
+        background-color: #eee; /* 회색 배경 색상 */
+    }
+</style>
+
+
 <!-- 본문 내용 -->
 <div layout:fragment="content">
     <form action="#" th:action="@{/}" class="bg0 p-t-75 p-b-85">
@@ -34,19 +41,19 @@
                                     <td class="column-3">7600 원</td>
                                     <td class="column-4"> 1</td>
                                     <td class="column-5">
-                                        <button type="button"
+                                        <button type="button" id="couponBtn"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                                                data-toggle="modal" data-target="#exampleModalCenter">
+                                                data-toggle="modal" data-target="#applyCouponBtn">
                                             쿠폰 적용
                                         </button>
 
                                         <!-- Coupon Modal -->
-                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="applyCouponBtn" tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">적용 가능 쿠폰
+                                                        <h5 class="modal-title" id="applyCouponBtnTitle">적용 가능 쿠폰
                                                             리스트</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -54,7 +61,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table class="table"
+                                                        <table class="table" id="couponTable"
                                                                style="text-align: center; vertical-align: middle;">
                                                             <thead>
                                                             <tr>
@@ -66,7 +73,7 @@
                                                             </thead>
                                                             <tbody>
                                                             <tr>
-                                                                <td>
+                                                                <td style="width: 30px">
                                                                     <input style="margin-left: 45%; margin-top: 10%"
                                                                            type="radio"
                                                                            name="coupon" value="1">
@@ -121,7 +128,7 @@
                                         <!-- Coupon Modal -->
                                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLongTitle">적용 가능 쿠폰
@@ -412,6 +419,9 @@
 
         }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/coupon.js"></script>
 
 </div>
 
