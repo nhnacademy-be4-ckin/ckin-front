@@ -1,10 +1,84 @@
 package store.ckin.front.cart.service.impl;
 
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
+import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
+import store.ckin.front.cart.exception.CartItemNotFoundException;
+import store.ckin.front.cart.service.CartService;
+
 /**
- * description
+ * 사용자 장바구니에 대한 아이템 추가, 갱신, 삭제, 조회를 담당하는 서비스 클래스
  *
  * @author 김준현
  * @version 2024. 02. 27
  */
-public class CartServiceImpl {
+@Service
+@RequiredArgsConstructor
+public class CartServiceImpl implements CartService {
+    private final RedisTemplate<String, Object> redisTemplate;
+    private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
+    private static final String CART_HASH_KEY = "user_cart";
+
+    public void createCartItem(String key, CartItem item) {
+        // 카트가 존재하지 않을 수도 있으므로, 없으면 생성
+        initCartAndUpdateExpire(key);
+
+        // Set을 고려하는 것은 어떤지?
+        List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
+        assert currentUserCart != null;
+        currentUserCart.add(item);
+
+        redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+    }
+
+    public List<CartItem> readCartItems(String key) {
+        initCartAndUpdateExpire(key);
+
+        return (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
+    }
+
+    public void updateItemQuantity(String key, CartItemUpdateRequestDto cartItemUpdateRequestDto) {
+        initCartAndUpdateExpire(key);
+
+        List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
+        assert currentUserCart != null;
+        Optional<CartItem>
+                selectedItem = currentUserCart.stream().filter(cartItem -> cartItem.getId() == cartItemUpdateRequestDto.getId()).findFirst();
+
+        if(selectedItem.isEmpty()) {
+            throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemUpdateRequestDto.getId()));
+        }
+        CartItem updatedItem = selectedItem.get();
+        updatedItem.updateQuantity(cartItemUpdateRequestDto.getQuantity());
+
+        redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+    }
+    public void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto) {
+        initCartAndUpdateExpire(key);
+
+        List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
+        assert currentUserCart != null;
+        if(!currentUserCart.removeIf(cartItem -> cartItem.getId() == cartItemDeleteRequestDto.getId())) {
+            throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemDeleteRequestDto.getId()));
+        }
+
+        redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+    }
+
+    public void initCartAndUpdateExpire(String key) {
+        HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
+        if(Objects.isNull(hashOperations.get(key, CART_HASH_KEY))) {
+            hashOperations.put(key, CART_HASH_KEY, new ArrayList<>());
+        }
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
+    }
 }
