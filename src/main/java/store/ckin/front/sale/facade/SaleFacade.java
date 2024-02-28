@@ -3,7 +3,7 @@ package store.ckin.front.sale.facade;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import store.ckin.front.book.dto.response.BookSaleResponseDto;
+import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.packaging.service.PackagingService;
@@ -36,7 +36,7 @@ public class SaleFacade {
                 .build();
     }
 
-    public List<BookSaleResponseDto> getBookSaleList(List<Long> bookIds) {
+    public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
         return bookService.getBookSaleList(bookIds);
     }
 

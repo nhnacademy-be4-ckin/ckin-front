@@ -1,7 +1,7 @@
 package store.ckin.front.book.adapter;
 
 import java.util.List;
-import store.ckin.front.book.dto.response.BookSaleResponseDto;
+import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 
 /**
  * 도서 어댑터 인터페이스입니다.
@@ -11,5 +11,5 @@ import store.ckin.front.book.dto.response.BookSaleResponseDto;
  */
 public interface BookAdapter {
 
-    List<BookSaleResponseDto> requestBookSaleList(List<Long> request);
+    List<BookExtractionResponseDto> requestBookSaleList(List<Long> request);
 }
