@@ -74,6 +74,15 @@ function renderCoupon(couponList, bookId, categoryIds) {
          * 따라서, 1번이면 discountPrice를 표시하고, 2번이면 discountRate를 표시합니다.
          */
 
+        console.log("test")
+        let book = bookInfo.get(parseInt(coupon.bookId));
+
+        // 추후에 book.bookSalePrice * 수량 으로 변경해야함
+        // 소수점은 반올림
+        let price = (book.bookSalePrice * (coupon.discountPrice / 100)).toFixed();
+        console.log(price);
+
+
         let priceRow;
         if (coupon.couponCodeId == 1) {
             priceRow = '<td>' + coupon.discountPrice + '원' + '<br/>' + '<span>' + '상품 가격이 최소 ' + coupon.minOrderPrice + '원 이상' + '</span></td>'
