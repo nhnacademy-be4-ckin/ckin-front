@@ -19,6 +19,7 @@ import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.service.TokenService;
+import store.ckin.front.util.CookieUtil;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.
@@ -27,12 +28,14 @@ import store.ckin.front.token.service.TokenService;
  * @version : 2024. 02. 21.
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
+
+    private final CookieUtil cookieUtil = new CookieUtil();
 
 
     /**
@@ -64,7 +67,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(tokenService);
+        return new JwtFilter(tokenService, cookieUtil);
     }
 
     /**
@@ -74,7 +77,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
+        CustomLoginFilter filter =  new CustomLoginFilter(tokenService, cookieUtil);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");

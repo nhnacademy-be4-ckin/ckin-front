@@ -1,11 +1,14 @@
 package store.ckin.front.token.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import store.ckin.front.token.adapter.TokenAdapter;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenRequestDto;
+import store.ckin.front.token.domain.TokenResponseDto;
+import store.ckin.front.token.exception.TokenAuthenticationFailedException;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -20,13 +23,21 @@ public class TokenServiceImpl implements TokenService {
     private final TokenAdapter tokenAdapter;
 
     @Override
-    public String getToken(TokenRequestDto tokenRequestDto) {
-        //TODO : 예외처리 필요
-        return tokenAdapter.getToken(tokenRequestDto).getHeaders().getFirst("Authorization");
+    public TokenResponseDto getToken(TokenRequestDto tokenRequestDto) {
+        return tokenAdapter.getToken(tokenRequestDto).getBody();
     }
 
     @Override
-    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequestDto tokenAuthRequestDto) {
-        return tokenAdapter.checkTokenAuth(tokenAuthRequestDto);
+    public TokenResponseDto reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
+        ResponseEntity<TokenResponseDto> responseEntity = tokenAdapter.reissueToken(tokenAuthRequestDto);
+
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+            throw new TokenAuthenticationFailedException(
+                    "Token Authentication failed (HttpStatusCode = "
+                            + responseEntity.getStatusCode()
+                            + ")");
+        }
+
+        return responseEntity.getBody();
     }
 }

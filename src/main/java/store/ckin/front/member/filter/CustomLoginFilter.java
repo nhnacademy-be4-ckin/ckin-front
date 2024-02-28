@@ -3,7 +3,6 @@ package store.ckin.front.member.filter;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import store.ckin.front.token.domain.TokenRequestDto;
+import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
+import store.ckin.front.util.CookieUtil;
 
 /**
  * 로그인 처리를 하는 Filter 클래스 입니다.
@@ -25,6 +26,8 @@ import store.ckin.front.token.service.TokenService;
 @RequiredArgsConstructor
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final TokenService tokenService;
+
+    private final CookieUtil cookieUtil;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -44,12 +47,8 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         TokenRequestDto tokenRequestDto = new TokenRequestDto(id);
 
-        String accessToken = tokenService.getToken(tokenRequestDto);
-
-        Cookie cookie = new Cookie("accessToken", accessToken);
-        cookie.setMaxAge(-1);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        TokenResponseDto tokenResponseDto = tokenService.getToken(tokenRequestDto);
+        addTokenCookie(response, tokenResponseDto);
 
         response.sendRedirect("/");
     }
@@ -59,5 +58,13 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         request.setAttribute("message", "로그인에 실패하였습니다.");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         request.getRequestDispatcher("/login").forward(request, response);
+    }
+
+    private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
+        String accessToken = tokenResponseDto.getAccessToken();
+        String refreshToken = tokenResponseDto.getRefreshToken();
+
+        cookieUtil.makeCookie(response, "accessToken", accessToken);
+        cookieUtil.makeCookie(response, "refreshToken", refreshToken);
     }
 }

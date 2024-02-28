@@ -12,6 +12,7 @@ import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.token.adapter.TokenAdapter;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenRequestDto;
+import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.util.AdapterHeaderUtil;
 
 /**
@@ -28,7 +29,7 @@ public class TokenAdapterImpl implements TokenAdapter {
     private final GatewayProperties gatewayProperties;
 
     @Override
-    public ResponseEntity<Void> getToken(TokenRequestDto tokenRequestDto) {
+    public ResponseEntity<TokenResponseDto> getToken(TokenRequestDto tokenRequestDto) {
         HttpHeaders headers = AdapterHeaderUtil.getHttpHeaders();
 
         HttpEntity<TokenRequestDto> requestEntity = new HttpEntity<>(tokenRequestDto, headers);
@@ -42,13 +43,12 @@ public class TokenAdapterImpl implements TokenAdapter {
     }
 
     @Override
-    public ResponseEntity<Void> checkTokenAuth(TokenAuthRequestDto tokenAuthRequestDto) {
-        String accessToken = tokenAuthRequestDto.getAccessToken();
-        String email = tokenAuthRequestDto.getEmail();
+    public ResponseEntity<TokenResponseDto> reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
+        String refreshToken = tokenAuthRequestDto.getToken();
         HttpHeaders headers = AdapterHeaderUtil.getHttpHeaders();
-        headers.set("Authorization", accessToken);
+        headers.set("Authorization", refreshToken);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(email, headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         return restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/auth/token",
                 HttpMethod.POST,
