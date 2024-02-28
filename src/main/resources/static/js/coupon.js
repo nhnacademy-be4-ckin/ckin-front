@@ -1,5 +1,5 @@
 // TODO 1) 회원 ID
-let memberId = 5;
+let memberId = 1;
 
 // 페이지가 로드되면 memberId와 bookId를 통해 사용 가능한 쿠폰 리스트를 받아옵니다.
 let bookIds = [];
@@ -74,22 +74,29 @@ function renderCoupon(couponList, bookId, categoryIds) {
          * 따라서, 1번이면 discountPrice를 표시하고, 2번이면 discountRate를 표시합니다.
          */
 
-        console.log("test")
-        let book = bookInfo.get(parseInt(coupon.bookId));
 
-        // 추후에 book.bookSalePrice * 수량 으로 변경해야함
-        // 소수점은 반올림
-        let price = (book.bookSalePrice * (coupon.discountPrice / 100)).toFixed();
-        console.log(price);
-
+        let book = bookInfo.get(parseInt(bookId));
 
         let priceRow;
         if (coupon.couponCodeId == 1) {
+
+            let price = coupon.discountPrice;
+            if (coupon.minOrderPrice > book.bookSalePrice) {
+                return;
+            }
+
             priceRow = '<td>' + coupon.discountPrice + '원' + '<br/>' + '<span>' + '상품 가격이 최소 ' + coupon.minOrderPrice + '원 이상' + '</span></td>'
                 + '<td style="color: dodgerblue">' + coupon.discountPrice + '원 </td>'
         } else {
+
+            let price = (book.bookSalePrice * (coupon.discountRate / 100)).toFixed();
+
+            if (price > coupon.maxDiscountPrice) {
+                price = coupon.maxDiscountPrice;
+            }
+
             priceRow = '<td>' + coupon.discountRate + '%' + '<br/>' + '<span>' + '최대 할인 금액 ' + coupon.maxDiscountPrice + '원' + '</span></td>'
-                + '<td style="color: dodgerblue">' + coupon.discountRate + '% </td>';
+                + '<td style="color: dodgerblue">' + price + '원 </td>';
         }
 
         let row =
