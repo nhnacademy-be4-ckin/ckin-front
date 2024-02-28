@@ -3,15 +3,26 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
 
-<style>
-    input[name="coupon"]:disabled {
-        background-color: #eee; /* 회색 배경 색상 */
-    }
-</style>
-
-
 <!-- 본문 내용 -->
 <div layout:fragment="content">
+    <style>
+
+        table {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        td > input {
+            margin-left: 30%;
+            margin-top: 10%;
+        }
+
+        td > span {
+            font-size: 12px;
+            color: dodgerblue;
+        }
+    </style>
+
     <form action="#" th:action="@{/}" class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
@@ -29,7 +40,7 @@
                                     <th class="column-7">🎁 포장지</th>
                                 </tr>
 
-                                <tr class="table_row">
+                                <tr class="table_row" th:each="bookSale : ${bookSaleList}">
                                     <td class="column-1">
                                         <div class="how-itemcart1">
                                             <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
@@ -37,11 +48,11 @@
                                         </div>
                                     </td>
 
-                                    <td class="column-2">어린왕자</td>
-                                    <td class="column-3">7600 원</td>
+                                    <td class="column-2" th:text="${bookSale.bookTitle}"></td>
+                                    <td class="column-3" th:text="${bookSale.bookSalePrice}">7600 원</td>
                                     <td class="column-4">1</td>
                                     <td class="column-5">
-                                        <button type="button" id="couponBtn" value="1"
+                                        <button type="button" id="couponBtn" th:value="${bookSale.bookId}"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal" data-target="#applyCouponBtn">
                                             쿠폰 적용
@@ -50,7 +61,7 @@
                                         <!-- Coupon Modal -->
                                         <div class="modal fade" id="applyCouponBtn" tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="applyCouponBtnTitle">적용 가능 쿠폰
@@ -61,11 +72,10 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table class="table" id="couponTable"
-                                                               style="text-align: center; vertical-align: middle;">
+                                                        <table class="table" id="couponTable">
                                                             <thead>
                                                             <tr>
-                                                                <th scope="col">선택</th>
+                                                                <th scope="col"></th>
                                                                 <th scope="col">쿠폰명</th>
                                                                 <th scope="col">할인율</th>
                                                                 <th scope="col">할인금액</th>
@@ -73,9 +83,8 @@
                                                             </thead>
                                                             <tbody>
                                                             <tr>
-                                                                <td style="width: 30px">
-                                                                    <input style="margin-left: 45%; margin-top: 10%"
-                                                                           type="radio"
+                                                                <td>
+                                                                    <input type="radio"
                                                                            name="coupon" value="1">
                                                                 </td>
                                                                 <td>회원가입 축하 쿠폰</td>
@@ -99,85 +108,8 @@
                                     <td class="column-7">
                                         <select class="packaging form-control form-control-sm">
                                             <option selected value="0">선택 X</option>
-                                            <option th:each="packaging : ${policyList.getPackagingPolicies()}"
-                                                    th:value="${packaging.packagingId}"
-                                                    th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
-
-
-                                <tr class="table_row">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/2b0403e5-59fc-4e9e-a651-694928350447.png"
-                                                 alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2">자바 ORM - JPA 프로그래밍</td>
-                                    <td class="column-3">37000 원</td>
-                                    <td class="column-4"> 2</td>
-                                    <td class="column-5">
-                                        <button type="button"
-                                                class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                                                data-toggle="modal" data-target="#exampleModalCenter">
-                                            쿠폰 적용
-                                        </button>
-
-                                        <!-- Coupon Modal -->
-                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">적용 가능 쿠폰
-                                                            리스트</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <table class="table"
-                                                               style="text-align: center; vertical-align: middle;">
-                                                            <thead>
-                                                            <tr>
-                                                                <th scope="col">선택</th>
-                                                                <th scope="col">쿠폰명</th>
-                                                                <th scope="col">할인율</th>
-                                                                <th scope="col">할인금액</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input style="margin-left: 45%; margin-top: 10%"
-                                                                           type="radio"
-                                                                           name="coupon" value="1">
-                                                                </td>
-                                                                <td>회원가입 축하 쿠폰</td>
-                                                                <td>10%</td>
-                                                                <td style="color: dodgerblue">760원</td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">취소
-                                                        </button>
-                                                        <button type="button" class="btn btn-dark">쿠폰 선택</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="column-6">74000 원</td>
-                                    <td class="column-7">
-                                        <select class="packaging form-control form-control-sm">
-                                            <option selected value="0">선택 X</option>
-                                            <option th:each="packaging : ${policyList.getPackagingPolicies()}"
+                                            <option th:if="${bookSale.bookPackaging}"
+                                                    th:each="packaging : ${policyList.getPackagingPolicies()}"
                                                     th:value="${packaging.packagingId}"
                                                     th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
                                             </option>
@@ -286,7 +218,6 @@
                         </div>
 
 
-
                         <div class="flex-w flex-t p-t-27 p-b-10">
                             <div class="size-208">
                                 <span class="mtext-101 cl2">
@@ -296,7 +227,8 @@
 
                             <div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									<span id="deliveryPrice" th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span>원
+									<span id="deliveryPrice"
+                                          th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span>원
 								</span>
                             </div>
                         </div>
