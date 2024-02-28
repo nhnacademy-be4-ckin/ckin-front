@@ -43,11 +43,9 @@ function renderCoupon(couponList, bookId, categoryIds) {
     let tableId = 'couponTable-' + bookId;
     let couponTableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
 
-    console.log(couponTableBody);
     // 쿠폰 목록을 비웁니다.
     couponTableBody.innerHTML = '';
 
-    console.log(couponTableBody);
     let selectableCoupons = [];
 
     // 쿠폰을 분류합니다.
@@ -57,9 +55,9 @@ function renderCoupon(couponList, bookId, categoryIds) {
          * 2. coupon.typeId === 2 : coupon.bookId와 bookId가 같은 상품에 적용 가능
          * 3. coupon.typeId === 3 : coupon.categoryId가 categoryIds에 포함되어 있는 상품에 적용 가능
          */
-        if ((coupon.typeId === 1)
-            || ((coupon.typeId === 2 && coupon.bookId === bookId))
-            || ((coupon.typeId === 3 && categoryIds.includes(coupon.categoryId)))) {
+        if ((coupon.typeId == 1)
+            || ((coupon.typeId == 2 && coupon.bookId == bookId))
+            || ((coupon.typeId == 3 && categoryIds.includes(coupon.categoryId)))) {
             selectableCoupons.push(coupon);
         }
     });
@@ -68,8 +66,6 @@ function renderCoupon(couponList, bookId, categoryIds) {
     // 선택 가능한 쿠폰을 HTML로 변환하여 출력합니다.
     selectableCoupons.forEach(coupon => {
 
-        console.log('선택된 쿠폰 HTML 출력')
-        console.log(coupon);
 
         /**
          * coupon.couponCodeId === 1 : 정액할인
@@ -79,7 +75,7 @@ function renderCoupon(couponList, bookId, categoryIds) {
          */
 
         let priceRow;
-        if (coupon.couponCodeId === 1) {
+        if (coupon.couponCodeId == 1) {
             priceRow = '<td>' + coupon.discountPrice + '원' + '<br/>' + '<span>' + '상품 가격이 최소 ' + coupon.minOrderPrice + '원 이상' + '</span></td>'
                 + '<td style="color: dodgerblue">' + coupon.discountPrice + '원 </td>'
         } else {
@@ -89,12 +85,10 @@ function renderCoupon(couponList, bookId, categoryIds) {
 
         let row =
             '<tr>' +
-                '<td><input type="radio" name="coupon" value="' + coupon.id + '"></td>' +
-                '<td>' + coupon.name + '</td>' +
-                priceRow +
+            '<td><input type="radio" name="coupon" value="' + coupon.id + '"></td>' +
+            '<td>' + coupon.name + '</td>' +
+            priceRow +
             '</tr>';
         couponTableBody.innerHTML += row;
-
-        console.log(couponTableBody);
     });
 }
