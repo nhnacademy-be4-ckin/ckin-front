@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * description:
+ * 현재 발급된 카트 식별자(UUID)가 쿠키에 없는 경우, 생성하고 쿠키에 저장하는 인터셉터
  *
- * @author : S20184366
+ * @author : 김준현
  * @version : 2024. 02. 28
  */
 @Slf4j
@@ -28,7 +28,7 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
                 userUuidCookieWrapped = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID")).findFirst();
         if(userUuidCookieWrapped.isEmpty()) {
             log.debug("preHandle(): user uuid cookie is null");
-            Cookie userUuidCookie = new Cookie("CARTID", UUID.randomUUID().toString());
+            Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
             userUuidCookie.setHttpOnly(true);
             // 브라우저(JS)에서 쿠키 접근 불가
             userUuidCookie.setSecure(true);
