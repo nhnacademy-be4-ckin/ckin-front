@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.book.adapter.BookAdapter;
-import store.ckin.front.book.dto.response.BookSaleResponseDto;
+import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.config.GatewayProperties;
 
 /**
@@ -33,12 +33,12 @@ public class BookAdapterImpl implements BookAdapter {
     private static final String BOOK_URI = "/api/books";
 
     @Override
-    public List<BookSaleResponseDto> requestBookSaleList(List<Long> request) {
+    public List<BookExtractionResponseDto> requestBookSaleList(List<Long> request) {
 
-        HttpEntity<List<BookSaleResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<List<BookExtractionResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
 
 
-        ResponseEntity<List<BookSaleResponseDto>> exchange = restTemplate.exchange(
+        ResponseEntity<List<BookExtractionResponseDto>> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + BOOK_URI + "/extraction?" + buildBookIds(request),
                 HttpMethod.GET,
                 requestEntity,
