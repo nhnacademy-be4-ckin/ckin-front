@@ -23,17 +23,21 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        log.info("preHandle(): called");
+        log.debug("preHandle(): called");
         Optional<Cookie>
                 userUuidCookieWrapped = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID")).findFirst();
         if(userUuidCookieWrapped.isEmpty()) {
-            log.info("preHandle(): user uuid cookie is null");
-            Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
+            log.debug("preHandle(): user uuid cookie is null");
+            Cookie userUuidCookie = new Cookie("CARTID", UUID.randomUUID().toString());
             userUuidCookie.setHttpOnly(true);
             // 브라우저(JS)에서 쿠키 접근 불가
+            userUuidCookie.setSecure(true);
+            // HTTPS 일때에만 쿠키 사용
             userUuidCookie.setMaxAge((int) Duration.ofDays(2).toSeconds());
             response.addCookie(userUuidCookie);
-            log.info("preHandle(): saved user uuid is -> {}", userUuidCookie.getValue());
+            log.debug("preHandle(): saved user uuid is -> {}", userUuidCookie.getValue());
+            response.sendRedirect("/cart");
+            return false;
         }
         return true;
     }
