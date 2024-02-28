@@ -112,4 +112,17 @@ public class CouponAdapterImpl implements CouponAdapter {
         return exchange.getBody();
     }
 
+    @Override
+    public boolean createCouponByIds(Long memberId, Long couponTemplateId) {
+        HttpEntity<Boolean> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<Boolean> exchange =
+                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/" + memberId + "/" + couponTemplateId,
+                        HttpMethod.POST,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+        return exchange.getBody();
+    }
+
 }

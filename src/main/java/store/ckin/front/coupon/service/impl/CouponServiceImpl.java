@@ -53,4 +53,9 @@ public class CouponServiceImpl implements CouponService {
     public PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId) {
         return couponAdapter.getCouponByMemberId(pageable, memberId);
     }
+
+    @Override
+    public boolean createCouponByIds(Long memberId, Long couponTemplateId) {
+        return couponAdapter.createCouponByIds(memberId, couponTemplateId);
+    }
 }
