@@ -1,8 +1,10 @@
 package store.ckin.front.sale.facade;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import store.ckin.front.couponpolicy.service.CouponPolicyService;
+import store.ckin.front.book.dto.response.BookSaleResponseDto;
+import store.ckin.front.book.service.BookService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.SalePolicyDto;
@@ -18,11 +20,13 @@ import store.ckin.front.sale.dto.SalePolicyDto;
 @RequiredArgsConstructor
 public class SaleFacade {
 
-    private final CouponPolicyService couponPolicyService;
 
     private final PackagingService packagingService;
 
     private final DeliveryPolicyService deliveryPolicyService;
+
+    private final BookService bookService;
+
 
 
     public SalePolicyDto getPolicyList() {
@@ -31,5 +35,10 @@ public class SaleFacade {
                 .packagingPolicies(packagingService.getPackagingPolicies())
                 .build();
     }
+
+    public List<BookSaleResponseDto> getBookSaleList(List<Long> bookIds) {
+        return bookService.getBookSaleList(bookIds);
+    }
+
 
 }
