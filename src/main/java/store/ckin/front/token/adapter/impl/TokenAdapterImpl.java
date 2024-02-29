@@ -43,14 +43,14 @@ public class TokenAdapterImpl implements TokenAdapter {
     }
 
     @Override
-    public ResponseEntity<TokenResponseDto> reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
+    public ResponseEntity<Void> reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
         String refreshToken = tokenAuthRequestDto.getToken();
         HttpHeaders headers = AdapterHeaderUtil.getHttpHeaders();
         headers.set("Authorization", refreshToken);
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         return restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/auth/token",
+                gatewayProperties.getGatewayUri() + "/auth/reissue",
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

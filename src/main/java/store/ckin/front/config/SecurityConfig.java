@@ -28,7 +28,7 @@ import store.ckin.front.util.CookieUtil;
  * @version : 2024. 02. 21.
  */
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final MemberDetailsService memberDetailsService;

@@ -14,5 +14,5 @@ import store.ckin.front.token.domain.TokenResponseDto;
 public interface TokenAdapter {
     ResponseEntity<TokenResponseDto> getToken(TokenRequestDto tokenRequestDto);
 
-    ResponseEntity<TokenResponseDto> reissueToken(TokenAuthRequestDto tokenAuthRequestDto);
+    ResponseEntity<Void> reissueToken(TokenAuthRequestDto tokenAuthRequestDto);
 }

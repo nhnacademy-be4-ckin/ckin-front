@@ -42,6 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
             Cookie accessTokenCookie = cookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
+            // TODO: AccessToken 유효성 검사
             if (!isExpired(accessToken)) {
                 filterChain.doFilter(request, response);
 
@@ -57,11 +58,12 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             // Refresh Token 이 살아있다면, Refresh Token 을 Auth Server 로 보내서 AccessToken 재발급 (Refresh Token Rotation)
-            TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(accessToken);
+            TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
             TokenResponseDto tokenResponseDto = tokenService.reissueToken(tokenAuthRequestDto);
 
             // 재발급을 완료헀다면 토큰들을 쿠키에 갱신
             updateJwtTokenCookie(request, response, tokenResponseDto);
+            log.debug("JwtFilter : Finish reissue Token");
 
             //TODO: Auth 서버에서 토큰이 인증이 되었다면, 보내준 정보를 가지고 Authentication 객체 만들기
 
@@ -78,7 +80,9 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private boolean isExpired(String token) {
-        return JWT.decode(token).getExpiresAt().before(new Date());
+        return JWT.decode(token.replace("Bearer ", ""))
+                .getExpiresAt()
+                .before(new Date());
     }
 
     private void updateJwtTokenCookie(HttpServletRequest request,

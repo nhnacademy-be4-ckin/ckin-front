@@ -1,6 +1,7 @@
 package store.ckin.front.token.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import store.ckin.front.token.service.TokenService;
  * @author : jinwoolee
  * @version : 2024. 02. 22.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
@@ -29,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenResponseDto reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
-        ResponseEntity<TokenResponseDto> responseEntity = tokenAdapter.reissueToken(tokenAuthRequestDto);
+        ResponseEntity<Void> responseEntity = tokenAdapter.reissueToken(tokenAuthRequestDto);
 
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             throw new TokenAuthenticationFailedException(
@@ -38,6 +40,9 @@ public class TokenServiceImpl implements TokenService {
                             + ")");
         }
 
-        return responseEntity.getBody();
+        String accessToken = responseEntity.getHeaders().getFirst("AccessToken");
+        String refreshToken = responseEntity.getHeaders().getFirst("RefreshToken");
+
+        return new TokenResponseDto(accessToken, refreshToken);
     }
 }
