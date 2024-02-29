@@ -1,109 +1,73 @@
 package store.ckin.front.coupon.controller;
 
-import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.ckin.front.coupon.service.CouponService;
+import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-import java.util.List;
-import java.util.Objects;
+import store.ckin.front.coupontemplate.service.CouponTemplateService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * 포인트 정책 페이지를 호출하는 컨트롤러입니다.
+ * description:
  *
- * @author 이가은
- * @version 2024. 02. 20.
+ * @author : gaeun
+ * @version : 2024. 02. 26
  */
-@Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/coupon")
+@RequestMapping("/index/coupon")
 public class CouponController {
 
     private final CouponService couponService;
+    private final CouponTemplateService couponTemplateService;
 
-    /**
-     * 쿠폰 목록을 가져오는 메서드 입니다.
-     *
-     * @param pageable
-     * @param couponId 쿠폰 아이디를 가지는 경우 해당 쿠폰 아이디만 보여줍니다.
-     *
-     * @return 쿠폰 목록 페이지로 이동합니다.
-     */
-    @GetMapping
-    public String getCouponAllList(Model model,
-                                   @PageableDefault(page = 0, size = 5) Pageable pageable,
-                                   @RequestParam(required = false, name = "id") Long couponId) {
-        PageDto<GetCouponResponseDto> couponAllList;
-
-        if (Objects.isNull(couponId)) {
-            couponAllList = couponService.getCouponAllList(pageable);
-        } else {
-            GetCouponResponseDto responseDto = couponService.getCouponByCouponId(couponId);
-            couponAllList = new PageDto<>(List.of(responseDto), 0, 1, 1, 1);
-        }
-
-        model.addAttribute("isPrevious", couponAllList.getNumber() > 0);
-        model.addAttribute("isNext", couponAllList.getNumber() < couponAllList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponAllList.getTotalPages() == 0 ? 1 : couponAllList.getTotalPages());
-        model.addAttribute("currentPage", couponAllList.getNumber());
-        model.addAttribute("couponAllList", couponAllList.getContent());
-        return "admin/coupon/main";
-    }
-
-    /**
-     * 쿠폰 목록을 타입별로 가져오는 메서드 입니다.
-     *
-     * @param pageable
-     * @param typeId   쿠폰 템플릿 타입 아이디
-     *
-     * @return 쿠폰 목록 페이지로 이동합니다.
-     */
     @GetMapping("/{typeId}")
-    public String getCouponList(Model model,
-                                @PageableDefault(page = 0, size = 5) Pageable pageable,
-                                @PathVariable("typeId") Long typeId) {
-        PageDto<GetCouponResponseDto> couponList = couponService.getCouponList(pageable, typeId);
+    public String getCouponPage(@PathVariable("typeId") Long typeId,
+                                @PageableDefault(page = 0, size = 9) Pageable pageable,
+                                Model model) {
+        PageDto<GetCouponTemplateResponseDto> couponResponseDtoPage = couponTemplateService.getCouponTemplateList(pageable, typeId);
 
-        model.addAttribute("isPrevious", couponList.getNumber() > 0);
-        model.addAttribute("isNext", couponList.getNumber() < couponList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponList.getTotalPages() == 0 ? 1 : couponList.getTotalPages());
-        model.addAttribute("currentPage", couponList.getNumber());
-        model.addAttribute("couponAllList", couponList.getContent());
-        return "admin/coupon/main";
-    }
-
-    /**
-     * 쿠폰 목록을 멤버별로 가져오는 메서드 입니다.
-     *
-     * @param pageable
-     * @param memberId 회원 ID
-     *
-     * @return 쿠폰 목록 페이지로 이동합니다.
-     */
-    @GetMapping("/member")
-    public String getMemberCouponList(Model model,
-                                      @PageableDefault(page = 0, size = 5) Pageable pageable,
-                                      @RequestParam(required = false, name = "id") Long memberId) {
-        PageDto<GetCouponResponseDto> couponList;
-
-        if (Objects.isNull(memberId)) {
-            couponList = couponService.getCouponAllList(pageable);
-        } else {
-            couponList = couponService.getCouponByMemberId(pageable, memberId);
+        model.addAttribute("memberId", 1);
+        model.addAttribute("couponList", couponResponseDtoPage.getContent());
+        model.addAttribute("isPrevious", couponResponseDtoPage.getNumber() > 0);
+        model.addAttribute("isNext", couponResponseDtoPage.getNumber() < couponResponseDtoPage.getTotalPages() - 1);
+        model.addAttribute("totalPages", couponResponseDtoPage.getTotalPages() == 0 ? 1 : couponResponseDtoPage.getTotalPages());
+        model.addAttribute("currentPage", couponResponseDtoPage.getNumber());
+        switch (typeId.intValue()) {
+            case 1:
+                return "index/coupon/birth";
+            case 2:
+                return "index/coupon/book";
+            case 3:
+                return "index/coupon/category";
+            default:
+                return "error";
         }
-        model.addAttribute("isPrevious", couponList.getNumber() > 0);
-        model.addAttribute("isNext", couponList.getNumber() < couponList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponList.getTotalPages() == 0 ? 1 : couponList.getTotalPages());
-        model.addAttribute("currentPage", couponList.getNumber());
-        model.addAttribute("couponAllList", couponList.getContent());
-        return "admin/coupon/main";
+
     }
 
+    @PostMapping("/{memberId}/{couponTemplateId}")
+    public String giveCoupon(@PathVariable("memberId") Long memberId,
+                             @PathVariable("couponTemplateId") Long couponTemplateId,
+                             HttpServletRequest request,
+                             RedirectAttributes redirectAttributes) {
 
+        if (!couponService.createCouponByIds(memberId, couponTemplateId)) {
+            redirectAttributes.addFlashAttribute("message", true);
+        } else {
+            redirectAttributes.addFlashAttribute("message", false);
+        }
+
+        return "redirect:" + request.getHeader("Referer");
+    }
 }
