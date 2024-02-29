@@ -30,17 +30,24 @@ import store.ckin.front.cart.service.CartService;
 public class CartController {
     private final CartService cartService;
     private static final String REDIRECT_CART_URL = "redirect:/cart";
+    private int count = 0;
 
     @GetMapping
     public String getCartPage(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
         List<CartItem> currentUserCart = cartService.readCartItems(cookie.getValue());
         for(CartItem item: currentUserCart) {
-            log.info("saved in cart -> {}", item.getName());
+            log.info("saved in cart: name -> {}, id -> {}, quantity -> {}", item.getName(), item.getId(), item.getQuantity());
         }
         model.addAttribute("CART_ITEMS", currentUserCart);
         return "cart/index";
     }
 
+    @GetMapping("/create")
+    public String addCartItemTest(@CookieValue(name = "CART_ID") Cookie cookie){
+        count++;
+        cartService.createCartItem(cookie.getValue(), new CartItem("책입니다", count, 1, 3000));
+        return REDIRECT_CART_URL;
+    }
     @PostMapping("/create")
     public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItem cartItem){
         cartService.createCartItem(cookie.getValue(), cartItem);
@@ -49,6 +56,7 @@ public class CartController {
 
     @PostMapping("/update")
     public String updateCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItemUpdateRequestDto cartItemUpdateRequestDto) {
+        log.debug("updateCartItem(): request(id: {}, quantity: {})", cartItemUpdateRequestDto.getId(), cartItemUpdateRequestDto.getQuantity());
         cartService.updateItemQuantity(cookie.getValue(), cartItemUpdateRequestDto);
         return REDIRECT_CART_URL;
     }
@@ -56,6 +64,7 @@ public class CartController {
     @PostMapping("/delete")
     public String deleteCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
     CartItemDeleteRequestDto cartItemDeleteRequestDto) {
+        log.debug("deleteCartItem(): request(id: {})", cartItemDeleteRequestDto.getId());
         cartService.deleteCartItem(cookie.getValue(), cartItemDeleteRequestDto);
         return REDIRECT_CART_URL;
     }
