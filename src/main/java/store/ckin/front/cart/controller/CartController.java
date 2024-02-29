@@ -18,7 +18,7 @@ import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.service.CartService;
 
 /**
- * description
+ * 장바구니의 임시 저장을 담당하는 컨트롤러 클래스
  *
  * @author 김준현
  * @version 2024. 02. 27
@@ -29,6 +29,7 @@ import store.ckin.front.cart.service.CartService;
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
+    private static final String REDIRECT_CART_URL = "redirect:/cart";
 
     @GetMapping
     public String getCartPage(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
@@ -36,37 +37,32 @@ public class CartController {
         for(CartItem item: currentUserCart) {
             log.info("saved in cart -> {}", item.getName());
         }
-        model.addAttribute(currentUserCart);
+        model.addAttribute("CART_ITEMS", currentUserCart);
         return "cart/index";
-    }
-    @GetMapping("/create")
-    public String addCartItemTest(@CookieValue(name = "CART_ID") Cookie cookie){
-//        cartService.createCartItem(cookie.getValue(), new CartItem("name", 1L, 10, 10000));
-        return "redirect:/cart";
     }
 
     @PostMapping("/create")
     public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItem cartItem){
         cartService.createCartItem(cookie.getValue(), cartItem);
-        return "redirect:/cart";
+        return REDIRECT_CART_URL;
     }
 
     @PostMapping("/update")
     public String updateCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItemUpdateRequestDto cartItemUpdateRequestDto) {
-        return "redirect:/cart";
+        cartService.updateItemQuantity(cookie.getValue(), cartItemUpdateRequestDto);
+        return REDIRECT_CART_URL;
     }
 
     @PostMapping("/delete")
     public String deleteCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
     CartItemDeleteRequestDto cartItemDeleteRequestDto) {
-        return "redirect:/cart";
+        cartService.deleteCartItem(cookie.getValue(), cartItemDeleteRequestDto);
+        return REDIRECT_CART_URL;
     }
 
     @GetMapping("/order")
-    public String placeOrder(RedirectAttributes redirectAttributes) {
-        // post시 list 받을 수 있나?
-//        redirectAttributes.addFlashAttribute()
-
+    public String placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("PLACE_ITEMS", cartService.readCartItems(cookie.getValue()));
         return "redirect:/sale";
     }
 }
