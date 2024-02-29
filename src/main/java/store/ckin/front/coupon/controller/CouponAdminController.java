@@ -6,10 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -32,7 +36,6 @@ public class CouponAdminController {
      *
      * @param pageable
      * @param couponId 쿠폰 아이디를 가지는 경우 해당 쿠폰 아이디만 보여줍니다.
-     *
      * @return 쿠폰 목록 페이지로 이동합니다.
      */
     @GetMapping
@@ -61,7 +64,6 @@ public class CouponAdminController {
      *
      * @param pageable
      * @param typeId   쿠폰 템플릿 타입 아이디
-     *
      * @return 쿠폰 목록 페이지로 이동합니다.
      */
     @GetMapping("/{typeId}")
@@ -83,7 +85,6 @@ public class CouponAdminController {
      *
      * @param pageable
      * @param memberId 회원 ID
-     *
      * @return 쿠폰 목록 페이지로 이동합니다.
      */
     @GetMapping("/member")

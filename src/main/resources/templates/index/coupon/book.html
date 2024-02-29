@@ -25,7 +25,7 @@
                                 <div class="card shadow-sm">
                                     <div class="user-wrap">
                                         <div class="user-image">
-                                            <img src="/images/004.jpg" width="100%" height="100%" />
+                                            <img src="/images/004.jpg" width="100%" height="100%"/>
                                         </div>
                                         <div class="user-text">
                                             <p><b th:text="${coupon.name}"></b></p>
@@ -58,7 +58,8 @@
                                             font-family: 'ypseo';
                                             text-align: left;
                                         }
-                                        .user-text2{
+
+                                        .user-text2 {
                                             position: absolute;
                                             top: 40%;
                                             left: 50%;
@@ -69,8 +70,12 @@
                                             text-align: right;
                                         }
                                     </style>
-                                    <form id="downloadForm"  th:action="@{'/index/coupon/' + ${memberId} + '/' + ${coupon.id}}" method="post" >
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary" id="request">Download</button>
+                                    <form id="downloadForm"
+                                          th:action="@{'/index/coupon/' + ${memberId} + '/' + ${coupon.id}}"
+                                          method="post">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary" id="request">
+                                            Download
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -113,7 +118,7 @@
         const message = document.querySelector('#message').getAttribute('value');
         if (message === 'true') {
             alert("이미 발급된 쿠폰입니다.");
-        } else if(message === 'false') {
+        } else if (message === 'false') {
             alert("발급되었습니다.");
         }
     </script>
