@@ -24,25 +24,13 @@ $(document).ready(function () {
     });
 });
 
-// couponBtn 버튼 클릭 이벤트를 처리합니다.
-
-let couponButtons = document.querySelectorAll('.couponBtn');
-couponButtons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-        // 쿠폰 적용할 책의 ID를 가져옵니다.
-        let bookId = this.value;
-        let categoryIds = bookInfo.get(parseInt(bookId)).categoryIds;
-
-        // 쿠폰 목록을 렌더링 합니다.
-        renderCoupon(couponList, bookId, categoryIds);
-    })
-})
-
-
 // 쿠폰 목록을 렌더링합니다.
 let appliedCoupons = new Map();
 
-function renderCoupon(couponList, bookId, categoryIds) {
+function renderCoupon(bookId) {
+
+    let categoryIds = bookInfo.get(parseInt(bookId)).categoryIds;
+    console.log(categoryIds);
 
     let tableId = 'couponTable-' + bookId;
     let couponTableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
@@ -112,7 +100,7 @@ function renderCoupon(couponList, bookId, categoryIds) {
         couponTableBody.innerHTML += row;
     });
 
-    // couponApplyBtn 버튼이 눌리면 쿠폰을 적용
+// couponApplyBtn 버튼이 눌리면 쿠폰을 적용
     let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
 
     couponApplyBtn.addEventListener('click', function () {
@@ -130,8 +118,31 @@ function renderCoupon(couponList, bookId, categoryIds) {
             alert('쿠폰이 적용되었습니다.');
 
             $('#applyCouponBtn-' + bookId).modal('hide');
+
+            // 적용 취소 버튼을 보이도록 변경
+            couponApplyBtn.style.display = 'none';
+            let cancelApplyBtn = document.getElementById('cancelApplyBtn-' + bookId);
+            cancelApplyBtn.style.display = 'block';
+
+
         } else {
             alert('쿠폰을 선택해주세요.');
         }
+    });
+
+// 적용 취소 버튼이 눌리면 쿠폰 적용을 취소
+    let cancelApplyBtn = document.getElementById('cancelApplyBtn-' + bookId);
+    cancelApplyBtn.addEventListener('click', function () {
+        // 쿠폰 적용을 취소합니다.
+        appliedCoupons.delete(parseInt(bookId));
+
+        // 쿠폰 적용 취소 후 동작을 추가하세요.
+        console.log('쿠폰이 적용된 상품 ID ' + bookId + '의 적용이 취소되었습니다.');
+        console.log(appliedCoupons);
+
+        // 적용 취소 버튼을 다시 숨깁니다.
+        cancelApplyBtn.style.display = 'none';
+        let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
+        couponApplyBtn.style.display = 'block';
     });
 }

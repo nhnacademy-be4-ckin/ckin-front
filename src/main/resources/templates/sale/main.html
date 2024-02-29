@@ -21,6 +21,24 @@
             font-size: 14px;
             color: darkolivegreen;
         }
+
+        #totalCouponDiscount {
+            color: dodgerblue;
+        }
+
+        .delivery-text {
+            padding: 3% 3% 3% 3%;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+        }
+
+        .delivery-title:hover + .delivery-text {
+            display: block;
+        }
+
     </style>
 
     <form action="#" th:action="@{/}" class="bg0 p-t-75 p-b-85">
@@ -56,12 +74,15 @@
                                     <td class="column-5">
                                         <button type="button" th:value="${bookSale.bookId}"
                                                 class="couponBtn flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                                                data-toggle="modal" th:attr="data-target='#applyCouponBtn-' + ${bookSale.bookId}">
+                                                data-toggle="modal"
+                                                th:attr="data-target='#applyCouponBtn-' + ${bookSale.bookId}"
+                                                th:onclick="|renderCoupon(${bookSale.bookId})|">
                                             쿠폰 적용
                                         </button>
 
                                         <!-- Coupon Modal -->
-                                        <div class="modal fade" th:id="'applyCouponBtn-' + ${bookSale.bookId}" tabindex="-1" role="dialog"
+                                        <div class="modal fade" th:id="'applyCouponBtn-' + ${bookSale.bookId}"
+                                             tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                 <div class="modal-content">
@@ -74,7 +95,8 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table class="table" th:id="'couponTable-' + ${bookSale.bookId}">
+                                                        <table class="table"
+                                                               th:id="'couponTable-' + ${bookSale.bookId}">
                                                             <thead>
                                                             <tr>
                                                                 <th scope="col"></th>
@@ -84,27 +106,35 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>라디오버튼</td>
-                                                                    <td>쿠폰명</td>
-                                                                    <td>할인율</td>
-                                                                    <td>할인금액</td>
-                                                                </tr>
+                                                            <tr>
+                                                                <td>라디오버튼</td>
+                                                                <td>쿠폰명</td>
+                                                                <td>할인율</td>
+                                                                <td>할인금액</td>
+                                                            </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">취소
+                                                                data-dismiss="modal">닫기
                                                         </button>
-                                                        <button type="button" class="btn btn-dark">쿠폰 선택</button>
+                                                        <button type="button" class="btn btn-dark"
+                                                                th:id="'couponApplyBtn-' + ${bookSale.bookId}">
+                                                            쿠폰 선택
+                                                        </button>
+
+                                                        <button style="display: none;" type="button" class="btn btn-danger"
+                                                                th:id="'cancelApplyBtn-' + ${bookSale.bookId}">
+                                                            적용 취소
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="column-6">
-                                        <span th:text="${bookSale.bookSalePrice} * 2"></span> 원
+                                        <span class="order-price" th:text="${bookSale.bookSalePrice} * 2"></span> 원
                                     </td>
                                     <td class="column-7">
                                         <select class="packaging form-control form-control-sm">
@@ -152,6 +182,18 @@
                             <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
                                    placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleReceiverContact"
                                    aria-placeholder="수령자 연락처" aria-label="수령자 연락처">
+                        </div>
+
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                            <h4> 포인트 사용</h4>
+                            <span> 보유중인 포인트 :
+                                <span style="color: #13653f"> 15000</span> 원
+                            </span>
+
+                            <input type="number" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
+                                   placeholder="사용할 포인트를 입력해주세요." name="saleReceiverName"
+                                   aria-placeholder="포인트" aria-label="포인트">
                         </div>
 
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
@@ -221,44 +263,74 @@
 
                         <div class="flex-w flex-t p-t-27 p-b-10">
                             <div class="size-208">
-                                <span class="mtext-101 cl2">
-                                    배송비:
+                                <span class="stext-117 cl2">
+                                    배송비
+                                    <span class="delivery-title">🚚</span>
+                                    <span class="delivery-text">50,000원 이상 주문시 무료 배송</span>
                                 </span>
                             </div>
 
                             <div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
+								<span class="stext-117 cl2">
 									<span id="deliveryPrice"
-                                          th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span>원
+                                          th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span> 원
 								</span>
                             </div>
                         </div>
 
                         <div class="flex-w flex-t p-t-10 p-b-10">
                             <div class="size-208">
-                                <span class="mtext-101 cl2">
-                                    쿠폰 할인:
+                                <span class="stext-117 cl2">
+                                    쿠폰 할인
                                 </span>
                             </div>
 
                             <div class="size-209 p-t-1">
-                                <span class="mtext-110 cl2">
-									<span id="couponDiscount">0</span>원
+                                <span id="totalCouponDiscount" class="stext-117 cl2">
+									- <span>0</span> 원
 								</span>
                             </div>
-
                         </div>
 
-                        <div class="flex-w flex-t p-t-10 p-b-33">
+                        <div class="flex-w flex-t p-t-10 p-b-10">
                             <div class="size-208">
-								<span class="mtext-101 cl2">
-									결제할 금액:
+								<span class="stext-117 cl2">
+									포장 금액
 								</span>
                             </div>
 
                             <div class="size-209 p-t-1">
-								<span class="mtext-110 cl2">
-									<span id="totalPrice">0</span>원
+								<span class="stext-117 cl2">
+									<span id="totalPackagingPrice">0</span> 원
+								</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-w flex-t p-t-10 p-b-10">
+                            <div class="size-208">
+								<span class="stext-117 cl2">
+									도서 금액
+								</span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+								<span class="stext-117 cl2">
+									<span id="totalOrderPrice">0</span> 원
+								</span>
+                            </div>
+                        </div>
+
+
+                        <div class="flex-w flex-t p-t-10 p-b-33">
+                            <div class="size-208">
+								<span class="stext-117 cl2">
+									결제할 금액
+								</span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+								<span class="stext-117 cl2">
+									<span id="totalPrice">0</span> 원
 								</span>
                             </div>
                         </div>
@@ -350,40 +422,74 @@
         /*[# th:each="packaging : ${policyList.getPackagingPolicies()}"]*/
         packagingPrices.set([[${packaging.packagingId}]], [[${packaging.packagingPrice}]]);
         /*[/]*/
+
+        let freeDeliveryPrice = [[${policyList.getDeliveryPolicy().deliveryPolicyCondition}]];
         /*]]>*/
 
-        let prevPackagingId = 0; // 이전 포장지의 ID를 저장할 변수
+        console.log('test');
+        console.log(freeDeliveryPrice);
 
-        let totalPrice = 0;
-        const selectedPackagingId = document.querySelectorAll('select.packaging');
-        console.log(selectedPackagingId);
+        // 주문 도서 금액 계산
+        let totalOrderPrice = 0;
+        let orderPrice = document.querySelectorAll('.order-price');
+        console.log(orderPrice);
 
-        // 초기 totalPrice 계산
+        orderPrice.forEach(price => {
+            totalOrderPrice += parseInt(price.innerText);
+        })
+        document.getElementById('totalOrderPrice').textContent = totalOrderPrice.toFixed(0);
+
+        //-------------------------------
+
+        // 배송 금액 계산
+        let deliveryPriceElement = document.getElementById('deliveryPrice');
+        let deliveryPrice = parseInt(deliveryPriceElement.innerText); // parseInt 추가
+        if (totalOrderPrice >= freeDeliveryPrice) {
+            deliveryPrice = 0;
+            deliveryPriceElement.textContent = deliveryPrice;
+        }
+        //-------------------------------
+
+        // 포장 금액 계산
+        let selectedPackagingId = document.querySelectorAll('select.packaging');
+
+        let totalPackagingPrice = 0;
         selectedPackagingId.forEach(selectElement => {
-            totalPrice += packagingPrices.get(parseInt(selectElement.value));
+            totalPackagingPrice += packagingPrices.get(parseInt(selectElement.value));
         });
 
         selectedPackagingId.forEach(selectElement => {
             selectElement.addEventListener('change', function (event) {
                 // 변경될 때마다 totalPrice 초기화
-                totalPrice = 0;
+                totalPackagingPrice = 0;
                 // 변경된 각 요소의 값을 totalPrice에 더함
                 selectedPackagingId.forEach(selectElement => {
-                    totalPrice += packagingPrices.get(parseInt(selectElement.value));
+                    totalPackagingPrice += packagingPrices.get(parseInt(selectElement.value));
                 });
-                updateTotalPrice(totalPrice);
+                updateTotalPackagingPrice(totalPackagingPrice);
+                updateTotalPrice(); // 포장 금액이 변경되었으므로 결제 총 금액을 다시 계산
             });
         });
 
-
-        // 포장지 선택 시 total 금액을 업데이트하는 함수
-        function updateTotalPrice(totalPrice) {
-            console.log('total : ' + totalPrice);
-            let totalPriceElement = document.getElementById('totalPrice');
-            totalPriceElement.textContent = totalPrice.toFixed(0);
-
+        // 포장지 선택 시 금액을 업데이트하는 함수
+        function updateTotalPackagingPrice(packagingPrice) {
+            let totalPriceElement = document.getElementById('totalPackagingPrice');
+            totalPriceElement.textContent = packagingPrice.toFixed(0);
         }
+
+        //-------------------------------
+
+        // 결제 총 금액 계산
+        function updateTotalPrice() {
+            let totalPrice = document.getElementById('totalPrice');
+            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice).toFixed(0);
+        }
+
+        updateTotalPrice(); // 페이지 로드 시 결제 총 금액을 계산하여 업데이트
+
+        //-------------------------------
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:inline="javascript">
