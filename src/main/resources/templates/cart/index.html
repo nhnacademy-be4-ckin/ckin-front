@@ -60,9 +60,10 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
+                                                        <form method="post" action="cart/update">
                                                         <div class="modal-body">
                                                             <div class="input-group mb-3">
-                                                                <input type="text" class="form-control" style="width: 80%" placeholder="변경할 수량을 입력하세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                                <input type="text" class="form-control" name="quantity" style="width: 80%" placeholder="변경할 수량을 입력하세요" aria-label="quantity" aria-describedby="basic-addon2">
                                                                 <span class="input-group-text" style="width: 20%" id="basic-addon2">개</span>
                                                             </div>
                                                             <h4 class="stext-111" style="color: #760c0c;">현재 남은 수량은 2개 입니다.</h4>
@@ -71,12 +72,10 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">취소
                                                             </button>
-                                                            <form method="post" action="cart/update">
                                                                 <input th:value="${item.id}" id="updateItemId" name="id" hidden>
-                                                                <input th:value="${item.quantity}" id="updateItemQuantity" name="quantity" hidden>
                                                                 <button type="submit" class="btn btn-dark">수량 변경</button>
-                                                            </form>
                                                         </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
