@@ -2,6 +2,7 @@ package store.ckin.front.cart.interceptor;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.Cookie;
@@ -24,8 +25,15 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         log.debug("preHandle(): called");
-        Optional<Cookie>
-                userUuidCookieWrapped = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID")).findFirst();
+        // Check cookie is null
+        Optional<Cookie> userUuidCookieWrapped;
+        if(Objects.nonNull(request.getCookies())) {
+            userUuidCookieWrapped = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID")).findFirst();
+        } else {
+            userUuidCookieWrapped = Optional.empty();
+        }
+
+        // Check cookie is empty
         if(userUuidCookieWrapped.isEmpty()) {
             log.debug("preHandle(): user uuid cookie is null");
             Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
