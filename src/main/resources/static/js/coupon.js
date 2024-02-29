@@ -1,4 +1,6 @@
 // TODO 1) 회원 ID
+
+// TODO 12312
 let memberId = 1;
 
 // 페이지가 로드되면 memberId와 bookId를 통해 사용 가능한 쿠폰 리스트를 받아옵니다.
@@ -37,6 +39,9 @@ couponButtons.forEach(function (btn) {
     })
 })
 
+
+// 쿠폰 목록을 렌더링합니다.
+let appliedCoupons = new Map();
 
 function renderCoupon(couponList, bookId, categoryIds) {
 
@@ -106,5 +111,28 @@ function renderCoupon(couponList, bookId, categoryIds) {
             priceRow +
             '</tr>';
         couponTableBody.innerHTML += row;
+    });
+
+    // couponApplyBtn 버튼이 눌리면 쿠폰을 적용
+    let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
+
+    couponApplyBtn.addEventListener('click', function () {
+
+        let selectedCouponId = $("input[name='coupon']:checked").val();
+        if (selectedCouponId) {
+
+            // 선택된 쿠폰을 적용합니다.
+            appliedCoupons.set(parseInt(bookId), parseInt(selectedCouponId));
+
+            // 쿠폰 적용 후 동작을 추가하세요.
+            console.log('쿠폰이 적용된 상품 ID와 쿠폰 ID = ' + bookId + ' ' + selectedCouponId);
+            console.log(appliedCoupons);
+
+            alert('쿠폰이 적용되었습니다.');
+
+            $('#applyCouponBtn-' + bookId).modal('hide');
+        } else {
+            alert('쿠폰을 선택해주세요.');
+        }
     });
 }
