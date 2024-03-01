@@ -130,7 +130,7 @@
                                                         </button>
                                                         <button type="button" class="btn btn-dark"
                                                                 th:id="'couponApplyBtn-' + ${bookSale.bookId}"
-                                                        th:onclick="|applyCoupon(${bookSale.bookId})|">
+                                                                th:onclick="|applyCoupon(${bookSale.bookId})|">
                                                             쿠폰 적용
                                                         </button>
                                                     </div>
@@ -192,13 +192,23 @@
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 
                             <h4> 포인트 사용</h4>
-                            <span> 보유중인 포인트 :
+
+                            <span style="margin-bottom: 20px;"> 보유중인 포인트 :
                                 <span style="color: #13653f"> 15000</span> 원
                             </span>
 
-                            <input type="number" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
-                                   placeholder="사용할 포인트를 입력해주세요." name="saleReceiverName"
-                                   aria-placeholder="포인트" aria-label="포인트">
+                            <div class="input-group" style="vertical-align: middle">
+                                <input id="memberPoint" type="number"
+                                       class="stext-104 cl2 plh4 size-126 bor13 p-lr-20 m-r-10 m-tb-5"
+                                       placeholder="사용할 포인트를 입력해주세요." name="saleReceiverName"
+                                       aria-placeholder="포인트" aria-label="포인트">
+                                <div class="input-group-append">
+                                    <button class="stext-104 cl2 size-127 bg8 bor13 hov-btn3 p-lr-20 m-t-5 m-r-10 b-tb-5 trans-04 pointer"
+                                            type="button"
+                                            onclick="applyPoint()">포인트 사용
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
@@ -240,7 +250,8 @@
 
                                     <div class="bor8 bg0 m-b-12">
                                         <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="address"
-                                               id="address" placeholder="도로명/지번 주소" readonly onclick="execDaumPostcode()">
+                                               id="address" placeholder="도로명/지번 주소" readonly
+                                               onclick="execDaumPostcode()">
                                     </div>
 
                                     <div class="bor8 bg0 m-b-12">
@@ -488,10 +499,11 @@
         function updateTotalPrice() {
             let totalPrice = document.getElementById('totalPrice');
             let couponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
+            let memberPoint = parseInt(document.getElementById('memberPoint').value);
 
             console.log(couponDiscount);
 
-            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount).toFixed(0);
+            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount - memberPoint).toFixed(0);
         }
 
         updateTotalPrice(); // 페이지 로드 시 결제 총 금액을 계산하여 업데이트
@@ -512,9 +524,29 @@
             updateTotalPrice();
         }
 
-        // 쿠폰 적용 취소시 쿠폰 할인 금액을 업데이트하는 함수
-        function cancelCouponDiscount(bookId) {
+        //-------------------------------
 
+        // 포인트 사용시 총 금액을 업데이트하는 함수
+        function applyPoint() {
+            let applyMemberPoint = parseInt(document.getElementById('memberPoint').value);
+            let holdingMemberPoint = 15000;
+            console.log(applyMemberPoint);
+
+            // 보유한 포인트보다 더 많이 사용하지 못해야 함.
+
+            if (isNaN(applyMemberPoint)) {
+                alert('사용할 포인트를 숫자로 입력해주세요.');
+                return;
+            } else if (applyMemberPoint > holdingMemberPoint) {
+                alert('보유한 포인트보다 더 많이 사용할 수 없습니다.');
+                return;
+            } else if (applyMemberPoint < 0) {
+                alert('0보다 작은 값을 입력할 수 없습니다.');
+                return;
+            }
+
+            alert('포인트를 사용하였습니다.');
+            updateTotalPrice();
         }
     </script>
 

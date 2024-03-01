@@ -2575,6 +2575,15 @@ input.num-product::-webkit-inner-spin-button {
     height: 40px;
 }
 
+.size-126 {
+    width: 70%;
+    height: 50px;
+}
+
+.size-127 {
+    min-width: 134px;
+    height: 50px;
+}
 /*//////////////////////////////////////////////////////////////////
 [ Width ]*/
 .size-201 {
