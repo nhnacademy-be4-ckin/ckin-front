@@ -3244,6 +3244,11 @@ input.num-product::-webkit-inner-spin-button {
     border-color: #717fe0;
 }
 
+.hov-cancel-btn:hover {
+    border-color: firebrick;
+    background-color: firebrick;
+    color: #fff;
+}
 
 /*---------------------------------------------*/
 .hov-ovelay1 {

@@ -22,7 +22,7 @@
             color: darkolivegreen;
         }
 
-        #totalCouponDiscount {
+        .couponDiscount {
             color: dodgerblue;
         }
 
@@ -73,11 +73,20 @@
                                     <td class="column-4" th:text="1"></td>
                                     <td class="column-5">
                                         <button type="button" th:value="${bookSale.bookId}"
-                                                class="couponBtn flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                                                class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal"
                                                 th:attr="data-target='#applyCouponBtn-' + ${bookSale.bookId}"
+                                                th:id="'couponBtn-' + ${bookSale.bookId}"
                                                 th:onclick="|renderCoupon(${bookSale.bookId})|">
-                                            쿠폰 적용
+                                            쿠폰 선택
+                                        </button>
+
+                                        <button type="button"
+                                                style="display: none;"
+                                                class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-cancel-btn p-lr-15 trans-04 pointer m-tb-10"
+                                                th:id="'cancelApplyBtn-' + ${bookSale.bookId}"
+                                                th:onclick="|cancelCoupon(${bookSale.bookId})|">
+                                            쿠폰 취소
                                         </button>
 
                                         <!-- Coupon Modal -->
@@ -120,13 +129,9 @@
                                                                 data-dismiss="modal">닫기
                                                         </button>
                                                         <button type="button" class="btn btn-dark"
-                                                                th:id="'couponApplyBtn-' + ${bookSale.bookId}">
-                                                            쿠폰 선택
-                                                        </button>
-
-                                                        <button style="display: none;" type="button" class="btn btn-danger"
-                                                                th:id="'cancelApplyBtn-' + ${bookSale.bookId}">
-                                                            적용 취소
+                                                                th:id="'couponApplyBtn-' + ${bookSale.bookId}"
+                                                        th:onclick="|applyCoupon(${bookSale.bookId})|">
+                                                            쿠폰 적용
                                                         </button>
                                                     </div>
                                                 </div>
@@ -286,8 +291,8 @@
                             </div>
 
                             <div class="size-209 p-t-1">
-                                <span id="totalCouponDiscount" class="stext-117 cl2">
-									- <span>0</span> 원
+                                <span class="couponDiscount stext-117 cl2">
+									- <span id="totalCouponDiscount">0</span> 원
 								</span>
                             </div>
                         </div>
@@ -482,12 +487,35 @@
         // 결제 총 금액 계산
         function updateTotalPrice() {
             let totalPrice = document.getElementById('totalPrice');
-            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice).toFixed(0);
+            let couponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
+
+            console.log(couponDiscount);
+
+            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount).toFixed(0);
         }
 
         updateTotalPrice(); // 페이지 로드 시 결제 총 금액을 계산하여 업데이트
 
         //-------------------------------
+
+        // 쿠폰 적용 시 쿠폰 할인 금액을 업데이트하는 함수
+        function updateCouponDiscountPrice(bookId, discountPrice) {
+            // 쿠폰 할인 금액 업데이트
+            let totalCouponDiscountElement = document.getElementById('totalCouponDiscount');
+
+            let totalCouponDiscount = parseInt(totalCouponDiscountElement.textContent);
+            totalCouponDiscount += discountPrice;
+
+            totalCouponDiscountElement.textContent = totalCouponDiscount;
+
+            // 결제 총 금액 업데이트
+            updateTotalPrice();
+        }
+
+        // 쿠폰 적용 취소시 쿠폰 할인 금액을 업데이트하는 함수
+        function cancelCouponDiscount(bookId) {
+
+        }
     </script>
 
 
