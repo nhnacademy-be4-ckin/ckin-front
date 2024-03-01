@@ -32,16 +32,11 @@ function execDaumPostcode() {
                 if (extraAddr !== '') {
                     extraAddr = ' (' + extraAddr + ')';
                 }
-                // 조합된 참고항목을 해당 필드에 넣는다.
-                document.getElementById("extraAddress").value = extraAddr;
-
-            } else {
-                document.getElementById("extraAddress").value = '';
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById('postcode').value = data.zonecode;
-            document.getElementById("address").value = addr;
+            document.getElementById("address").value = addr + extraAddr;
             // 커서를 상세주소 필드로 이동한다.
             document.getElementById("detailAddress").focus();
         }
