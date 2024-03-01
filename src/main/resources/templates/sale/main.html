@@ -22,7 +22,7 @@
             color: darkolivegreen;
         }
 
-        .couponDiscount {
+        .discount {
             color: dodgerblue;
         }
 
@@ -171,7 +171,7 @@
                                    aria-placeholder="주문자 이름" aria-label="주문자 이름">
 
                             <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
-                                   placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleOrderContact"
+                                   placeholder="연락처를 입력해주세요. ('-' 제외)" name="saleOrderContact"
                                    aria-placeholder="주문자 연락처" aria-label="주문자 연락처">
 
                         </div>
@@ -185,7 +185,7 @@
                                    aria-placeholder="수령자 이름" aria-label="수령자 이름">
 
                             <input type="text" class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5"
-                                   placeholder="연락처를 '-'를 제외하고 입력해주세요." name="saleReceiverContact"
+                                   placeholder="연락처를 입력해주세요. ('-' 제외)" name="saleReceiverContact"
                                    aria-placeholder="수령자 연락처" aria-label="수령자 연락처">
                         </div>
 
@@ -290,20 +290,6 @@
 
                         <div class="flex-w flex-t p-t-10 p-b-10">
                             <div class="size-208">
-                                <span class="stext-117 cl2">
-                                    쿠폰 할인
-                                </span>
-                            </div>
-
-                            <div class="size-209 p-t-1">
-                                <span class="couponDiscount stext-117 cl2">
-									- <span id="totalCouponDiscount">0</span> 원
-								</span>
-                            </div>
-                        </div>
-
-                        <div class="flex-w flex-t p-t-10 p-b-10">
-                            <div class="size-208">
 								<span class="stext-117 cl2">
 									포장 금액
 								</span>
@@ -326,6 +312,34 @@
                             <div class="size-209 p-t-1">
 								<span class="stext-117 cl2">
 									<span id="totalOrderPrice">0</span> 원
+								</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-w flex-t p-t-10 p-b-10">
+                            <div class="size-208">
+                                <span class="stext-117 cl2">
+                                    쿠폰 할인
+                                </span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+                                <span class="discount stext-117 cl2">
+									- <span id="totalCouponDiscount">0</span> 원
+								</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-w flex-t p-t-10 p-b-10">
+                            <div class="size-208">
+                                <span class="stext-117 cl2">
+                                    포인트 사용
+                                </span>
+                            </div>
+
+                            <div class="size-209 p-t-1">
+                                <span class="discount stext-117 cl2">
+									- <span id="pointDiscount">0</span> 원
 								</span>
                             </div>
                         </div>
@@ -539,6 +553,9 @@
             }
 
             alert('포인트를 사용하였습니다.');
+
+            document.getElementById('pointDiscount').textContent = applyMemberPoint;
+
             updateTotalPrice();
         }
     </script>
