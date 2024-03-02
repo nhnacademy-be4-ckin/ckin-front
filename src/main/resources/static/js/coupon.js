@@ -16,6 +16,7 @@ $(document).ready(function () {
         success: function (coupons) {
             coupons.forEach(coupon => {
                 couponList.push(coupon);
+                console.log(coupon);
             });
         },
         error: function (xhr, status, error) {
@@ -42,13 +43,17 @@ function renderCoupon(bookId) {
 
     // 쿠폰을 분류합니다.
     couponList.forEach(coupon => {
+
+        console.log('test')
+        console.log(categoryIds.includes(coupon.categoryId));
+
         /**
          * 1. coupon.typeId === 1 : 모든 상품에 적용 가능
          * 2. coupon.typeId === 2 : coupon.bookId와 bookId가 같은 상품에 적용 가능
          * 3. coupon.typeId === 3 : coupon.categoryId가 categoryIds에 포함되어 있는 상품에 적용 가능
          */
-        if ((coupon.typeId == 1) ||
-            ((coupon.typeId == 2 && coupon.bookId == bookId))
+        if ((coupon.typeId == 1)
+            || ((coupon.typeId == 2 && coupon.bookId == bookId))
             || ((coupon.typeId == 3 && categoryIds.includes(coupon.categoryId)))) {
             selectableCoupons.push(coupon);
         }
@@ -65,26 +70,16 @@ function renderCoupon(bookId) {
     // 선택 가능한 쿠폰을 HTML로 변환하여 출력합니다.
     selectableCoupons.forEach(coupon => {
 
-        console.log(coupon);
-
-
         /**
-         * coupon.couponCodeId === 1 : 정액할인
-         * coupon.couponCodeId === 2 : 정률할인
+         * coupon.couponCodeId == 1 : 정액할인
+         * coupon.couponCodeId == 2 : 정률할인
          *
          * 따라서, 1번이면 discountPrice를 표시하고, 2번이면 discountRate를 표시합니다.
          */
 
-        console.log('id 값')
         let discountPriceId = 'discountPrice-' + coupon.id;
-        console.log(discountPriceId);
-
         let bookSalePriceElement = document.getElementById(bookId + '-saleOrderPrice').innerText;
-
         let bookSalePrice = parseInt(bookSalePriceElement);
-
-        console.log('bookSalePrice')
-        console.log(bookSalePrice);
 
         let priceRow;
         if (coupon.couponCodeId == 1) {
@@ -108,16 +103,22 @@ function renderCoupon(bookId) {
                 '<td style="color: dodgerblue" id=' + discountPriceId + '>' + price + '원 </td>';
         }
 
-        let row = '<tr>' + '<td><input type="radio" name="coupon" value="' + coupon.id + '"></td>' + '<td>' + coupon.name + '</td>' + priceRow + '</tr>';
+        let row = '<tr>' +
+            '<td><input type="radio" id="coupon-' + bookId + '" name="coupon"  value="' + coupon.id + '"></td>' +
+            '<td>' + coupon.name + '</td>' +
+            priceRow +
+            '</tr>';
         couponTableBody.innerHTML += row;
     });
 }
 
 
-
 function applyCoupon(bookId) {
 
-    let selectedCouponId = $("input[name='coupon']:checked").val();
+    let check = 'coupon-' + bookId;
+    let selectedCouponId = $("input[id='" + check + "']:checked").val();
+
+    console.log(selectedCouponId);
     let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
 
     if (selectedCouponId) {
@@ -135,8 +136,14 @@ function applyCoupon(bookId) {
 
         document.getElementById(bookId + '-coupon').value = selectedCouponId;
 
+        let saleOrderPrice = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) - parseInt(document.getElementById('discountPrice-' + selectedCouponId).innerText.replace('원', ''));
+
         document.getElementById(bookId + '-saleOrderPrice').innerText
-         = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) - parseInt(document.getElementById('discountPrice-' + selectedCouponId).innerText.replace('원', ''));
+            = saleOrderPrice;
+
+        // <input type="hidden" th:value="${bookSale.bookSalePrice} * 2" name="bookSalePrice">
+        document.getElementById(bookId + '-inputPrice').value = saleOrderPrice;
+
 
         let couponBtn = document.getElementById('couponBtn-' + bookId);
         couponBtn.style.display = 'none';
@@ -148,7 +155,6 @@ function applyCoupon(bookId) {
         let discountPriceElement = document.getElementById('discountPrice-' + selectedCouponId);
         let discountPriceText = discountPriceElement.innerText;
         let discountPrice = parseInt(discountPriceText.replace('원', ''));
-        console.log(discountPrice);
 
         updateCouponDiscountPrice(bookId, discountPrice);
     } else {
@@ -168,8 +174,12 @@ function cancelCoupon(bookId) {
 
     appliedCoupons.delete(cancelCouponBookId);
 
+    let saleOrderPrice = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) + discountPrice;
+
     document.getElementById(bookId + '-saleOrderPrice').innerText
-        = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) + discountPrice;
+        = saleOrderPrice;
+
+    document.getElementById(bookId + '-inputPrice').value = saleOrderPrice;
 
     let cancelApplyBtn = document.getElementById('cancelApplyBtn-' + bookId);
     cancelApplyBtn.style.display = 'none';
@@ -178,8 +188,6 @@ function cancelCoupon(bookId) {
     couponApplyBtn.style.display = 'block';
 
     alert('쿠폰이 취소되었습니다.');
-    console.log(bookId);
-    console.log(-discountPrice);
 
     updateCouponDiscountPrice(bookId, -discountPrice);
 }

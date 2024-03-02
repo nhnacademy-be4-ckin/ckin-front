@@ -41,13 +41,14 @@
 
     </style>
 
-    <form action="#" th:action="@{/}" class="bg0 p-t-75 p-b-85">
+    <form action="#" th:action="@{/sale}" method="POST" class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
                     <div class="m-l-25 m-r--38 m-lr-0-xl">
                         <div class="wrap-table-shopping-cart">
                             <table class="table-shopping-cart" style="text-align: center;">
+                                <thead>
                                 <tr class="table_head">
                                     <th class="column-1"></th>
                                     <th class="column-2">상품명</th>
@@ -57,12 +58,14 @@
                                     <th class="column-6">주문금액</th>
                                     <th class="column-7">🎁 포장지</th>
                                 </tr>
+                                </thead>
 
+                                <tbody>
                                 <tr class="table_row" th:each="bookSale : ${bookSaleList}">
                                     <input type="hidden" th:value="${bookSale.bookId}" name="bookId">
-                                    <input type="hidden" th:value="${bookSale.bookSalePrice}" name="bookSalePrice">
-                                    <input type="hidden" th:id="${bookSale.bookId} + '-coupon'" value=""
+                                    <input type="hidden" th:id="${bookSale.bookId} + '-coupon'" th:value="0"
                                            name="appliedCouponId">
+
                                     <td class="column-1">
                                         <div class="how-itemcart1">
                                             <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
@@ -74,7 +77,9 @@
                                     <td class="column-3">
                                         <span th:text="${bookSale.bookSalePrice}"></span> 원
                                     </td>
-                                    <td class="column-4" th:text="1"></td>
+
+                                    <!-- 장바구니에서 넘겨주는 수량 사용 -->
+                                    <td class="column-4" th:text="2"></td>
                                     <td class="column-5">
                                         <button type="button" th:value="${bookSale.bookId}"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
@@ -143,12 +148,14 @@
                                         </div>
                                     </td>
                                     <td class="column-6">
+                                        <input type="hidden" th:id="${bookSale.bookId} + '-inputPrice'"
+                                               th:value="${bookSale.bookSalePrice} * 2" name="bookSalePrice">
                                         <span th:id="${bookSale.bookId} + '-saleOrderPrice'" class="salePrice"
                                               th:text="${bookSale.bookSalePrice} * 2"></span> 원
                                     </td>
                                     <td class="column-7">
                                         <label>
-                                            <select class="packaging form-control form-control-sm">
+                                            <select name="packagingId" class="packaging form-control form-control-sm">
                                                 <option selected value="0">선택 X</option>
                                                 <option th:if="${bookSale.bookPackaging}"
                                                         th:each="packaging : ${policyList.getPackagingPolicies()}"
@@ -159,6 +166,7 @@
                                         </label>
                                     </td>
                                 </tr>
+                                </tbody>
                             </table>
                         </div>
 
@@ -289,6 +297,9 @@
 
                             <div class="size-209 p-t-1">
 								<span class="stext-117 cl2">
+                                    <input type="hidden" name="deliveryFee"
+                                           th:id="deliveryFee"
+                                           th:value="${policyList.getDeliveryPolicy().deliveryPolicyFee}">
 									<span id="deliveryPrice"
                                           th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span> 원
 								</span>
@@ -458,12 +469,10 @@
         let freeDeliveryPrice = [[${policyList.getDeliveryPolicy().deliveryPolicyCondition}]];
         /*]]>*/
 
-        console.log(freeDeliveryPrice);
 
         // 주문 도서 금액 계산
         let totalOrderPrice = 0;
         let salePrice = document.querySelectorAll('.salePrice');
-        console.log(salePrice);
 
         salePrice.forEach(price => {
             totalOrderPrice += parseInt(price.innerText);
@@ -479,6 +488,9 @@
             deliveryPrice = 0;
             deliveryPriceElement.textContent = deliveryPrice;
         }
+
+        document.getElementById('deliveryFee').value = deliveryPrice;
+
         //-------------------------------
 
         // 포장 금액 계산
@@ -515,8 +527,6 @@
             let totalPrice = document.getElementById('totalPrice');
             let couponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
             let memberPoint = parseInt(document.getElementById('memberPoint').value);
-
-            console.log(couponDiscount);
 
             totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount - memberPoint).toFixed(0);
         }
