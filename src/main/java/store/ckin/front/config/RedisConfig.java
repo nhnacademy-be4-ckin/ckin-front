@@ -10,7 +10,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * description
+ * Redis DB의 설정 클래스
  *
  * @author 김준현
  * @version 2024. 02. 22
