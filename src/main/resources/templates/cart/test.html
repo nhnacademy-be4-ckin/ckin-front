@@ -6,7 +6,10 @@
 </head>
 <body>
 <div th:each="item: ${PLACE_ITEMS}">
+    <span th:text="${item.id}"></span>
     <span th:text="${item.name}"></span>
+    <span th:text="${item.quantity}"></span>
+    <span th:text="${item.unitPrice}"></span>
 </div>
 </body>
 </html>
