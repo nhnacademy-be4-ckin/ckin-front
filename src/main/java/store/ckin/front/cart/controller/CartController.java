@@ -30,7 +30,6 @@ import store.ckin.front.cart.service.CartService;
 public class CartController {
     private final CartService cartService;
     private static final String REDIRECT_CART_URL = "redirect:/cart";
-    private int count = 0;
 
     @GetMapping
     public String getCartPage(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
@@ -44,8 +43,9 @@ public class CartController {
 
     @GetMapping("/create")
     public String addCartItemTest(@CookieValue(name = "CART_ID") Cookie cookie){
-        count++;
-        cartService.createCartItem(cookie.getValue(), new CartItem("책입니다", count, 1, 3000));
+        cartService.createCartItem(cookie.getValue(), new CartItem("어린왕자", 1, 1, 30000));
+        cartService.createCartItem(cookie.getValue(), new CartItem("MSA기반 Spring Boot개론", 2, 1, 40000));
+        cartService.createCartItem(cookie.getValue(), new CartItem("체크인이라는 서점에대하여", 3, 1, 50000));
         return REDIRECT_CART_URL;
     }
     @PostMapping("/create")
@@ -72,6 +72,8 @@ public class CartController {
     @GetMapping("/order")
     public String placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("PLACE_ITEMS", cartService.readCartItems(cookie.getValue()));
+        cartService.deleteCartItemAll(cookie.getValue());
+        // 주문시 카트 비워지는 로직 추가
         return "redirect:/sale";
     }
 }
