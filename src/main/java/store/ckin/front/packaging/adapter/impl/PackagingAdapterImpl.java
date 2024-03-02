@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.packaging.adapter.PackagingAdapter;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
 import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;

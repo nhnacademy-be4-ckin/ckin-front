@@ -1,4 +1,4 @@
-package store.ckin.front.config;
+package store.ckin.front.config.properties;
 
 import lombok.Getter;
 import lombok.Setter;
