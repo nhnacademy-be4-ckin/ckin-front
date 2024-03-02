@@ -61,10 +61,11 @@
                                 </thead>
 
                                 <tbody>
-                                <tr class="table_row" th:each="bookSale : ${bookSaleList}">
-                                    <input type="hidden" th:value="${bookSale.bookId}" name="bookId">
+                                <tr class="table_row" th:each="bookSale, iterStat : ${bookSaleList}">
+                                    <input type="hidden" th:value="${bookSale.bookId}"
+                                           th:name="|bookSaleList[${iterStat.index}].bookId|">
                                     <input type="hidden" th:id="${bookSale.bookId} + '-coupon'" th:value="0"
-                                           name="appliedCouponId">
+                                           th:name="|bookSaleList[${iterStat.index}].appliedCouponId|">
 
                                     <td class="column-1">
                                         <div class="how-itemcart1">
@@ -81,7 +82,7 @@
                                     <!-- 장바구니에서 넘겨주는 수량 사용 -->
                                     <td class="column-4" th:text="2"></td>
                                     <td class="column-5">
-                                        <button type="button" th:value="${bookSale.bookId}"
+                                        <button type="button"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal"
                                                 th:attr="data-target='#applyCouponBtn-' + ${bookSale.bookId}"
@@ -149,13 +150,15 @@
                                     </td>
                                     <td class="column-6">
                                         <input type="hidden" th:id="${bookSale.bookId} + '-inputPrice'"
-                                               th:value="${bookSale.bookSalePrice} * 2" name="bookSalePrice">
+                                               th:value="${bookSale.bookSalePrice} * 2"
+                                               th:name="|bookSaleList[${iterStat.index}].bookSalePrice|">
                                         <span th:id="${bookSale.bookId} + '-saleOrderPrice'" class="salePrice"
                                               th:text="${bookSale.bookSalePrice} * 2"></span> 원
                                     </td>
                                     <td class="column-7">
                                         <label>
-                                            <select name="packagingId" class="packaging form-control form-control-sm">
+                                            <select th:name="|bookSaleList[${iterStat.index}].packagingId|"
+                                                    class="packaging form-control form-control-sm">
                                                 <option selected value="0">선택 X</option>
                                                 <option th:if="${bookSale.bookPackaging}"
                                                         th:each="packaging : ${policyList.getPackagingPolicies()}"
