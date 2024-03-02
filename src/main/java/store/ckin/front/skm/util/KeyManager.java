@@ -27,7 +27,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import store.ckin.front.config.KeyManagerProperties;
+import store.ckin.front.config.properties.KeyManagerProperties;
 import store.ckin.front.skm.dto.KeyResponseDto;
 import store.ckin.front.skm.exception.KeyMangerException;
 

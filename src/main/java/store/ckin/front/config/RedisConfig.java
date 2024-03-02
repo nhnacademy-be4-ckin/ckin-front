@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import store.ckin.front.config.properties.RedisProperties;
+import store.ckin.front.skm.util.KeyManager;
 
 /**
  * Redis DB의 설정 클래스
@@ -20,15 +22,16 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @RequiredArgsConstructor
 public class RedisConfig {
     private final RedisProperties redisProperties;
+    private final KeyManager keyManager;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
         RedisStandaloneConfiguration redisStandaloneConfiguration
                 = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName("133.186.241.167");
-        redisStandaloneConfiguration.setPort(6379);
-        redisStandaloneConfiguration.setPassword("*N2vya7H@muDTwdNMR!");
-        redisStandaloneConfiguration.setDatabase(10);
+        redisStandaloneConfiguration.setHostName(keyManager.keyStore(redisProperties.getHostname()));
+        redisStandaloneConfiguration.setPort(Integer.parseInt(keyManager.keyStore(redisProperties.getPort())));
+        redisStandaloneConfiguration.setPassword(keyManager.keyStore(redisProperties.getPassword()));
+        redisStandaloneConfiguration.setDatabase(redisProperties.getDatabaseIndex());
 
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
