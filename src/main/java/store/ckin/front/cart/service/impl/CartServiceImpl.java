@@ -28,6 +28,11 @@ public class CartServiceImpl implements CartService {
     private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
     private static final String CART_HASH_KEY = "user_cart";
 
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     * @param item 추가하고자 하는 상품에 대한 정보를 담은 Dto
+     */
     public void createCartItem(String key, CartItem item) {
         // 카트가 존재하지 않을 수도 있으므로, 없으면 생성
         initCartAndUpdateExpire(key);
@@ -40,12 +45,22 @@ public class CartServiceImpl implements CartService {
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     * @return
+     */
     public List<CartItem> readCartItems(String key) {
         initCartAndUpdateExpire(key);
 
         return (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     * @param cartItemUpdateRequestDto 수량 변경을 원하는 상품의 정보가 담긴 Dto
+     */
     public void updateItemQuantity(String key, CartItemUpdateRequestDto cartItemUpdateRequestDto) {
         initCartAndUpdateExpire(key);
 
@@ -62,6 +77,12 @@ public class CartServiceImpl implements CartService {
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
     }
+
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     * @param cartItemDeleteRequestDto 삭제할 상품의 ID가 담긴 Dto
+     */
     public void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto) {
         initCartAndUpdateExpire(key);
 
@@ -74,6 +95,18 @@ public class CartServiceImpl implements CartService {
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     */
+    public void deleteCartItemAll(String key) {
+        redisTemplate.opsForHash().delete(key, CART_HASH_KEY);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param key 현재 유저의 UUID
+     */
     public void initCartAndUpdateExpire(String key) {
         HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
         if(Objects.isNull(hashOperations.get(key, CART_HASH_KEY))) {
