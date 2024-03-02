@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * description
+ * 상품 삭제를 위한 Dto 클래스
  *
  * @author 김준현
  * @version 2024. 02. 28
