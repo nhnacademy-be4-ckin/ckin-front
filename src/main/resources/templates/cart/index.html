@@ -2,11 +2,19 @@
 <html lang="ko"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
-<style>
-    .container {
-        width: 80%;
-    }
-</style>
+<head>
+    <title>CKIN | Shopping Cart</title>
+    <script>
+        function clickUpdateBtn(id) {
+            document.getElementById('updateItemId').value = id;
+        }
+    </script>
+    <style>
+        .container {
+            width: 80%;
+        }
+    </style>
+</head>
 <!-- 본문 내용 -->
 <div layout:fragment="content" class="container">
         <div class="container">
@@ -44,7 +52,8 @@
                                     <td class="column-5">
                                         <button type="button"
                                                 class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                                                data-toggle="modal" data-target="#updateQuantityModal">
+                                                data-toggle="modal" data-target="#updateQuantityModal"
+                                                th:onclick="clickUpdateBtn([[${item.id}]])">
                                             수량 변경
                                         </button>
                                         <!-- Quantity Update Modal -->
@@ -72,7 +81,7 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">취소
                                                             </button>
-                                                                <input th:value="${item.id}" id="updateItemId" name="id" hidden>
+                                                            <input id="updateItemId" name="id">
                                                                 <button type="submit" class="btn btn-dark">수량 변경</button>
                                                         </div>
                                                         </form>
