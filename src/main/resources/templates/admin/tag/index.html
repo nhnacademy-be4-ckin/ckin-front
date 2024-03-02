@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>태그 관리 페이지</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+
+    <!-- 태그 목록 -->
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold mb-2">태그 목록</h2>
+        <ul id="tagList" class="list-group">
+            <!-- 여기에 현재까지 만들어진 태그들을 나열 -->
+            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="tag : ${tagList}">
+                <input id="tagId" th:value="${tag.tagId}" hidden>
+                <span id="tagName" th:text="${tag.tagName}"></span>
+                <div>
+                    <button class="btn btn-danger me-2" onclick="openUpdateModal(this)">태그 수정</button>
+                </div>
+            </li>
+            <!-- 필요에 따라 추가 -->
+        </ul>
+    </div>
+
+    <!-- 태그 추가 버튼 -->
+    <button class="btn btn-primary" onclick="openCreateModal()" style="float: right">태그 추가</button>
+
+
+    <!-- 모달 -->
+    <div id="modal" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="modalForm" name="modalForm" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">태그 추가</h5>
+                        <button type="button" class="btn-close" aria-label="Close" onclick="closeModal()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input id="tagInputId" name="tagId" hidden>
+                            <input type="text" id="tagInputName" name="tagName" class="form-control"
+                                   placeholder="태그를 입력하세요(2자 이상 10자 이하)" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modalExecuteBtn" class="btn btn-primary" onclick="executeModal()">추가
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+                        <button id="modalDeleteBtn" type="button" class="btn btn-danger" onclick="deleteModal()" hidden>삭제</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item" th:each="num : ${#numbers.sequence(1, pageInfo.totalPages)}">
+                <a class="page-link" th:href="@{/admin/tag(page=${num})}" th:text="${num}"></a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+    <script src="/js/tag-script.js"></script>
+</div>
+</body>
+</html>

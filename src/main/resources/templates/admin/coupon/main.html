@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+
+<!-- 본문 내용 -->
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">쿠폰 발급 목록</h1>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">검색</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                    <form th:action="@{/admin/coupon/search}" method="post">
+
+                        <div class="form-group">
+                            <select name="searchId" id="couponSelect" class="form-select">
+                                <option value="1">전체</option>
+                                <option value="2">생일 쿠폰</option>
+                                <option value="3">도서 쿠폰</option>
+                                <option value="4">카테고리 쿠폰</option>
+                                <option value="5">회원 아이디</option>
+                            </select>
+
+                            <script>
+                                // var selectElement = document.getElementById('couponSelect');
+                                // selectElement.addEventListener('change', function() {
+                                //     var selectedValue = selectElement.value;
+                                //     handleOptionSelection(selectedValue);
+                                // });
+
+                                function handleOptionSelection(selectedValue) {
+                                    console.log("selectedValue" + selectedValue);
+                                    var searchValue = document.getElementById('searchContent').value;
+                                    if (selectedValue != 5 && searchValue > 0) {
+                                        window.location.href = '/admin/coupon?id=' + searchValue;
+                                    } else {
+                                        switch (selectedValue) {
+                                            case '1':
+                                                window.location.href = '/admin/coupon?id=' + searchValue;
+                                                break;
+                                            case '2':
+                                                window.location.href = '/admin/coupon/1';
+                                                break;
+                                            case '3':
+                                                window.location.href = '/admin/coupon/2';
+                                                break;
+                                            case '4':
+                                                window.location.href = '/admin/coupon/3';
+                                                break;
+                                            case '5':
+                                                window.location.href = '/admin/coupon/member?id=' + searchValue;
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+
+
+                                }
+                            </script>
+                        </div>
+                    </form>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input id="searchContent" class="form-control mr-sm-2" type="search" placeholder="Search"
+                           aria-label="Search">
+                </form>
+                <div>
+                    <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                </div>
+
+                <script>
+                    document.getElementById('searchButton').addEventListener('click', function () {
+                        // 여기에 검색 버튼 클릭 시 실행할 코드를 작성
+                        var selectedValue = document.getElementById('couponSelect').value;
+                        handleOptionSelection(selectedValue);
+                    });
+                </script>
+            </div>
+        </nav>
+
+
+        <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+            <thead>
+            <tr>
+                <th scope="col">쿠폰 ID</th>
+                <th scope="col">회원 ID</chl></th>
+                <th scope="col">쿠폰 템플릿 ID</th>
+                <th scope="col">정책 ID</th>
+                <th scope="col">도서 ID</th>
+                <th scope="col">카테고리 ID</th>
+                <th scope="col">쿠폰 이름</th>
+                <th scope="col">만료일</th>
+                <th scope="col">발급일</th>
+                <th scope="col">사용일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coupon : ${couponAllList}">
+                <td id="pointPolicyId" th:text="${coupon.id}"></td>
+                <td th:text="${coupon.memberId}"></td>
+                <td th:text="${coupon.couponTemplateId}"></td>
+                <td th:text="${coupon.policyId}"></td>
+                <td th:text="${coupon.bookId}"></td>
+                <td th:text="${coupon.categoryId}"></td>
+                <td th:text="${coupon.name}"></td>
+                <td th:text="${coupon.expirationDate}"></td>
+                <td th:text="${coupon.issueDate}"></td>
+                <td th:text="${coupon.usedDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/admin/coupon(page=${currentPage - 1})}">Previous</a>
+                </li>
+                <th:block th:with="start=1, end=${totalPages}">
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                        <a class="page-link" th:href="@{/admin/coupon(page=${page - 1})}"
+                           th:text="${page}"></a></li>
+                </th:block>
+                <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/admin/coupon(page=${currentPage+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</html>

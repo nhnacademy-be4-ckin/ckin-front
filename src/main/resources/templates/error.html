@@ -2,15 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CKIN - Error</title>
+    <title>체크인 | 에러가 발생하였습니다</title>
+    <style>
+        body {
+            margin: 0 auto;
+            justify-content: center;
+            background-color: #F4EADF;
+        }
+        img {
+            width: 50%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        div {
+            margin-bottom: 100px;
+        }
+    </style>
 </head>
 <body>
-
-<h1>에러 페이지</h1>
-
-<div th:each="error : ${errors}">
-    <p th:text="${error}"></p>
-</div>
-
+<div></div>
+<img src="https://i.ibb.co/4JS0WjH/error-404.jpg" alt="error-404" border="0">
 </body>
 </html>
