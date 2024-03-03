@@ -44,7 +44,7 @@ public class SaleFacade {
     }
 
 
-    public void createSale(SaleCreateRequestDto requestDto) {
-        saleService.createSale(requestDto);
+    public Long createSale(SaleCreateRequestDto requestDto) {
+        return saleService.createSale(requestDto);
     }
 }

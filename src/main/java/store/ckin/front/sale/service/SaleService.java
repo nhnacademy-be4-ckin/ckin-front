@@ -16,5 +16,5 @@ public interface SaleService {
 
     List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId, List<Long> bookId);
 
-    void createSale(SaleCreateRequestDto requestDto);
+    Long createSale(SaleCreateRequestDto requestDto);
 }

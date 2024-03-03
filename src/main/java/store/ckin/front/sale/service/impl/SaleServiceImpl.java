@@ -26,7 +26,7 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public void createSale(SaleCreateRequestDto requestDto) {
-        saleAdapter.requestCreateSale(requestDto);
+    public Long createSale(SaleCreateRequestDto requestDto) {
+        return saleAdapter.requestCreateSale(requestDto);
     }
 }

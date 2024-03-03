@@ -51,14 +51,16 @@ public class SaleAdapterImpl implements SaleAdapter {
     }
 
     @Override
-    public void requestCreateSale(SaleCreateRequestDto requestDto) {
+    public Long requestCreateSale(SaleCreateRequestDto requestDto) {
         HttpEntity<SaleCreateRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
 
-        restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
+        ResponseEntity<Long> exchange = restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
                 HttpMethod.POST,
                 requestEntity,
-                new ParameterizedTypeReference<Void>() {
+                new ParameterizedTypeReference<>() {
                 });
+
+        return exchange.getBody();
     }
 
     private String buildBookIds(List<Long> bookIds) {
