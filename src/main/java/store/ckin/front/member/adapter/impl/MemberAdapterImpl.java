@@ -1,5 +1,6 @@
 package store.ckin.front.member.adapter.impl;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -20,9 +21,6 @@ import store.ckin.front.member.domain.MemberAuthResponseDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
 import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.util.AdapterHeaderUtil;
-
-import javax.swing.text.html.Option;
-import java.util.Optional;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.

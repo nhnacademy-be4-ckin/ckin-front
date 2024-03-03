@@ -1,13 +1,10 @@
 package store.ckin.front.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
-import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
 /**

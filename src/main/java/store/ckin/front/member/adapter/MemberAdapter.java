@@ -1,7 +1,6 @@
 package store.ckin.front.member.adapter;
 
 import java.util.Optional;
-import org.springframework.http.ResponseEntity;
 import store.ckin.front.member.domain.MemberAuthRequestDto;
 import store.ckin.front.member.domain.MemberAuthResponseDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;

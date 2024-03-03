@@ -2,7 +2,6 @@ package store.ckin.front.member.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
