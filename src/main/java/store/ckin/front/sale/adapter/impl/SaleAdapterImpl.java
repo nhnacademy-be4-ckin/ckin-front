@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
+import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -31,6 +32,8 @@ public class SaleAdapterImpl implements SaleAdapter {
 
     private static final String COUPON_URL = "/coupon";
 
+    private static final String SALE_URL = "/api/sales";
+
 
     @Override
     public List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId, List<Long> bookId) {
@@ -45,6 +48,17 @@ public class SaleAdapterImpl implements SaleAdapter {
                 }, memberId);
 
         return exchange.getBody();
+    }
+
+    @Override
+    public void requestCreateSale(SaleCreateRequestDto requestDto) {
+        HttpEntity<SaleCreateRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
+
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                });
     }
 
     private String buildBookIds(List<Long> bookIds) {

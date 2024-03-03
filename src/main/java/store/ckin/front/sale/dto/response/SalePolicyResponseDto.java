@@ -1,4 +1,4 @@
-package store.ckin.front.sale.dto;
+package store.ckin.front.sale.dto.response;
 
 import java.util.List;
 import lombok.Builder;
@@ -14,14 +14,14 @@ import store.ckin.front.packaging.dto.response.PackagingResponseDto;
  */
 
 @Getter
-public class SalePolicyDto {
+public class SalePolicyResponseDto {
 
     private final List<PackagingResponseDto> packagingPolicies;
 
     private final DeliveryPolicyResponseDto deliveryPolicy;
 
     @Builder
-    public SalePolicyDto(List<PackagingResponseDto> packagingPolicies, DeliveryPolicyResponseDto deliveryPolicy) {
+    public SalePolicyResponseDto(List<PackagingResponseDto> packagingPolicies, DeliveryPolicyResponseDto deliveryPolicy) {
         this.packagingPolicies = packagingPolicies;
         this.deliveryPolicy = deliveryPolicy;
     }

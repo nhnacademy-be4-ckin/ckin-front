@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
+import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -22,5 +23,10 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId, List<Long> bookId) {
         return saleAdapter.requestCouponsByMemberId(memberId, bookId);
+    }
+
+    @Override
+    public void createSale(SaleCreateRequestDto requestDto) {
+        saleAdapter.requestCreateSale(requestDto);
     }
 }
