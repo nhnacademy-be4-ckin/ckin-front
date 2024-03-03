@@ -66,6 +66,7 @@
                                            th:name="|bookSaleList[${iterStat.index}].bookId|">
                                     <input type="hidden" th:id="${bookSale.bookId} + '-coupon'" th:value="0"
                                            th:name="|bookSaleList[${iterStat.index}].appliedCouponId|">
+                                    <input type="hidden" th:value="2" th:name="|bookSaleList[${iterStat.index}].quantity|">
 
                                     <td class="column-1">
                                         <div class="how-itemcart1">
@@ -151,7 +152,7 @@
                                     <td class="column-6">
                                         <input type="hidden" th:id="${bookSale.bookId} + '-inputPrice'"
                                                th:value="${bookSale.bookSalePrice} * 2"
-                                               th:name="|bookSaleList[${iterStat.index}].bookSalePrice|">
+                                               th:name="|bookSaleList[${iterStat.index}].paymentAmount|">
                                         <span th:id="${bookSale.bookId} + '-saleOrderPrice'" class="salePrice"
                                               th:text="${bookSale.bookSalePrice} * 2"></span> 원
                                     </td>
@@ -218,7 +219,7 @@
                             <div class="input-group" style="vertical-align: middle">
                                 <input id="memberPoint" type="number" value="0"
                                        class="stext-104 cl2 plh4 size-126 bor13 p-lr-20 m-r-10 m-tb-5"
-                                       placeholder="사용할 포인트를 입력해주세요." name="saleReceiverName"
+                                       placeholder="사용할 포인트를 입력해주세요."
                                        aria-placeholder="포인트" aria-label="포인트">
                                 <div class="input-group-append">
                                     <button class="stext-104 cl2 size-127 bg8 bor13 hov-btn3 p-lr-20 m-t-5 m-r-10 b-tb-5 trans-04 pointer"
@@ -262,19 +263,19 @@
                                 <div class="p-t-15">
 
                                     <div class="bor8 bg0 m-b-12">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode"
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" th:name="postcode"
                                                id="postcode" placeholder="우편번호" readonly onclick="execDaumPostcode()">
                                     </div>
 
                                     <div class="bor8 bg0 m-b-12">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="address"
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" th:name="address"
                                                id="address" placeholder="도로명/지번 주소" readonly
                                                onclick="execDaumPostcode()">
                                     </div>
 
                                     <div class="bor8 bg0 m-b-12">
                                         <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text"
-                                               name="detailAddress" id="detailAddress"
+                                               th:name="detailAddress" id="detailAddress"
                                                placeholder="상세 주소">
                                     </div>
 
@@ -359,6 +360,7 @@
                             </div>
 
                             <div class="size-209 p-t-1">
+                                <input type="hidden" th:id="pointUsage" th:value="0" th:name="pointUsage">
                                 <span class="discount stext-117 cl2">
 									- <span id="pointDiscount">0</span> 원
 								</span>
@@ -375,6 +377,7 @@
 
                             <div class="size-209 p-t-1">
 								<span class="stext-117 cl2">
+                                    <input type="hidden" th:name="totalPrice" th:id="totalSalePrice">
 									<span id="totalPrice">0</span> 원
 								</span>
                             </div>
@@ -532,6 +535,8 @@
             let memberPoint = parseInt(document.getElementById('memberPoint').value);
 
             totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount - memberPoint).toFixed(0);
+
+            document.getElementById('totalSalePrice').value = totalPrice.textContent;
         }
 
         updateTotalPrice(); // 페이지 로드 시 결제 총 금액을 계산하여 업데이트
@@ -576,6 +581,7 @@
             alert('포인트를 사용하였습니다.');
 
             document.getElementById('pointDiscount').textContent = applyMemberPoint;
+            document.getElementById('pointUsage').value = applyMemberPoint;
 
             updateTotalPrice();
         }
