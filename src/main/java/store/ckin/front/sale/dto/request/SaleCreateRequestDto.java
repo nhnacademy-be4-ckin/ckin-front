@@ -53,8 +53,7 @@ public class SaleCreateRequestDto {
 
     @NotBlank(message = "주소를 입력해주세요.")
     private String address;
-
-
+    
     private String detailAddress;
 
     @PositiveOrZero(message = "포인트 사용량은 0보다 작을 수 없습니다.")

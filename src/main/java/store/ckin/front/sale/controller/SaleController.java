@@ -3,7 +3,6 @@ package store.ckin.front.sale.controller;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
-@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -31,6 +29,12 @@ public class SaleController {
 
     private final SaleFacade saleFacade;
 
+    /**
+     * 주문 등록 페이지를 요청하는 메서드입니다.
+     *
+     * @param model Model 객체 (주문 등록에 사용될 정책, 책 목록 정보)
+     * @return 주문 등록 페이지
+     */
     @GetMapping
     public String getSaleForm(Model model) {
 
@@ -44,14 +48,21 @@ public class SaleController {
     }
 
 
+    /**
+     * 주문을 등록하는 메서드입니다.
+     *
+     * @param requestDto 주문 등록 요청 정보
+     * @param redirectAttributes 주문 등록 성공 시, 주문 번호를 전달하기 위한 RedirectAttributes 객체
+     * @return 주문 완료 페이지로 이동
+     */
     @PostMapping
     public String createSale(@Valid SaleCreateRequestDto requestDto,
                              RedirectAttributes redirectAttributes) {
         Long saleId = saleFacade.createSale(requestDto);
 
-        // TODO : 주문 완료 페이지로 이동하며 주문번호를 전달한다.
-        log.debug("주문 완료 : {}", saleId);
         redirectAttributes.addFlashAttribute("saleId", saleId);
+
+        // todo: 주문 완료 페이지 생성 후 REDIRECT URL 변경 필요!!
         return "redirect:/";
     }
 

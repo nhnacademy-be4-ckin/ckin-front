@@ -33,6 +33,11 @@ public class SaleFacade {
     private final SaleService saleService;
 
 
+    /**
+     * 주문 페이지에서 필요한 정책(배송, 포장) 목록을 조회하는 메서드입니다.
+     *
+     * @return 정책 응답 DTO
+     */
     public SalePolicyResponseDto getPolicyList() {
         return SalePolicyResponseDto.builder()
                 .deliveryPolicy(deliveryPolicyService.getActiveDeliveryPolicy())
@@ -40,15 +45,31 @@ public class SaleFacade {
                 .build();
     }
 
+    /**
+     * 주문 페이지에서 필요한 주문할 책 정보 목록을 조회하는 메서드입니다.
+     *
+     * @param bookIds 책 ID 목록
+     * @return 책 정보 목록
+     */
     public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
         return bookService.getBookSaleList(bookIds);
     }
 
-
+    /**
+     * 주문을 생성하는 메서드입니다.
+     *
+     * @param requestDto 주문 생성 요청 DTO
+     * @return 주문 ID
+     */
     public Long createSale(SaleCreateRequestDto requestDto) {
         return saleService.createSale(requestDto);
     }
 
+    /**
+     * 모든 주문을 조회하는 메서드입니다.
+     *
+     * @return 주문 응답 DTO 리스트
+     */
     public List<SaleResponseDto> getSales() {
         return saleService.getSales();
     }

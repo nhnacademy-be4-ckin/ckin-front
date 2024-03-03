@@ -25,6 +25,12 @@ public class AdminSaleController {
 
     private final SaleFacade saleFacade;
 
+    /**
+     * 모든 주문 목록을 조회하는 메서드.
+     *
+     * @param model Model 객체
+     * @return 주문 목록 페이지
+     */
     @GetMapping
     public String getSales(Model model) {
 
