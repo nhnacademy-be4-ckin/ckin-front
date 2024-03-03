@@ -7,8 +7,9 @@ import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.packaging.service.PackagingService;
-import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
+import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -46,5 +47,9 @@ public class SaleFacade {
 
     public Long createSale(SaleCreateRequestDto requestDto) {
         return saleService.createSale(requestDto);
+    }
+
+    public List<SaleResponseDto> getSales() {
+        return saleService.getSales();
     }
 }

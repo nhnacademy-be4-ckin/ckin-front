@@ -3,6 +3,7 @@ package store.ckin.front.sale.service;
 import java.util.List;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleResponseDto;
 
 /**
  * 주문 서비스 인터페이스입니다.
@@ -17,4 +18,6 @@ public interface SaleService {
     List<GetCouponResponseDto> requestCouponsByMemberId(Long memberId, List<Long> bookId);
 
     Long createSale(SaleCreateRequestDto requestDto);
+
+    List<SaleResponseDto> getSales();
 }

@@ -14,6 +14,7 @@ import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleResponseDto;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -56,6 +57,21 @@ public class SaleAdapterImpl implements SaleAdapter {
 
         ResponseEntity<Long> exchange = restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
                 HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public List<SaleResponseDto> requestGetSales() {
+
+        HttpEntity<List<SaleResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<List<SaleResponseDto>> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL,
+                HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });

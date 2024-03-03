@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -28,5 +29,10 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public Long createSale(SaleCreateRequestDto requestDto) {
         return saleAdapter.requestCreateSale(requestDto);
+    }
+
+    @Override
+    public List<SaleResponseDto> getSales() {
+        return saleAdapter.requestGetSales();
     }
 }
