@@ -13,7 +13,7 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
  * @version : 2024. 02. 16.
  */
 public interface MemberAdapter {
-    ResponseEntity<Void> createMember(MemberCreateRequestDto memberCreateRequestDto);
+    void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     Optional<MemberAuthResponseDto> getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);
 }

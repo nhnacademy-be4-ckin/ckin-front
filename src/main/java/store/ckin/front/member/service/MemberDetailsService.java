@@ -27,19 +27,16 @@ public class MemberDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        Optional<MemberAuthResponseDto> memberAuthResponseDto =
-                memberAdapter.getMemberAuthInfo(new MemberAuthRequestDto(email));
+        MemberAuthResponseDto memberInfo =
+                memberAdapter.getMemberAuthInfo(new MemberAuthRequestDto(email))
+                        .orElseThrow(() ->
+                                new UsernameNotFoundException(
+                                        String.format("Not found information for this email [%s]",
+                                                email)));
 
-        MemberAuthResponseDto memberInfo;
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(memberInfo::getRole);
 
-        if (memberAuthResponseDto.isPresent()) {
-            memberInfo = memberAuthResponseDto.get();
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(memberInfo::getRole);
-
-            return new User(memberInfo.getId().toString(), memberInfo.getPassword(), authorities);
-        }
-
-        throw new UsernameNotFoundException(email + " : email 에 대한 정보가 없어 인증에 실패 하였습니다.");
+        return new User(memberInfo.getId().toString(), memberInfo.getPassword(), authorities);
     }
 }

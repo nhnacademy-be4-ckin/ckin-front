@@ -28,10 +28,6 @@ public class MemberServiceImpl implements MemberService {
         String encodedPwd = bcryptPasswordEncoder.encode(memberCreateRequestDto.getPassword());
         memberCreateRequestDto.setEncodedPassword(encodedPwd);
 
-        ResponseEntity<Void> responseEntity = memberAdapter.createMember(memberCreateRequestDto);
-
-        if (responseEntity.getStatusCode() == HttpStatus.CONFLICT) {
-            throw new MemberAlreadyExistsException();
-        }
+        memberAdapter.createMember(memberCreateRequestDto);
     }
 }

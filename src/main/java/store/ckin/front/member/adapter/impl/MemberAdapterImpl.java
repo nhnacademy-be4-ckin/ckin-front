@@ -1,20 +1,28 @@
 package store.ckin.front.member.adapter.impl;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.MemberAuthRequestDto;
 import store.ckin.front.member.domain.MemberAuthResponseDto;
 import store.ckin.front.member.domain.MemberCreateRequestDto;
+import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.util.AdapterHeaderUtil;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.
@@ -30,33 +38,52 @@ public class MemberAdapterImpl implements MemberAdapter {
     private final GatewayProperties gatewayProperties;
 
     @Override
-    public ResponseEntity<Void> createMember(MemberCreateRequestDto memberCreateRequestDto) {
-        HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
+    public void createMember(MemberCreateRequestDto memberCreateRequestDto) {
+        try {
+            HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
 
-        HttpEntity<MemberCreateRequestDto> requestEntity = new HttpEntity<>(memberCreateRequestDto, headers);
+            HttpEntity<MemberCreateRequestDto> requestEntity = new HttpEntity<>(memberCreateRequestDto, headers);
 
-        return restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/api/members",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<>() {
-                });
+            restTemplate.exchange(
+                    gatewayProperties.getGatewayUri() + "/api/members",
+                    HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<>() {
+                    });
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().equals(HttpStatus.CONFLICT)) {
+                throw new MemberAlreadyExistsException();
+            }
+        } catch (HttpServerErrorException ex) {
+            throw new ServerErrorException();
+        }
+
     }
 
     @Override
     public Optional<MemberAuthResponseDto> getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto) {
-        HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
+        try {
+            HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
 
-        HttpEntity<MemberAuthRequestDto> requestEntity = new HttpEntity<>(memberAuthRequestDto, headers);
-        ResponseEntity<Optional<MemberAuthResponseDto>> responseEntity =  restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/api/login",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<>() {
-                });
+            HttpEntity<MemberAuthRequestDto> requestEntity = new HttpEntity<>(memberAuthRequestDto, headers);
+            ResponseEntity<MemberAuthResponseDto> responseEntity = restTemplate.exchange(
+                    gatewayProperties.getGatewayUri() + "/api/login",
+                    HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<>() {
+                    });
 
-        return responseEntity.getBody();
+            return Optional.ofNullable(responseEntity.getBody());
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                throw new UsernameNotFoundException(
+                        String.format("Not found information for this email [%s]",
+                                memberAuthRequestDto.getEmail()));
+            }
+        } catch (HttpServerErrorException ex) {
+            throw new ServerErrorException();
+        }
+
+        return Optional.empty();
     }
-
-
 }
