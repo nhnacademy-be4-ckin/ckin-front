@@ -41,7 +41,7 @@ public class CartController {
     public String getCartPage(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
         List<CartItem> currentUserCart = cartService.readCartItems(cookie.getValue());
         for(CartItem item: currentUserCart) {
-            log.info("saved in cart: name -> {}, id -> {}, quantity -> {}", item.getName(), item.getId(), item.getQuantity());
+            log.debug("saved in cart: name -> {}, id -> {}, quantity -> {}", item.getName(), item.getId(), item.getQuantity());
         }
         model.addAttribute("CART_ITEMS", currentUserCart);
         return "cart/index";
