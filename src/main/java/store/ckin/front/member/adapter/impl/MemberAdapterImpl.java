@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
-import store.ckin.front.member.domain.MemberAuthRequestDto;
-import store.ckin.front.member.domain.MemberAuthResponseDto;
-import store.ckin.front.member.domain.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.response.MemberAuthResponseDto;
+import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.util.AdapterHeaderUtil;
 
 /**

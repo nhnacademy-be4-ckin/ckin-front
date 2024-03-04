@@ -1,5 +1,6 @@
-package store.ckin.front.member.domain;
+package store.ckin.front.member.domain.request;
 
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,6 +13,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberInfoDetailRequestDto {
+    @NotNull
     Long id;
 
     public MemberInfoDetailRequestDto(String id) {

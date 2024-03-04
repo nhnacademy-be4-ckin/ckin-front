@@ -1,7 +1,6 @@
 package store.ckin.front.member.service;
 
-import store.ckin.front.member.domain.LoginRequestDto;
-import store.ckin.front.member.domain.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 
 /**
  * Member 관련 서비스에 대한 Interface 입니다.

@@ -1,4 +1,4 @@
-package store.ckin.front.member.domain;
+package store.ckin.front.member.domain.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

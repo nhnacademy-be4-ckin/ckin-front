@@ -1,4 +1,4 @@
-package store.ckin.front.member.domain;
+package store.ckin.front.member.domain.request;
 
 import java.time.LocalDate;
 import javax.validation.constraints.Email;
