@@ -27,8 +27,6 @@ import store.ckin.front.util.CookieUtil;
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final TokenService tokenService;
 
-    private final CookieUtil cookieUtil;
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
@@ -46,6 +44,8 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult)
             throws IOException, ServletException {
+        log.debug("CustomLoginFilter : Success Authentication");
+
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
 
         String id = authenticationToken.getName();
@@ -72,7 +72,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String accessToken = tokenResponseDto.getAccessToken();
         String refreshToken = tokenResponseDto.getRefreshToken();
 
-        cookieUtil.makeCookie(response, "accessToken", accessToken);
-        cookieUtil.makeCookie(response, "refreshToken", refreshToken);
+        CookieUtil.makeCookie(response, "accessToken", accessToken);
+        CookieUtil.makeCookie(response, "refreshToken", refreshToken);
     }
 }

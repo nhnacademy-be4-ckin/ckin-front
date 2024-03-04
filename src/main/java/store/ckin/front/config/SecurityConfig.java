@@ -21,9 +21,7 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.
@@ -37,14 +35,9 @@ import store.ckin.front.util.CookieUtil;
 public class SecurityConfig {
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final MemberService memberService;
-
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
-
-    private final CookieUtil cookieUtil = new CookieUtil();
-
 
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
@@ -88,7 +81,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(redisTemplate, memberService, tokenService, cookieUtil);
+        return new JwtFilter(redisTemplate, memberDetailsService, tokenService);
     }
 
     /**
@@ -98,7 +91,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService, cookieUtil);
+        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");

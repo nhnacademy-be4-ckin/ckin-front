@@ -2,8 +2,6 @@ package store.ckin.front.member.filter;
 
 import com.auth0.jwt.JWT;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 import javax.servlet.FilterChain;
@@ -15,13 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNouFoundException;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
-import store.ckin.front.member.service.MemberService;
+import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -40,18 +36,16 @@ import store.ckin.front.util.CookieUtil;
 public class JwtFilter extends OncePerRequestFilter {
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final MemberService memberService;
+    private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
-
-    private final CookieUtil cookieUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
             // Access 토큰이 만료되었는지 확인
-            Cookie accessTokenCookie = cookieUtil.findCookie(request, "accessToken");
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
@@ -61,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = cookieUtil.findCookie(request, "refreshToken");
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
@@ -81,20 +75,21 @@ public class JwtFilter extends OncePerRequestFilter {
             String uuid = getUuid(accessToken);
             String memberId = getMemberId(uuid);
 
-            MemberInfoDetailResponseDto memberInfo =
-                    memberService.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
-
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(memberInfo::getRole);
+            UserDetails memberDetails = memberDetailsService.loadUserById(memberId);
 
             UsernamePasswordAuthenticationToken token =
-                    new UsernamePasswordAuthenticationToken(memberId, null, authorities);
+                    new UsernamePasswordAuthenticationToken(
+                            memberDetails.getUsername(),
+                            null,
+                            memberDetails.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(token);
 
             filterChain.doFilter(request, response);
         } catch (CookieNouFoundException ex) {
-            log.error("{} : Cookie not found", ex.getClass().getName());
+            log.debug("{} : Cookie not found", ex.getClass().getName());
+
+            filterChain.doFilter(request, response);
         } catch (TokenAuthenticationFailedException ex) {
             log.error(ex.getMessage());
         } catch (TokenExpiredException ex) {
@@ -130,7 +125,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
 
-        cookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
-        cookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+        CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
+        CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
     }
 }
