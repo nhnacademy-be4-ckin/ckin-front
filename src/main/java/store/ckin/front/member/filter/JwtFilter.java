@@ -2,8 +2,6 @@ package store.ckin.front.member.filter;
 
 import com.auth0.jwt.JWT;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 import javax.servlet.FilterChain;
@@ -15,15 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNouFoundException;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.service.MemberDetailsService;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -95,7 +89,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (CookieNouFoundException ex) {
-            log.error("{} : Cookie not found", ex.getClass().getName());
+            log.debug("{} : Cookie not found", ex.getClass().getName());
+
+            filterChain.doFilter(request, response);
         } catch (TokenAuthenticationFailedException ex) {
             log.error(ex.getMessage());
         } catch (TokenExpiredException ex) {

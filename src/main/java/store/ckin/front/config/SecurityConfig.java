@@ -21,7 +21,6 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.service.TokenService;
 import store.ckin.front.util.CookieUtil;
 
