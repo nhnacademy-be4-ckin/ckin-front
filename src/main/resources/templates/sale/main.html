@@ -50,13 +50,13 @@
                             <table class="table-shopping-cart" style="text-align: center;">
                                 <thead>
                                 <tr class="table_head">
-                                    <th class="column-1"></th>
-                                    <th class="column-2">상품명</th>
-                                    <th class="column-3">판매가</th>
-                                    <th class="column-4">수량</th>
-                                    <th class="column-5">쿠폰</th>
-                                    <th class="column-6">주문금액</th>
-                                    <th class="column-7">🎁 포장지</th>
+                                    <th class="column-sj-1"></th>
+                                    <th class="column-sj-2">상품명</th>
+                                    <th class="column-sj-3">판매가</th>
+                                    <th class="column-sj-4">수량</th>
+                                    <th class="column-sj-5">쿠폰</th>
+                                    <th class="column-sj-6">주문금액</th>
+                                    <th class="column-sj-7">🎁 포장지</th>
                                 </tr>
                                 </thead>
 
@@ -66,23 +66,23 @@
                                            th:name="|bookSaleList[${iterStat.index}].bookId|">
                                     <input type="hidden" th:id="${bookSale.bookId} + '-coupon'" th:value="0"
                                            th:name="|bookSaleList[${iterStat.index}].appliedCouponId|">
-                                    <input type="hidden" th:value="2" th:name="|bookSaleList[${iterStat.index}].quantity|">
+                                    <input type="hidden" th:value="${bookSale.quantity}" th:name="|bookSaleList[${iterStat.index}].quantity|">
 
-                                    <td class="column-1">
+                                    <td class="column-sj-1">
                                         <div class="how-itemcart1">
                                             <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
                                                  alt="IMG">
                                         </div>
                                     </td>
 
-                                    <td class="column-2" th:text="${bookSale.bookTitle}"></td>
-                                    <td class="column-3">
+                                    <td class="column-sj-2" th:text="${bookSale.bookTitle}"></td>
+                                    <td class="column-sj-3">
                                         <span th:text="${bookSale.bookSalePrice}"></span> 원
                                     </td>
 
                                     <!-- 장바구니에서 넘겨주는 수량 사용 -->
-                                    <td class="column-4" th:text="2"></td>
-                                    <td class="column-5">
+                                    <td class="column-sj-4" th:text="${bookSale.quantity}"></td>
+                                    <td class="column-sj-5">
                                         <button type="button"
                                                 class="flex-c-m stext-101 cl2 size-106 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
                                                 data-toggle="modal"
@@ -149,14 +149,14 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="column-6">
+                                    <td class="column-sj-6">
                                         <input type="hidden" th:id="${bookSale.bookId} + '-inputPrice'"
-                                               th:value="${bookSale.bookSalePrice} * 2"
+                                               th:value="${bookSale.bookSalePrice} * ${bookSale.quantity}"
                                                th:name="|bookSaleList[${iterStat.index}].paymentAmount|">
                                         <span th:id="${bookSale.bookId} + '-saleOrderPrice'" class="salePrice"
-                                              th:text="${bookSale.bookSalePrice} * 2"></span> 원
+                                              th:text="${bookSale.bookSalePrice} * ${bookSale.quantity}"></span> 원
                                     </td>
-                                    <td class="column-7">
+                                    <td class="column-sj-7">
                                         <label>
                                             <select th:name="|bookSaleList[${iterStat.index}].packagingId|"
                                                     class="packaging form-control form-control-sm">
