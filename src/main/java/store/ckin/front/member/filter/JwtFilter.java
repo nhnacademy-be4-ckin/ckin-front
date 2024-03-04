@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNouFoundException;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
@@ -36,8 +37,6 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            //TODO: 인증이 필요없는 공개적인 URL 은 바로 통과되게 하기
-
             // Access 토큰이 만료되었는지 확인
             Cookie accessTokenCookie = cookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
@@ -65,7 +64,7 @@ public class JwtFilter extends OncePerRequestFilter {
             updateJwtTokenCookie(request, response, tokenResponseDto);
             log.debug("JwtFilter : Finish reissue Token");
 
-            //TODO: Auth 서버에서 토큰이 인증이 되었다면, 보내준 정보를 가지고 Authentication 객체 만들기
+            // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
 
             filterChain.doFilter(request, response);
         } catch (CookieNouFoundException ex) {
@@ -74,9 +73,11 @@ public class JwtFilter extends OncePerRequestFilter {
             log.error(ex.getMessage());
         } catch (TokenExpiredException ex) {
             log.error("{} : Refresh Token is expired", ex.getClass().getName());
-        }
+        } finally {
+            SecurityContextHolder.clearContext();
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        }
     }
 
     private boolean isExpired(String token) {
