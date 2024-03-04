@@ -37,8 +37,6 @@ import store.ckin.front.util.CookieUtil;
 public class SecurityConfig {
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final MemberService memberService;
-
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
@@ -88,7 +86,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(redisTemplate, memberService, tokenService, cookieUtil);
+        return new JwtFilter(redisTemplate, memberDetailsService, tokenService, cookieUtil);
     }
 
     /**
