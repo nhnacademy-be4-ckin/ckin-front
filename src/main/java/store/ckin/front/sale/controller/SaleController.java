@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
+@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -63,6 +65,9 @@ public class SaleController {
     @PostMapping
     public String createSale(@Valid SaleCreateRequestDto requestDto,
                              RedirectAttributes redirectAttributes) {
+
+        log.info("SaleCreateRequestDto: {}", requestDto);
+
         Long saleId = saleFacade.createSale(requestDto);
 
         redirectAttributes.addFlashAttribute("saleId", saleId);
