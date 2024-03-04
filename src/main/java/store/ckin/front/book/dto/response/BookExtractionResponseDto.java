@@ -28,4 +28,10 @@ public class BookExtractionResponseDto {
     private Integer bookStock;
 
     private List<Long> categoryIds;
+
+    private Integer quantity;
+
+    public void updateQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

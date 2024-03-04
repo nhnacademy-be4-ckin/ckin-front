@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
+import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
@@ -39,8 +40,10 @@ public class SaleController {
     public String getSaleForm(Model model) {
 
         SalePolicyResponseDto policyList = saleFacade.getPolicyList();
-        List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(List.of(1L, 2L, 5L));
 
+        List<CartItem> cartItems = (List<CartItem>) model.getAttribute("PLACE_ITEMS");
+
+        List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(cartItems);
 
         model.addAttribute("policyList", policyList);
         model.addAttribute("bookSaleList", bookSaleList);
@@ -51,7 +54,7 @@ public class SaleController {
     /**
      * 주문을 등록하는 메서드입니다.
      *
-     * @param requestDto 주문 등록 요청 정보
+     * @param requestDto         주문 등록 요청 정보
      * @param redirectAttributes 주문 등록 성공 시, 주문 번호를 전달하기 위한 RedirectAttributes 객체
      * @return 주문 완료 페이지로 이동
      */

@@ -1,10 +1,12 @@
 package store.ckin.front.sale.facade;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
+import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
@@ -48,11 +50,23 @@ public class SaleFacade {
     /**
      * 주문 페이지에서 필요한 주문할 책 정보 목록을 조회하는 메서드입니다.
      *
-     * @param bookIds 책 ID 목록
+     * @param cartItems 장바구니 도서 리스트
      * @return 책 정보 목록
      */
-    public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
-        return bookService.getBookSaleList(bookIds);
+    public List<BookExtractionResponseDto> getBookSaleList(List<CartItem> cartItems) {
+
+        List<Long> bookIds = cartItems.stream()
+                .map(CartItem::getId)
+                .collect(Collectors.toList());
+
+        List<BookExtractionResponseDto> bookSaleList = bookService.getBookSaleList(bookIds);
+
+        bookSaleList.forEach(
+                book -> cartItems.stream()
+                        .filter(cartItem -> cartItem.getId() == book.getBookId())
+                        .forEach(cartItem -> book.updateQuantity(cartItem.getQuantity())));
+
+        return bookSaleList;
     }
 
     /**
