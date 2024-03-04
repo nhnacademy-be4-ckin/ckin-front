@@ -14,5 +14,5 @@ import store.ckin.front.member.domain.MemberCreateRequestDto;
 public interface MemberAdapter {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
-    Optional<MemberAuthResponseDto> getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);
+    MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);
 }
