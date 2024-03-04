@@ -45,4 +45,6 @@ public interface CouponAdapter {
      * @return 쿠폰 목록 DTO
      */
     PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId);
+
+    boolean createCouponByIds(Long memberId, Long couponTemplateId);
 }

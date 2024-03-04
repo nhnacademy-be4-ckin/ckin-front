@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupontemplate.adapter.CouponTemplateAdapter;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
