@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
-import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.config.properties.GatewayProperties;
 
 /**
  * 도서 어댑터 구현 클래스입니다.
