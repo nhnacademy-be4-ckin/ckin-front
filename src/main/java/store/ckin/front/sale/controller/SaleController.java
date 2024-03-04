@@ -1,6 +1,7 @@
 package store.ckin.front.sale.controller;
 
 import java.util.List;
+import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,8 @@ public class SaleController {
 
         List<CartItem> cartItems = (List<CartItem>) model.getAttribute("PLACE_ITEMS");
 
-        List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(cartItems);
+        List<BookExtractionResponseDto> bookSaleList =
+                saleFacade.getBookSaleList(Objects.requireNonNull(cartItems));
 
         model.addAttribute("policyList", policyList);
         model.addAttribute("bookSaleList", bookSaleList);
