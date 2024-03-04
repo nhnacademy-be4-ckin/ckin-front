@@ -56,9 +56,9 @@ public class SecurityConfig {
                 .logout().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/login", "/signup").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
@@ -77,7 +77,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService, cookieUtil);
+        CustomLoginFilter filter = new CustomLoginFilter(tokenService, cookieUtil);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");
@@ -92,7 +92,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-        throws Exception {
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
