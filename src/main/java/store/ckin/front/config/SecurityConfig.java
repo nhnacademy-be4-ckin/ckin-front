@@ -22,7 +22,6 @@ import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.

@@ -44,6 +44,8 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult)
             throws IOException, ServletException {
+        log.debug("CustomLoginFilter : Success Authentication");
+
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
 
         String id = authenticationToken.getName();
