@@ -40,9 +40,6 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
-    private final CookieUtil cookieUtil = new CookieUtil();
-
-
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
      *
@@ -85,7 +82,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(redisTemplate, memberDetailsService, tokenService, cookieUtil);
+        return new JwtFilter(redisTemplate, memberDetailsService, tokenService);
     }
 
     /**
@@ -95,7 +92,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService, cookieUtil);
+        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");

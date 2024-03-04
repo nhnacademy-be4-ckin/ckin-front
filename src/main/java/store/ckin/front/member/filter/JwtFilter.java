@@ -40,14 +40,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
-    private final CookieUtil cookieUtil;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
             // Access 토큰이 만료되었는지 확인
-            Cookie accessTokenCookie = cookieUtil.findCookie(request, "accessToken");
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
@@ -57,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = cookieUtil.findCookie(request, "refreshToken");
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
@@ -127,7 +125,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
 
-        cookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
-        cookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+        CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
+        CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
     }
 }
