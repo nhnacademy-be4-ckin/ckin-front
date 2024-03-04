@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.common.dto.PagedResponse;
-import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.tag.adapter.TagAdaptor;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
