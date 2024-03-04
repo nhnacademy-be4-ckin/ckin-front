@@ -14,8 +14,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
-import store.ckin.front.member.domain.MemberAuthRequestDto;
-import store.ckin.front.member.domain.MemberAuthResponseDto;
+import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 
 /**
  * UserDetailsService 를 구현한 클래스 입니다.

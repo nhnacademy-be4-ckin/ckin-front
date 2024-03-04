@@ -1,5 +1,8 @@
 package store.ckin.front.config;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,4 +51,5 @@ public class RedisConfig {
 
         return redisTemplate;
     }
+
 }

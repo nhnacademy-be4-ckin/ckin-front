@@ -2,14 +2,17 @@ package store.ckin.front.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,6 +21,7 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.service.TokenService;
 import store.ckin.front.util.CookieUtil;
 
@@ -31,6 +35,10 @@ import store.ckin.front.util.CookieUtil;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    private final MemberService memberService;
+
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
@@ -58,16 +66,29 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home", "/login", "/signup").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    /**
+     * Web security customizer web security customizer.
+     *
+     * @return the web security customizer
+     */
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers(PathRequest
+                        .toStaticResources()
+                        .atCommonLocations());
+    }
+
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(tokenService, cookieUtil);
+        return new JwtFilter(redisTemplate, memberService, tokenService, cookieUtil);
     }
 
     /**
