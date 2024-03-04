@@ -110,7 +110,7 @@
                             </ul>
                         </div>
                         <div style="text-align: center">
-                            <form action="cart/order" method="get">
+                            <form th:unless="${CART_ITEMS.isEmpty()}" action="cart/order" method="get">
                                 <button class="flex-c-m stext-101 cl0 size-117 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-b-50 m-t-30 d-inline-block">
                                     주문하기
                                 </button>
