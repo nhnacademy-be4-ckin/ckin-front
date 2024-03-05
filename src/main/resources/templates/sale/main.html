@@ -242,7 +242,7 @@
 
                             <th:block sec:authorize="isAuthenticated()">
                             <span style="margin-bottom: 20px;"> 보유중인 포인트 :
-                                <span style="color: #13653f"> 15000</span> 원
+                                <span style="color: #13653f" th:id="holdingMemberPoint" th:text="${memberPoint}">0</span> 원
                             </span>
 
                                 <div class="input-group" style="vertical-align: middle">
@@ -596,7 +596,7 @@
         // 포인트 사용시 총 금액을 업데이트하는 함수
         function applyPoint() {
             let applyMemberPoint = parseInt(document.getElementById('memberPoint').value);
-            let holdingMemberPoint = 15000;
+            let holdingMemberPoint = parseInt(document.getElementById('holdingMemberPoint').textContent);
             console.log(applyMemberPoint);
 
             // 보유한 포인트보다 더 많이 사용하지 못해야 함.
