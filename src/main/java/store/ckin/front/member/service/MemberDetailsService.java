@@ -61,19 +61,9 @@ public class MemberDetailsService implements UserDetailsService {
      * @param memberId Member ID
      * @return UserDetails
      */
-    public UserDetails loadUserById(String memberId) {
-
-        log.info("memberId = {}", memberId);
+    public MemberInfoDetailResponseDto loadUserById(String memberId) {
         try {
-            MemberInfoDetailResponseDto memberInfo =
-                    memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
-
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(memberInfo::getRole);
-            User user = new User(memberId, "", authorities);
-
-            log.info("user = {}", user);
-            return user;
+            return memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
         } catch (HttpClientErrorException ex) {
             if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new MemberNotFoundException();

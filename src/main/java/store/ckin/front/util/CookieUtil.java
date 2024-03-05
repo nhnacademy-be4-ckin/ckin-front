@@ -5,7 +5,9 @@ import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import store.ckin.front.exception.CookieNouFoundException;
+import store.ckin.front.exception.CookieNotFoundException;
+
+import java.util.Objects;
 
 /**
  * 쿠키에 관련된 로직을 처리하는 클래스 입니다.
@@ -14,8 +16,8 @@ import store.ckin.front.exception.CookieNouFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
-    private CookieUtil() {
-    }
+
+    private CookieUtil() {}
 
     /**
      * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
@@ -47,7 +49,7 @@ public class CookieUtil {
                     .orElseThrow(CookieNouFoundException::new);
         }
 
-        throw new CookieNouFoundException();
+        throw new CookieNotFoundException();
     }
 
     /**
@@ -58,8 +60,9 @@ public class CookieUtil {
      * @param name     Cookie name
      * @param value    New Cookie value
      */
-    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name,
-                                    String value) {
+
+    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
+
         Cookie oldCookie = findCookie(request, name);
         oldCookie.setMaxAge(0);
         response.addCookie(oldCookie);
