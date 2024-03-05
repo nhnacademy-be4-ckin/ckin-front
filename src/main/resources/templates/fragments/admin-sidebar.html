@@ -22,9 +22,23 @@
                         <a class="nav-link" th:href="@{/admin/policy/delivery}">배송비 정책</a>
                         <a class="nav-link" th:href="@{/admin/policy/packaging}">포장 정책</a>
                         <a class="nav-link" th:href="@{/admin/policy/coupon}">쿠폰 정책</a>
+                        <a class="nav-link" th:href="@{/admin/tag}">태그 생성</a>
                         <a class="nav-link" th:href="@{#}">회원 등급 정책</a>
                     </nav>
+                </div>
 
+                <!-- 도서 관리 -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBooks"
+                   aria-expanded="false" aria-controls="collapseBooks">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-outlined">library_books</span></div>
+                    도서 관리
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseBooks" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" th:href="@{/admin/tag}">태그 관리</a>
+                    </nav>
                 </div>
 
                 <!--회원 관리-->
