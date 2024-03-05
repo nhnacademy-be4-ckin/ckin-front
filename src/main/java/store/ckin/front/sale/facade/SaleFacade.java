@@ -8,6 +8,8 @@ import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
+import store.ckin.front.member.domain.response.MemberPointResponseDto;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
@@ -33,6 +35,8 @@ public class SaleFacade {
     private final BookService bookService;
 
     private final SaleService saleService;
+
+    private final MemberService memberService;
 
 
     /**
@@ -96,5 +100,15 @@ public class SaleFacade {
      */
     public SaleResponseDto getSaleInformation(Long saleId) {
         return saleService.getSaleInformation(saleId);
+    }
+
+    /**
+     * 회원의 포인트 정보를 조회하는 메서드입니다.
+     *
+     * @param memberId 회원 ID
+     * @return 회원 포인트 응답 DTO
+     */
+    public MemberPointResponseDto getMemberPoint(String memberId) {
+        return memberService.getMemberPoint(memberId);
     }
 }

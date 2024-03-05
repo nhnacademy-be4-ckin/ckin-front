@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -46,8 +49,14 @@ public class SaleController {
         SalePolicyResponseDto policyList = saleFacade.getPolicyList();
 
         List<CartItem> cartItems = (List<CartItem>) model.getAttribute("PLACE_ITEMS");
-        List<BookExtractionResponseDto> bookSaleList =
-                saleFacade.getBookSaleList(Objects.requireNonNull(cartItems));
+        List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(Objects.requireNonNull(cartItems));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.isAuthenticated()) {
+            MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
+            log.info("memberPoint = {}", memberPoint.getPoint());
+            model.addAttribute("memberPoint", memberPoint.getPoint());
+        }
 
         model.addAttribute("policyList", policyList);
         model.addAttribute("bookSaleList", bookSaleList);

@@ -84,18 +84,19 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Web security customizer web security customizer.
-     *
-     * @return the web security customizer
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring()
-                .requestMatchers(PathRequest
-                        .toStaticResources()
-                        .atCommonLocations());
-    }
+//    /**
+//     * Web security customizer web security customizer.
+//     *
+//     * @return the web security customizer
+//     */
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return web -> web.ignoring()
+//                .requestMatchers(PathRequest
+//                        .toStaticResources()
+//                        .atCommonLocations());
+//    }
+
 
     @Bean
     public JwtFilter jwtFilter() {
