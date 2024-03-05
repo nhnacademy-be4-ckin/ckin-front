@@ -82,7 +82,7 @@ public class JwtFilter extends OncePerRequestFilter {
             log.debug("JwtFilter : Finish setSecurityContextHolder");
 
             filterChain.doFilter(request, response);
-        } catch (CookieNouFoundException ex) {
+        } catch (CookieNotFoundException ex) {
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
