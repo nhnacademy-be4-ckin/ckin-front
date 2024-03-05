@@ -21,25 +21,37 @@ import store.ckin.front.skm.util.KeyManager;
 @Configuration
 @RequiredArgsConstructor
 public class RedisConfig {
+
     private final RedisProperties redisProperties;
+
     private final KeyManager keyManager;
 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory(){
-        RedisStandaloneConfiguration redisStandaloneConfiguration
-                = new RedisStandaloneConfiguration();
+    @Bean(name = "cartRedisConnectionFactory")
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(keyManager.keyStore(redisProperties.getHostname()));
         redisStandaloneConfiguration.setPort(Integer.parseInt(keyManager.keyStore(redisProperties.getPort())));
         redisStandaloneConfiguration.setPassword(keyManager.keyStore(redisProperties.getPassword()));
-        redisStandaloneConfiguration.setDatabase(redisProperties.getDatabaseIndex());
+        redisStandaloneConfiguration.setDatabase(redisProperties.getCartDatabaseIndex());
 
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(){
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    @Bean(name = "authRedisConnectionFactory")
+    public RedisConnectionFactory authRedisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(keyManager.keyStore(redisProperties.getHostname()));
+        redisStandaloneConfiguration.setPort(Integer.parseInt(keyManager.keyStore(redisProperties.getPort())));
+        redisStandaloneConfiguration.setPassword(keyManager.keyStore(redisProperties.getPassword()));
+        redisStandaloneConfiguration.setDatabase(redisProperties.getAuthDatabaseIndex());
 
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+    }
+
+
+    @Bean(name = "redisTemplate")
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
@@ -48,4 +60,17 @@ public class RedisConfig {
 
         return redisTemplate;
     }
+
+
+    @Bean(name = "authRedisTemplate")
+    public RedisTemplate<String, Object> authRedisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setConnectionFactory(authRedisConnectionFactory());
+        return redisTemplate;
+    }
+
 }
