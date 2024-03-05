@@ -1,6 +1,5 @@
 package store.ckin.front.author.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -38,14 +37,17 @@ public class AuthorController {
     public String findAllAuthors(@PageableDefault Pageable pageable, Model model) {
         PageResponse<AuthorResponseDto> authors = authorService.getAuthors(pageable);
 
+        int maxPageButtonNum = 10;
+        int pageButtonNum = Math.min(authors.getTotalPages(), maxPageButtonNum);
+
+        model.addAttribute("isSearch", false);
         model.addAttribute("authors", authors.getContent());
         model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
         model.addAttribute("totalPages", authors.getTotalPages());
         model.addAttribute("currentPage", authors.getNumber());
-
         model.addAttribute("isPrevious", authors.isPrevious());
         model.addAttribute("isNext", authors.isNext());
-        model.addAttribute("pageButtonNum", 100);
+        model.addAttribute("pageButtonNum", pageButtonNum);
 
         return "admin/author/authorIndex";
     }
@@ -66,12 +68,25 @@ public class AuthorController {
         return "redirect:/admin/authors";
     }
 
-//    @GetMapping("/search")
-//    public String getAuthorsByName(@RequestParam String name, Model model) {
-//        List<AuthorResponseDto> authors = authorService.getAuthorsByName(name);
-//        model.addAttribute("authors", authors);
-//        return "admin/author/searchAuthors";
-//    }
+    @GetMapping("/search")
+    public String getAuthorsByName(@RequestParam String name, @PageableDefault Pageable pageable, Model model) {
+        PageResponse<AuthorResponseDto> authors = authorService.getAuthorsByName(name, pageable);
+
+        // Determine the number of page buttons to display
+        int maxPageButtonNum = 10;
+        int pageButtonNum = Math.min(authors.getTotalPages(), maxPageButtonNum);
+
+        model.addAttribute("isSearch", true);
+        model.addAttribute("authors", authors.getContent());
+        model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
+        model.addAttribute("totalPages", authors.getTotalPages());
+        model.addAttribute("currentPage", authors.getNumber());
+        model.addAttribute("isPrevious", authors.isPrevious());
+        model.addAttribute("isNext", authors.isNext());
+        model.addAttribute("pageButtonNum", pageButtonNum);
+        model.addAttribute("searchName", name);
+        return "admin/author/authorIndex";
+    }
 
 
 //    @GetMapping("/{authorId}")

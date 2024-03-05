@@ -2,7 +2,6 @@ package store.ckin.front.author.adapter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.adapter.AuthorAdaptor;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
@@ -39,9 +37,12 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
     @Override
     public PageResponse<AuthorResponseDto> requestGetAllAuthors(Pageable pageable) {
 
-        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + AUTHOR_URL)
-                .queryParam("page", pageable.getPageNumber()).queryParam("size", pageable.getPageSize()).encode()
-                .toUriString();
+        String baseUrl = gatewayProperties.getGatewayUri() + AUTHOR_URL;
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+
+        String url = baseUrl + "?page=" + pageNumber + "&size=" + pageSize;
+
 
         ResponseEntity<PageResponse<AuthorResponseDto>> exchange =
                 restTemplate.exchange(url,
@@ -54,11 +55,13 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
     }
 
     @Override
-    public List<AuthorResponseDto> requestGetAuthorsByName(String name) {
-        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + AUTHOR_URL + "/search")
-                .queryParam("name", name).encode().toUriString();
+    public PageResponse<AuthorResponseDto> requestGetAuthorsByName(String name, Pageable pageable) {
+        int pageNumber = pageable.getPageNumber();
+        int pageSize = pageable.getPageSize();
+        String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/search?name=" + name + "&page=" + pageNumber +
+                "&size=" + pageSize;
 
-        ResponseEntity<List<AuthorResponseDto>> exchange =
+        ResponseEntity<PageResponse<AuthorResponseDto>> exchange =
                 restTemplate.exchange(url,
                         HttpMethod.GET,
                         new HttpEntity<>(getHttpHeaders()),

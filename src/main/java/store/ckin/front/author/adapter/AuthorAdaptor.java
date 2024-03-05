@@ -1,6 +1,5 @@
 package store.ckin.front.author.adapter;
 
-import java.util.List;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
@@ -17,7 +16,7 @@ public interface AuthorAdaptor {
 
     PageResponse<AuthorResponseDto> requestGetAllAuthors(Pageable pageable);
 
-    List<AuthorResponseDto> requestGetAuthorsByName(String name);
+    PageResponse<AuthorResponseDto> requestGetAuthorsByName(String name, Pageable pageable);
 
     AuthorResponseDto requestGetAuthorById(Long id);
 

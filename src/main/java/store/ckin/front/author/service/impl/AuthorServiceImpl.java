@@ -1,6 +1,5 @@
 package store.ckin.front.author.service.impl;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorResponseDto> getAuthorsByName(String name) {
-        return authorAdaptor.requestGetAuthorsByName(name);
+    public PageResponse<AuthorResponseDto> getAuthorsByName(String name, Pageable pageable) {
+        return authorAdaptor.requestGetAuthorsByName(name, pageable);
     }
 
     @Override
