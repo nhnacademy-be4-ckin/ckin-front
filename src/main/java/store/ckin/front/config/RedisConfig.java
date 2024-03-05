@@ -39,18 +39,7 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setConnectionFactory(cartRedisConnectionFactory());
-
-        return redisTemplate;
-    }
 
     /**
      * Auth 관련된 정보로 설정한 RedisConnectionFactory 입니다.
@@ -69,18 +58,6 @@ public class RedisConfig {
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
 
-    /**
-     * AuthRedisTemplate 을 Bean 으로 등록한 메서드 입니다.
-     *
-     * @return AuthRedisTemplate
-     */
-    @Bean(name = "authRedisTemplate")
-    public RedisTemplate<String, Object> authRedisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-
-        return new LettuceConnectionFactory(redisStandaloneConfiguration);
-    }
-
 
     @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate() {
@@ -89,7 +66,7 @@ public class RedisConfig {
         redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setConnectionFactory(authRedisConnectionFactory());
+        redisTemplate.setConnectionFactory(cartRedisConnectionFactory());
 
         return redisTemplate;
     }
