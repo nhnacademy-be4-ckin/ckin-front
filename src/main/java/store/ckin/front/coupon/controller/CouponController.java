@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/index/coupon")
+@RequestMapping("/coupon")
 public class CouponController {
 
     private final CouponService couponService;
@@ -45,11 +45,11 @@ public class CouponController {
         model.addAttribute("currentPage", couponResponseDtoPage.getNumber());
         switch (typeId.intValue()) {
             case 1:
-                return "index/coupon/birth";
+                return "coupon/birth";
             case 2:
-                return "index/coupon/book";
+                return "coupon/book";
             case 3:
-                return "index/coupon/category";
+                return "coupon/category";
             default:
                 return "error";
         }
