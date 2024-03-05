@@ -27,10 +27,9 @@ import store.ckin.front.util.CookieUtil;
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     private final TokenService tokenService;
 
-    private final CookieUtil cookieUtil;
-
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException {
         log.debug("CustomLoginFilter : Try Login Authentication");
 
         UsernamePasswordAuthenticationToken token =
@@ -40,7 +39,13 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult)
+            throws IOException, ServletException {
+        log.debug("CustomLoginFilter : Success Authentication");
+
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
 
         String id = authenticationToken.getName();
@@ -54,7 +59,10 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed)
+            throws IOException, ServletException {
         request.setAttribute("message", "로그인에 실패하였습니다.");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         request.getRequestDispatcher("/login").forward(request, response);
@@ -64,7 +72,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String accessToken = tokenResponseDto.getAccessToken();
         String refreshToken = tokenResponseDto.getRefreshToken();
 
-        cookieUtil.makeCookie(response, "accessToken", accessToken);
-        cookieUtil.makeCookie(response, "refreshToken", refreshToken);
+        CookieUtil.makeCookie(response, "accessToken", accessToken);
+        CookieUtil.makeCookie(response, "refreshToken", refreshToken);
     }
 }

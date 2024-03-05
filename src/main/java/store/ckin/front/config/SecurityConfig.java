@@ -2,14 +2,17 @@ package store.ckin.front.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,7 +22,6 @@ import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
 
 /**
  * Security 설정을 관리하는 Configuration 클래스 입니다.
@@ -31,12 +33,11 @@ import store.ckin.front.util.CookieUtil;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final RedisTemplate<String, Object> redisTemplate;
+
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
-
-    private final CookieUtil cookieUtil = new CookieUtil();
-
 
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
@@ -56,7 +57,7 @@ public class SecurityConfig {
                 .logout().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/login", "/signup").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/member/**").hasRole("MEMBER")
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
@@ -65,9 +66,22 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Web security customizer web security customizer.
+     *
+     * @return the web security customizer
+     */
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers(PathRequest
+                        .toStaticResources()
+                        .atCommonLocations());
+    }
+
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(tokenService, cookieUtil);
+        return new JwtFilter(redisTemplate, memberDetailsService, tokenService);
     }
 
     /**
@@ -77,7 +91,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter = new CustomLoginFilter(tokenService, cookieUtil);
+        CustomLoginFilter filter = new CustomLoginFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");

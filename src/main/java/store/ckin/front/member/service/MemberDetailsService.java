@@ -14,8 +14,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
-import store.ckin.front.member.domain.MemberAuthRequestDto;
-import store.ckin.front.member.domain.MemberAuthResponseDto;
+import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
+import store.ckin.front.member.domain.response.MemberAuthResponseDto;
+import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
+import store.ckin.front.member.exception.MemberNotFoundException;
 
 /**
  * UserDetailsService 를 구현한 클래스 입니다.
@@ -42,9 +45,35 @@ public class MemberDetailsService implements UserDetailsService {
             if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new UsernameNotFoundException(
                         String.format("Not found information for this email [%s]", email));
-            } else {
-                throw new ServerErrorException();
             }
+
+            throw new ServerErrorException();
+        } catch (HttpServerErrorException ex) {
+            throw new ServerErrorException();
+        }
+    }
+
+    /**
+     * Member ID 로 DB에 멤버 정보를 조회하여 UserDetails 를 가져오는 메서드 입니다.
+     *
+     * @param memberId Member ID
+     * @return UserDetails
+     */
+    public UserDetails loadUserById(String memberId) {
+        try {
+            MemberInfoDetailResponseDto memberInfo =
+                    memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
+
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(memberInfo::getRole);
+
+            return new User(memberId, null, authorities);
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                throw new MemberNotFoundException();
+            }
+
+            throw new ServerErrorException();
         } catch (HttpServerErrorException ex) {
             throw new ServerErrorException();
         }

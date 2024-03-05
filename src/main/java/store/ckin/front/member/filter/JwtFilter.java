@@ -3,6 +3,7 @@ package store.ckin.front.member.filter;
 import com.auth0.jwt.JWT;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -10,8 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNouFoundException;
+import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -28,18 +34,18 @@ import store.ckin.front.util.CookieUtil;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final TokenService tokenService;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    private final CookieUtil cookieUtil;
+    private final MemberDetailsService memberDetailsService;
+
+    private final TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            //TODO: 인증이 필요없는 공개적인 URL 은 바로 통과되게 하기
-
             // Access 토큰이 만료되었는지 확인
-            Cookie accessTokenCookie = cookieUtil.findCookie(request, "accessToken");
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
@@ -49,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = cookieUtil.findCookie(request, "refreshToken");
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
@@ -65,18 +71,46 @@ public class JwtFilter extends OncePerRequestFilter {
             updateJwtTokenCookie(request, response, tokenResponseDto);
             log.debug("JwtFilter : Finish reissue Token");
 
-            //TODO: Auth 서버에서 토큰이 인증이 되었다면, 보내준 정보를 가지고 Authentication 객체 만들기
+            // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
+            String uuid = getUuid(accessToken);
+            String memberId = getMemberId(uuid);
+
+            UserDetails memberDetails = memberDetailsService.loadUserById(memberId);
+
+            UsernamePasswordAuthenticationToken token =
+                    new UsernamePasswordAuthenticationToken(
+                            memberDetails.getUsername(),
+                            null,
+                            memberDetails.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(token);
 
             filterChain.doFilter(request, response);
         } catch (CookieNouFoundException ex) {
-            log.error("{} : Cookie not found", ex.getClass().getName());
+            log.debug("{} : Cookie not found", ex.getClass().getName());
+
+            filterChain.doFilter(request, response);
         } catch (TokenAuthenticationFailedException ex) {
             log.error(ex.getMessage());
         } catch (TokenExpiredException ex) {
             log.error("{} : Refresh Token is expired", ex.getClass().getName());
+        } finally {
+            SecurityContextHolder.clearContext();
         }
+    }
 
-        filterChain.doFilter(request, response);
+    private String getMemberId(String uuid) {
+        return Objects.requireNonNull(
+                        redisTemplate
+                                .opsForHash()
+                                .get(uuid, "uuid"))
+                .toString();
+    }
+
+    private String getUuid(String token) {
+        return JWT.decode(token.replace("Bearer ", ""))
+                .getClaim("id")
+                .toString();
     }
 
     private boolean isExpired(String token) {
@@ -91,7 +125,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
 
-        cookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
-        cookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+        CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
+        CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
     }
 }
