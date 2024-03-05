@@ -2,7 +2,6 @@ package store.ckin.front.config;
 
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -56,7 +54,6 @@ public class SecurityConfig {
     }
 
 
-
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
      *
@@ -83,19 +80,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    /**
-//     * Web security customizer web security customizer.
-//     *
-//     * @return the web security customizer
-//     */
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return web -> web.ignoring()
-//                .requestMatchers(PathRequest
-//                        .toStaticResources()
-//                        .atCommonLocations());
-//    }
 
 
     @Bean
