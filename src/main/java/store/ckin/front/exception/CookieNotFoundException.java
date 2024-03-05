@@ -6,5 +6,5 @@ package store.ckin.front.exception;
  * @author : jinwoolee
  * @version : 2024. 02. 27.
  */
-public class CookieNouFoundException extends RuntimeException{
+public class CookieNotFoundException extends RuntimeException{
 }

@@ -2,7 +2,10 @@ package store.ckin.front.member.filter;
 
 import com.auth0.jwt.JWT;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -12,10 +15,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNouFoundException;
+import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
@@ -33,7 +37,6 @@ import store.ckin.front.util.CookieUtil;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
@@ -45,14 +48,12 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
 
-            // redisTemplate이 현재 접근하려는 데이터베이스의 정보 가져오기
-            log.info("redisTemplate = {}", redisTemplate.getConnectionFactory().getConnection().isClosed());
-
-            // Access 토큰이 만료되었는지 확인
             Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
+
+            // Access 토큰이 만료되었는지 확인
             if (!isExpired(accessToken)) {
                 setSecurityContextHolder(accessToken);
                 filterChain.doFilter(request, response);
@@ -73,10 +74,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
             updateJwtTokenCookie(request, response, tokenResponseDto);
 
+            // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
             setSecurityContextHolder(accessToken);
+            log.debug("JwtFilter : Finish setSecurityContextHolder");
 
             filterChain.doFilter(request, response);
-        } catch (CookieNouFoundException ex) {
+        } catch (CookieNotFoundException ex) {
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
@@ -89,24 +92,27 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 
+
     private void setSecurityContextHolder(String accessToken) {
         String uuid = getUuid(accessToken);
         String memberId = getMemberId(uuid);
 
-        UserDetails memberDetails = memberDetailsService.loadUserById(memberId);
+        MemberInfoDetailResponseDto memberInfo = memberDetailsService.loadUserById(memberId);
+
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(memberInfo::getRole);
 
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(
-                        memberDetails.getUsername(),
-                        null,
-                        memberDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(memberId, null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 
     private String getMemberId(String uuid) {
-
-        return (String) redisTemplate.opsForHash().get(uuid, "id");
+        return (String) Objects.requireNonNull(
+                redisTemplate
+                        .opsForHash()
+                        .get(uuid, "id"));
     }
 
     private String getUuid(String token) {

@@ -33,13 +33,20 @@ import store.ckin.front.token.service.TokenService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
 
+
+    /**
+     * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
+     *
+     * @param redisTemplate        authRedisTemplate
+     * @param memberDetailsService MemberDetailService
+     * @param tokenService         TokenService
+     */
     public SecurityConfig(@Qualifier("authRedisTemplate") RedisTemplate<String, Object> redisTemplate,
                           MemberDetailsService memberDetailsService,
                           TokenService tokenService) {
@@ -47,6 +54,7 @@ public class SecurityConfig {
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
     }
+
 
 
     /**

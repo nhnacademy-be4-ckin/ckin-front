@@ -19,4 +19,5 @@ public class MemberAuthResponseDto {
     private String password;
 
     private String role;
+
 }
