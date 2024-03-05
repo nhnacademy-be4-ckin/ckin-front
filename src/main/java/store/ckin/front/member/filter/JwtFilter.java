@@ -54,6 +54,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Access 토큰이 만료되었는지 확인
             if (!isExpired(accessToken)) {
+                if (request.getRequestURI().equals("/login")
+                        || request.getRequestURI().equals("/signup")) {
+                    response.sendRedirect("/");
+                }
+
                 setSecurityContextHolder(accessToken);
 
                 filterChain.doFilter(request, response);
