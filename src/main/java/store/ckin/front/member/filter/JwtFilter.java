@@ -16,7 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
-import store.ckin.front.exception.CookieNouFoundException;
+import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
@@ -86,7 +86,7 @@ public class JwtFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(token);
 
             filterChain.doFilter(request, response);
-        } catch (CookieNouFoundException ex) {
+        } catch (CookieNotFoundException ex) {
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
