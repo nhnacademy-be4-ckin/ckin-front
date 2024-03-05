@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 등록</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Toast UI Editor -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
+</head>
+<body>
+<form id="book-form">
+    <div class="form-group">
+        <label for="bookIsbn">ISBN:</label>
+        <input type="text" class="form-control" id="bookIsbn">
+    </div>
+
+    <div class="form-group">
+        <label for="bookTitle">제목:</label>
+        <input type="text" class="form-control" id="bookTitle">
+    </div>
+    <div>
+        <label for="bookPublisher">출판사:</label>
+        <input type="text" id="bookPublisher">
+    </div>
+    <div>
+        <label for="bookPublicationDate">출판일:</label>
+        <input type="date" id="bookPublicationDate">
+    </div>
+    <div class="form-group">
+        <label for="bookDescription">책 설명:</label>
+        <div id="bookDescription" class="form-control"></div>
+    </div>
+    <div>
+        <label for="bookIndex">책 목차:</label>
+        <textarea id="bookIndex" placeholder="책 목차를 입력해주세요..."></textarea>
+    </div>
+    <div>
+        <label for="bookPackaging">포장 여부:</label>
+        <select id="bookPackaging">
+            <option value="true">예</option>
+            <option value="false">아니오</option>
+        </select>
+    </div>
+    <div>
+        <label for="bookState">책 상태:</label>
+        <select id="bookState">
+            <option value="ON_SALE">판매중</option>
+            <option value="SOLD_OUT">품절</option>
+            <option value="DELETED">삭제됨</option>
+            <option value="SALE_END">판매 종료</option>
+        </select>
+    </div>
+    <div>
+        <label for="bookStock">재고:</label>
+        <input type="number" id="bookStock">
+    </div>
+    <div>
+        <label for="bookRegularPrice">정가:</label>
+        <input type="number" id="bookRegularPrice">
+    </div>
+    <div>
+        <label for="bookDiscountRate">할인율:</label>
+        <input type="number" id="bookDiscountRate">
+    </div>
+    <!-- 썸네일 입력 필드 및 미리보기 추가 -->
+    <div>
+        <label for="bookThumbnail">책 썸네일:</label>
+        <input type="file" id="bookThumbnail" accept="image/*">
+        <img id="thumbnailPreview" src="#" alt="Thumbnail Preview" style="display:none; max-width: 200px; max-height: 200px;">
+    </div>
+    <button type="submit">등록하기</button>
+</form>
+
+<script>
+    // Toast UI Editors
+    const descriptionEditor = new toastui.Editor({
+        el: document.querySelector('#bookDescription'),
+        height: '300px',
+        initialEditType: 'wysiwyg',
+        placeholder: '책 설명을 입력해주세요...',
+        hooks: {
+            addImageBlobHook: function (blob, callback) {
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                fetch('/book/upload/description', { // 서버의 이미지 업로드 엔드포인트
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                    .then(data => {
+                        callback(data.imageUrl, 'image description'); // 반환된 이미지 URL
+                    }).catch(error => {
+                    console.error('Error:', error);
+                });
+
+                return false; // Default image upload behavior를 막음
+            }
+        }
+    });
+
+
+
+    // Form Submit
+    document.getElementById('book-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // 책 데이터 객체 생성
+        const formData = new FormData();
+        formData.append('title', document.getElementById('bookTitle').value);
+        formData.append('isbn', document.getElementById('bookIsbn').value);
+        formData.append('publisher', document.getElementById('bookPublisher').value);
+        formData.append('publicationDate', document.getElementById('bookPublicationDate').value);
+        formData.append('description', descriptionEditor.getHtml());
+        formData.append('index', indexEditor.getHtml());
+        formData.append('packaging', document.getElementById('bookPackaging').value);
+        formData.append('state', document.getElementById('bookState').value);
+        formData.append('stock', parseInt(document.getElementById('bookStock').value, 10));
+        formData.append('regularPrice', parseFloat(document.getElementById('bookRegularPrice').value));
+        formData.append('discountRate', parseFloat(document.getElementById('bookDiscountRate').value));
+        formData.append('salePrice', parseFloat(document.getElementById('bookSalePrice').value));
+        formData.append('reviewRate', document.getElementById('bookReviewRate').value);
+        // 이미지 파일 처리
+        const thumbnailFile = document.getElementById('bookThumbnail').files[0];
+        if (thumbnailFile) {
+            formData.append('thumbnail', thumbnailFile);
+        }
+
+    });
+
+    // 이미지 미리보기 기능
+    document.getElementById('bookThumbnail').addEventListener('change', function(event) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('thumbnailPreview');
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
