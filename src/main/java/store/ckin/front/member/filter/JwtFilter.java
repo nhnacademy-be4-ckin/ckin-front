@@ -18,7 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import store.ckin.front.exception.CookieNouFoundException;
+import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
