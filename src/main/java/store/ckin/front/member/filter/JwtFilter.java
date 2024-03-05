@@ -3,7 +3,6 @@ package store.ckin.front.member.filter;
 import com.auth0.jwt.JWT;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -34,6 +33,7 @@ import store.ckin.front.util.CookieUtil;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
@@ -44,16 +44,21 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
+
+            // redisTemplate이 현재 접근하려는 데이터베이스의 정보 가져오기
+            log.info("redisTemplate = {}", redisTemplate.getConnectionFactory().getConnection().isClosed());
+
             // Access 토큰이 만료되었는지 확인
             Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
             if (!isExpired(accessToken)) {
+                setSecurityContextHolder(accessToken);
                 filterChain.doFilter(request, response);
-
                 return;
             }
+
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
             Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
             String refreshToken = refreshTokenCookie.getValue();
@@ -63,27 +68,12 @@ public class JwtFilter extends OncePerRequestFilter {
                 throw new TokenExpiredException();
             }
 
-            // Refresh Token 이 살아있다면, Refresh Token 을 Auth Server 로 보내서 AccessToken 재발급 (Refresh Token Rotation)
             TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
             TokenResponseDto tokenResponseDto = tokenService.reissueToken(tokenAuthRequestDto);
 
-            // 재발급을 완료헀다면 토큰들을 쿠키에 갱신
             updateJwtTokenCookie(request, response, tokenResponseDto);
-            log.debug("JwtFilter : Finish reissue Token");
 
-            // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
-            String uuid = getUuid(accessToken);
-            String memberId = getMemberId(uuid);
-
-            UserDetails memberDetails = memberDetailsService.loadUserById(memberId);
-
-            UsernamePasswordAuthenticationToken token =
-                    new UsernamePasswordAuthenticationToken(
-                            memberDetails.getUsername(),
-                            null,
-                            memberDetails.getAuthorities());
-
-            SecurityContextHolder.getContext().setAuthentication(token);
+            setSecurityContextHolder(accessToken);
 
             filterChain.doFilter(request, response);
         } catch (CookieNouFoundException ex) {
@@ -99,18 +89,30 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 
+    private void setSecurityContextHolder(String accessToken) {
+        String uuid = getUuid(accessToken);
+        String memberId = getMemberId(uuid);
+
+        UserDetails memberDetails = memberDetailsService.loadUserById(memberId);
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(
+                        memberDetails.getUsername(),
+                        null,
+                        memberDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(token);
+    }
+
     private String getMemberId(String uuid) {
-        return Objects.requireNonNull(
-                        redisTemplate
-                                .opsForHash()
-                                .get(uuid, "uuid"))
-                .toString();
+
+        return (String) redisTemplate.opsForHash().get(uuid, "id");
     }
 
     private String getUuid(String token) {
         return JWT.decode(token.replace("Bearer ", ""))
-                .getClaim("id")
-                .toString();
+                .getClaim("uuid")
+                .asString();
     }
 
     private boolean isExpired(String token) {
