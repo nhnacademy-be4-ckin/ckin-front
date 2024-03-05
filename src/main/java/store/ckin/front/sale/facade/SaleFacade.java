@@ -88,6 +88,12 @@ public class SaleFacade {
         return saleService.getSales();
     }
 
+    /**
+     * 주문 정보를 조회하는 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문 응답 DTO
+     */
     public SaleResponseDto getSaleInformation(Long saleId) {
         return saleService.getSaleInformation(saleId);
     }

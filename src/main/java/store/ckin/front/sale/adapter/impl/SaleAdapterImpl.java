@@ -97,6 +97,12 @@ public class SaleAdapterImpl implements SaleAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 조회할 주문 ID
+     * @return 주문 응답 DTO
+     */
     @Override
     public SaleResponseDto requestGetSaleInformation(Long saleId) {
 
@@ -112,6 +118,13 @@ public class SaleAdapterImpl implements SaleAdapter {
         return exchange.getBody();
     }
 
+
+    /**
+     * Book ID를 QueryString 으로 만들어주는 메서드입니다.
+     *
+     * @param bookIds 쿼리 스트링으로 만들 Book ID 리스트
+     * @return QueryString
+     */
     private String buildBookIds(List<Long> bookIds) {
         StringBuilder query = new StringBuilder();
 

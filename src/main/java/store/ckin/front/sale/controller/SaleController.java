@@ -70,6 +70,13 @@ public class SaleController {
         return "redirect:/sale/" + saleId;
     }
 
+    /**
+     * 주문 정보를 조회하는 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @param model  Model 객체
+     * @return 주문 완료 페이지
+     */
     @GetMapping("/{saleId}")
     public String getSaleInformation(@PathVariable Long saleId, Model model) {
 
