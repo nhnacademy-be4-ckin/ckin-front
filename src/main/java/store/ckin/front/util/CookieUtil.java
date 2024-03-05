@@ -1,5 +1,7 @@
 package store.ckin.front.util;
 
+import java.util.Arrays;
+import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,14 +41,12 @@ public class CookieUtil {
      */
     public static Cookie findCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
-        if(Objects.isNull(cookies)) {
-            throw new CookieNotFoundException();
-        }
 
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(name)) {
-                return cookie;
-            }
+        if (Objects.nonNull(cookies)) {
+            return Arrays.stream(cookies)
+                    .filter(cookie -> cookie.getName().equals(name))
+                    .findFirst()
+                    .orElseThrow(CookieNouFoundException::new);
         }
 
         throw new CookieNotFoundException();

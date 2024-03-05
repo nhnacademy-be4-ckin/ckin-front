@@ -18,5 +18,6 @@ public class RedisProperties {
     private String hostname;
     private String port;
     private String password;
-    private int databaseIndex;
+    private int cartDatabaseIndex;
+    private int authDatabaseIndex;
 }
