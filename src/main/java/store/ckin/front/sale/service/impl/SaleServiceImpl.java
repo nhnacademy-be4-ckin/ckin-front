@@ -53,4 +53,9 @@ public class SaleServiceImpl implements SaleService {
     public List<SaleResponseDto> getSales() {
         return saleAdapter.requestGetSales();
     }
+
+    @Override
+    public SaleResponseDto getSaleInformation(Long saleId) {
+        return saleAdapter.requestGetSaleInformation(saleId);
+    }
 }

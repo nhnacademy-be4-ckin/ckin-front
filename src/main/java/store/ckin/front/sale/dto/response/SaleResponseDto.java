@@ -50,6 +50,7 @@ public class SaleResponseDto {
     private String saleReceiverAddress;
 
     private LocalDateTime saleDate;
+    
     private LocalDateTime saleShippingDate;
 
     private LocalDate saleDeliveryDate;

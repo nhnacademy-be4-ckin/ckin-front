@@ -37,4 +37,6 @@ public interface SaleAdapter {
      * @return 주문 응답 DTO 리스트
      */
     List<SaleResponseDto> requestGetSales();
+
+    SaleResponseDto requestGetSaleInformation(Long saleId);
 }

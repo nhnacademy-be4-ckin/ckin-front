@@ -87,4 +87,8 @@ public class SaleFacade {
     public List<SaleResponseDto> getSales() {
         return saleService.getSales();
     }
+
+    public SaleResponseDto getSaleInformation(Long saleId) {
+        return saleService.getSaleInformation(saleId);
+    }
 }

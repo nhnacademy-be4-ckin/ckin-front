@@ -38,4 +38,6 @@ public interface SaleService {
      * @return 주문 응답 DTO 리스트
      */
     List<SaleResponseDto> getSales();
+
+    SaleResponseDto getSaleInformation(Long saleId);
 }

@@ -1,5 +1,7 @@
 package store.ckin.front.util;
 
+import java.util.Arrays;
+import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,11 +14,11 @@ import store.ckin.front.exception.CookieNouFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
-    private CookieUtil() {}
+    private CookieUtil() {
+    }
 
     /**
      * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
-     *
      */
     public static void makeCookie(HttpServletResponse response, String name, String token) {
         Cookie cookie = new Cookie(name, token);
@@ -37,10 +39,12 @@ public class CookieUtil {
      */
     public static Cookie findCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(name)) {
-                return cookie;
-            }
+
+        if (Objects.nonNull(cookies)) {
+            return Arrays.stream(cookies)
+                    .filter(cookie -> cookie.getName().equals(name))
+                    .findFirst()
+                    .orElseThrow(CookieNouFoundException::new);
         }
 
         throw new CookieNouFoundException();
@@ -54,7 +58,8 @@ public class CookieUtil {
      * @param name     Cookie name
      * @param value    New Cookie value
      */
-    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
+    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name,
+                                    String value) {
         Cookie oldCookie = findCookie(request, name);
         oldCookie.setMaxAge(0);
         response.addCookie(oldCookie);

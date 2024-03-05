@@ -40,7 +40,7 @@ public class SaleAdapterImpl implements SaleAdapter {
      * {@inheritDoc}
      *
      * @param memberId 주문하는 회원 ID
-     * @param bookId 주문할 도서 ID 리스트
+     * @param bookId   주문할 도서 ID 리스트
      * @return 적용 가능한 모든 쿠폰 리스트
      */
     @Override
@@ -93,6 +93,21 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public SaleResponseDto requestGetSaleInformation(Long saleId) {
+
+        HttpEntity<SaleResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleId);
 
         return exchange.getBody();
     }

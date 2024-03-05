@@ -1,7 +1,3 @@
-// TODO 1) 회원 ID
-
-let memberId = 1;
-
 // 페이지가 로드되면 memberId와 bookId를 통해 사용 가능한 쿠폰 리스트를 받아옵니다.
 let bookIds = [];
 bookInfo.forEach(book => {
