@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+
+<div layout:fragment="admin-content">
+    <!-- 본문 내용 -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">작가 관리</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">CKIN 작가 관리 페이지입니다.</li>
+                    </ol>
+
+                    <!-- 작가 목록 테이블 -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            작가 목록
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Actions</th> <!-- 액션 컬럼 추가 -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="author : ${authors}">
+                                    <td th:text="${author.authorName}">Author Name</td>
+                                    <td>
+                                        <!-- 수정 버튼 -->
+                                        <button type="button" class="btn btn-success"
+                                                th:data-author-id="${author.authorId}"
+                                                th:data-author-name="${author.authorName}"
+                                                data-bs-toggle="modal" data-bs-target="#authorEditModal"
+                                                onclick="prepareEditModal(this)">
+                                            수정
+                                        </button>
+                                        <!-- 삭제 버튼 -->
+                                        <button type="button" class="btn btn-danger"
+                                                th:data-author-id="${author.authorId}"
+                                                data-bs-toggle="modal" data-bs-target="#authorDeleteModal"
+                                                onclick="prepareDeleteModal(this)">
+                                            삭제
+                                        </button>
+
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 페이지네이션 컨트롤 -->
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <th:block th:with="start=${(currentPage/pageButtonNum)*pageButtonNum + 1}, end=(${(totalPages == 0) ?
+                                 1 : (start + (pageButtonNum - 1) < totalPages ? start + (pageButtonNum - 1) : totalPages)})">
+                                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                                    <a class="page-link" th:href="@{/admin/authors(page=(${page}-1))}"
+                                       th:text="${page}"></a></li>
+                            </th:block>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- 작가 추가 버튼 -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorAddModal">
+                    작가 추가
+                </button>
+
+                <!-- 작가 추가 모달 -->
+                <div class="modal fade" id="authorAddModal" tabindex="-1" aria-labelledby="authorAddModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="authorAddModalLabel">작가 추가</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/admin/authors}" th:object="${authorCreateRequestDto}" method="post">
+                                    <div class="form-group">
+                                        <label for="authorName">저자 이름</label>
+                                        <input type="text" class="form-control" id="authorName" th:field="*{authorName}"
+                                               placeholder="저자 이름" required>
+                                        <div class="invalid-feedback">최소 1글자, 최대 200글자</div>
+                                    </div>
+                                    <!-- ... -->
+                                    <button type="submit" class="btn btn-primary">등록</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 작가 수정 모달 -->
+                <div class="modal fade" id="authorEditModal" tabindex="-1" aria-labelledby="authorEditModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="authorEditModalLabel">작가 수정</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="authorEditForm" th:action="@{/admin/authors/{id}(id=${authorId})}"
+                                      method="post">
+                                    <input type="hidden" name="_method" value="put">
+                                    <div class="mb-3">
+                                        <label for="editAuthorName" class="form-label">이름</label>
+                                        <input type="text" class="form-control" id="editAuthorName" name="authorName">
+                                    </div>
+                                    <!-- 여기에 필요한 다른 필드 추가 -->
+                                    <button type="submit" class="btn btn-success">수정</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 작가 삭제 모달 -->
+                <div class="modal fade" id="authorDeleteModal" tabindex="-1" aria-labelledby="authorDeleteModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="authorDeleteModalLabel">작가 삭제 확인</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>정말로 이 작가를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                <form id="authorDeleteForm" th:action="@{/admin/authors/delete/{id}(id=${authorId})}"
+                                      method="post">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <button type="submit" class="btn btn-danger">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </main>
+        </div>
+        <script src="/js/author-script.js"></script>
+    </div>
+</div>
+</html>
