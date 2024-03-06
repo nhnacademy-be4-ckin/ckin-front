@@ -11,6 +11,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import store.ckin.front.util.CookieUtil;
 import store.ckin.front.util.JwtUtil;
 
+import java.util.Enumeration;
+
 /**
  * 로그아웃 프로세스를 처리하는 클래스 입니다.
  *
@@ -26,10 +28,13 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request,
                        HttpServletResponse response,
                        Authentication authentication) {
-        String jwt = request.getHeader("Authorization");
-        String uuid = JwtUtil.getUuid(jwt);
-        redisTemplate.opsForHash().delete(uuid, "uuid");
-        redisTemplate.opsForHash().delete(uuid, JwtUtil.REFRESH_TOKEN_SUBJECT);
+        //TODO: uuid를 가져와야함.
+//        String jwt = request.getHeader(JwtUtil.HEADER_AUTHORIZATION);
+//
+//        log.debug("logout : {}", jwt);
+//        String uuid = JwtUtil.getUuid(jwt);
+//        redisTemplate.opsForHash().delete(uuid, "id");
+//        redisTemplate.opsForHash().delete(uuid, JwtUtil.REFRESH_TOKEN_SUBJECT);
 
         SecurityContextHolder.clearContext();
 

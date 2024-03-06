@@ -1,8 +1,11 @@
 package store.ckin.front.util;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * Adapter 에서 사용할 헤더를 만드는 클래스입니다.
@@ -21,9 +24,14 @@ public class AdapterHeaderUtil {
      * @return Http 헤더
      */
     public static HttpHeaders getHttpHeaders() {
+        HttpServletRequest request = ((ServletRequestAttributes)
+                RequestContextHolder.currentRequestAttributes()).getRequest();
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+        httpHeaders.setBearerAuth(String.valueOf(request.getAttribute(JwtUtil.HEADER_AUTHORIZATION)));
+
         return httpHeaders;
     }
 

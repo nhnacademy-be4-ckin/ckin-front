@@ -14,6 +14,10 @@ import store.ckin.front.exception.CookieNotFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
+    public static final String HEADER_ACCESS_TOKEN = "accessToken";
+
+    public static final String HEADER_REFRESH_TOKEN = "refreshToken";
+
     private CookieUtil() {}
 
     /**
@@ -83,8 +87,8 @@ public class CookieUtil {
         if (Objects.nonNull(cookies)) {
             Arrays.stream(cookies)
                     .filter(cookie ->
-                            cookie.getName().equals("accessToken")
-                                    || cookie.getName().equals("refreshToken"))
+                            cookie.getName().equals(HEADER_ACCESS_TOKEN)
+                                    || cookie.getName().equals(HEADER_REFRESH_TOKEN))
                     .forEach(cookie -> {
                         cookie.setMaxAge(0);
                         response.addCookie(cookie);

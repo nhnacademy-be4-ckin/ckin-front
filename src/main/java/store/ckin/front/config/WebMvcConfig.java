@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import store.ckin.front.cart.interceptor.CartIdInitInterceptor;
+import store.ckin.front.interceptor.JwtInterceptor;
 
 /**
  * description:
@@ -17,9 +18,15 @@ import store.ckin.front.cart.interceptor.CartIdInitInterceptor;
 public class WebMvcConfig implements WebMvcConfigurer {
     private final CartIdInitInterceptor cartIdInitInterceptor;
 
+    private final JwtInterceptor jwtInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(cartIdInitInterceptor)
                 .addPathPatterns("/cart/**");
+
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/auth/reissue");
     }
 }

@@ -10,6 +10,8 @@ import java.util.Date;
  * @version : 2024. 02. 28.
  */
 public class JwtUtil {
+    public static final String HEADER_AUTHORIZATION = "Authorization";
+
     public static final String AUTHORIZATION_SCHEME_BEARER = "Bearer ";
 
     public static final String REFRESH_TOKEN_SUBJECT = "ckin_refresh_token";
@@ -21,7 +23,7 @@ public class JwtUtil {
      * @return 만료 여부
      */
     public static boolean isExpired(String token) {
-        return JWT.decode(token.replace(AUTHORIZATION_SCHEME_BEARER, ""))
+        return JWT.decode(token)
                 .getExpiresAt()
                 .before(new Date());
     }
@@ -33,7 +35,7 @@ public class JwtUtil {
      * @return UUID
      */
     public static String getUuid(String token) {
-        return JWT.decode(token.replace(AUTHORIZATION_SCHEME_BEARER, ""))
+        return JWT.decode(token)
                 .getClaim("uuid")
                 .asString();
     }
