@@ -87,25 +87,21 @@ public class AuthorController {
         model.addAttribute("searchName", name);
         return "admin/author/authorIndex";
     }
+
     @GetMapping("/authorList")
     @ResponseBody
     public PageResponse<AuthorResponseDto> findAllAuthors(@PageableDefault Pageable pageable) {
         return authorService.getAuthors(pageable);
     }
+
     @GetMapping("/authorList/search")
     @ResponseBody
-    public PageResponse<AuthorResponseDto> getAuthorsByName(@RequestParam String name, @PageableDefault Pageable pageable) {
+    public PageResponse<AuthorResponseDto> getAuthorsByName(@RequestParam String name,
+                                                            @PageableDefault Pageable pageable) {
         PageResponse<AuthorResponseDto> authors = authorService.getAuthorsByName(name, pageable);
         return authors;
     }
 
-
-//    @GetMapping("/{authorId}")
-//    public String getAuthorById(@PathVariable Long authorId, Model model) {
-//        AuthorResponseDto author = authorService.getAuthorById(authorId);
-//        model.addAttribute("author", author);
-//        return "admin/author/authorDetail";
-//    }
 
     @DeleteMapping("/{authorId}")
     public String deleteAuthor(@PathVariable Long authorId) {
