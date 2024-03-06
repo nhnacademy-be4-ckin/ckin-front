@@ -3,10 +3,11 @@ package store.ckin.front.sale.facade;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.service.CartService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.member.service.MemberService;
@@ -23,7 +24,7 @@ import store.ckin.front.sale.service.SaleService;
  * @version 2024. 02. 27.
  */
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class SaleFacade {
 
@@ -38,6 +39,7 @@ public class SaleFacade {
 
     private final MemberService memberService;
 
+    private final CartService cartService;
 
     /**
      * 주문 페이지에서 필요한 정책(배송, 포장) 목록을 조회하는 메서드입니다.
@@ -110,5 +112,14 @@ public class SaleFacade {
      */
     public MemberPointResponseDto getMemberPoint(String memberId) {
         return memberService.getMemberPoint(memberId);
+    }
+
+    /**
+     * 주문 완료시 장바구니에 담긴 모든 상품을 삭제하는 메서드입니다.
+     *
+     * @param value 장바구니 쿠키 값
+     */
+    public void deleteCartItemAll(String value) {
+        cartService.deleteCartItemAll(value);
     }
 }
