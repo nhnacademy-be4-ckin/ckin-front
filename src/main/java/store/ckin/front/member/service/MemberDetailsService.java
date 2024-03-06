@@ -3,6 +3,7 @@ package store.ckin.front.member.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +27,7 @@ import store.ckin.front.member.exception.MemberNotFoundException;
  * @author : jinwoolee
  * @version : 2024. 02. 22.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {

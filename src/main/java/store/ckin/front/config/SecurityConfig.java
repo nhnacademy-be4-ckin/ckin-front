@@ -34,11 +34,13 @@ import store.ckin.front.token.service.TokenService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
+
 
     /**
      * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
@@ -54,6 +56,7 @@ public class SecurityConfig {
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
     }
+
 
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
@@ -86,6 +89,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
     public JwtFilter jwtFilter() {
         return new JwtFilter(redisTemplate, memberDetailsService, tokenService);
@@ -98,7 +102,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
+        CustomLoginFilter filter = new CustomLoginFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");

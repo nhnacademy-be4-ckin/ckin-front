@@ -47,6 +47,14 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        if (isResourceFile(request.getRequestURI())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        log.debug("request uri = {}", request.getRequestURI());
+
         try {
             // 정적 파일인지 확인
             if (isResourceFile(request.getRequestURI())) {
@@ -71,11 +79,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 }
 
                 setSecurityContextHolder(accessToken);
-
                 filterChain.doFilter(request, response);
-
                 return;
             }
+
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
             Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
             String refreshToken = refreshTokenCookie.getValue();
@@ -85,13 +92,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 throw new TokenExpiredException("Refresh Token is expired");
             }
 
-            // Refresh Token 이 살아있다면, Refresh Token 을 Auth Server 로 보내서 AccessToken 재발급 (Refresh Token Rotation)
             TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
             TokenResponseDto tokenResponseDto = tokenService.reissueToken(tokenAuthRequestDto);
 
-            // 재발급을 완료헀다면 토큰들을 쿠키에 갱신
             updateJwtTokenCookie(request, response, tokenResponseDto);
-            log.debug("JwtFilter : Finish reissue Token");
 
             // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
             setSecurityContextHolder(accessToken);
@@ -117,6 +121,15 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 
+    private static boolean isResourceFile(String requestUri) {
+        return requestUri.startsWith("/static") ||
+                requestUri.startsWith("/css") ||
+                requestUri.startsWith("/js") ||
+                requestUri.startsWith("/images");
+
+    }
+
+
     private void setSecurityContextHolder(String accessToken) {
         String uuid = getUuid(accessToken);
         String memberId = getMemberId(uuid);
@@ -128,6 +141,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(memberId, null, authorities);
+
         SecurityContextHolder.getContext().setAuthentication(token);
     }
 

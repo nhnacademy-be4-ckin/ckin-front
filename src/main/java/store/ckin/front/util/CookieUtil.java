@@ -14,11 +14,11 @@ import store.ckin.front.exception.CookieNotFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
+
     private CookieUtil() {}
 
     /**
      * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
-     *
      */
     public static void makeCookie(HttpServletResponse response, String name, String token) {
         Cookie cookie = new Cookie(name, token);
@@ -68,7 +68,6 @@ public class CookieUtil {
 
         makeCookie(response, name, value);
     }
-
 
     /**
      * 갖고 있는 토큰 쿠키를 삭제하는 메서드 입니다.
