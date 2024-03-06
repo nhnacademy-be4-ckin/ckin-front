@@ -48,14 +48,8 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        if (isResourceFile(request.getRequestURI())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        log.debug("request uri = {}", request.getRequestURI());
-
         try {
+
             // 정적 파일인지 확인
             if (isResourceFile(request.getRequestURI())) {
                 filterChain.doFilter(request, response);
@@ -119,14 +113,6 @@ public class JwtFilter extends OncePerRequestFilter {
         } finally {
             SecurityContextHolder.clearContext();
         }
-    }
-
-    private static boolean isResourceFile(String requestUri) {
-        return requestUri.startsWith("/static") ||
-                requestUri.startsWith("/css") ||
-                requestUri.startsWith("/js") ||
-                requestUri.startsWith("/images");
-
     }
 
 
