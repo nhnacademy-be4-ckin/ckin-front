@@ -12,7 +12,6 @@ $(document).ready(function () {
         success: function (coupons) {
             coupons.forEach(coupon => {
                 couponList.push(coupon);
-                console.log(coupon);
             });
         },
         error: function (xhr, status, error) {
@@ -27,7 +26,6 @@ let appliedCoupons = new Map();
 function renderCoupon(bookId) {
 
     let categoryIds = bookInfo.get(parseInt(bookId)).categoryIds;
-    console.log(categoryIds);
 
     let tableId = 'couponTable-' + bookId;
     let couponTableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
@@ -39,9 +37,6 @@ function renderCoupon(bookId) {
 
     // 쿠폰을 분류합니다.
     couponList.forEach(coupon => {
-
-        console.log('test')
-        console.log(categoryIds.includes(coupon.categoryId));
 
         /**
          * 1. coupon.typeId === 1 : 모든 상품에 적용 가능
@@ -114,17 +109,12 @@ function applyCoupon(bookId) {
     let check = 'coupon-' + bookId;
     let selectedCouponId = $("input[id='" + check + "']:checked").val();
 
-    console.log(selectedCouponId);
     let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
 
     if (selectedCouponId) {
 
         // 선택된 쿠폰을 적용합니다.
         appliedCoupons.set(parseInt(bookId), parseInt(selectedCouponId));
-
-        // 쿠폰 적용 후 동작을 추가하세요.
-        console.log('쿠폰이 적용된 상품 ID와 쿠폰 ID = ' + bookId + ' ' + selectedCouponId);
-        console.log(appliedCoupons);
 
         alert('쿠폰이 적용되었습니다.');
 
@@ -172,8 +162,7 @@ function cancelCoupon(bookId) {
 
     let saleOrderPrice = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) + discountPrice;
 
-    document.getElementById(bookId + '-saleOrderPrice').innerText
-        = saleOrderPrice;
+    document.getElementById(bookId + '-saleOrderPrice').innerText = saleOrderPrice;
 
     document.getElementById(bookId + '-inputPrice').value = saleOrderPrice;
 

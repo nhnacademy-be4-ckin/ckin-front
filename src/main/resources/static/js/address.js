@@ -2,7 +2,6 @@ function execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function (data) {
 
-            console.log(data);
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
