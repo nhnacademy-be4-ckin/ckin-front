@@ -36913,6 +36913,7 @@ button {
     -webkit-flex-direction: row;
     flex-direction: row;
     padding: 22px 0 20px;
+    align-items: center;
 }
 
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap {
@@ -37518,7 +37519,7 @@ button {
 
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap.active .btn_anb {
     background-size: 44px 44px;
-    background-image: url("../images/common/ink/btn_anb_open_active@2x.png");
+    background-image: url("../images/main-category.png");
 }
 
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap.active .anb_area {
