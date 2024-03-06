@@ -71,7 +71,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
             if (isExpired(refreshToken)) {
-                throw new TokenExpiredException();
+                throw new TokenExpiredException("Refresh Token is expired");
             }
 
             // Refresh Token 이 살아있다면, Refresh Token 을 Auth Server 로 보내서 AccessToken 재발급 (Refresh Token Rotation)
@@ -91,10 +91,12 @@ public class JwtFilter extends OncePerRequestFilter {
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
-        } catch (TokenAuthenticationFailedException ex) {
+        } catch (TokenAuthenticationFailedException | TokenExpiredException ex) {
             log.error(ex.getMessage());
-        } catch (TokenExpiredException ex) {
-            log.error("{} : Refresh Token is expired", ex.getClass().getName());
+            CookieUtil.resetCookie(request, response);
+            response.sendRedirect("/login");
+
+            filterChain.doFilter(request, response);
         } finally {
             SecurityContextHolder.clearContext();
         }

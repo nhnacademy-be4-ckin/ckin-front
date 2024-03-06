@@ -58,11 +58,37 @@ public class CookieUtil {
      * @param name     Cookie name
      * @param value    New Cookie value
      */
-    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
+    public static void updateCookie(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    String name,
+                                    String value) {
         Cookie oldCookie = findCookie(request, name);
         oldCookie.setMaxAge(0);
         response.addCookie(oldCookie);
 
         makeCookie(response, name, value);
+    }
+
+
+    /**
+     * 갖고 있는 토큰 쿠키를 삭제하는 메서드 입니다.
+     *
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     */
+    public static void resetCookie(HttpServletRequest request,
+                                   HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+
+        if (Objects.nonNull(cookies)) {
+            Arrays.stream(cookies)
+                    .filter(cookie ->
+                            cookie.getName().equals("accessToken")
+                                    || cookie.getName().equals("refreshToken"))
+                    .forEach(cookie -> {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    });
+        }
     }
 }
