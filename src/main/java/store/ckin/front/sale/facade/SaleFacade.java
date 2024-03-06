@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
+import store.ckin.front.booksale.dto.request.BookSaleCreateRequestDto;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.service.CartService;
+import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.member.service.MemberService;
@@ -40,6 +42,8 @@ public class SaleFacade {
     private final MemberService memberService;
 
     private final CartService cartService;
+
+    private final CouponService couponService;
 
     /**
      * 주문 페이지에서 필요한 정책(배송, 포장) 목록을 조회하는 메서드입니다.
@@ -82,6 +86,12 @@ public class SaleFacade {
      * @return 주문 ID
      */
     public Long createSale(SaleCreateRequestDto requestDto) {
+
+        List<Long> couponIds = requestDto.getBookSaleList().stream()
+                .map(BookSaleCreateRequestDto::getAppliedCouponId)
+                .collect(Collectors.toList());
+
+        couponService.updateCouponUsed(couponIds);
 
         return saleService.createSale(requestDto);
     }
