@@ -2,6 +2,7 @@ package store.ckin.front.sale.controller;
 
 import java.util.List;
 import java.util.Objects;
+import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,11 +74,12 @@ public class SaleController {
      * @return 주문 완료 페이지로 이동
      */
     @PostMapping
-    public String createSale(@Valid SaleCreateRequestDto requestDto) {
+    public String createSale(@CookieValue("CART_ID") Cookie cookie, @Valid SaleCreateRequestDto requestDto) {
 
         log.info("SaleCreateRequestDto: {}", requestDto);
 
         Long saleId = saleFacade.createSale(requestDto);
+        saleFacade.deleteCartItemAll(cookie.getValue());
         return "redirect:/sale/" + saleId;
     }
 
