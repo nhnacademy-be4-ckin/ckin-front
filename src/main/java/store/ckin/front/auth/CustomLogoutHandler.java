@@ -1,5 +1,6 @@
 package store.ckin.front.auth;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.util.CookieUtil;
 import store.ckin.front.util.JwtUtil;
-
-import java.util.Enumeration;
 
 /**
  * 로그아웃 프로세스를 처리하는 클래스 입니다.
@@ -28,16 +28,19 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request,
                        HttpServletResponse response,
                        Authentication authentication) {
-        //TODO: uuid를 가져와야함.
-//        String jwt = request.getHeader(JwtUtil.HEADER_AUTHORIZATION);
-//
-//        log.debug("logout : {}", jwt);
-//        String uuid = JwtUtil.getUuid(jwt);
-//        redisTemplate.opsForHash().delete(uuid, "id");
-//        redisTemplate.opsForHash().delete(uuid, JwtUtil.REFRESH_TOKEN_SUBJECT);
+        try {
+            Cookie cookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
+            String token = cookie.getValue();
+            String uuid = JwtUtil.getUuid(token);
 
-        SecurityContextHolder.clearContext();
+            redisTemplate.opsForHash().delete(uuid, "id");
+            redisTemplate.opsForHash().delete(uuid, JwtUtil.REFRESH_TOKEN_SUBJECT);
 
-        CookieUtil.resetCookie(request, response);
+            SecurityContextHolder.clearContext();
+
+            CookieUtil.resetCookie(request, response);
+        } catch (CookieNotFoundException ex) {
+            log.debug("Cookie not found");
+        }
     }
 }

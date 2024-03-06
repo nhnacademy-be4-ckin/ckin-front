@@ -1,6 +1,7 @@
 package store.ckin.front.util;
 
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,13 +25,18 @@ public class AdapterHeaderUtil {
      * @return Http 헤더
      */
     public static HttpHeaders getHttpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.currentRequestAttributes()).getRequest();
 
-        HttpHeaders httpHeaders = new HttpHeaders();
+        if (Objects.nonNull(request.getAttribute(JwtUtil.HEADER_AUTHORIZATION))) {
+            httpHeaders.setBearerAuth(
+                    String.valueOf(request.getAttribute(JwtUtil.HEADER_AUTHORIZATION)));
+        }
+
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
-        httpHeaders.setBearerAuth(String.valueOf(request.getAttribute(JwtUtil.HEADER_AUTHORIZATION)));
 
         return httpHeaders;
     }
