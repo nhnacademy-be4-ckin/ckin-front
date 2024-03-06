@@ -3,7 +3,6 @@ package store.ckin.front.book.adapter.impl;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
@@ -37,9 +37,14 @@ public class BookAdapterImpl implements BookAdapter {
 
         HttpEntity<List<BookExtractionResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
 
+        String requestUrl =
+                UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + BOOK_URI + "/extraction")
+                        .queryParam("bookId", request)
+                        .encode()
+                        .toUriString();
 
         ResponseEntity<List<BookExtractionResponseDto>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + BOOK_URI + "/extraction?" + buildBookIds(request),
+                requestUrl,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -48,11 +53,4 @@ public class BookAdapterImpl implements BookAdapter {
 
         return exchange.getBody();
     }
-
-    public String buildBookIds(List<Long> bookIds) {
-        return bookIds.stream()
-                .map(bookId -> "bookId=" + bookId)
-                .collect(Collectors.joining("&"));
-    }
-
 }

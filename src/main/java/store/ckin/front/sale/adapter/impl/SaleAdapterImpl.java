@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
@@ -48,12 +49,19 @@ public class SaleAdapterImpl implements SaleAdapter {
 
         HttpEntity<List<GetCouponResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
 
+        String requestUrl =
+                UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + COUPON_URL + "/sale")
+                        .queryParam("memberId", memberId)
+                        .queryParam("bookId", bookId)
+                        .encode()
+                        .toUriString();
+
         ResponseEntity<List<GetCouponResponseDto>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + COUPON_URL + "/sale?memberId={memberId}" + buildBookIds(bookId),
+                requestUrl,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                }, memberId);
+                });
 
         return exchange.getBody();
     }
@@ -116,22 +124,5 @@ public class SaleAdapterImpl implements SaleAdapter {
                 }, saleId);
 
         return exchange.getBody();
-    }
-
-
-    /**
-     * Book ID를 QueryString 으로 만들어주는 메서드입니다.
-     *
-     * @param bookIds 쿼리 스트링으로 만들 Book ID 리스트
-     * @return QueryString
-     */
-    private String buildBookIds(List<Long> bookIds) {
-        StringBuilder query = new StringBuilder();
-
-        for (Long bookId : bookIds) {
-            query.append("&bookId=").append(bookId);
-        }
-
-        return query.toString();
     }
 }
