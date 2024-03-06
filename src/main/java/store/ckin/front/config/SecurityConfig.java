@@ -130,7 +130,7 @@ public class SecurityConfig {
 
     @Bean
     public LogoutHandler logoutHandler() {
-        return new CustomLogoutHandler();
+        return new CustomLogoutHandler(redisTemplate);
     }
 
     @Bean
