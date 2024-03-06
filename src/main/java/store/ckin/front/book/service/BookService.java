@@ -1,6 +1,5 @@
 package store.ckin.front.book.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
