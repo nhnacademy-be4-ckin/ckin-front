@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -30,15 +31,19 @@ public class SaleCreateRequestDto {
     private Long memberId;
 
     @NotBlank(message = "주문자 이름을 입력해주세요.")
+    @Size(min = 1, max = 10, message = "주문자 이름은 1자 이상 10자 이하로 입력해주세요.")
     private String saleOrderName;
 
     @NotBlank(message = "주문자 연락처를 입력해주세요.")
+    @Size(min = 10, max = 11, message = "주문자 연락처는 10자 이상 11자 이하로 입력해주세요.")
     private String saleOrderContact;
 
     @NotBlank(message = "수령자 이름을 입력해주세요.")
+    @Size(min = 1, max = 10, message = "수령자 이름은 1자 이상 10자 이하로 입력해주세요.")
     private String saleReceiverName;
 
     @NotBlank(message = "수령자 연락처를 입력해주세요.")
+    @Size(min = 10, max = 11, message = "수령자 연락처는 10자 이상 11자 이하로 입력해주세요.")
     private String saleReceiverContact;
 
     @NotNull(message = "배송비를 입력해주세요.")
@@ -49,11 +54,13 @@ public class SaleCreateRequestDto {
     private LocalDate saleDeliveryDate;
 
     @NotBlank(message = "우편번호를 입력해주세요.")
+    @Size(min = 5, max = 5, message = "우편번호는 5자리로 입력해주세요.")
     private String postcode;
 
     @NotBlank(message = "주소를 입력해주세요.")
+    @Size(min = 1, max = 100, message = "주소는 1자 이상 100자 이하로 입력해주세요.")
     private String address;
-    
+
     private String detailAddress;
 
     @PositiveOrZero(message = "포인트 사용량은 0보다 작을 수 없습니다.")
