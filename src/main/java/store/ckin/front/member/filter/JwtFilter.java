@@ -47,6 +47,15 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
+            // 정적 파일인지 확인
+            if (isResourceFile(request.getRequestURI())) {
+                filterChain.doFilter(request, response);
+
+                return;
+            }
+
+            log.debug("Request URI : {}", request.getRequestURI());
+
             Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
 
@@ -54,6 +63,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Access 토큰이 만료되었는지 확인
             if (!isExpired(accessToken)) {
+                log.debug("Access Token is still available to use");
                 if (request.getRequestURI().equals("/login")
                         || request.getRequestURI().equals("/signup")) {
                     response.sendRedirect("/");
@@ -142,5 +152,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
         CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+    }
+
+    private static boolean isResourceFile(String requestUri) {
+        return requestUri.startsWith("/static")
+                || requestUri.startsWith("/css")
+                || requestUri.startsWith("/js")
+                || requestUri.startsWith("/images");
     }
 }
