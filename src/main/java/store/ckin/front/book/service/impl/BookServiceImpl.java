@@ -1,5 +1,6 @@
 package store.ckin.front.book.service.impl;
 
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void createBook(BookCreateRequestDto requestDto, MultipartFile file) {
+    public void createBook(BookCreateRequestDto requestDto, MultipartFile file) throws IOException {
         bookAdapter.requestCreateBook(requestDto, file);
     }
 
