@@ -15,6 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import store.ckin.front.auth.CustomLogoutHandler;
+import store.ckin.front.auth.CustomLogoutSuccessHandler;
 import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
@@ -69,7 +73,11 @@ public class SecurityConfig {
                 .and()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .logout().disable()
+                .logout()
+                .logoutUrl("/logout")
+                .addLogoutHandler(logoutHandler())
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .and()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/login", "/signup").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
@@ -122,5 +130,15 @@ public class SecurityConfig {
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
         return (serverFactory) -> serverFactory.addContextCustomizers(
                 (context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
+    }
+
+    @Bean
+    public LogoutHandler logoutHandler() {
+        return new CustomLogoutHandler();
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 }
