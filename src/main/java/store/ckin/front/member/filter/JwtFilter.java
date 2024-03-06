@@ -93,8 +93,7 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (TokenAuthenticationFailedException | TokenExpiredException ex) {
             log.error(ex.getMessage());
-            CookieUtil.resetCookie(request, response);
-            response.sendRedirect("/login");
+            response.sendRedirect("/logout");
 
             filterChain.doFilter(request, response);
         } finally {

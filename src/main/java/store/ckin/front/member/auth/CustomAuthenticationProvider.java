@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         UserDetails userDetails = memberDetailsService.loadUserByUsername(email);
 
         if (!bcryptPasswordEncoder.matches(password, userDetails.getPassword())) {
-           throw new BadCredentialsException(email + " : Invalid password");
+            throw new BadCredentialsException("Invalid email or password");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
