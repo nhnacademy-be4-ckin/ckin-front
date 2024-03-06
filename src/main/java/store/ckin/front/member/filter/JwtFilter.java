@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNotFoundException;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
@@ -55,6 +56,14 @@ public class JwtFilter extends OncePerRequestFilter {
         log.debug("request uri = {}", request.getRequestURI());
 
         try {
+            // 정적 파일인지 확인
+            if (isResourceFile(request.getRequestURI())) {
+                filterChain.doFilter(request, response);
+
+                return;
+            }
+
+            log.debug("Request URI : {}", request.getRequestURI());
 
             Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
             String accessToken = accessTokenCookie.getValue();
@@ -63,6 +72,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Access 토큰이 만료되었는지 확인
             if (!isExpired(accessToken)) {
+                log.debug("Access Token is still available to use");
+                if (request.getRequestURI().equals("/login")
+                        || request.getRequestURI().equals("/signup")) {
+                    response.sendRedirect("/");
+                }
+
                 setSecurityContextHolder(accessToken);
                 filterChain.doFilter(request, response);
                 return;
@@ -74,7 +89,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
             if (isExpired(refreshToken)) {
-                throw new TokenExpiredException();
+                throw new TokenExpiredException("Refresh Token is expired");
             }
 
             TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
@@ -91,10 +106,16 @@ public class JwtFilter extends OncePerRequestFilter {
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
-        } catch (TokenAuthenticationFailedException ex) {
+        } catch (TokenAuthenticationFailedException | TokenExpiredException ex) {
             log.error(ex.getMessage());
-        } catch (TokenExpiredException ex) {
-            log.error("{} : Refresh Token is expired", ex.getClass().getName());
+            response.sendRedirect("/logout");
+
+            filterChain.doFilter(request, response);
+        } catch (ServerErrorException ex) {
+            log.error("{} : Internal Server error", ex.getClass().getName());
+            response.sendRedirect("/error");
+
+            filterChain.doFilter(request, response);
         } finally {
             SecurityContextHolder.clearContext();
         }
@@ -151,5 +172,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
         CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+    }
+
+    private static boolean isResourceFile(String requestUri) {
+        return requestUri.startsWith("/static")
+                || requestUri.startsWith("/css")
+                || requestUri.startsWith("/js")
+                || requestUri.startsWith("/images");
     }
 }

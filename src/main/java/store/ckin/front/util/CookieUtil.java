@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import store.ckin.front.exception.CookieNotFoundException;
 
-
 /**
  * 쿠키에 관련된 로직을 처리하는 클래스 입니다.
  *
@@ -59,13 +58,36 @@ public class CookieUtil {
      * @param name     Cookie name
      * @param value    New Cookie value
      */
-
-    public static void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
-
+    public static void updateCookie(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    String name,
+                                    String value) {
         Cookie oldCookie = findCookie(request, name);
         oldCookie.setMaxAge(0);
         response.addCookie(oldCookie);
 
         makeCookie(response, name, value);
+    }
+
+    /**
+     * 갖고 있는 토큰 쿠키를 삭제하는 메서드 입니다.
+     *
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     */
+    public static void resetCookie(HttpServletRequest request,
+                                   HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+
+        if (Objects.nonNull(cookies)) {
+            Arrays.stream(cookies)
+                    .filter(cookie ->
+                            cookie.getName().equals("accessToken")
+                                    || cookie.getName().equals("refreshToken"))
+                    .forEach(cookie -> {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    });
+        }
     }
 }
