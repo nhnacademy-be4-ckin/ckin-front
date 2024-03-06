@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
@@ -91,16 +92,16 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO 리스트
      */
     @Override
-    public List<SaleResponseDto> requestGetSales() {
+    public PagedResponse<List<SaleResponseDto>> requestGetSales(Integer page, Integer size) {
 
         HttpEntity<List<SaleResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
 
-        ResponseEntity<List<SaleResponseDto>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + SALE_URL,
+        ResponseEntity<PagedResponse<List<SaleResponseDto>>> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "?page={page}&size={size}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                });
+                }, page, size);
 
         return exchange.getBody();
     }

@@ -3,6 +3,7 @@ package store.ckin.front.sale.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
@@ -50,8 +51,8 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문 응답 DTO 리스트
      */
     @Override
-    public List<SaleResponseDto> getSales() {
-        return saleAdapter.requestGetSales();
+    public PagedResponse<List<SaleResponseDto>> getSales(Integer page, Integer size) {
+        return saleAdapter.requestGetSales(page, size);
     }
 
     /**

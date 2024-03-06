@@ -1,11 +1,14 @@
 package store.ckin.front.sale.controller;
 
 import java.util.List;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
@@ -30,9 +33,11 @@ public class AdminSaleController {
      * @return 주문 목록 페이지
      */
     @GetMapping
-    public String getSales(Model model) {
+    public String getSales(@Positive @RequestParam(defaultValue = "1") Integer page,
+                           @Positive @RequestParam(required = false, defaultValue = "10") Integer size,
+                           Model model) {
 
-        List<SaleResponseDto> sales = saleFacade.getSales();
+        PagedResponse<List<SaleResponseDto>> sales = saleFacade.getSales(page - 1, size);
 
         model.addAttribute("sales", sales);
         return "admin/sale/main";

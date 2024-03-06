@@ -9,6 +9,7 @@ import store.ckin.front.book.service.BookService;
 import store.ckin.front.booksale.dto.request.BookSaleCreateRequestDto;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.service.CartService;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
@@ -99,10 +100,12 @@ public class SaleFacade {
     /**
      * 모든 주문을 조회하는 메서드입니다.
      *
+     * @param page 페이지 번호
+     * @param size 페이지 사이즈
      * @return 주문 응답 DTO 리스트
      */
-    public List<SaleResponseDto> getSales() {
-        return saleService.getSales();
+    public PagedResponse<List<SaleResponseDto>> getSales(Integer page, Integer size) {
+        return saleService.getSales(page, size);
     }
 
     /**
