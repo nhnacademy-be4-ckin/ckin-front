@@ -40,6 +40,10 @@
             display: block;
         }
 
+        input:invalid {
+            border: 1px solid red;
+        }
+
     </style>
 </head>
 
@@ -242,11 +246,12 @@
 
                             <th:block sec:authorize="isAuthenticated()">
                             <span style="margin-bottom: 20px;"> 보유중인 포인트 :
-                                <span style="color: #13653f" th:id="holdingMemberPoint" th:text="${memberPoint}">0</span> 원
+                                <span style="color: #13653f" th:id="holdingMemberPoint"
+                                      th:text="${memberPoint}">0</span> 원
                             </span>
 
                                 <div class="input-group" style="vertical-align: middle">
-                                    <input id="memberPoint" type="number" value="0"
+                                    <input id="memberPoint" type="text" value="0" pattern="[0-9]+"
                                            class="stext-104 cl2 plh4 size-126 bor13 p-lr-20 m-r-10 m-tb-5"
                                            placeholder="사용할 포인트를 입력해주세요."
                                            aria-placeholder="포인트" aria-label="포인트">
@@ -595,12 +600,19 @@
 
         // 포인트 사용시 총 금액을 업데이트하는 함수
         function applyPoint() {
-            let applyMemberPoint = parseInt(document.getElementById('memberPoint').value);
+            let applyMemberPoint = document.getElementById('memberPoint').value.trim();
+            let checkPoint = new RegExp("^[0-9]*$");
+            if (!checkPoint.test(applyMemberPoint)) {
+                alert('숫자만 입력해주세요.');
+                return;
+            }
+
+
             let holdingMemberPoint = parseInt(document.getElementById('holdingMemberPoint').textContent);
             console.log(applyMemberPoint);
 
             // 보유한 포인트보다 더 많이 사용하지 못해야 함.
-
+            applyMemberPoint = parseInt(applyMemberPoint);
             if (isNaN(applyMemberPoint)) {
                 alert('사용할 포인트를 숫자로 입력해주세요.');
                 return;
