@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNotFoundException;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
@@ -104,6 +105,11 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (TokenAuthenticationFailedException | TokenExpiredException ex) {
             log.error(ex.getMessage());
             response.sendRedirect("/logout");
+
+            filterChain.doFilter(request, response);
+        } catch (ServerErrorException ex) {
+            log.error("{} : Internal Server error", ex.getClass().getName());
+            response.sendRedirect("/error");
 
             filterChain.doFilter(request, response);
         } finally {
