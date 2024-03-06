@@ -63,9 +63,8 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
                                               HttpServletResponse response,
                                               AuthenticationException failed)
             throws IOException, ServletException {
-        request.setAttribute("message", "로그인에 실패하였습니다.");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        request.getRequestDispatcher("/login").forward(request, response);
+        log.debug("Login Failed : {}", failed.getMessage());
+        response.sendRedirect("/login");
     }
 
     private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
