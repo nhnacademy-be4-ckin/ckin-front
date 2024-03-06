@@ -1,7 +1,12 @@
 package store.ckin.front.book.adapter.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,6 +33,7 @@ public class BookAdapterImpl implements BookAdapter {
     private static final String BOOK_URL = "/api/books";
     private final RestTemplate restTemplate;
     private final GatewayProperties gatewayProperties;
+    private final ObjectMapper objectMapper;
 
     @Override
     public String requestUploadDescriptionImage(MultipartFile file) {
@@ -49,16 +55,17 @@ public class BookAdapterImpl implements BookAdapter {
 
 
     @Override
-    public void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file) {
+    public void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file)
+            throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        // DTO를 JSON 문자열로 변환하고 HttpEntity에 추가
-        body.add("requestDto", new HttpEntity<>(bookCreateRequestDto, headers));
-        // MultipartFile을 Resource로 변환하고 HttpEntity에 추가
-        body.add("file", file.getResource());
 
+        if (file != null && !file.isEmpty()) {
+            body.add("file", new FileSystemResource(convertMultiPartToFile(file)));
+        }
+        body.add("requestDto", bookCreateRequestDto);
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL,
@@ -66,6 +73,14 @@ public class BookAdapterImpl implements BookAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
                 });
+    }
+
+    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
     }
 
 }

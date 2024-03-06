@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -18,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
  * @version 2024. 03. 04.
  */
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class BookCreateRequestDto {
     @NotBlank(message = "ISBN을 입력해주세요.")
     @Length(max = 17, message = "ISBN은 최대 17자까지 가능합니다.")
@@ -68,4 +69,6 @@ public class BookCreateRequestDto {
     private Set<Long> categoryIds;
 
     private Set<Long> tagIds;
+
+
 }

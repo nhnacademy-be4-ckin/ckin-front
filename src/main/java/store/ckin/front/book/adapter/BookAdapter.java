@@ -1,5 +1,6 @@
 package store.ckin.front.book.adapter;
 
+import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
 
@@ -12,5 +13,6 @@ import store.ckin.front.book.dto.request.BookCreateRequestDto;
 public interface BookAdapter {
     String requestUploadDescriptionImage(MultipartFile file);
 
-    void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file);
+    void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file)
+            throws IOException;
 }
