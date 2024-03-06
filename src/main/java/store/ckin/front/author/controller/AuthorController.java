@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
@@ -53,7 +54,6 @@ public class AuthorController {
     }
 
     @PostMapping
-
     public String addAuthor(@ModelAttribute AuthorCreateRequestDto authorCreateRequestDto) {
         authorService.createAuthor(authorCreateRequestDto);
 
@@ -86,6 +86,17 @@ public class AuthorController {
         model.addAttribute("pageButtonNum", pageButtonNum);
         model.addAttribute("searchName", name);
         return "admin/author/authorIndex";
+    }
+    @GetMapping("/authorList")
+    @ResponseBody
+    public PageResponse<AuthorResponseDto> findAllAuthors(@PageableDefault Pageable pageable) {
+        return authorService.getAuthors(pageable);
+    }
+    @GetMapping("/authorList/search")
+    @ResponseBody
+    public PageResponse<AuthorResponseDto> getAuthorsByName(@RequestParam String name, @PageableDefault Pageable pageable) {
+        PageResponse<AuthorResponseDto> authors = authorService.getAuthorsByName(name, pageable);
+        return authors;
     }
 
 
