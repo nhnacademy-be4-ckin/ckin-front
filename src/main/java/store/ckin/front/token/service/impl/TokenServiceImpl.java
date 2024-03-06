@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.token.adapter.TokenAdapter;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenRequestDto;
@@ -24,7 +25,11 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenResponseDto getToken(TokenRequestDto tokenRequestDto) {
-        return tokenAdapter.getToken(tokenRequestDto).getBody();
+        try {
+            return tokenAdapter.getToken(tokenRequestDto).getBody();
+        } catch (Exception ex) {
+            throw new ServerErrorException();
+        }
     }
 
     @Override

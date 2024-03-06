@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
@@ -47,15 +48,18 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         log.debug("CustomLoginFilter : Success Authentication");
 
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
-
         String id = authenticationToken.getName();
 
-        TokenRequestDto tokenRequestDto = new TokenRequestDto(id);
+        try {
+            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(id));
+            addTokenCookie(response, tokenResponseDto);
 
-        TokenResponseDto tokenResponseDto = tokenService.getToken(tokenRequestDto);
-        addTokenCookie(response, tokenResponseDto);
+            response.sendRedirect("/");
+        } catch (ServerErrorException ex) {
+            log.error("CustomLoginFilter.successfulAuthentication() : Internal Server Error");
 
-        response.sendRedirect("/");
+            response.sendRedirect("/error");
+        }
     }
 
     @Override
