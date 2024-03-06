@@ -74,7 +74,7 @@
 
                                     <th:block sec:authorize="isAuthenticated()">
                                         <input th:unless="${#authentication.getAuthorities() eq 'ROLE_ANONYMOUS'}"
-                                               type="hidden">
+                                               type="hidden" th:name="memberId" th:value="${#authentication.name}">
                                     </th:block>
                                     <input type="hidden" th:value="${bookSale.bookId}"
                                            th:name="|bookSaleList[${iterStat.index}].bookId|">
