@@ -2,7 +2,6 @@ package store.ckin.front.config;
 
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,11 +30,13 @@ import store.ckin.front.token.service.TokenService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
+
 
     /**
      * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
@@ -52,6 +52,7 @@ public class SecurityConfig {
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
     }
+
 
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
@@ -80,18 +81,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Web security customizer web security customizer.
-     *
-     * @return the web security customizer
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring()
-                .requestMatchers(PathRequest
-                        .toStaticResources()
-                        .atCommonLocations());
-    }
 
     @Bean
     public JwtFilter jwtFilter() {
@@ -105,7 +94,7 @@ public class SecurityConfig {
      */
     @Bean
     public CustomLoginFilter customLoginFilter() throws Exception {
-        CustomLoginFilter filter =  new CustomLoginFilter(tokenService);
+        CustomLoginFilter filter = new CustomLoginFilter(tokenService);
         filter.setAuthenticationManager(authenticationManager(null));
         filter.setUsernameParameter("email");
         filter.setPasswordParameter("password");
