@@ -1,9 +1,7 @@
 package store.ckin.front.member.domain.response;
 
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * 회원의 포인트 응답 DTO 입니다.
@@ -14,8 +12,7 @@ import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
-@Setter
-public class MemberPointResponseDto implements Serializable {
+public class MemberPointResponseDto {
 
     private Integer point;
 }

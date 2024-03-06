@@ -2,8 +2,8 @@ package store.ckin.front.sale.dto.response;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 주문 조회 응답 DTO.
@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class SaleResponseDto {
 
     /**
