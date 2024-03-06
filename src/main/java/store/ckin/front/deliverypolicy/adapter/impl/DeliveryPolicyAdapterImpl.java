@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.config.GatewayProperties;
+import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
@@ -109,5 +109,25 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
                 }, id);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return 활성화된 배송비 정책 응답 DTO
+     */
+    @Override
+    public DeliveryPolicyResponseDto requestActiveDeliveryPolicy() {
+
+        HttpEntity<DeliveryPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<DeliveryPolicyResponseDto> exchange =
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL + "/activation",
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
     }
 }
