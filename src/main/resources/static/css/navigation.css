@@ -43796,3 +43796,18 @@ body.responsive .wrapper {
     scrollbar-width: none;
     -ms-overflow-style: none
 }
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-left : 400px;
+    padding-right : 400px;
+}
+
+.header_inner {
+    padding-left : 400px;
+}
+
+.wrap-menu-desktop.how-shadow1 {
+    padding-left : 200px;
+}
