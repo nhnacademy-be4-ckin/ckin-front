@@ -43837,3 +43837,6 @@ nav {
     min-height: 700px;
     min-width: 800px;
 }
+.prod_detail_header {
+    padding-top: 150px;
+}

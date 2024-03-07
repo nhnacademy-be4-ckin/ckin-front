@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://contents.kyobobook.co.kr/resources/fo/css/components_ink.css">
+        <link rel="stylesheet" type="text/css" href="https://contents.kyobobook.co.kr/resources/fo/css/product_ink.css">
+
+        <style>
+            /* 추가한 CSS 스타일 */
+            .product-info-head {
+                width: 170px;
+                border: 1px solid #dee2e6;
+                padding: 8px;
+                text-align: center;
+                background-color: #f8f9fa;
+            }
+
+            .product-info-body {
+                border: 1px solid #dee2e6;
+                padding: 8px;
+            }
+            .klover_review_box {
+                display:flex;
+            }
+        </style>
+    </head>
+    <div class="prod_detail_header">
+        <div class="header_contents_inner">
+            <div class="prod_detail_title_wrap">
+                <div class="prod_title_area">
+                    <div class="prod_title_box auto_overflow_wrap">
+                        <div class="auto_overflow_contents">
+                            <div class="auto_overflow_inner">
+                                <h1>
+                                    <span class="prod_title" th:text="${book.bookTitle}"></span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="prod_detail_view_wrap">
+                <div class="prod_detail_view_area">
+                    <div class="col_prod_info">
+                        <div class="prod_info_wrap">
+                            <div class="prod_author_box auto_overflow_wrap">
+                                <div class="auto_overflow_contents">
+                                    <div class="auto_overflow_inner">
+                                        <div class="author">
+                                            <a href="#" th:text="${authorNames}">
+                                            </a>저자(글)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="prod_info_text publish_date">
+
+                                <a href="#" class="btn_publish_link"
+                                   th:text="${book.bookPublisher} + ' ' + ${book.bookPublicationDate}"></a>
+
+                            </div>
+
+                            <div class="prod_review_box">
+                                <div class="col_review">
+                                    <span class="review_score feel_lucky" th:text="${book.bookReviewRate}">9.4</span>
+                                    <div class="rating-container theme-krajee-gly rating-md rating-animate rating-disabled">
+                                        <div class="clear-rating " title="초기화"><i
+                                                class="glyphicon glyphicon-minus-sign"></i></div>
+                                        <div class="rating-stars" tabindex="0"><span class="empty-stars"><span
+                                                class="star" title="One Star"><i
+                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
+                                                                                                        title="Two Stars"><i
+                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
+                                                                                                        title="Three Stars"><i
+                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
+                                                                                                        title="Four Stars"><i
+                                                class="glyphicon glyphicon-star-empty"></i></span></span><span
+                                                class="filled-stars" style="width: 94%;"><span class="star"
+                                                                                               title="One Star"><i
+                                                class="glyphicon glyphicon-star"></i></span><span class="star"
+                                                                                                  title="Two Stars"><i
+                                                class="glyphicon glyphicon-star"></i></span><span class="star"
+                                                                                                  title="Three Stars"><i
+                                                class="glyphicon glyphicon-star"></i></span><span class="star"
+                                                                                                  title="Four Stars"><i
+                                                class="glyphicon glyphicon-star"></i></span></span></div>
+                                        <div class="caption"><span
+                                                class="caption-badge caption-secondary">10점 중 9.4점</span></div>
+                                    </div>
+                                    <input type="number" class="form_rating rating-input" value="9.4" title="이 책의 평점"
+                                           readonly="readonly" tabindex="-1">
+
+
+                                    <span class="review_desc">(<span class="val">1137</span>개의 리뷰)</span>
+                                </div>
+                                <div class="col_review">
+                                    <span class="review_quotes_text">도움돼요</span>
+                                    <span class="review_desc">(<span class="val">39%</span>의
+        구매자)</span>
+                                </div>
+
+                                <button type="button" class="btn_go_review"><span class="hidden">리뷰 영역으로 가기</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col_prod_info thumb">
+                        <div class="prod_thumb_swiper_wrap active">
+                            <div class="swiper-container prod_thumb_list_wrap swiper-container-fade swiper-container-horizontal">
+                                <ul class="swiper-wrapper">
+                                    <li class="prod_thumb_item swiper-slide swiper-slide-visible swiper-slide-active"
+                                        style="width: 380px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
+                                        <div class="blur_img_wrap portrait">
+                                            <div class="blur_img_box">
+                                                <img th:data-src="${book.thumbnail}"
+                                                     th:src="${book.thumbnail}"
+                                                     alt="대표 이미지">
+                                            </div>
+                                            <div class="portrait_img_box portrait">
+
+                                                <img th:src="${book.thumbnail}"
+                                                     alt="대표 이미지">
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                            <div class="swiper_control_box">
+                                <button type="button" class="swiper-button-prev swiper-button-disabled" tabindex="0"
+                                        role="button" aria-label="Previous slide" aria-disabled="true"><span
+                                        class="hidden">이전</span></button>
+                                <div class="swiper-pagination swiper-pagination-fraction"><span
+                                        class="swiper-pagination-current">01</span> / <span
+                                        class="swiper-pagination-total">03</span></div>
+                                <button type="button" class="swiper-button-next" tabindex="0" role="button"
+                                        aria-label="Next slide" aria-disabled="false"><span class="hidden">다음</span>
+                                </button>
+                            </div>
+                            <div class="swiper_control_floating_box">
+                                <button type="button" class="btn_swiper_floating prev disabled"><span
+                                        class="hidden">이전</span></button>
+                                <button type="button" class="btn_swiper_floating next"><span class="hidden">다음</span>
+                                </button>
+
+                                <button type="button" class="btn_img_zoom" data-role="btn-dialog"
+                                        data-target="#popImgZoom"><span class="text">크게보기</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_prod_info">
+                        <div class="prod_price_wrap">
+                            <div class="badge_list_box">
+                                <span class="badge_md badge_line_primary"><span class="text">2023년 05월 23일 오늘의 선택</span></span>
+                                <span class="badge_md badge_line_primary"><span class="text">MD의 선택</span></span>
+                                <span class="badge_md badge_line_gray"><span class="text">무료배송</span></span>
+                                <span class="badge_md badge_line_gray"><span class="text">사은품</span></span>
+                                <span class="badge_md badge_line_gray"><span class="text">이벤트</span></span>
+                                <span class="badge_md badge_line_gray"><span class="text">소득공제</span></span>
+                            </div>
+                            <div class="prod_price_box">
+                                <div class="prod_price">
+                                    <span class="percent" th:text="${book.bookDiscountRate} + '%'"></span>
+                                    <span class="price">
+                                        <span class="val" th:text="${book.bookSalePrice} + '원'">
+                                        </span>
+                                    </span>
+                                    <span class="sale_price">
+                                        <s class="val" th:text="${book.bookRegularPrice} + '원'"></s>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prod_guide_wrap">
+                            <div class="prod_guide_box">
+                                <div class="prod_guide_row">
+                                    <div class="prod_guide_title">적립/혜택</div>
+                                    <div class="prod_guide_cont">
+                                        <div class="point_text">
+                                            940P
+                                            <div class="tooltip_wrap type_info right">
+                                                <button type="button" class="btn_tooltip" data-btn-toggle="">
+                                                    <span class="ico_arw"></span>
+                                                    <span class="hidden">툴팁열기</span>
+                                                </button>
+                                                <div class="tooltip_inner">
+                                                    <div class="tooltip_contents">
+
+                                                        <div class="tooltip_info_list">
+
+                                                            <div class="tooltip_info_item">
+                                                                <div class="title_wrap title_size_xxs">
+                                                                    <p class="title_heading">기본적립</p>
+                                                                </div>
+                                                                <div class="info_cont">
+                                                                    <p class="bul_item_branch font_size_min">
+                                                                        <span class="cont_title">5% 적립</span>
+                                                                        <span class="cont_desc">940P</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="tooltip_info_item">
+                                                                <div class="title_wrap title_size_xxs">
+                                                                    <p class="title_heading">
+                                                                        <span>추가적립</span>
+                                                                        <button type="button" class="btn_info_popup"
+                                                                                data-role="btn-dialog"
+                                                                                data-target="#popAccrualPointGuide">
+                                                                            <span class="ico_question"></span>
+                                                                            <span class="hidden">팝업 열기</span>
+                                                                        </button>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="info_cont">
+                                                                    <ul class="bul_list">
+                                                                        <li class="bul_item_dot font_size_min">
+                                                                            <span class="cont_title">5만원 이상 구매 시 추가</span>
+                                                                            <span class="cont_desc">2,000P</span>
+                                                                        </li>
+
+
+                                                                        <li class="bul_item_dot font_size_min">
+                                                                            <span class="cont_title">3만원 이상 구매 시, 등급별 2~4% 추가</span>
+                                                                            <span class="cont_desc">최대 940P</span>
+                                                                        </li>
+
+                                                                        <li class="bul_item_dot font_size_min">
+                                                                            <span class="cont_title">리뷰 작성 시, e교환권 추가</span>
+                                                                            <span class="cont_desc">최대 300원</span>
+                                                                        </li>
+
+
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="tooltip_info_item">
+                                                                <div class="title_wrap title_size_xxs">
+                                                                    <p class="title_heading">부가혜택 안내</p>
+
+                                                                    <div class="right_area">
+                                                                        <div class="benefit_link_box">
+                                                                            <a href="#" class="btn_link"
+                                                                               data-role="btn-dialog"
+                                                                               data-target="#popAffiliatePoints">제휴포인트</a>
+                                                                            <a href="#" class="btn_link"
+                                                                               data-role="btn-dialog"
+                                                                               data-target="#popBookIncomeDeduction">도서소득공제</a>
+                                                                            <a href="https://www.kyobobook.co.kr/benefit"
+                                                                               class="btn_link">쿠폰/혜택</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="prod_guide_box">
+
+                                <div class="prod_guide_row">
+                                    <div class="prod_guide_title">배송안내</div>
+                                    <div class="prod_guide_cont">
+                                        <div class="delivery_guide_text">
+                                            <span id="OrderDeliveryType" class="delivery_type">무료배송</span>
+                                            <div class="tooltip_wrap type_sm right">
+                                                <button type="button" class="btn_tooltip" data-btn-toggle="">
+                                                    <span class="ico_info"></span>
+                                                    <span class="hidden">툴팁열기</span>
+                                                </button>
+                                                <div class="tooltip_inner">
+                                                    <div class="tooltip_header">
+                                                        <div class="tooltip_head_title">배송비 안내</div>
+                                                    </div>
+                                                    <div class="tooltip_contents">
+                                                        <div class="tooltip_sub_title">국내도서/외국도서</div>
+                                                        <div class="tooltip_desc">
+                                                            도서만 15,000원 이상 구매 시 무료배송
+                                                            <br>도서+교보Only(교보배송)을 함께 15,000원 이상 구매 시 무료배송
+                                                        </div>
+                                                        <p class="bul_item_asterisk font_size_xxs">15,000원 미만 시 2,500원
+                                                            배송비 부과</p>
+
+                                                        <div class="tooltip_sub_title">교보Only(교보배송)</div>
+                                                        <div class="tooltip_desc">
+                                                            각각 구매하거나 함께 20,000원 이상 구매 시 무료배송
+                                                        </div>
+                                                        <p class="bul_item_asterisk font_size_xxs">20,000원 미만 시 2,500원
+                                                            배송비 부과</p>
+
+                                                        <div class="tooltip_sub_title">해외주문 서양도서/해외주문 일본도서(교보배송)</div>
+                                                        <div class="tooltip_desc">
+                                                            각각 구매하거나 함께 15,000원 이상 구매 시 무료배송
+                                                        </div>
+                                                        <p class="bul_item_asterisk font_size_xxs">15,000원 미만 시 2,500원
+                                                            배송비 부과</p>
+
+                                                        <div class="tooltip_sub_title">업체배송 상품(전집, GIFT, 음반/DVD 등)</div>
+                                                        <div class="tooltip_desc">
+                                                            해당 상품 상세페이지 "배송비" 참고 (업체 별/판매자 별 무료배송 기준 다름)
+                                                        </div>
+
+                                                        <div class="tooltip_sub_title">바로드림 오늘배송</div>
+                                                        <div class="tooltip_desc">
+                                                            업체에서 별도 배송하여 1Box당 배송비 2,500원 부과
+                                                        </div>
+                                                        <p class="bul_item_asterisk font_size_xxs">1Box 기준 : 도서 10권</p>
+
+                                                        <div class="tooltip_sub_title">그 외 무료배송 기준</div>
+                                                        <div class="tooltip_desc">
+                                                            바로드림, eBook 상품을 주문한 경우, 플래티넘/골드/실버회원 무료배송쿠폰 이용하여 주문한 경우,
+                                                            무료배송 등록 상품을 주문한 경우
+                                                        </div>
+
+                                                    </div>
+                                                    <button type="button" class="btn_tooltip_close"><span
+                                                            class="hidden">툴팁닫기</span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="btn_wrap justify overlap">
+                            <button type="button" class="btn_sm btn_line_gray" data-role="btn-dialog"
+                                    data-target="#popStock"
+                                    onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                <span class="text">장바구니 담기</span></button>
+                        </div>
+                        <div class="btn_wrap justify overlap">
+                            <button type="button" class="btn_sm btn_line_gray" data-role="btn-dialog"
+                                    data-target="#popStock"
+                                    onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                <span class="text">주문 하기</span></button>
+                        </div>
+                        <div class="btn_wrap justify overlap">
+                            <button type="button" class="btn_sm btn_line_gray" data-role="btn-dialog"
+                                    data-target="#popStock"
+                                    onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                <span class="text">♥️ 위시리스트 담기</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="header_contents_inner">
+            <div class="row">
+                <div>
+                    <h2 style="padding-bottom: 2%">책 정보</h2>
+
+                    <table style="width: 100%;" class="table table-bordered">
+                        <colgroup>
+                            <col width="170">
+                            <col width="*">
+                        </colgroup>
+                        <tbody>
+                        <tr style="border: 1px">
+                            <th class="product-info-head">발행일</th>
+                            <td class="product-info-body">2022년 12월 10일</td>
+                        </tr>
+
+                        <tr>
+                            <th class="product-info-head">페이지 수</th>
+                            <td class="product-info-body">311쪽</td>
+                        </tr>
+
+                        <tr>
+                            <th class="product-info-head">ISBN</th>
+                            <td class="product-info-body">9791166637056</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="header_contents_inner">
+            <h2 data-nodeid="1">책소개</h2>
+            <h2 data-nodeid="5">목차</h2>
+        </div>
+        <div class="header_contents_inner">
+            <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
+                <!-- 타이틀 영역 -->
+                <p class="title_heading" data-review-label="title">Klover 리뷰 (1,137)</p>
+                <!-- 툴팁 영역 -->
+                <div class="tooltip_wrap">
+                    <button type="button" class="btn_tooltip" data-btn-toggle=""><span class="ico_info"></span><span class="hidden">툴팁열기</span></button>
+                    <div class="tooltip_inner">
+                        <div class="tooltip_header">
+                            <div class="tooltip_head_title">Klover 리뷰 안내</div>
+                        </div>
+                        <div class="tooltip_contents">
+                            <div class="tooltip_desc">교보를 애용해 주시는 고객님들이 남겨주신 평점과 감상을 바탕으로, 다양한 정보를 전달하는 교보문고의 리뷰 서비스입니다.
+                            </div>
+
+                            <div class="tooltip_sub_title">1.리워드 안내</div>
+                            <div class="tooltip_desc">
+                                구매 후 90일 이내에 평점과 10자 이상의 리뷰 작성 시 e교환권 200원을 적립해 드립니다.
+                                <br>e교환권은 적립 일로부터 180일 동안 사용 가능합니다.
+                                <br>리워드는 작성 후 다음 날 제공되며, 발송 전 작성 시 발송 완료 후 익일 제공됩니다.
+                                <br>리워드는 리뷰 종류별로 구매한 아이디당 한 상품에 최초 1회 작성 건들에 대해서만 제공됩니다.
+                                <br>판매가 1,000원 미만 도서의 경우 리워드 지급 대상에서 제외됩니다.
+                            </div>
+
+                            <div class="tooltip_desc_title">한달 후 리뷰</div>
+                            <div class="tooltip_desc">구매 후 30일~ 120일 이내에 작성된 두 번째 구매리뷰에 대해 한 달 후 리뷰로 인지하고 e교환권 100원을 추가
+                                제공합니다.</div>
+
+                            <br>
+                            <div class="tooltip_desc">* 강연, 공연, 여행, 동영상, 사은품, 기프트카드 상품은 지급 제외</div>
+
+                            <div class="tooltip_sub_title">2.운영 원칙 안내</div>
+                            <div class="tooltip_desc">
+                                Klover 리뷰를 통한 리뷰를 작성해 주셔서 감사합니다.
+                                자유로운 의사 표현의 공간인 만큼 타인에 대한 배려를 부탁합니다.
+                                <br>일부 타인의 권리를 침해하거나 불편을 끼치는 것을 방지하기 위해 아래에 해당하는 Klover 리뷰는 별도의 통보 없이 삭제될 수 있습니다.
+                            </div>
+
+                            <div class="info_text_box">
+                                <ul class="bul_list">
+                                    <li class="bul_item_dot font_size_xxs">도서나 타인에 대해 근거 없이 비방을 하거나 타인의 명예를 훼손할 수 있는 리뷰</li>
+                                    <li class="bul_item_dot font_size_xxs">도서와 무관한 내용의 리뷰</li>
+                                    <li class="bul_item_dot font_size_xxs">인신공격이나 욕설, 비속어, 혐오발언이 개재된 리뷰</li>
+                                    <li class="bul_item_dot font_size_xxs">의성어나 의태어 등 내용의 의미가 없는 리뷰</li>
+                                </ul>
+                            </div>
+
+                            <div class="tooltip_desc">
+                                <br>
+                                리뷰는 1인이 중복으로 작성하실 수는 있지만, 평점계산은 가장 최근에 남긴 1건의 리뷰만 반영됩니다.
+                            </div>
+
+                            <div class="tooltip_sub_title">3.신고하기</div>
+                            <div class="tooltip_desc">
+                                다른 고객이 작성리뷰에 대해 불쾌함을 느끼는
+                                경우 신고를 할 수 있으며,
+                                신고 자가 일정수준 이상 누적되면 작성하신
+                                리뷰가 노출되지 않을 수 있습니다.
+                            </div>
+                        </div>
+                        <button type="button" class="btn_tooltip_close"><span class="hidden">툴팁닫기</span></button>
+                    </div>
+                </div>
+                <!-- 버튼 영역 -->
+                <div class="right_area">
+                    <!-- 텍스트 문구 -->
+                    <p class="bul_item_asterisk font_size_xxs">구매 후 리뷰 작성 시, e교환권 200원 적립</p>
+                    <!-- [#TODO]시리즈 상품 -->
+                    <!--<div th:if="${#lists.size(eventRevwCmdt.revwCmdtList) > 1}"
+                             class="form_sel w_full" data-class="type_sm">
+                        <select title="타이틀">
+                            <option th:each="item : ${eventRevwCmdt.revwCmdtList}"
+                                th:data-kbbfn-prod-pid="${item.saleCmdtid}"
+                                th:data-kbbfn-prod-bid="${item.cmdtcode}"
+                                th:data-kbbfn-prod-title="${item.cmdtName}"
+                                th:data-kbbfn-prod-code="${item.saleCmdtDvsnCode}"
+                                th:data-kbbfn-prod-age="${item.saleLmttAge}"
+                                th:text="${item.cmdtName}">요한의 크루이프 턴! 10 (완결)</option>
+                        </select>
+                    </div>-->
+                    <!-- 작성하기 버튼 영역 -->
+
+                    <button type="button" data-kbbfn-type="002" data-kbbfn-role="post" data-kbbfn-title="리뷰 작성" data-kbbfn-list-for="ReviewList1" class="btn_sm btn_primary" data-role="btn-dialog" data-target="#ReviewList1_77b9d3a4-6ef6-4efd-905c-a58f84028519_post" data-kbbfn="ui-review-form" data-kbbfn-prod-age="0" data-kbbfn-prod-code="KOR" data-kbbfn-prod-title="도둑맞은 집중력" data-kbbfn-prod-bid="9791167740984" data-kbbfn-prod-pid="S000201621022">
+                        <span class="ico_review"></span>
+                        <span class="text">리뷰 작성</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="klover_review_box">
+                <div class="klover_box_left">
+                    <div class="box_top">
+                        <p class="text_user_score">사용자 총점</p>
+                        <div class="rating-container theme-krajee-gly rating-md rating-animate rating-disabled has_caption"><div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i></div><div class="rating-stars" tabindex="0"><span class="empty-stars"><span class="star" title="One Star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star-empty"></i></span></span><span class="filled-stars" style="width: 94%;"><span class="star" title="One Star"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star"></i></span></span></div><div class="caption"><span class="caption-badge caption-secondary">10점 중 9.4점<span class="val" aria-hidden="true">9.4</span><span class="total" aria-hidden="true">10</span></span></div></div><input type="number" class="form_rating rating-input" value="9.4" title="평가점수 선택" data-caption="" readonly="readonly" tabindex="-1">
+                    </div>
+                    <div class="box_bottom">
+
+                        <div class="score_bar_wrap">
+                            <div class="rating-container theme-krajee-gly rating-sm rating-animate rating-disabled"><div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i></div><div class="rating-stars" tabindex="0"><span class="empty-stars"><span class="star" title="One Star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star-empty"></i></span></span><span class="filled-stars" style="width: 100%;"><span class="star" title="One Star"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star"></i></span></span></div><div class="caption"><span class="caption-badge caption-secondary">10점 중 10점</span></div></div><input type="number" class="form_rating rating-input" value="10" title="평가점수 선택" readonly="readonly" data-size="sm" tabindex="-1">
+                            <div class="score_bar"><span class="score_bar_inner  score_best" style="width: 81%;"></span></div>
+                            <span class="text_score_bar">81%</span>
+                        </div>
+
+                        <div class="score_bar_wrap">
+                            <div class="rating-container theme-krajee-gly rating-sm rating-animate rating-disabled"><div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i></div><div class="rating-stars" tabindex="0"><span class="empty-stars"><span class="star" title="One Star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star-empty"></i></span></span><span class="filled-stars" style="width: 75%;"><span class="star" title="One Star"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star"></i></span></span></div><div class="caption"><span class="caption-badge caption-secondary">10점 중 7.5점</span></div></div><input type="number" class="form_rating rating-input" value="7.5" title="평가점수 선택" readonly="readonly" data-size="sm" tabindex="-1">
+                            <div class="score_bar"><span class="score_bar_inner  " style="width: 11%;"></span></div>
+                            <span class="text_score_bar">11%</span>
+                        </div>
+
+                        <div class="score_bar_wrap">
+                            <div class="rating-container theme-krajee-gly rating-sm rating-animate rating-disabled"><div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i></div><div class="rating-stars" tabindex="0"><span class="empty-stars"><span class="star" title="One Star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star-empty"></i></span></span><span class="filled-stars" style="width: 50%;"><span class="star" title="One Star"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star"></i></span></span></div><div class="caption"><span class="caption-badge caption-success">10점 중 5점</span></div></div><input type="number" class="form_rating rating-input" value="5" title="평가점수 선택" readonly="readonly" data-size="sm" tabindex="-1">
+                            <div class="score_bar"><span class="score_bar_inner  " style="width: 5%;"></span></div>
+                            <span class="text_score_bar">5%</span>
+                        </div>
+
+                        <div class="score_bar_wrap">
+                            <div class="rating-container theme-krajee-gly rating-sm rating-animate rating-disabled"><div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i></div><div class="rating-stars" tabindex="0"><span class="empty-stars"><span class="star" title="One Star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star-empty"></i></span></span><span class="filled-stars" style="width: 25%;"><span class="star" title="One Star"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Two Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Three Stars"><i class="glyphicon glyphicon-star"></i></span><span class="star" title="Four Stars"><i class="glyphicon glyphicon-star"></i></span></span></div><div class="caption"><span class="caption-badge caption-info">10점 중 2.5점</span></div></div><input type="number" class="form_rating rating-input" value="2.5" title="평가점수 선택" readonly="readonly" data-size="sm" tabindex="-1">
+                            <div class="score_bar"><span class="score_bar_inner  " style="width: 2%;"></span></div>
+                            <span class="text_score_bar">2%</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="klover_box_right">
+                    <div class="box_top">
+                        <p class="text_good_respon">
+                            39%의 구매자가<br>
+                            <span class="fc_spot"><span class="review_quotes_text">도움돼요</span></span> 라고 응답했어요
+                        </p>
+                    </div>
+                    <div class="box_bottom">
+                        <div class="reply_score_list">
+                            <div class="reply_score_item ">
+                                <div class="score_bar_box">
+                                    <span class="num_score_bar">29%</span>
+                                    <div class="score_bar"><span class="score_bar_inner" style="height: 29%;"></span></div>
+                                </div>
+                                <p class="text_reply">집중돼요</p>
+                            </div>
+
+                            <div class="reply_score_item score_best">
+                                <div class="score_bar_box">
+                                    <span class="num_score_bar">39%</span>
+                                    <div class="score_bar"><span class="score_bar_inner" style="height: 39%;"></span></div>
+                                </div>
+                                <p class="text_reply">도움돼요</p>
+                            </div>
+
+                            <div class="reply_score_item ">
+                                <div class="score_bar_box">
+                                    <span class="num_score_bar">7%</span>
+                                    <div class="score_bar"><span class="score_bar_inner" style="height: 7%;"></span></div>
+                                </div>
+                                <p class="text_reply">쉬웠어요</p>
+                            </div>
+
+                            <div class="reply_score_item ">
+                                <div class="score_bar_box">
+                                    <span class="num_score_bar">7%</span>
+                                    <div class="score_bar"><span class="score_bar_inner" style="height: 7%;"></span></div>
+                                </div>
+                                <p class="text_reply">최고예요</p>
+                            </div>
+
+                            <div class="reply_score_item ">
+                                <div class="score_bar_box">
+                                    <span class="num_score_bar">19%</span>
+                                    <div class="score_bar"><span class="score_bar_inner" style="height: 19%;"></span></div>
+                                </div>
+                                <p class="text_reply">추천해요</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</html>

@@ -63,8 +63,13 @@ public class ProductController {
     public String getProductById(@PathVariable("bookId") Long bookId,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
-
+        String authorNames = "";
+        for(String author : bookResponseDto.getAuthorNames()) {
+            authorNames += author;
+            authorNames += " ";
+        }
         model.addAttribute("book", bookResponseDto);
+        model.addAttribute("authorNames", authorNames);
         return "product/view";
     }
 
