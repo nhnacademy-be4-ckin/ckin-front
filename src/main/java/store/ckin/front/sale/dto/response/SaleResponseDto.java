@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 주문 조회 응답 DTO.
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
  * @version 2024. 03. 03.
  */
 
+@ToString
 @Getter
 @NoArgsConstructor
 public class SaleResponseDto {

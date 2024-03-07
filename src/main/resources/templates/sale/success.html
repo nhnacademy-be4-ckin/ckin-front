@@ -12,51 +12,49 @@
                 <div class="m-l-25 m-r--38 m-lr-0-xl m-t-50">
                     <h2> 주문이 완료되었습니다 🥳 </h2>
 
-                    <div class="wrap-table-shopping-cart">
-
-
-                        <table class="table-shopping-cart" style="text-align: center;">
-                            <thead>
-                            <tr class="table_head">
-                                <th class="column-1"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                주문 번호 :<td th:text="${saleId}"></td>
-                            </tr>
-                            <tr>
-                                주문자 이름 : <td th:text="${sale.saleOrderName}"></td>
-                            </tr>
-                            <tr>
-                                주문자 전화번호 : <td th:text="${sale.saleOrderContact}"></td>
-                            </tr>
-                            <tr>
-                                수령자 이름 : <td th:text="${sale.saleReceiverName}"></td>
-                            </tr>
-                            <tr>
-                                수령자 전화번호 : <td th:text="${sale.saleReceiverContact}"></td>
-                            </tr>
-                            <tr>
-                                수령 주소 : <td th:text="${sale.address} + ' ' + ${sale.detailAddress}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <br/>
+                    <div class="m-t-15 m-b-15">
+                        <h4 class="p-b-5">주문 도서</h4>
+                        <input type="text"
+                               class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
+                               th:value="${sale.saleTitle}" readonly>
                     </div>
-                </div>
-            </div>
 
-            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-                    <div class="bor12 p-t-15 p-b-30">
+                    <div class="m-t-15 m-b-15">
+
+                        <h4>수령자</h4>
+                        <input type="text"
+                               class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
+                               th:value="${sale.saleReceiverName}" readonly>
+                    </div>
+                    <div class="m-t-15 m-b-15">
+
+                        <h4>수령자 번호</h4>
+                        <input type="text"
+                               class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
+                               th:value="${sale.saleReceiverContact}" readonly>
+                    </div>
+
+                    <div class="m-t-15 m-b-15">
+                        <h4>배송 주소</h4>
+                        <input type="text"
+                               class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
+                               th:value="${sale.address}" readonly>
+                    </div>
+
+                    <div class="m-t-15 m-b-15">
+
                         <form action="#" method="post">
+                            <h4>결제 금액</h4>
                             <input type="hidden" th:name="saleId" th:value="${saleId}"/>
                             <input type="hidden" th:name="totalPrice" th:value="${sale.totalPrice}"/>
 
-                            <span class="stext-110 cl2">
-                                총 결제 금액 : <span th:text="${sale.totalPrice}"></span>원
-                            </span>
-                            <button type="submit"
+
+                            <input type="text"
+                                   class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
+                                   th:value="|${sale.totalPrice}원|" readonly>
+
+                            <button type="button"
                                     class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                                 💰 결제하기
                             </button>
