@@ -3,6 +3,7 @@ package store.ckin.front.sale.facade;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
@@ -18,6 +19,7 @@ import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -27,6 +29,7 @@ import store.ckin.front.sale.service.SaleService;
  * @version 2024. 02. 27.
  */
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SaleFacade {
@@ -88,11 +91,19 @@ public class SaleFacade {
      */
     public Long createSale(SaleCreateRequestDto requestDto) {
 
+        // TODO : 쿠폰과 주문은 서버가 다르기 때문에 하나의 트랜잭션으로 묶으려면 어떻게 ?
+        //  분산 트랜잭션 (Message Queue)에 대해서 찾아보기
+
         List<Long> couponIds = requestDto.getBookSaleList().stream()
                 .map(BookSaleCreateRequestDto::getAppliedCouponId)
+                .filter(appliedCouponId -> appliedCouponId != 0)
                 .collect(Collectors.toList());
 
-        couponService.updateCouponUsed(couponIds);
+        log.debug("couponIds = {}", couponIds);
+
+        if (!couponIds.isEmpty()) {
+            couponService.updateCouponUsed(couponIds);
+        }
 
         return saleService.createSale(requestDto);
     }
@@ -125,5 +136,25 @@ public class SaleFacade {
      */
     public void deleteCartItemAll(String value) {
         cartService.deleteCartItemAll(value);
+    }
+
+    /**
+     * 주문 상세 정보를 조회하는 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문 응답 DTO
+     */
+    public SaleResponseDto getSaleDetail(Long saleId) {
+        return saleService.getSaleDetail(saleId);
+    }
+
+    /**
+     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
+        return saleService.getSaleWithBooks(saleId);
     }
 }

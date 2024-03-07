@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.common.dto.PagedResponse;
@@ -45,5 +46,21 @@ public class AdminSaleController {
 
         model.addAttribute("sales", sales);
         return "admin/sale/main";
+    }
+
+
+    /**
+     * 주문 상세 정보를 조회하는 메서드.
+     *
+     * @param saleId 주문 ID
+     * @param model  Model 객체
+     * @return 주문 상세 페이지
+     */
+    @GetMapping("/{saleId}")
+    public String getSaleDetail(@PathVariable("saleId") Long saleId, Model model) {
+        SaleResponseDto sale = saleFacade.getSaleDetail(saleId);
+
+        model.addAttribute("sale", sale);
+        return "admin/sale/detail";
     }
 }

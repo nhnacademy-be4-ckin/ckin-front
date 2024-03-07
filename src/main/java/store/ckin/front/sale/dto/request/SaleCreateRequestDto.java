@@ -61,6 +61,8 @@ public class SaleCreateRequestDto {
     @Size(min = 1, max = 100, message = "주소는 1자 이상 100자 이하로 입력해주세요.")
     private String address;
 
+    @NotBlank(message = "상세 주소는 필수입니다.")
+    @Size(min = 1, max = 50, message = "상세 주소는 1자 이상 50자 이하로 입력해주세요.")
     private String detailAddress;
 
     @PositiveOrZero(message = "포인트 사용량은 0보다 작을 수 없습니다.")

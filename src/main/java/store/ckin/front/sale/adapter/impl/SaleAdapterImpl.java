@@ -17,6 +17,7 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -113,12 +114,32 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto requestGetSaleInformation(Long saleId) {
+    public SaleResponseDto requestGetSaleDetail(Long saleId) {
 
         HttpEntity<SaleResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<SaleResponseDto> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleId);
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 조회할 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    @Override
+    public SaleWithBookResponseDto requestGetSaleWithBooks(Long saleId) {
+        HttpEntity<SaleWithBookResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleWithBookResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}/books",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

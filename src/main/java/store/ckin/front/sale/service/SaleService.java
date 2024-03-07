@@ -5,6 +5,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 
 /**
  * 주문 서비스 인터페이스입니다.
@@ -48,5 +49,13 @@ public interface SaleService {
      * @param saleId 주문 ID
      * @return 주문 응답 DTO
      */
-    SaleResponseDto getSaleInformation(Long saleId);
+    SaleResponseDto getSaleDetail(Long saleId);
+
+    /**
+     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    SaleWithBookResponseDto getSaleWithBooks(Long saleId);
 }
