@@ -61,8 +61,6 @@ public class JwtFilter extends OncePerRequestFilter {
             Cookie accessTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
             String accessToken = accessTokenCookie.getValue();
 
-            // TODO: AccessToken 유효성 검사
-
             // Access 토큰이 만료되었는지 확인
             if (!JwtUtil.isExpired(accessToken)) {
                 log.debug("Access Token is still available to use");
