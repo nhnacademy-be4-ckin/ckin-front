@@ -31,12 +31,10 @@ public class CategoryRestController {
     private final CategoryService categoryService;
 
     @GetMapping("/{parentId}")
-    public List<CategoryResponseDto> getCouponPage(@PathVariable("parentId") Long parentId,
-                                                   Model model) {
+    public List<CategoryResponseDto> getCouponPage(@PathVariable("parentId") Long parentId) {
 
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(parentId);
 
-        model.addAttribute("categoryList", categoryList);
         return categoryList;
     }
 }

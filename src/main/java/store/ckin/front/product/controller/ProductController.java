@@ -5,38 +5,40 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import store.ckin.front.category.dto.response.CategoryResponseDto;
-import store.ckin.front.category.service.CategoryService;
-import store.ckin.front.coupon.service.CouponService;
-import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-import store.ckin.front.coupontemplate.service.CouponTemplateService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.service.ProductService;
 
 /**
  * description:
  *
  * @author : gaeun
- * @version : 2024. 02. 26
+ * @version 2024. 03. 07.
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/category/view")
-public class CategoryController {
+@RequestMapping("/product")
+public class ProductController {
 
-    private final CategoryService categoryService;
+    private final ProductService productService;
 
     @GetMapping("/{categoryId}")
-    public String getCouponPage(@PathVariable("categoryId") Long parentId,
+    public String getCouponPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
+                                @PathVariable("categoryId") Long categoryId,
                                 Model model) {
 
-        List<CategoryResponseDto> categoryList = categoryService.getSubcategories(parentId);
+        PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
 
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("bookList", bookPageDto.getContent());
+        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
+        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
+        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
+        model.addAttribute("currentPage", bookPageDto.getNumber());
+
         return "category/initial";
     }
 }
