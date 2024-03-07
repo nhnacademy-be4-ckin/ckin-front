@@ -8,6 +8,7 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -64,5 +65,16 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public SaleResponseDto getSaleDetail(Long saleId) {
         return saleAdapter.requestGetSaleDetail(saleId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    @Override
+    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
+        return saleAdapter.requestGetSaleWithBooks(saleId);
     }
 }
