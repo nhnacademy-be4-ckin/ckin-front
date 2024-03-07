@@ -1,7 +1,7 @@
 package store.ckin.front.pointpolicy.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 포인트 정책 응답 DTO.
@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class PointPolicyResponseDto {
 
     private Long pointPolicyId;

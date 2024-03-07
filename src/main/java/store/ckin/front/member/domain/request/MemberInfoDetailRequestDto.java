@@ -19,4 +19,6 @@ public class MemberInfoDetailRequestDto {
     public MemberInfoDetailRequestDto(String id) {
         this.id = Long.valueOf(id);
     }
+
 }
+

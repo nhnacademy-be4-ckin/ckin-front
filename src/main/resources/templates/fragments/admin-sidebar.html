@@ -68,7 +68,19 @@
                                 <a class="nav-link" th:href="@{/admin/coupon/template/3}">카테고리 쿠폰 템플릿</a>
                             </nav>
                         </div>
+                    </nav>
+                </div>
 
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSale"
+                   aria-expanded="false" aria-controls="collapsePages">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-outlined">shopping_bag</span></div>
+                    주문
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseSale" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" th:href="@{/admin/sale}">주문 목록</a>
                     </nav>
                 </div>
             </div>

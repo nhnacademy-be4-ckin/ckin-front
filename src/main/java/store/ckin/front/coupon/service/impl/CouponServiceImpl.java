@@ -1,5 +1,6 @@
 package store.ckin.front.coupon.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,15 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public boolean createCouponByIds(Long memberId, Long couponTemplateId) {
         return couponAdapter.createCouponByIds(memberId, couponTemplateId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param couponIds 사용한 쿠폰 ID 리스트
+     */
+    @Override
+    public void updateCouponUsed(List<Long> couponIds) {
+        couponAdapter.updateCouponUsed(couponIds);
     }
 }
