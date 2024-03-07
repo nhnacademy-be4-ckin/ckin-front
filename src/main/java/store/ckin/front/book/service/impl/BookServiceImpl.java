@@ -9,7 +9,7 @@ import store.ckin.front.book.dto.request.BookCreateRequestDto;
 import store.ckin.front.book.service.BookService;
 
 /**
- * {class name}.
+ * BookService 구현 클래스.
  *
  * @author 나국로
  * @version 2024. 03. 04.
@@ -21,7 +21,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void createBook(BookCreateRequestDto requestDto, MultipartFile file) throws IOException {
+    public void createBook(BookCreateRequestDto requestDto, MultipartFile file) {
         bookAdapter.requestCreateBook(requestDto, file);
     }
 

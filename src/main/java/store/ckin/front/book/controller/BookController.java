@@ -1,13 +1,14 @@
 package store.ckin.front.book.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,11 +16,12 @@ import store.ckin.front.book.dto.request.BookCreateRequestDto;
 import store.ckin.front.book.service.BookService;
 
 /**
- * {class name}.
+ * BookController 클래스 .
  *
  * @author 나국로
  * @version 2024. 03. 04.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class BookController {
@@ -43,12 +45,12 @@ public class BookController {
     }
 
     @PostMapping("/book/upload")
-    public ResponseEntity<Void> createBook(@RequestPart("requestDto") String requestDtoJson,
-                                           @RequestPart("file") MultipartFile file) throws IOException {
-        BookCreateRequestDto requestDto = objectMapper.readValue(requestDtoJson, BookCreateRequestDto.class);
+    public String createBook(@ModelAttribute BookCreateRequestDto requestDto,
+                             @RequestPart("bookThumbnail") MultipartFile file) {
 
         bookService.createBook(requestDto, file);
-        return ResponseEntity.ok().build();
+
+        return "redirect:/admin";
     }
 
 }

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * BookCreateRequestDto 클래스.
@@ -37,6 +38,7 @@ public class BookCreateRequestDto {
     private String bookPublisher;
 
     @NotNull(message = "출판일을 입력해주세요.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate bookPublicationDate;
 
     @Length(max = 8000, message = "책 목차는 최대 8000자까지 가능합니다.")

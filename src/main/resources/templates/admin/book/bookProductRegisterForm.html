@@ -89,6 +89,7 @@
                     type="file"
                     class="form-control-file"
                     id="bookThumbnail"
+                    name="bookThumbnail"
                     accept="image/*"
             />
             <div class="thumbnail-preview-box">
@@ -315,49 +316,100 @@
             const editorContent = descriptionEditor.getHTML();
 
 
-            const jsonData = {
-                bookIsbn: document.getElementById('bookIsbn').value,
-                bookTitle: document.getElementById('bookTitle').value,
-                bookDescription: descriptionEditor.getHTML(),
-                bookPublisher: document.getElementById('bookPublisher').value,
-                bookPublicationDate: document.getElementById('bookPublicationDate').value,
-                bookIndex: document.getElementById('bookIndex').value,
-                bookPackaging: document.getElementById('bookPackaging').value === 'true',
-                bookState: document.getElementById('bookState').value,
-                bookStock: parseInt(document.getElementById('bookStock').value),
-                bookRegularPrice: parseInt(document.getElementById('bookRegularPrice').value),
-                bookDiscountRate: parseInt(document.getElementById('bookDiscountRate').value),
-                authorIds: Object.keys(selectedAuthors).map(Number),
-                categoryIds: [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value].filter(Boolean).map(Number),
-                tagIds: Object.keys(selectedTags).map(Number)
-            };
-
             const formData = new FormData();
-            formData.append('requestDto', new Blob([JSON.stringify(jsonData)], {type: "application/json"}));
 
-            // 이미지 파일 처리
-            const thumbnailFile =
-                document.getElementById("bookThumbnail").files[0];
+// JSON 데이터를 개별 필드로 추가
+            formData.append('bookIsbn', document.getElementById('bookIsbn').value);
+            formData.append('bookTitle', document.getElementById('bookTitle').value);
+            formData.append('bookDescription', descriptionEditor.getHTML());
+            formData.append('bookPublisher', document.getElementById('bookPublisher').value);
+            formData.append('bookPublicationDate', document.getElementById('bookPublicationDate').value);
+            formData.append('bookIndex', document.getElementById('bookIndex').value);
+            formData.append('bookPackaging', document.getElementById('bookPackaging').value === 'true');
+            formData.append('bookState', document.getElementById('bookState').value);
+            formData.append('bookStock', parseInt(document.getElementById('bookStock').value));
+            formData.append('bookRegularPrice', parseInt(document.getElementById('bookRegularPrice').value));
+            formData.append('bookDiscountRate', parseInt(document.getElementById('bookDiscountRate').value));
+            Object.keys(selectedAuthors).forEach((authorId) => {
+                formData.append('authorIds', authorId);
+            });
+            [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value]
+                .filter(Boolean)
+                .forEach((categoryId) => {
+                    formData.append('categoryIds', categoryId);
+                });
+            Object.keys(selectedTags).forEach((tagId) => {
+                formData.append('tagIds', tagId);
+            });
+
+// 이미지 파일 처리
+            const thumbnailFile = document.getElementById("bookThumbnail").files[0];
             if (thumbnailFile) {
-                formData.append("file", thumbnailFile);
+                formData.append("bookThumbnail", thumbnailFile);
             }
 
             fetch("/book/upload", {
                 method: "POST",
                 body: formData,
             })
-                .then((response) => {
+                .then(response => {
                     if (response.ok) {
                         return response.json();
                     }
                     throw new Error("Network response was not ok.");
                 })
-                .then((data) => {
+                .then(data => {
                     console.log(data); // 응답 처리
+                    window.location.href = '/';
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.error("Error:", error);
                 });
+
+
+            // const jsonData = {
+            //     bookIsbn: document.getElementById('bookIsbn').value,
+            //     bookTitle: document.getElementById('bookTitle').value,
+            //     bookDescription: descriptionEditor.getHTML(),
+            //     bookPublisher: document.getElementById('bookPublisher').value,
+            //     bookPublicationDate: document.getElementById('bookPublicationDate').value,
+            //     bookIndex: document.getElementById('bookIndex').value,
+            //     bookPackaging: document.getElementById('bookPackaging').value === 'true',
+            //     bookState: document.getElementById('bookState').value,
+            //     bookStock: parseInt(document.getElementById('bookStock').value),
+            //     bookRegularPrice: parseInt(document.getElementById('bookRegularPrice').value),
+            //     bookDiscountRate: parseInt(document.getElementById('bookDiscountRate').value),
+            //     authorIds: Object.keys(selectedAuthors).map(Number),
+            //     categoryIds: [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value].filter(Boolean).map(Number),
+            //     tagIds: Object.keys(selectedTags).map(Number)
+            // };
+            //
+            // const formData = new FormData();
+            // formData.append('requestDto', new Blob([JSON.stringify(jsonData)], {type: "application/json"}));
+            //
+            // // 이미지 파일 처리
+            // const thumbnailFile =
+            //     document.getElementById("bookThumbnail").files[0];
+            // if (thumbnailFile) {
+            //     formData.append("file", thumbnailFile);
+            // }
+            //
+            // fetch("/book/upload", {
+            //     method: "POST",
+            //     body: formData,
+            // })
+            //     .then((response) => {
+            //         if (response.ok) {
+            //             return response.json();
+            //         }
+            //         throw new Error("Network response was not ok.");
+            //     })
+            //     .then((data) => {
+            //         console.log(data); // 응답 처리
+            //     })
+            //     .catch((error) => {
+            //         console.error("Error:", error);
+            //     });
         });
 
     // 이미지 미리보기 기능

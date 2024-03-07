@@ -22,7 +22,7 @@ import store.ckin.front.book.dto.request.BookCreateRequestDto;
 import store.ckin.front.config.properties.GatewayProperties;
 
 /**
- * {class name}.
+ * BookAdapter 구현 클래스.
  *
  * @author 나국로
  * @version 2024. 03. 04.
@@ -55,24 +55,25 @@ public class BookAdapterImpl implements BookAdapter {
 
 
     @Override
-    public void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file)
-            throws IOException {
+    public void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
         if (file != null && !file.isEmpty()) {
-            body.add("file", new FileSystemResource(convertMultiPartToFile(file)));
+            try {
+                body.add("file", new FileSystemResource(convertMultiPartToFile(file)));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        body.add("requestDto", bookCreateRequestDto);
+        body.add("requestDto", bookCreateRequestDto );
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL,
                 HttpMethod.POST,
                 requestEntity,
-                new ParameterizedTypeReference<Void>() {
-                });
+                new ParameterizedTypeReference<Void>() {});
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
