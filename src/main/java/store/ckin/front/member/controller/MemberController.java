@@ -53,4 +53,9 @@ public class MemberController {
     public String getLogin() {
         return "member/login";
     }
+
+    @GetMapping("/member/mypage")
+    public String getMypage() {
+        return "member/mypage";
+    }
 }
