@@ -36295,8 +36295,8 @@ table, th, td, input, select, button, textarea, pre {
 }
 
 body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, select, button, textarea, p, blockquote, table, th, td {
-    margin: 0;
-    padding: 0;
+    margin: 2px;
+    padding: 2px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -43826,4 +43826,14 @@ article, aside, details, figcaption, figure, header, hgroup, menu, nav, section,
 }
 nav {
     display: block;
+}
+.snb_wrap {
+    height: 300px;
+}
+.aside_wrap.sub_category {
+    padding-right: 30px;
+}
+.prod_row_list.has_line.col2 {
+    min-height: 700px;
+    min-width: 800px;
 }

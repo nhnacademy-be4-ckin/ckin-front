@@ -52,8 +52,9 @@
 
                         data.forEach(function (category) {
                             console.log(category.categoryName);
-                            html += `<li class="fold_box"><div class="fold_box_header" onclick="category(` + category.categoryId + `)" id="category` +
-                                category.categoryId + `"><a href="#">`
+                            html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category(` + category.categoryId + `)" id="category` +
+                                category.categoryId + `"><a href="/product/` +
+                                category.categoryId + `">`
                                 + category.categoryName + `</a></div></li>`
                         });
 
@@ -126,8 +127,9 @@
 
                         data.forEach(function (category) {
                             console.log(category.categoryName);
-                            html += `<li class="fold_box"><div class="fold_box_header" onclick="category2(` + category.categoryId + `)" id="category` +
-                                category.categoryId + `"><a href="#">`
+                            html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category2(` + category.categoryId + `)" id="category` +
+                                category.categoryId + `"><a href="/product/` +
+                                category.categoryId + `">`
                                 + category.categoryName + `</a></div></li>`
                         });
 
@@ -371,7 +373,7 @@
                                                                                      tabindex="0"
                                                                                      style="height: 370px;">
                                                                                     <div class="category_view_area"><a
-                                                                                            href="https://product.kyobobook.co.kr/"
+                                                                                            href="/product/1"
                                                                                             class="btn_arw_link">
                                                                                         <span class="text">국내도서 전체</span>
                                                                                     </a>
@@ -432,7 +434,7 @@
                                                                                      id="customScrollInner2"
                                                                                      tabindex="0" style="height: 0px;">
                                                                                     <div class="category_view_area"><a
-                                                                                            href="https://product.kyobobook.co.kr/ENG"
+                                                                                            href="/product/2"
                                                                                             class="btn_arw_link"> <span
                                                                                             class="text">서양도서 전체</span>
                                                                                     </a>

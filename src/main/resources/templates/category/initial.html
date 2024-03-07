@@ -35,87 +35,14 @@
                 <aside class="aside_wrap sub_category">
                     <div class="aside_header">
                         <div class="title_wrap title_size_xxl">
-                            <a href="https://product.kyobobook.co.kr/KOR" class="title_heading">국내도서</a>
+                            <a href="https://product.kyobobook.co.kr/KOR" class="title_heading" th:text="${categoryName}"></a>
                         </div>
                     </div>
                     <div class="aside_body">
                         <div class="snb_wrap">
-                            <a href="https://product.kyobobook.co.kr/KOR" class="snb_title">소설</a>
                             <ul class="snb_list">
-
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0101" class="snb_link">
-                                        한국소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0103" class="snb_link">
-                                        영미소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0105" class="snb_link">
-                                        일본소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0107" class="snb_link">
-                                        중국소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0109" class="snb_link">
-                                        러시아소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0111" class="snb_link">
-                                        프랑스소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0112" class="snb_link">
-                                        독일소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0115" class="snb_link">
-                                        북유럽소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0116" class="snb_link">
-                                        그외유럽소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0117" class="snb_link">
-                                        기타나라소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0118" class="snb_link">
-                                        청소년소설
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0121" class="snb_link">
-                                        고전소설/문학선
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0124" class="snb_link">
-                                        세계문학전집
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0126" class="snb_link">
-                                        라이트노벨
-                                    </a>
-                                </li>
-                                <li class="snb_item">
-                                    <a href="https://product.kyobobook.co.kr/category/KOR/0128" class="snb_link">
-                                        장르소설
+                                <li class="snb_item" th:each="category : ${categoryList}">
+                                    <a th:href="@{'/product/' + ${category.categoryId}}" class="snb_link" th:text="${category.categoryName}">
                                     </a>
                                 </li>
                             </ul>
