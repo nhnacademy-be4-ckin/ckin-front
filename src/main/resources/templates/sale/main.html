@@ -73,8 +73,7 @@
                                 <tr class="table_row" th:each="bookSale, iterStat : ${bookSaleList}">
 
                                     <th:block sec:authorize="isAuthenticated()">
-                                        <input th:unless="${#authentication.getAuthorities() eq 'ROLE_ANONYMOUS'}"
-                                               type="hidden" th:name="memberId" th:value="${#authentication.name}">
+                                        <input type="hidden" th:name="memberId" th:value="${#authentication.name}">
                                     </th:block>
                                     <input type="hidden" th:value="${bookSale.bookId}"
                                            th:name="|bookSaleList[${iterStat.index}].bookId|">
@@ -169,6 +168,7 @@
                                         </th:block>
 
                                         <th:block sec:authorize="isAnonymous()">
+                                            X
                                         </th:block>
                                     </td>
                                     <td class="column-sj-6">
@@ -436,73 +436,7 @@
     <!-- Daum 주소 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/address.js"></script>
-    <script>
-
-        // 현재 날짜 기준으로 2일을 더한 날짜를 가져오는 함수
-        function getDefaultDeliveryDate() {
-            var today = new Date();
-            var deliveryDate = new Date(today);
-
-            // 최소 예약 배송일자는 현재 날짜 + 2일
-            deliveryDate.setDate(deliveryDate.getDate() + 2);
-
-            var dd = deliveryDate.getDate();
-            var mm = deliveryDate.getMonth() + 1;
-            var yyyy = deliveryDate.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-
-            return yyyy + '-' + mm + '-' + dd;
-        }
-
-        function getMaxDeliveryDate() {
-            var today = new Date();
-            var deliveryDate = new Date(today);
-
-            // 최대 예약 배송일자는 현재 날짜 + 59일
-            deliveryDate.setDate(deliveryDate.getDate() + 59);
-
-            var dd = deliveryDate.getDate();
-            var mm = deliveryDate.getMonth() + 1;
-            var yyyy = deliveryDate.getFullYear();
-
-            if (dd < 10) {
-                dd = '0' + dd;
-            }
-
-            if (mm < 10) {
-                mm = '0' + mm;
-            }
-
-            return yyyy + '-' + mm + '-' + dd;
-        }
-
-
-        // 배송 날짜 input 요소의 최소, 최대 날짜를 설정하는 함수
-        function setMinDeliveryDate() {
-            var deliveryDateInput = document.getElementById('saleDeliveryDate');
-            if (deliveryDateInput) {
-                deliveryDateInput.value = getDefaultDeliveryDate();
-                deliveryDateInput.min = getDefaultDeliveryDate();
-                deliveryDateInput.max = getMaxDeliveryDate();
-            }
-        }
-
-
-        // 문서가 로드되면 최소 배송 날짜를 설정합니다.
-        window.onload = function () {
-            setMinDeliveryDate();
-        };
-
-
-    </script>
-
+    <script src="/js/sale/delivery-date.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         let packagingPrices = new Map();
@@ -514,136 +448,21 @@
         let freeDeliveryPrice = [[${policyList.getDeliveryPolicy().deliveryPolicyCondition}]];
         /*]]>*/
 
-
-        // 주문 도서 금액 계산
-        let totalOrderPrice = 0;
-        let salePrice = document.querySelectorAll('.salePrice');
-
-        salePrice.forEach(price => {
-            totalOrderPrice += parseInt(price.innerText);
-        })
-        document.getElementById('totalOrderPrice').textContent = totalOrderPrice.toFixed(0);
-
-        //-------------------------------
-
-        // 배송 금액 계산
-        let deliveryPriceElement = document.getElementById('deliveryPrice');
-        let deliveryPrice = parseInt(deliveryPriceElement.innerText); // parseInt 추가
-        if (totalOrderPrice >= freeDeliveryPrice) {
-            deliveryPrice = 0;
-            deliveryPriceElement.textContent = deliveryPrice;
-        }
-
-        document.getElementById('deliveryFee').value = deliveryPrice;
-
-        //-------------------------------
-
-        // 포장 금액 계산
-        let selectedPackagingId = document.querySelectorAll('select.packaging');
-
-        let totalPackagingPrice = 0;
-        selectedPackagingId.forEach(selectElement => {
-            totalPackagingPrice += packagingPrices.get(parseInt(selectElement.value));
-        });
-
-        selectedPackagingId.forEach(selectElement => {
-            selectElement.addEventListener('change', function (event) {
-                // 변경될 때마다 totalPrice 초기화
-                totalPackagingPrice = 0;
-                // 변경된 각 요소의 값을 totalPrice에 더함
-                selectedPackagingId.forEach(selectElement => {
-                    totalPackagingPrice += packagingPrices.get(parseInt(selectElement.value));
-                });
-                updateTotalPackagingPrice(totalPackagingPrice);
-                updateTotalPrice(); // 포장 금액이 변경되었으므로 결제 총 금액을 다시 계산
-            });
-        });
-
-        // 포장지 선택 시 금액을 업데이트하는 함수
-        function updateTotalPackagingPrice(packagingPrice) {
-            let totalPriceElement = document.getElementById('totalPackagingPrice');
-            totalPriceElement.textContent = packagingPrice.toFixed(0);
-        }
-
-        //-------------------------------
-
-        // 결제 총 금액 계산
-        function updateTotalPrice() {
-            let totalPrice = document.getElementById('totalPrice');
-            let couponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
-            let memberPoint = parseInt(document.getElementById('memberPoint').value);
-
-            totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount - memberPoint).toFixed(0);
-
-            document.getElementById('totalSalePrice').value = totalPrice.textContent;
-        }
-
-        updateTotalPrice(); // 페이지 로드 시 결제 총 금액을 계산하여 업데이트
-
-        //-------------------------------
-
-        // 쿠폰 적용 시 쿠폰 할인 금액을 업데이트하는 함수
-        function updateCouponDiscountPrice(bookId, discountPrice) {
-            // 쿠폰 할인 금액 업데이트
-            let totalCouponDiscountElement = document.getElementById('totalCouponDiscount');
-
-            let totalCouponDiscount = parseInt(totalCouponDiscountElement.textContent);
-            totalCouponDiscount += discountPrice;
-
-            totalCouponDiscountElement.textContent = totalCouponDiscount;
-
-            // 결제 총 금액 업데이트
-            updateTotalPrice();
-        }
-
-        //-------------------------------
-
-        // 포인트 사용시 총 금액을 업데이트하는 함수
-        function applyPoint() {
-            let applyMemberPoint = document.getElementById('memberPoint').value.trim();
-            let checkPoint = new RegExp("^[0-9]*$");
-            if (!checkPoint.test(applyMemberPoint)) {
-                alert('숫자만 입력해주세요.');
-                return;
-            }
-
-
-            let holdingMemberPoint = parseInt(document.getElementById('holdingMemberPoint').textContent);
-
-            // 보유한 포인트보다 더 많이 사용하지 못해야 함.
-            applyMemberPoint = parseInt(applyMemberPoint);
-            if (isNaN(applyMemberPoint)) {
-                alert('사용할 포인트를 숫자로 입력해주세요.');
-                return;
-            } else if (applyMemberPoint > holdingMemberPoint) {
-                alert('보유한 포인트보다 더 많이 사용할 수 없습니다.');
-                return;
-            } else if (applyMemberPoint < 0) {
-                alert('0보다 작은 값을 입력할 수 없습니다.');
-                return;
-            }
-
-            alert('포인트를 사용하였습니다.');
-
-            document.getElementById('pointDiscount').textContent = applyMemberPoint;
-            document.getElementById('pointUsage').value = applyMemberPoint;
-
-            updateTotalPrice();
-        }
     </script>
-
+    <script src="/js/sale/total-price.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        let bookInfo = new Map();
-        let memberId = [[${#authentication.name}]]
-        /*[# th:each="book : ${bookSaleList}"]*/
-        bookInfo.set([[${book.bookId}]], [[${book}]]);
-        /*[/]*/
-        /*]]>*/
-    </script>
-    <script src="/js/coupon.js"></script>
-
+    <th:block sec:authorize="isAuthenticated()">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            let bookInfo = new Map();
+            let memberId = [[${#authentication.name}]]
+            /*[# th:each="book : ${bookSaleList}"]*/
+            bookInfo.set([[${book.bookId}]], [[${book}]]);
+            /*[/]*/
+            /*]]>*/
+        </script>
+        <script  src="/js/sale/coupon.js"></script>
+    </th:block>
 </div>
 </html>
