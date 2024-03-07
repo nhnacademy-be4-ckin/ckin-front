@@ -126,4 +126,14 @@ public class SaleFacade {
     public void deleteCartItemAll(String value) {
         cartService.deleteCartItemAll(value);
     }
+
+    /**
+     * 주문 상세 정보를 조회하는 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문 응답 DTO
+     */
+    public SaleResponseDto getSaleDetail(Long saleId) {
+        return saleService.getSaleDetail(saleId);
+    }
 }

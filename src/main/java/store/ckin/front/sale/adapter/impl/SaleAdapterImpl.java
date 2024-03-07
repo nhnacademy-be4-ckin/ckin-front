@@ -113,7 +113,7 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto requestGetSaleInformation(Long saleId) {
+    public SaleResponseDto requestGetSaleDetail(Long saleId) {
 
         HttpEntity<SaleResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 

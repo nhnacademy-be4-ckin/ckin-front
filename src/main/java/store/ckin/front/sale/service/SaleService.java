@@ -48,5 +48,5 @@ public interface SaleService {
      * @param saleId 주문 ID
      * @return 주문 응답 DTO
      */
-    SaleResponseDto getSaleInformation(Long saleId);
+    SaleResponseDto getSaleDetail(Long saleId);
 }

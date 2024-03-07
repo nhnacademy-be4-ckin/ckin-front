@@ -62,7 +62,7 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto getSaleInformation(Long saleId) {
-        return saleAdapter.requestGetSaleInformation(saleId);
+    public SaleResponseDto getSaleDetail(Long saleId) {
+        return saleAdapter.requestGetSaleDetail(saleId);
     }
 }

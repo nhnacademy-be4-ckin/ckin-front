@@ -19,7 +19,7 @@
             </thead>
             <tbody>
             <tr th:each="sale : ${sales.getData()}">
-                <td th:text="${sale.saleId}"></td>
+                <td><a th:text="${sale.saleId}" th:href="@{/admin/sale/{id}(id=${sale.saleId})}"></a></td>
                 <th:block th:if="${sale.getMemberEmail() != null}">
                     <td th:text="${sale.getMemberEmail()}"></td>
                 </th:block>
@@ -35,14 +35,14 @@
 
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"> << </a>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
                 <li class="page-item" th:each="num : ${#numbers.sequence(1, sales.getPageInfo().getTotalPages())}">
-                    <a class="page-link" th:href="@{'/admin/sale?page=' + ${num}}" th:text="${num}"></a>
+                    <a class="page-link" th:href="@{/admin/sale(page=${num})}" th:text="${num}"></a>
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#"> >> </a>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
                 </li>
             </ul>
         </nav>
