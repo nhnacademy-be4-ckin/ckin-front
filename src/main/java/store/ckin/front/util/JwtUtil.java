@@ -10,7 +10,33 @@ import java.util.Date;
  * @version : 2024. 02. 28.
  */
 public class JwtUtil {
-    public boolean isExpired(String token) {
-        return JWT.decode(token).getExpiresAt().before(new Date());
+    public static final String HEADER_AUTHORIZATION = "Authorization";
+
+    public static final String AUTHORIZATION_SCHEME_BEARER = "Bearer ";
+
+    public static final String REFRESH_TOKEN_SUBJECT = "ckin_refresh_token";
+
+    /**
+     * 토큰의 만료기간을 확인하는 메서드입니다.
+     *
+     * @param token JWT
+     * @return 만료 여부
+     */
+    public static boolean isExpired(String token) {
+        return JWT.decode(token)
+                .getExpiresAt()
+                .before(new Date());
+    }
+
+    /**
+     * 토큰에서 UUID 를 추출하는 메서드 입니다.
+     *
+     * @param token JWT
+     * @return UUID
+     */
+    public static String getUuid(String token) {
+        return JWT.decode(token)
+                .getClaim("uuid")
+                .asString();
     }
 }

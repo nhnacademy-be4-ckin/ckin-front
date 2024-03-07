@@ -75,7 +75,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String accessToken = tokenResponseDto.getAccessToken();
         String refreshToken = tokenResponseDto.getRefreshToken();
 
-        CookieUtil.makeCookie(response, "accessToken", accessToken);
-        CookieUtil.makeCookie(response, "refreshToken", refreshToken);
+        CookieUtil.makeCookie(response, CookieUtil.HEADER_ACCESS_TOKEN, accessToken);
+        CookieUtil.makeCookie(response, CookieUtil.HEADER_REFRESH_TOKEN, refreshToken);
     }
 }
