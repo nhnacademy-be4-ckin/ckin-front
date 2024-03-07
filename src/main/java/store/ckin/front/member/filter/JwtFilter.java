@@ -58,7 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             log.debug("Request URI : {}", request.getRequestURI());
 
-            Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
             String accessToken = accessTokenCookie.getValue();
 
             // TODO: AccessToken 유효성 검사
@@ -77,7 +77,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_REFRESH_TOKEN);
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
@@ -143,8 +143,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
 
-        CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
-        CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_ACCESS_TOKEN, reissuedAccessToken);
+        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_REFRESH_TOKEN, reissuedRefreshToken);
     }
 
     private static boolean isResourceFile(String requestUri) {
