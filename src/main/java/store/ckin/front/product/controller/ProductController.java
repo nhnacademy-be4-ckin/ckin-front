@@ -12,6 +12,7 @@ import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
 
 import java.util.List;
@@ -50,6 +51,21 @@ public class ProductController {
         model.addAttribute("currentPage", bookPageDto.getNumber());
 
         return "category/initial";
+    }
+
+    /**
+     * bookId로 상품 상세 정보 페이지를 보여주는 메서드 입니다.
+     *
+     * @param bookId
+     * @return 상품 상세 정보 DTO
+     */
+    @GetMapping("/view/{bookId}")
+    public String getProductById(@PathVariable("bookId") Long bookId,
+                                 Model model) {
+        BookResponseDto bookResponseDto = productService.findProductById(bookId);
+
+        model.addAttribute("book", bookResponseDto);
+        return "product/view";
     }
 
 }

@@ -16,6 +16,7 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.adapter.ProductAdapter;
 import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.dto.response.BookResponseDto;
 
 import java.util.List;
 
@@ -53,6 +54,22 @@ public class ProductAdapterImpl implements ProductAdapter {
                         new ParameterizedTypeReference<>() {
                         });
 
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BookResponseDto findProductById(Long bookId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<BookResponseDto> exchange =
+                restTemplate.exchange(portProperties.getGatewayUri() + "/api/books/" + bookId,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
         return exchange.getBody();
     }
 }

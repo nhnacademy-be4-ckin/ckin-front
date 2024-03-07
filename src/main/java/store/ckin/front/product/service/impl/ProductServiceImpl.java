@@ -9,6 +9,7 @@ import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.adapter.ProductAdapter;
 import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
 
 import java.util.List;
@@ -32,5 +33,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable) {
         return productAdapter.findByCategoryId(categoryId, pageable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BookResponseDto findProductById(Long bookId) {
+        return productAdapter.findProductById(bookId);
     }
 }
