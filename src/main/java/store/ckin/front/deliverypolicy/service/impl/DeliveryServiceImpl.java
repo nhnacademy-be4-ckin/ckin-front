@@ -64,4 +64,14 @@ public class DeliveryServiceImpl implements DeliveryPolicyService {
     public void updateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy) {
         deliveryPolicyAdapter.requestUpdateDeliveryPolicy(id, updateDeliveryPolicy);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return 활성화된 배송비 정책 응답 DTO
+     */
+    @Override
+    public DeliveryPolicyResponseDto getActiveDeliveryPolicy() {
+        return deliveryPolicyAdapter.requestActiveDeliveryPolicy();
+    }
 }

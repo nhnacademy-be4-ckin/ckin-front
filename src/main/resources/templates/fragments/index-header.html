@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <style>
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
 
 <header class="header-v4" th:fragment="index-fragment-header">
     <!-- Header desktop -->
@@ -21,6 +32,35 @@
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
+                    <ul class="main-menu">
+                        <li>
+                            <a href="product.html">Shop</a>
+                        </li>
+
+                        <li class="label1" data-label1="sale">
+                            <a href="shoping-cart.html">Features</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Coupon
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" th:href="@{/coupon/1}">생일 쿠폰</a></li>
+                                <li><a class="dropdown-item" th:href="@{/coupon/2}">도서 쿠폰</a></li>
+                                <li><a class="dropdown-item" th:href="@{/coupon/3}">카테고리 쿠폰</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="about.html">About</a>
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contact</a>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- Icon header -->
@@ -31,11 +71,29 @@
 
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
                         <a href="/cart" class="material-symbols-sharp">shopping_cart_checkout</a>
+                        <a href="/cart" class="material-symbols-sharp">shopping_cart_checkout</a>
+                    </div>
+
+                    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+                         class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/admin" class="material-symbols-sharp">shield_person</a>
                     </div>
 
                     <a href="#" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                         <a href="/login" class="material-symbols-sharp">account_circle</a>
                     </a>
+                    <div th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+                         class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/member/mypage" class="material-symbols-sharp">account_circle</a>
+                    </div>
+
+                    <div sec:authorize="isAnonymous()" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/login" class="material-symbols-sharp">login</a>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated()" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/logout" class="material-symbols-sharp">logout</a>
+                    </div>
                 </div>
             </nav>
         </div>

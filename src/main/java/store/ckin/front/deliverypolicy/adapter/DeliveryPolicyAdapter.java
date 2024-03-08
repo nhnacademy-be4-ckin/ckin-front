@@ -43,4 +43,11 @@ public interface DeliveryPolicyAdapter {
      * @param updateDeliveryPolicy 수정 배송비 정책 DTO
      */
     void requestUpdateDeliveryPolicy(Long id, DeliveryPolicyUpdateRequestDto updateDeliveryPolicy);
+
+    /**
+     * 활성화된 배송비 정책 조회를 요청하는 메서드입니다.
+     *
+     * @return 활성화된 배송비 정책 응답 DTO
+     */
+    DeliveryPolicyResponseDto requestActiveDeliveryPolicy();
 }

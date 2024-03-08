@@ -27,16 +27,15 @@
 
 </head>
 
+<body>
 
 <header th:replace="fragments/index-header :: index-fragment-header"></header>
 <div th:replace="fragments/index-navigation ::index-fragment-navigation"></div>
 
 <div>
-    <body>
 
     <!-- 본문 내용 호출 -->
     <div layout:fragment="content"></div>
-    </body>
 </div>
 
 <footer th:replace="fragments/index-footer :: index-fragment-footer"></footer>
@@ -112,5 +111,5 @@
 })(window, document, "clarity", "script", "fwzapuw1br");</script>
 <script src="/js/navigation.js" type="text/javascript" data-name="navigation"></script>
 <script src="/js/main.js"></script>
-
+</body>
 </html>

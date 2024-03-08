@@ -97,7 +97,6 @@ public class CartController {
     @GetMapping("/order")
     public String placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("PLACE_ITEMS", cartService.readCartItems(cookie.getValue()));
-        cartService.deleteCartItemAll(cookie.getValue());
         // 주문시 카트 비워지는 로직 추가
         return "redirect:/sale";
     }

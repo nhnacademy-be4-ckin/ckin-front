@@ -41,4 +41,5 @@ public class MemberCreateRequestDto {
     public void setEncodedPassword(String encoded) {
         this.password = encoded;
     }
+
 }

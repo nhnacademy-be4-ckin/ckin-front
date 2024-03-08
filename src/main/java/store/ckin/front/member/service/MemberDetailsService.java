@@ -1,6 +1,7 @@
 package store.ckin.front.member.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -27,6 +28,7 @@ import java.util.Collection;
  * @author : jinwoolee
  * @version : 2024. 02. 22.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
@@ -60,15 +62,9 @@ public class MemberDetailsService implements UserDetailsService {
      * @param memberId Member ID
      * @return UserDetails
      */
-    public UserDetails loadUserById(String memberId) {
+    public MemberInfoDetailResponseDto loadUserById(String memberId) {
         try {
-            MemberInfoDetailResponseDto memberInfo =
-                    memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
-
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(memberInfo::getRole);
-
-            return new User(memberId, null, authorities);
+            return memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
         } catch (HttpClientErrorException ex) {
             if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new MemberNotFoundException();

@@ -1,8 +1,7 @@
 package store.ckin.front.config;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +11,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import store.ckin.front.auth.CustomLogoutHandler;
+import store.ckin.front.auth.CustomLogoutSuccessHandler;
 import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
@@ -31,13 +33,30 @@ import store.ckin.front.token.service.TokenService;
  */
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
+
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
+
+
+    /**
+     * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
+     *
+     * @param redisTemplate        authRedisTemplate
+     * @param memberDetailsService MemberDetailService
+     * @param tokenService         TokenService
+     */
+    public SecurityConfig(@Qualifier("authRedisTemplate") RedisTemplate<String, Object> redisTemplate,
+                          MemberDetailsService memberDetailsService,
+                          TokenService tokenService) {
+        this.redisTemplate = redisTemplate;
+        this.memberDetailsService = memberDetailsService;
+        this.tokenService = tokenService;
+    }
+
 
     /**
      * SecurityFilterChain 을 설정하는 메서드 입니다.
@@ -54,11 +73,15 @@ public class SecurityConfig {
                 .and()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .logout().disable()
+                .logout()
+                .logoutUrl("/logout")
+                .addLogoutHandler(logoutHandler())
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .and()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/login", "/signup").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/member/**").hasRole("MEMBER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/member/**").hasAuthority("MEMBER")
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -66,18 +89,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Web security customizer web security customizer.
-     *
-     * @return the web security customizer
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring()
-                .requestMatchers(PathRequest
-                        .toStaticResources()
-                        .atCommonLocations());
-    }
 
     @Bean
     public JwtFilter jwtFilter() {
@@ -119,5 +130,15 @@ public class SecurityConfig {
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
         return (serverFactory) -> serverFactory.addContextCustomizers(
                 (context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
+    }
+
+    @Bean
+    public LogoutHandler logoutHandler() {
+        return new CustomLogoutHandler(redisTemplate);
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 }

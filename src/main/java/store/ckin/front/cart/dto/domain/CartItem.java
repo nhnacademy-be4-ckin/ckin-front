@@ -1,8 +1,8 @@
 package store.ckin.front.cart.dto.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * 장바구니에 저장되는 상품에 대한 정보를 저장하는 클래스
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class CartItem {
     private String name;
     private long id;

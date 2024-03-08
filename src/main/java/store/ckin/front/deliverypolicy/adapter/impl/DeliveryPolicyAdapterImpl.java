@@ -111,4 +111,24 @@ public class DeliveryPolicyAdapterImpl implements DeliveryPolicyAdapter {
                 new ParameterizedTypeReference<Void>() {
                 }, id);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return 활성화된 배송비 정책 응답 DTO
+     */
+    @Override
+    public DeliveryPolicyResponseDto requestActiveDeliveryPolicy() {
+
+        HttpEntity<DeliveryPolicyResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<DeliveryPolicyResponseDto> exchange =
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + DELIVERY_POLICY_URL + "/activation",
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
 }

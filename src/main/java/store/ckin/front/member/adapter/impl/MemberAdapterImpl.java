@@ -1,5 +1,7 @@
 package store.ckin.front.member.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -15,7 +17,8 @@ import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
-import store.ckin.front.util.AdapterHeaderUtil;
+import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
+import store.ckin.front.member.domain.response.MemberPointResponseDto;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.
@@ -23,16 +26,18 @@ import store.ckin.front.util.AdapterHeaderUtil;
  * @author : jinwoolee
  * @version : 2024. 02. 16.
  */
+
 @Component
 @RequiredArgsConstructor
 public class MemberAdapterImpl implements MemberAdapter {
+
     private final RestTemplate restTemplate;
 
     private final GatewayProperties gatewayProperties;
 
     @Override
     public void createMember(MemberCreateRequestDto memberCreateRequestDto) {
-        HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
+        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
 
         HttpEntity<MemberCreateRequestDto> requestEntity = new HttpEntity<>(memberCreateRequestDto, headers);
 
@@ -46,7 +51,7 @@ public class MemberAdapterImpl implements MemberAdapter {
 
     @Override
     public MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto) {
-        HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
+        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
 
         HttpEntity<MemberAuthRequestDto> requestEntity = new HttpEntity<>(memberAuthRequestDto, headers);
         ResponseEntity<MemberAuthResponseDto> responseEntity = restTemplate.exchange(
@@ -61,7 +66,7 @@ public class MemberAdapterImpl implements MemberAdapter {
 
     @Override
     public MemberInfoDetailResponseDto getMemberInfoDetail(MemberInfoDetailRequestDto memberInfoDetailRequestDto) {
-        HttpHeaders headers = new HttpHeaders(AdapterHeaderUtil.getHttpHeaders());
+        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
 
         HttpEntity<MemberInfoDetailRequestDto> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<MemberInfoDetailResponseDto> responseEntity = restTemplate.exchange(
@@ -72,5 +77,35 @@ public class MemberAdapterImpl implements MemberAdapter {
                 });
 
         return responseEntity.getBody();
+    }
+
+    @Override
+    public MemberPointResponseDto getMemberPoint(String memberId) {
+
+        HttpEntity<MemberPointResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<MemberPointResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{id}/point",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId);
+
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public MemberMyPageResponseDto getMyPageInfo(String memberId) {
+        HttpEntity<MemberMyPageResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<MemberMyPageResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/mypage/{memberId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId);
+
+        return exchange.getBody();
     }
 }

@@ -1,6 +1,11 @@
 package store.ckin.front.cart.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -10,12 +15,6 @@ import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
 import store.ckin.front.cart.service.CartService;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 /**
  * 사용자 장바구니에 대한 아이템 추가, 갱신, 삭제, 조회를 담당하는 서비스 클래스
  *
@@ -23,11 +22,14 @@ import java.util.Optional;
  * @version 2024. 02. 27
  */
 @Service
-@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
     private final RedisTemplate<String, Object> redisTemplate;
     private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
     private static final String CART_HASH_KEY = "user_cart";
+
+    public CartServiceImpl(@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * {@inheritDoc}
@@ -71,10 +73,13 @@ public class CartServiceImpl implements CartService {
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
         Optional<CartItem>
-                selectedItem = currentUserCart.stream().filter(cartItem -> cartItem.getId() == cartItemUpdateRequestDto.getId()).findFirst();
+                selectedItem =
+                currentUserCart.stream().filter(cartItem -> cartItem.getId() == cartItemUpdateRequestDto.getId())
+                        .findFirst();
 
         if (selectedItem.isEmpty()) {
-            throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemUpdateRequestDto.getId()));
+            throw new CartItemNotFoundException(
+                    String.format("Item(id=%d) is not exist in cart", cartItemUpdateRequestDto.getId()));
         }
         CartItem updatedItem = selectedItem.get();
         updatedItem.updateQuantity(cartItemUpdateRequestDto.getQuantity());
@@ -94,7 +99,8 @@ public class CartServiceImpl implements CartService {
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
         if (!currentUserCart.removeIf(cartItem -> cartItem.getId() == cartItemDeleteRequestDto.getId())) {
-            throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemDeleteRequestDto.getId()));
+            throw new CartItemNotFoundException(
+                    String.format("Item(id=%d) is not exist in cart", cartItemDeleteRequestDto.getId()));
         }
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
