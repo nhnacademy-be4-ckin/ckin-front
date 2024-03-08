@@ -39371,7 +39371,6 @@ button {
     position: absolute;
     min-width: 1440px;
     overflow: hidden;
-    min-height: 100vh;
 }
 
 .wrapper .container_wrapper {

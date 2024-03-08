@@ -2,6 +2,7 @@ package store.ckin.front.coupon.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ import store.ckin.front.coupontemplate.service.CouponTemplateService;
  * @author : gaeun
  * @version : 2024. 02. 26
  */
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/coupon")
@@ -34,6 +37,10 @@ public class CouponController {
     public String getCouponPage(@PathVariable("typeId") Long typeId,
                                 @PageableDefault(page = 0, size = 9) Pageable pageable,
                                 Model model) {
+
+        log.info("typeId = {}", typeId);
+
+
         PageDto<GetCouponTemplateResponseDto> couponResponseDtoPage =
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
 

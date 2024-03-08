@@ -12,6 +12,7 @@ $(document).ready(function () {
         success: function (coupons) {
             coupons.forEach(coupon => {
                 couponList.push(coupon);
+                console.log(coupon);
             });
         },
         error: function (xhr, status, error) {

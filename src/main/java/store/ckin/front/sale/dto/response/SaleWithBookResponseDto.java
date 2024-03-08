@@ -20,6 +20,7 @@ public class SaleWithBookResponseDto {
 
     private final List<BookSaleResponseDto> bookSaleList = new ArrayList<>();
 
+
     private String saleTitle;
 
     private String memberEmail;
