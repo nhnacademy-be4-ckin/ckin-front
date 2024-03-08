@@ -1,9 +1,8 @@
 package store.ckin.front.couponpolicy.adapter;
 
+import java.util.List;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
-
-import java.util.List;
 
 /**
  * PointPolicyAdapter

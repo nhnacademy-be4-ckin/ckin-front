@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+<head>
+    <link
+            rel="stylesheet"
+            href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+    <style>
+        div:has(> #book-form) {
+            padding: 60px;
+        }
+
+        #book-form {
+            width: 60%;
+            min-width: 500px;
+
+            /* 기본 폼 스타일링 */
+
+            .form-group {
+                margin-bottom: 2rem;
+            }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+            .form-control,
+            .form-control:focus {
+                border-color: #007bff;
+                box-shadow: none;
+            }
+
+            .form-control::placeholder {
+                color: #6c757d;
+            }
+
+            & textarea.form-control {
+                resize: vertical; /* 세로 크기 조절 가능 */
+            }
+
+            .thumbnail-preview-box {
+                width: 200px;
+                height: 200px;
+                border: 1px dashed #ccc;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 10px;
+            }
+
+            .thumbnail-preview-box img {
+                max-width: 100%;
+                max-height: 100%;
+                display: none; /* 초기에는 숨김 */
+            }
+
+            .row {
+                justify-content: space-between;
+                margin: 0 auto;
+
+                .col {
+                    flex-basis: initial;
+                    flex-grow: initial;
+                    width: 32%;
+                    padding: 0;
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+
+    <div class="w-full p-all-60">
+        <form id="book-form">
+            <div class="thumbnail-container form-group">
+                <label for="bookThumbnail">책 썸네일:</label>
+                <input
+                        type="file"
+                        class="form-control-file"
+                        id="bookThumbnail"
+                        name="bookThumbnail"
+                        accept="image/*"
+                />
+                <div class="thumbnail-preview-box">
+                    <img id="thumbnailPreview" src="#" alt="Thumbnail Preview"/>
+                </div>
+            </div>
+            <!-- ISBN 입력 필드 -->
+            <div class="form-group">
+                <label for="bookIsbn">ISBN:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="bookIsbn"
+                        maxlength="17"
+                        placeholder="ISBN을 입력해주세요..."
+                        required
+                />
+            </div>
+
+            <!-- 제목 입력 필드 -->
+            <div class="form-group">
+                <label for="bookTitle">제목:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="bookTitle"
+                        maxlength="100"
+                        placeholder="제목을 입력해주세요..."
+                        required
+                />
+            </div>
+
+            <div class="row form-group">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="category1">카테고리 (1단계)</label>
+                        <select class="form-control" id="category1"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="category2">카테고리 (2단계)</label>
+                        <select class="form-control" id="category2"></select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="category3">카테고리 (3단계)</label>
+                        <select class="form-control" id="category3"></select>
+                    </div>
+                </div>
+            </div>
+            <!-- 작가 입력 필드 -->
+            <div class="form-group">
+                <label for="authorSearch">작가 검색:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="authorSearch"
+                        placeholder="작가를 검색하세요..."
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="authorList">작가:</label>
+                <!-- 여기에 작가 목록을 추가할 것입니다 -->
+                <div id="authorList"></div>
+            </div>
+
+            <!-- 선택된 작가를 표시할 요소 추가 -->
+            <div class="form-group">
+                <label for="selectedAuthors">선택된 작가:</label>
+                <div id="selectedAuthors"></div>
+            </div>
+
+            <!-- 출판사 입력 필드 -->
+            <div class="form-group">
+                <label for="bookPublisher">출판사:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="bookPublisher"
+                        placeholder="출판사를 입력해주세요..."
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="tagList">태그 목록:</label>
+                <div id="tagList"></div>
+            </div>
+
+            <!-- 선택된 태그를 표시할 요소 -->
+            <div class="form-group">
+                <label for="selectedTags">선택된 태그:</label>
+                <div id="selectedTags"></div>
+            </div>
+            <div class="form-group">
+                <label for="bookPublicationDate">출판일:</label>
+                <input type="date" id="bookPublicationDate"/>
+            </div>
+            <div class="form-group">
+                <label for="bookDescription">책 설명:</label>
+                <div id="bookDescription"></div>
+            </div>
+            <!-- 책 목차 입력 필드 -->
+            <div class="form-group">
+                <label for="bookIndex">책 목차:</label>
+                <textarea
+                        class="form-control"
+                        id="bookIndex"
+                        rows="5"
+                        placeholder="책 목차를 입력해주세요..."
+                ></textarea>
+            </div>
+            <div class="form-group">
+                <label for="bookPackaging">포장 여부:</label>
+                <select class="form-control" id="bookPackaging">
+                    <option value="true">예</option>
+                    <option value="false">아니오</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bookState">책 상태:</label>
+                <select class="form-control" id="bookState">
+                    <option value="ON_SALE">판매중</option>
+                    <option value="SOLD_OUT">품절</option>
+                    <option value="DELETED">삭제됨</option>
+                    <option value="SALE_END">판매 종료</option>
+                </select>
+            </div>
+
+            <!-- 재고 입력 필드 -->
+            <div class="form-group">
+                <label for="bookStock">재고:</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="bookStock"
+                        min="0"
+                        placeholder="재고를 입력해주세요..."
+                        required
+                />
+            </div>
+
+            <!-- 정가 입력 필드 -->
+            <div class="form-group">
+                <label for="bookRegularPrice">정가:</label>
+                <div class="input-group">
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="bookRegularPrice"
+                            min="0"
+                            step="100"
+                            placeholder="정가를 입력해주세요..."
+                            required
+                    />
+                    <div class="input-group-append">
+                        <span class="input-group-text">원</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 할인율 입력 필드 -->
+            <div class="form-group">
+                <label for="bookDiscountRate">할인율:</label>
+                <div class="input-group">
+                    <input
+                            type="number"
+                            class="form-control"
+                            id="bookDiscountRate"
+                            min="0"
+                            max="100"
+                            placeholder="할인율을 입력해주세요..."
+                            required
+                    />
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">등록하기</button>
+        </form>
+    </div>
+
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+        // Toast UI Editors
+        const descriptionEditor = new toastui.Editor({
+            el: document.querySelector("#bookDescription"),
+            height: "300px",
+            initialEditType: "wysiwyg",
+            hooks: {
+                addImageBlobHook: function (blob, callback) {
+                    const formData = new FormData();
+                    formData.append("image", blob);
+
+                    fetch("/admin/books/upload/description", {
+                        // 서버의 이미지 업로드 엔드포인트
+                        method: "POST",
+                        body: formData,
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            callback(data.imageUrl, "image description"); // 반환된 이미지 URL
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                        });
+
+                    return false; // Default image upload behavior를 막음
+                },
+            },
+        });
+
+
+        // Form Submit
+        document
+            .getElementById("book-form")
+            .addEventListener("submit", function (e) {
+                e.preventDefault();
+                const editorContent = descriptionEditor.getHTML();
+
+
+                const formData = new FormData();
+
+// JSON 데이터를 개별 필드로 추가
+                formData.append('bookIsbn', document.getElementById('bookIsbn').value);
+                formData.append('bookTitle', document.getElementById('bookTitle').value);
+                formData.append('bookDescription', descriptionEditor.getHTML());
+                formData.append('bookPublisher', document.getElementById('bookPublisher').value);
+                formData.append('bookPublicationDate', document.getElementById('bookPublicationDate').value);
+                formData.append('bookIndex', document.getElementById('bookIndex').value);
+                formData.append('bookPackaging', document.getElementById('bookPackaging').value === 'true');
+                formData.append('bookState', document.getElementById('bookState').value);
+                formData.append('bookStock', parseInt(document.getElementById('bookStock').value));
+                formData.append('bookRegularPrice', parseInt(document.getElementById('bookRegularPrice').value));
+                formData.append('bookDiscountRate', parseInt(document.getElementById('bookDiscountRate').value));
+                Object.keys(selectedAuthors).forEach((authorId) => {
+                    formData.append('authorIds', authorId);
+                });
+                [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value]
+                    .filter(Boolean)
+                    .forEach((categoryId) => {
+                        formData.append('categoryIds', categoryId);
+                    });
+                Object.keys(selectedTags).forEach((tagId) => {
+                    formData.append('tagIds', tagId);
+                });
+
+// 이미지 파일 처리
+                const thumbnailFile = document.getElementById("bookThumbnail").files[0];
+                if (thumbnailFile) {
+                    formData.append("bookThumbnail", thumbnailFile);
+                }
+
+                fetch("/admin/books/upload", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json(); // 또는 response.text() 등 서버의 응답 형식에 맞춰 사용
+                        }
+                        throw new Error("Network response was not ok.");
+                    })
+                    .then(data => {
+                        // 서버로부터 성공적인 응답을 받은 후 리다이렉트 수행
+                        window.location.href = 'admin/book/index'; // 예: '/admin'
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        window.location.href = '/error';
+                    });
+            });
+
+        // 이미지 미리보기 기능
+        document
+            .getElementById("bookThumbnail")
+            .addEventListener("change", function (event) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const preview = document.getElementById("thumbnailPreview");
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 최상위 카테고리 로드
+            loadTopCategories("#category1");
+
+            // 카테고리 변경 시 하위 카테고리 로드
+            $("#category1").change(function () {
+                loadCategories("#category2", $(this).val());
+                $("#category3").empty();
+            });
+            $("#category2").change(function () {
+                loadCategories("#category3", $(this).val());
+            });
+        });
+
+        function loadTopCategories(selector) {
+            fetch("/categories/topCategories")
+                .then((response) => response.json())
+                .then((categories) => {
+                    $(selector).empty().append("<option selected>선택하세요</option>");
+                    categories.forEach(function (category) {
+                        $(selector).append(
+                            new Option(category.categoryName, category.categoryId)
+                        );
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
+        function loadCategories(selector, parentId) {
+            if (parentId) {
+                fetch("/categories/subcategories/" + parentId)
+                    .then((response) => response.json())
+                    .then((categories) => {
+                        $(selector)
+                            .empty()
+                            .append("<option selected>선택하세요</option>");
+                        categories.forEach(function (category) {
+                            $(selector).append(
+                                new Option(category.categoryName, category.categoryId)
+                            );
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            } else {
+                $(selector).empty();
+            }
+        }
+
+        document
+            .getElementById("bookThumbnail")
+            .addEventListener("change", function (event) {
+                if (event.target.files && event.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const preview = document.getElementById("thumbnailPreview");
+                        preview.src = e.target.result;
+                        preview.style.display = "block"; // 이미지가 있을 때만 표시
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            });
+        document
+            .getElementById("bookRegularPrice")
+            .addEventListener("input", function (e) {
+                let value = parseInt(e.target.value, 10);
+                value = Math.round(value / 100) * 100; // 100원 단위로 반올림
+                e.target.value = isNaN(value) ? "" : value;
+            });
+
+        // 작가를 검색하는 함수
+        function searchAuthors(name) {
+            if (name.length < 1) {
+                // 최소 3글자 이상 입력되었을 때 검색 시작
+                return;
+            }
+
+            fetch(`/admin/authors/authorList/search?name=${name}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const authorListContainer = document.getElementById("authorList");
+                    authorListContainer.innerHTML = "";
+
+                    if (data.content.length === 0) {
+                        authorListContainer.innerHTML = "<p>검색된 작가가 없습니다.</p>";
+                    } else {
+                        data.content.forEach((author) => {
+                            const checkbox = document.createElement("input");
+                            checkbox.type = "checkbox";
+                            checkbox.id = `author_${author.authorId}`;
+                            checkbox.value = author.authorId;
+
+                            const label = document.createElement("label");
+                            label.htmlFor = `author_${author.authorId}`;
+                            label.appendChild(document.createTextNode(author.authorName));
+
+                            const br = document.createElement("br");
+
+                            authorListContainer.appendChild(checkbox);
+                            authorListContainer.appendChild(label);
+                            authorListContainer.appendChild(br);
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
+        document
+            .getElementById("authorSearch")
+            .addEventListener("input", function () {
+                const searchInput = this.value;
+                searchAuthors(searchInput);
+            });
+
+        const selectedAuthors = [];
+
+        document
+            .getElementById("authorList")
+            .addEventListener("change", function (event) {
+                if (event.target.type === "checkbox") {
+                    const authorId = event.target.value;
+                    const authorName = event.target.nextSibling.textContent;
+
+                    if (event.target.checked) {
+                        if (!selectedAuthors.hasOwnProperty(authorId)) {
+                            selectedAuthors[authorId] = authorName;
+                            updateSelectedAuthorsDisplay();
+                        } else {
+                            event.target.checked = false; // 중복 선택 방지
+                        }
+                    } else {
+                        if (selectedAuthors.hasOwnProperty(authorId)) {
+                            delete selectedAuthors[authorId];
+                            updateSelectedAuthorsDisplay();
+                        }
+                    }
+                }
+            });
+
+        function updateSelectedAuthorsDisplay() {
+            const selectedAuthorsContainer =
+                document.getElementById("selectedAuthors");
+            selectedAuthorsContainer.innerHTML = "";
+
+            for (const [authorId, authorName] of Object.entries(selectedAuthors)) {
+                const authorDiv = document.createElement("div");
+                authorDiv.textContent = authorName + " ";
+
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "취소";
+                removeButton.onclick = function () {
+                    delete selectedAuthors[authorId];
+                    updateSelectedAuthorsDisplay();
+                };
+
+                authorDiv.appendChild(removeButton);
+                selectedAuthorsContainer.appendChild(authorDiv);
+            }
+        }
+
+        const selectedTags = {};
+
+        function loadTags() {
+            fetch("/admin/tags?page=1&size=100")
+                .then((response) => response.json())
+                .then((data) => {
+                    const tagListContainer = document.getElementById("tagList");
+                    tagListContainer.innerHTML = "";
+
+                    data.forEach((tag) => {
+                        const tagDiv = document.createElement("div");
+                        tagDiv.textContent = tag.tagName;
+                        tagDiv.classList.add("tag-item"); // 스타일링을 위한 클래스 추가
+                        tagDiv.onclick = function () {
+                            selectTag(tag.tagId, tag.tagName);
+                        };
+                        tagListContainer.appendChild(tagDiv);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+
+        function selectTag(tagId, tagName) {
+            if (!selectedTags.hasOwnProperty(tagId)) {
+                selectedTags[tagId] = tagName;
+                updateSelectedTagsDisplay();
+            }
+        }
+
+        function updateSelectedTagsDisplay() {
+            const selectedTagsContainer = document.getElementById("selectedTags");
+            selectedTagsContainer.innerHTML = "";
+
+            for (const [tagId, tagName] of Object.entries(selectedTags)) {
+                const tagDiv = document.createElement("div");
+                tagDiv.textContent = tagName + " ";
+
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "취소";
+                removeButton.onclick = function () {
+                    delete selectedTags[tagId];
+                    updateSelectedTagsDisplay();
+                };
+
+                tagDiv.appendChild(removeButton);
+                selectedTagsContainer.appendChild(tagDiv);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadTags);
+    </script>
+</div>
+</body>
+</html>
