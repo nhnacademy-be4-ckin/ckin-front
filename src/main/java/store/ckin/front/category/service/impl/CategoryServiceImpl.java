@@ -12,7 +12,7 @@ import store.ckin.front.category.service.CategoryService;
 /**
  * CategoryService 구현 클래스.
  *
- * @author 나국로
+ * @author 나국로, 이가은
  * @version 2024. 02. 22.
  */
 @Service

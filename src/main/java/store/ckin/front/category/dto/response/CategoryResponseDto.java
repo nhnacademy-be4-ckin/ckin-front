@@ -1,15 +1,17 @@
 package store.ckin.front.category.dto.response;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
- * CategoryResponseDto 클래스.
+ * CategoryResponseDto.
  *
- * @author 나국로
- * @version 2024. 02. 15.
+ * @author 나국로, 이가은
+ * @version 2024. 03. 06.
  */
-@Data
+@Getter
+@NoArgsConstructor
 public class CategoryResponseDto {
 
     private Long categoryId;

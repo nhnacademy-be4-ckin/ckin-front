@@ -1,9 +1,5 @@
 package store.ckin.front.tag.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
-import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -19,6 +15,11 @@ import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
+
+import java.net.URI;
+import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 태그 어댑터 구현 클래스

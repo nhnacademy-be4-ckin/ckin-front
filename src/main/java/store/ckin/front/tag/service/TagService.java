@@ -1,11 +1,12 @@
 package store.ckin.front.tag.service;
 
-import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
+
+import java.util.List;
 
 /**
  * 태그 서비스 인터페이스

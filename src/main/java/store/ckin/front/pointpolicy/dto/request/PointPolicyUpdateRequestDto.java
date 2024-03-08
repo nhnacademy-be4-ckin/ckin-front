@@ -1,12 +1,13 @@
 package store.ckin.front.pointpolicy.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
 
 /**
  * 포인트 정책 수정 요청 DTO.

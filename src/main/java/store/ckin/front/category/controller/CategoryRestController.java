@@ -48,4 +48,12 @@ public class CategoryRestController {
     public void updateCategory(@RequestBody CategoryUpdateRequestDto requestDto, @PathVariable Long categoryId) {
         categoryService.updateCategory(categoryId, requestDto);
     }
+
+    @GetMapping("/{parentId}")
+    public List<CategoryResponseDto> getCouponPage(@PathVariable("parentId") Long parentId) {
+
+        List<CategoryResponseDto> categoryList = categoryService.getSubcategories(parentId);
+
+        return categoryList;
+    }
 }

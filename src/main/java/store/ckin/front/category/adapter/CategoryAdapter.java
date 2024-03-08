@@ -8,7 +8,7 @@ import store.ckin.front.category.dto.response.CategoryResponseDto;
 /**
  * CategoryAdapter.
  *
- * @author 나국로
+ * @author 나국로, 이가은
  * @version 2024. 02. 15.
  */
 public interface CategoryAdapter {
@@ -25,6 +25,13 @@ public interface CategoryAdapter {
 
 
     void requestDeleteCategory(Long categoryId);
+    /**
+     * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
+     *
+     * @param parentId the parent id
+     * @return the subcategories
+     */
+    List<CategoryResponseDto> getSubcategories(Long parentId);
 
 
 }

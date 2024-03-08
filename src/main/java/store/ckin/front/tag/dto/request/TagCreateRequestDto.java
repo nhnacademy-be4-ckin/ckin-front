@@ -1,9 +1,10 @@
 package store.ckin.front.tag.dto.request;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  * 태그 생성 요청 DTO

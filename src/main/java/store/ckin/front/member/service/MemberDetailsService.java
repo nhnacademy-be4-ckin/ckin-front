@@ -1,7 +1,5 @@
 package store.ckin.front.member.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,9 @@ import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.exception.MemberNotFoundException;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * UserDetailsService 를 구현한 클래스 입니다.

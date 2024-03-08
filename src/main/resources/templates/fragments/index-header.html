@@ -26,6 +26,12 @@
 
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
+                    <div class="container-fluid">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
                     <ul class="main-menu">
                         <li>
                             <a href="product.html">Shop</a>
@@ -65,6 +71,7 @@
 
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
                         <a href="/cart" class="material-symbols-sharp">shopping_cart_checkout</a>
+                        <a href="/cart" class="material-symbols-sharp">shopping_cart_checkout</a>
                     </div>
 
                     <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
@@ -72,6 +79,9 @@
                         <a href="/admin" class="material-symbols-sharp">shield_person</a>
                     </div>
 
+                    <a href="#" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/login" class="material-symbols-sharp">account_circle</a>
+                    </a>
                     <div th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}"
                          class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                         <a href="/member/mypage" class="material-symbols-sharp">account_circle</a>
@@ -172,8 +182,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Coupon
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
