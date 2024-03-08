@@ -6,29 +6,52 @@
     <div layout:fragment="mypage-content" class="my-page-body">
         <h1 class="mt-4" th:text="${member.getName() + '님 환영합니다!'}"></h1>
 
-        <div class="card mt-4">
-            <div class="d-flex justify-content-center">
-                <span>나의 CKIN 등급</span>
-                <span class="memberName" th:text="${' ' + member.getGradeName()}"></span>
+        <div class="card mt-4 my-page-header">
+            <div class="my-page-header-nav">
+                <div class="d-flex justify-content-center">
+                    <span>나의 CKIN 등급</span>
+                    <span class="memberName" th:text="${' ' + member.getGradeName()}"></span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="circle" th:classappend="${member.gradeName == '일반' ? 'normal' : ''}">Normal</div>
+                    <div class="circle" th:classappend="${member.gradeName == '로얄' ? 'royal' : ''}">Royal</div>
+                    <div class="circle" th:classappend="${member.gradeName == '골드' ? 'gold' : ''}">Gold</div>
+                    <div class="circle" th:classappend="${member.gradeName == '플래티넘' ? 'platinum' : ''}">Platinum</div>
+                </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <div class="circle" th:classappend="${member.gradeName == '일반' ? 'normal' : ''}">Normal</div>
-                <div class="circle" th:classappend="${member.gradeName == '로얄' ? 'royal' : ''}">Royal</div>
-                <div class="circle" th:classappend="${member.gradeName == '골드' ? 'gold' : ''}">Gold</div>
-                <div class="circle" th:classappend="${member.gradeName == '플래티넘' ? 'platinum' : ''}">Platinum</div>
+
+            <div class="my-page-header-nav">
+                <a href="#" style="text-decoration: none; color: black; display: flex; justify-content: center;">
+                    <div>
+                        <div><span class="material-symbols-sharp" style="color: black;">local_parking</span></div>
+                        <div style="color: black;">
+                            <span>포인트</span>
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                        <div th:text="${member.getPoint()}" style="color: black;"></div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="my-page-header-nav">
+                <a href="#" style="text-decoration: none; color: black; display: flex; justify-content: center;">
+                    <div>
+                        <div><span class="material-symbols-sharp" style="color: black;">local_activity</span></div>
+                        <div style="color: black;">
+                            <span>보유쿠폰</span>
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                        <div th:text="${member.getCountReview()}" style="color: black;"></div>
+                    </div>
+                </a>
             </div>
         </div>
+
 
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">3개월 간 구매 금액</h5>
                 <p class="card-text" th:text="${member.getAccumulateAmount() + '원'}"></p>
-            </div>
-        </div>
-        <div class="card mt-4">
-            <div class="card-body">
-                <h5 class="card-title">포인트</h5>
-                <p class="card-text" th:text="${member.getPoint()}"></p>
             </div>
         </div>
     </div>
