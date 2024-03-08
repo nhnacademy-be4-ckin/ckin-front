@@ -17,6 +17,7 @@ import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
+import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 
 /**
@@ -90,6 +91,20 @@ public class MemberAdapterImpl implements MemberAdapter {
                 new ParameterizedTypeReference<>() {
                 }, memberId);
 
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public MemberMyPageResponseDto getMyPageInfo(String memberId) {
+        HttpEntity<MemberMyPageResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<MemberMyPageResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/mypage/{memberId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId);
 
         return exchange.getBody();
     }

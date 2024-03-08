@@ -1,7 +1,13 @@
 package store.ckin.front.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
+import store.ckin.front.token.exception.TokenAuthenticationFailedException;
+
 
 /**
  * JWT 관련 로직을 처리하는 클래스 입니다.
@@ -9,10 +15,11 @@ import java.util.Date;
  * @author : jinwoolee
  * @version : 2024. 02. 28.
  */
+@Slf4j
 public class JwtUtil {
-    public static final String HEADER_AUTHORIZATION = "Authorization";
+    public static final String SECRET_KEY = "ckin";
 
-    public static final String AUTHORIZATION_SCHEME_BEARER = "Bearer ";
+    public static final String HEADER_AUTHORIZATION = "Authorization";
 
     public static final String REFRESH_TOKEN_SUBJECT = "ckin_refresh_token";
 
@@ -23,9 +30,17 @@ public class JwtUtil {
      * @return 만료 여부
      */
     public static boolean isExpired(String token) {
-        return JWT.decode(token)
-                .getExpiresAt()
-                .before(new Date());
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC512(SECRET_KEY)).build();
+
+            return verifier.verify(token)
+                    .getExpiresAt()
+                    .before(new Date());
+        } catch (JWTVerificationException ex) {
+            log.error("{} :  Token Validation failed", ex.getClass().getName());
+
+            throw new TokenAuthenticationFailedException("Token Authentication Failed");
+        }
     }
 
     /**
