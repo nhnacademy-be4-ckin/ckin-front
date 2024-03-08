@@ -102,7 +102,6 @@ public class SaleController {
         log.debug("sale = {}", sale);
 
         model.addAttribute("sale", sale);
-        model.addAttribute("saleId", saleId);
         return "sale/success";
     }
 }
