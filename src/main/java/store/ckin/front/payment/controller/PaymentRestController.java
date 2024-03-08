@@ -1,6 +1,5 @@
 package store.ckin.front.payment.controller;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -9,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import store.ckin.front.config.properties.TossProperties;
+import store.ckin.front.skm.util.KeyManager;
 
 /**
  * 결제 REST Controller
@@ -25,7 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@RequiredArgsConstructor
 public class PaymentRestController {
+
+
+    private final KeyManager keyManager;
+
+    private final TossProperties tossProperties;
 
     @RequestMapping(value = "/confirm")
     public ResponseEntity<JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
@@ -50,7 +58,7 @@ public class PaymentRestController {
         obj.put("paymentKey", paymentKey);
 
         // @docs https://docs.tosspayments.com/reference/using-api/api-keys
-        String widgetSecretKey = "test_sk_LlDJaYngroa6b0bmKbQy3ezGdRpX";
+        String widgetSecretKey = keyManager.keyStore(tossProperties.getSecretKey());
 
         // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
         // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
