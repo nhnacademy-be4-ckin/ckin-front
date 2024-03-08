@@ -49,7 +49,6 @@ public class PaymentRestController {
         obj.put("amount", amount);
         obj.put("paymentKey", paymentKey);
 
-        // TODO: 개발자센터에 로그인해서 내 결제위젯 연동 키 > 시크릿 키를 입력하세요. 시크릿 키는 외부에 공개되면 안돼요.
         // @docs https://docs.tosspayments.com/reference/using-api/api-keys
         String widgetSecretKey = "test_sk_LlDJaYngroa6b0bmKbQy3ezGdRpX";
 
