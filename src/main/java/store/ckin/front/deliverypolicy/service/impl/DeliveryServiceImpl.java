@@ -1,6 +1,5 @@
 package store.ckin.front.deliverypolicy.service.impl;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
@@ -8,6 +7,8 @@ import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDt
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
+
+import java.util.List;
 
 /**
  * 배송비 정책을 관리하는 서비스 구현 클래스입니다.
@@ -56,7 +57,7 @@ public class DeliveryServiceImpl implements DeliveryPolicyService {
     /**
      * {@inheritDoc}
      *
-     * @param id 수정할 배송비 정책 ID
+     * @param id                   수정할 배송비 정책 ID
      * @param updateDeliveryPolicy 배송비 정책 요청 DTO
      */
     @Override

@@ -1,9 +1,10 @@
 package store.ckin.front.token.domain;
 
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * JWT 토큰에 대한 인증을 Auth 서버로 요청하는 DTO 입니다.

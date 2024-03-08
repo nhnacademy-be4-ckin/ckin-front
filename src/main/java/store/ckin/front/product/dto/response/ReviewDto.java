@@ -2,7 +2,6 @@ package store.ckin.front.product.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.w3c.dom.Text;
 
 import java.sql.Date;
 

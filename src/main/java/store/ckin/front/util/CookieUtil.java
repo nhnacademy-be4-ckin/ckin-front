@@ -1,9 +1,10 @@
 package store.ckin.front.util;
 
+import store.ckin.front.exception.CookieNouFoundException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import store.ckin.front.exception.CookieNouFoundException;
 
 /**
  * 쿠키에 관련된 로직을 처리하는 클래스 입니다.
@@ -12,11 +13,11 @@ import store.ckin.front.exception.CookieNouFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
-    private CookieUtil() {}
+    private CookieUtil() {
+    }
 
     /**
      * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
-     *
      */
     public static void makeCookie(HttpServletResponse response, String name, String token) {
         Cookie cookie = new Cookie(name, token);

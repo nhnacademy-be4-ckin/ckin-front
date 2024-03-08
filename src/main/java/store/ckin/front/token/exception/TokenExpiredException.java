@@ -6,5 +6,5 @@ package store.ckin.front.token.exception;
  * @author : jinwoolee
  * @version : 2024. 02. 28.
  */
-public class TokenExpiredException extends RuntimeException{
+public class TokenExpiredException extends RuntimeException {
 }

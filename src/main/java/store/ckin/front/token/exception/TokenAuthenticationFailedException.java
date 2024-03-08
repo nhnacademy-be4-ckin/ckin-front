@@ -7,7 +7,8 @@ package store.ckin.front.token.exception;
  * @version : 2024. 02. 25.
  */
 public class TokenAuthenticationFailedException extends RuntimeException {
-    public TokenAuthenticationFailedException() {}
+    public TokenAuthenticationFailedException() {
+    }
 
     public TokenAuthenticationFailedException(String message) {
         super(message);

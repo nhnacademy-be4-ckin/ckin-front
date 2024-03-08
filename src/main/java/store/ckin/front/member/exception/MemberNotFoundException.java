@@ -6,5 +6,5 @@ package store.ckin.front.member.exception;
  * @author : jinwoolee
  * @version : 2024. 03. 04.
  */
-public class MemberNotFoundException extends RuntimeException{
+public class MemberNotFoundException extends RuntimeException {
 }

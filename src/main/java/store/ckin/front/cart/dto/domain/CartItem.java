@@ -21,6 +21,7 @@ public class CartItem {
 
     /**
      * 상품의 수량을 변경하기 위한 메서드
+     *
      * @param quantity 변경할 수량
      */
     public void updateQuantity(int quantity) {

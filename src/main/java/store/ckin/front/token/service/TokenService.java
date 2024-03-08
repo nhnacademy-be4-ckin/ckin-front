@@ -1,6 +1,5 @@
 package store.ckin.front.token.service;
 
-import org.springframework.http.ResponseEntity;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;

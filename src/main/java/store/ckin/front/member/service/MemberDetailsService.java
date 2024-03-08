@@ -1,10 +1,7 @@
 package store.ckin.front.member.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +17,9 @@ import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.exception.MemberNotFoundException;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * UserDetailsService 를 구현한 클래스 입니다.

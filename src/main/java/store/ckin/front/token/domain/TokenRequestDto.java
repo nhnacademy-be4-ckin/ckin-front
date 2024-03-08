@@ -1,9 +1,10 @@
 package store.ckin.front.token.domain;
 
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 인증된 유저의 토큰을 요청하는 DTO 입니다.

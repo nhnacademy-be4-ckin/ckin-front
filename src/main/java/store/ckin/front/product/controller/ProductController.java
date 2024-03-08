@@ -13,7 +13,6 @@ import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
-import store.ckin.front.product.dto.response.ReviewDto;
 import store.ckin.front.product.service.ProductService;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class ProductController {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
 //        PageDto<ReviewDto> reviewListDtoPageDto = productService.getReviewListByBookId(bookId);
         String authorNames = "";
-        for(String author : bookResponseDto.getAuthorNames()) {
+        for (String author : bookResponseDto.getAuthorNames()) {
             authorNames += author;
             authorNames += " ";
         }

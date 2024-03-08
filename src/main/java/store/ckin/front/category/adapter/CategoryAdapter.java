@@ -1,9 +1,6 @@
 package store.ckin.front.category.adapter;
 
-import org.springframework.data.domain.Pageable;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
-import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
-import store.ckin.front.coupontemplate.dto.response.PageDto;
 
 import java.util.List;
 

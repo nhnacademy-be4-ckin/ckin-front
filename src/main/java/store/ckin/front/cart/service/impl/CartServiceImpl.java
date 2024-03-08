@@ -1,10 +1,5 @@
 package store.ckin.front.cart.service.impl;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +9,12 @@ import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
 import store.ckin.front.cart.service.CartService;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 사용자 장바구니에 대한 아이템 추가, 갱신, 삭제, 조회를 담당하는 서비스 클래스
@@ -30,7 +31,8 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
-     * @param key 현재 유저의 UUID
+     *
+     * @param key  현재 유저의 UUID
      * @param item 추가하고자 하는 상품에 대한 정보를 담은 Dto
      */
     public void createCartItem(String key, CartItem item) {
@@ -47,6 +49,7 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
+     *
      * @param key 현재 유저의 UUID
      * @return
      */
@@ -58,7 +61,8 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
-     * @param key 현재 유저의 UUID
+     *
+     * @param key                      현재 유저의 UUID
      * @param cartItemUpdateRequestDto 수량 변경을 원하는 상품의 정보가 담긴 Dto
      */
     public void updateItemQuantity(String key, CartItemUpdateRequestDto cartItemUpdateRequestDto) {
@@ -69,7 +73,7 @@ public class CartServiceImpl implements CartService {
         Optional<CartItem>
                 selectedItem = currentUserCart.stream().filter(cartItem -> cartItem.getId() == cartItemUpdateRequestDto.getId()).findFirst();
 
-        if(selectedItem.isEmpty()) {
+        if (selectedItem.isEmpty()) {
             throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemUpdateRequestDto.getId()));
         }
         CartItem updatedItem = selectedItem.get();
@@ -80,7 +84,8 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
-     * @param key 현재 유저의 UUID
+     *
+     * @param key                      현재 유저의 UUID
      * @param cartItemDeleteRequestDto 삭제할 상품의 ID가 담긴 Dto
      */
     public void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto) {
@@ -88,7 +93,7 @@ public class CartServiceImpl implements CartService {
 
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
-        if(!currentUserCart.removeIf(cartItem -> cartItem.getId() == cartItemDeleteRequestDto.getId())) {
+        if (!currentUserCart.removeIf(cartItem -> cartItem.getId() == cartItemDeleteRequestDto.getId())) {
             throw new CartItemNotFoundException(String.format("Item(id=%d) is not exist in cart", cartItemDeleteRequestDto.getId()));
         }
 
@@ -97,6 +102,7 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
+     *
      * @param key 현재 유저의 UUID
      */
     public void deleteCartItemAll(String key) {
@@ -105,11 +111,12 @@ public class CartServiceImpl implements CartService {
 
     /**
      * {@inheritDoc}
+     *
      * @param key 현재 유저의 UUID
      */
     public void initCartAndUpdateExpire(String key) {
         HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
-        if(Objects.isNull(hashOperations.get(key, CART_HASH_KEY))) {
+        if (Objects.isNull(hashOperations.get(key, CART_HASH_KEY))) {
             hashOperations.put(key, CART_HASH_KEY, new ArrayList<>());
         }
         redisTemplate.expire(key, EXPIRE_CART_ITEMS);

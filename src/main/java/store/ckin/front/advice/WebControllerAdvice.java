@@ -1,7 +1,5 @@
 package store.ckin.front.advice;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,6 +8,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
 import store.ckin.front.token.exception.TokenExpiredException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description
@@ -38,9 +39,8 @@ public class WebControllerAdvice {
     /**
      * JWT 의 인증이 실패하거나 만료되었을 때 호출되는 ExceptionHandler 입니다.
      *
-     * @author : jinwoolee
-     *
      * @return 로그인 페이지로 Redirect
+     * @author : jinwoolee
      */
     @ExceptionHandler({TokenAuthenticationFailedException.class, TokenExpiredException.class})
     public String handleJwtAuthenticationFailureRedirect() {

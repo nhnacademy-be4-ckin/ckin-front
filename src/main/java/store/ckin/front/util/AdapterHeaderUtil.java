@@ -1,8 +1,9 @@
 package store.ckin.front.util;
 
-import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+
+import java.util.List;
 
 /**
  * Adapter 에서 사용할 헤더를 만드는 클래스입니다.

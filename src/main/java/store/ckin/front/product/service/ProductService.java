@@ -1,12 +1,9 @@
 package store.ckin.front.product.service;
 
 import org.springframework.data.domain.Pageable;
-import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
-
-import java.util.List;
 
 /**
  * CouponPolicyService

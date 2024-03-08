@@ -1,9 +1,10 @@
 package store.ckin.front.packaging.service;
 
-import java.util.List;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
 import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
+
+import java.util.List;
 
 /**
  * 포장 정책 서비스 인터페이스입니다.

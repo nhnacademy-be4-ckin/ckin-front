@@ -6,5 +6,5 @@ package store.ckin.front.exception;
  * @author : jinwoolee
  * @version : 2024. 03. 03.
  */
-public class ServerErrorException extends RuntimeException{
+public class ServerErrorException extends RuntimeException {
 }
