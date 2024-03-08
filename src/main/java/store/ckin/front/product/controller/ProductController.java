@@ -13,6 +13,7 @@ import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
+import store.ckin.front.product.dto.response.ReviewDto;
 import store.ckin.front.product.service.ProductService;
 
 import java.util.List;
@@ -63,6 +64,7 @@ public class ProductController {
     public String getProductById(@PathVariable("bookId") Long bookId,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
+//        PageDto<ReviewDto> reviewListDtoPageDto = productService.getReviewListByBookId(bookId);
         String authorNames = "";
         for(String author : bookResponseDto.getAuthorNames()) {
             authorNames += author;
@@ -70,6 +72,10 @@ public class ProductController {
         }
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
+//        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
+//        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
+//        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
+//        model.addAttribute("currentPage", bookPageDto.getNumber());
         return "product/view";
     }
 
