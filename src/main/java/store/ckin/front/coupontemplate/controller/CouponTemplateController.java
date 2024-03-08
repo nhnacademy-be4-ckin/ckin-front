@@ -1,20 +1,23 @@
 package store.ckin.front.coupontemplate.controller;
 
 import groovy.util.logging.Slf4j;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
-
-import java.util.List;
 
 /**
  * CouponTemplateController
@@ -43,12 +46,14 @@ public class CouponTemplateController {
     public String getCouponTemplate(@PageableDefault(page = 0, size = 10) Pageable pageable,
                                     @PathVariable("typeId") Long typeId,
                                     Model model) {
-        PageDto<GetCouponTemplateResponseDto> couponTemplateList = couponTemplateService.getCouponTemplateList(pageable, typeId);
+        PageDto<GetCouponTemplateResponseDto> couponTemplateList =
+                couponTemplateService.getCouponTemplateList(pageable, typeId);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
         model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
         model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
+        model.addAttribute("totalPages",
+                couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
         model.addAttribute("currentPage", couponTemplateList.getNumber());
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
@@ -77,15 +82,18 @@ public class CouponTemplateController {
         CreateCouponTemplateRequestDto couponTemplateRequestDto;
         switch (typeId.intValue()) {
             case 1:
-                couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, null, typeId, value + "월 생일 쿠폰", 1L);
+                couponTemplateRequestDto =
+                        new CreateCouponTemplateRequestDto(policyId, null, null, typeId, value + "월 생일 쿠폰", 1L);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/1";
             case 2:
-                couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, value, null, typeId, value + "도서 쿠폰", 1L);
+                couponTemplateRequestDto =
+                        new CreateCouponTemplateRequestDto(policyId, value, null, typeId, value + "도서 쿠폰", 1L);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/2";
             default:
-                couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, null, value, typeId, value + "카테고리 쿠폰", 1L);
+                couponTemplateRequestDto =
+                        new CreateCouponTemplateRequestDto(policyId, null, value, typeId, value + "카테고리 쿠폰", 1L);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/3";
         }

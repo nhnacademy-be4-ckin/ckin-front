@@ -10,11 +10,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.adapter.AuthorAdaptor;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
+import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.config.properties.GatewayProperties;
 
 /**

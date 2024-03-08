@@ -29,8 +29,8 @@ public interface BookService {
      * @return 상품 상세 정보 DTO
      */
     BookResponseDto findProductById(Long bookId);
-    List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds);
 
+    List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds);
 
 
 }

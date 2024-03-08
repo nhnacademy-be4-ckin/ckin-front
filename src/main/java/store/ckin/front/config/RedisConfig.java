@@ -40,7 +40,6 @@ public class RedisConfig {
     }
 
 
-
     /**
      * Auth 관련된 정보로 설정한 RedisConnectionFactory 입니다.
      *

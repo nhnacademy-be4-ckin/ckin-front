@@ -6,5 +6,5 @@ package store.ckin.front.member.exception;
  * @author : jinwoolee
  * @version : 2024. 02. 21.
  */
-public class MemberAlreadyExistsException extends RuntimeException{
+public class MemberAlreadyExistsException extends RuntimeException {
 }

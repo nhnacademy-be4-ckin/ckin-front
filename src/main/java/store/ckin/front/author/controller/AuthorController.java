@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
+import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.author.service.AuthorService;
 
 /**
@@ -43,7 +43,6 @@ public class AuthorController {
 
         model.addAttribute("isSearch", false);
         model.addAttribute("authors", authors.getContent());
-        model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
         model.addAttribute("totalPages", authors.getTotalPages());
         model.addAttribute("currentPage", authors.getNumber());
         model.addAttribute("isPrevious", authors.isPrevious());
@@ -78,7 +77,6 @@ public class AuthorController {
 
         model.addAttribute("isSearch", true);
         model.addAttribute("authors", authors.getContent());
-        model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
         model.addAttribute("totalPages", authors.getTotalPages());
         model.addAttribute("currentPage", authors.getNumber());
         model.addAttribute("isPrevious", authors.isPrevious());

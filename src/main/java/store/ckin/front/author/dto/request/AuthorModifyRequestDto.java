@@ -4,8 +4,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * AuthorModifyRequestDto.
@@ -14,8 +12,6 @@ import lombok.Setter;
  * @version 2024. 02. 16.
  */
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 public class AuthorModifyRequestDto {
     @NotBlank(message = "작가 이름은 비어 있을 수 없습니다")

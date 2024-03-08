@@ -84,6 +84,7 @@ public class BookAdapterImpl implements BookAdapter {
                 new ParameterizedTypeReference<Void>() {
                 });
     }
+
     @Override
     public PageDto<BookListResponseDto> findAllBooks(Pageable pageable) {
         HttpHeaders headers = getHttpHeaders(); // 필요한 헤더를 설정

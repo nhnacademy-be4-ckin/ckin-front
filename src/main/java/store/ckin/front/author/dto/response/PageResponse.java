@@ -1,4 +1,4 @@
-package store.ckin.front.author;
+package store.ckin.front.author.dto.response;
 
 import java.util.List;
 import lombok.Getter;

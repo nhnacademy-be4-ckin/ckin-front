@@ -3,11 +3,11 @@ package store.ckin.front.author.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.adapter.AuthorAdaptor;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
+import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.author.service.AuthorService;
 
 /**

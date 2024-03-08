@@ -1,10 +1,10 @@
 package store.ckin.front.author.adapter;
 
 import org.springframework.data.domain.Pageable;
-import store.ckin.front.author.PageResponse;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
+import store.ckin.front.author.dto.response.PageResponse;
 
 /**
  * AuthorAdaptor.

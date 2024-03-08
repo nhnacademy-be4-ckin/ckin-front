@@ -45,7 +45,7 @@ public class CategoryRestController {
     }
 
     @PutMapping("/admin/{categoryId}")
-    public void updateCategory(@RequestBody CategoryUpdateRequestDto requestDto,@PathVariable Long categoryId){
+    public void updateCategory(@RequestBody CategoryUpdateRequestDto requestDto, @PathVariable Long categoryId) {
         categoryService.updateCategory(categoryId, requestDto);
     }
 }

@@ -40,8 +40,9 @@ public class TagController {
      * @return 태그 관리 페이지
      */
     @GetMapping
-    public String getTagMain(Model model, @Positive @RequestParam(defaultValue = "1") int page, @Positive @RequestParam(required = false, defaultValue = "10") int size) {
-        PagedResponse<List<TagResponseDto>> tagPagedResponse = tagService.readTagList(page-1, size);
+    public String getTagMain(Model model, @Positive @RequestParam(defaultValue = "1") int page,
+                             @Positive @RequestParam(required = false, defaultValue = "10") int size) {
+        PagedResponse<List<TagResponseDto>> tagPagedResponse = tagService.readTagList(page - 1, size);
         model.addAttribute("tagList", tagPagedResponse.getData());
         model.addAttribute("pageInfo", tagPagedResponse.getPageInfo());
         return "admin/tag/index";
