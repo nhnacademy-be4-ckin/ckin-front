@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <style>
@@ -69,7 +71,11 @@
                         <a href="/member/mypage" class="material-symbols-sharp">account_circle</a>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                    <div sec:authorize="isAnonymous()" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/login" class="material-symbols-sharp">login</a>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated()" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                         <a href="/logout" class="material-symbols-sharp">logout</a>
                     </div>
                 </div>
