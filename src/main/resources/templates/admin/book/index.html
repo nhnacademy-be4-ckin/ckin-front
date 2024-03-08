@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+<head>
+    <style>
+        .center-text {
+            text-align: center;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: end;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+
+    <h1 class="mt-4">책 조회 - 관리자 페이지</h1>
+    <div class="search-container">
+        <input type="text" class="form-control" id="searchInput" placeholder="책 제목을 입력해주세요..."
+               style="width: auto; display: inline-block;">
+        <button class="btn btn-primary ms-2" id="searchButton">검색</button>
+    </div>
+        <div class="table-responsive">
+            <table class="table center-text">
+                <thead>
+                <tr>
+                    <th>썸네일</th>
+                    <th>제목</th>
+                    <th>출판일</th>
+                    <th>재고</th>
+                    <th>상태</th>
+                    <th>수정</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${bookList}">
+                    <td><img th:src="${book.thumbnail}" alt="썸네일" style="width: 60px; height: auto;"></td>
+                    <td th:text="${book.bookTitle}"></td>
+                    <td th:text="${book.bookPublicationDate}"></td>
+                    <td th:text="${book.bookStock}"></td>
+                    <td th:text="${book.bookState}"></td>
+                    <td>
+                        <button class="btn btn-secondary" th:onclick="'location.href=\'/admin/books/edit/' + ${book.bookId} + '\''">수정</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <!-- 페이지네이션 -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li th:class="${isPrevious} ? 'page-item' : 'page-item disabled'">
+                <a class="page-link" th:href="@{${currentPage} - 1}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:class="'page-item'" th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                <a class="page-link" th:href="@{${pageNum}}" th:text="${pageNum}"></a>
+            </li>
+            <li th:class="${isNext} ? 'page-item' : 'page-item disabled'">
+                <a class="page-link" th:href="@{${currentPage} + 1}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+        <!-- 책 수정 모달 -->
+        <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editBookModalLabel">책 수정</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 수정 폼 (폼 필드 예시) -->
+                        <form id="editBookForm">
+                            <!-- 책 제목 필드 -->
+                            <div class="mb-3">
+                                <label for="editBookTitle" class="form-label">제목</label>
+                                <input type="text" class="form-control" id="editBookTitle">
+                            </div>
+                            <!-- 기타 필드 추가 -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-primary" onclick="saveBookChanges()">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-success" id="addBookButton">새 책 추가</button>
+    </div>
+
+</div>
+
+<!-- JavaScript 코드 -->
+<script>
+    // JavaScript 코드를 여기에 추가
+</script>
+</body>
+</html>

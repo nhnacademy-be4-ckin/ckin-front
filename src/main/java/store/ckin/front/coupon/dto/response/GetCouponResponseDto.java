@@ -1,9 +1,8 @@
 package store.ckin.front.coupon.dto.response;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Date;
 
 /**
  * 쿠폰 응답 DTO

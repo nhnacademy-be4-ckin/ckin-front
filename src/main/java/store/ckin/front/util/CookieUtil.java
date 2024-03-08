@@ -18,7 +18,8 @@ public class CookieUtil {
 
     public static final String HEADER_REFRESH_TOKEN = "refreshToken";
 
-    private CookieUtil() {}
+    private CookieUtil() {
+    }
 
     /**
      * JWT Access Token 을 쿠키로 만드는 메서드 입니다.

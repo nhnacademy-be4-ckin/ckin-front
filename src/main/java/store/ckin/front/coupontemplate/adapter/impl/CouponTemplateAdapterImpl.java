@@ -1,5 +1,7 @@
 package store.ckin.front.coupontemplate.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +16,6 @@ import store.ckin.front.coupontemplate.adapter.CouponTemplateAdapter;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * CouponTemplateAdapterImpl
@@ -64,7 +64,8 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
      */
     @Override
     public void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto) {
-        HttpEntity<CreateCouponTemplateRequestDto> requestEntity = new HttpEntity<>(couponTemplateRequestDto, getHttpHeaders());
+        HttpEntity<CreateCouponTemplateRequestDto> requestEntity =
+                new HttpEntity<>(couponTemplateRequestDto, getHttpHeaders());
 
 
         ResponseEntity<Void> exchange =

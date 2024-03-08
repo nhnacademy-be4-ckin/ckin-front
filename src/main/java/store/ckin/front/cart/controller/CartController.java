@@ -1,18 +1,21 @@
 package store.ckin.front.cart.controller;
 
+import java.util.List;
+import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.service.CartService;
-
-import javax.servlet.http.Cookie;
-import java.util.List;
 
 /**
  * 장바구니의 임시 저장을 담당하는 컨트롤러 클래스
@@ -39,7 +42,8 @@ public class CartController {
     public String getCartPage(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
         List<CartItem> currentUserCart = cartService.readCartItems(cookie.getValue());
         for (CartItem item : currentUserCart) {
-            log.debug("saved in cart: name -> {}, id -> {}, quantity -> {}", item.getName(), item.getId(), item.getQuantity());
+            log.debug("saved in cart: name -> {}, id -> {}, quantity -> {}", item.getName(), item.getId(),
+                    item.getQuantity());
         }
         model.addAttribute("CART_ITEMS", currentUserCart);
         return "cart/index";
@@ -66,8 +70,10 @@ public class CartController {
      * @return 장바구니 페이지로 리다이렉트
      */
     @PostMapping("/update")
-    public String updateCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItemUpdateRequestDto cartItemUpdateRequestDto) {
-        log.debug("updateCartItem(): request(id: {}, quantity: {})", cartItemUpdateRequestDto.getId(), cartItemUpdateRequestDto.getQuantity());
+    public String updateCartItem(@CookieValue(name = "CART_ID") Cookie cookie,
+                                 @ModelAttribute CartItemUpdateRequestDto cartItemUpdateRequestDto) {
+        log.debug("updateCartItem(): request(id: {}, quantity: {})", cartItemUpdateRequestDto.getId(),
+                cartItemUpdateRequestDto.getQuantity());
         cartService.updateItemQuantity(cookie.getValue(), cartItemUpdateRequestDto);
         return REDIRECT_CART_URL;
     }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 /**
  * CategoryResponseDto.
  *
- * @author 이가은
- * @version 2024. 03.06.
+ * @author 나국로, 이가은
+ * @version 2024. 03. 06.
  */
 @Getter
 @NoArgsConstructor
