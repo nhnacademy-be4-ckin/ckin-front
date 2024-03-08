@@ -27,14 +27,16 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
         log.debug("preHandle(): called");
         // Check cookie is null
         Optional<Cookie> userUuidCookieWrapped;
-        if(Objects.nonNull(request.getCookies())) {
-            userUuidCookieWrapped = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID")).findFirst();
+        if (Objects.nonNull(request.getCookies())) {
+            userUuidCookieWrapped =
+                    Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("CART_ID"))
+                            .findFirst();
         } else {
             userUuidCookieWrapped = Optional.empty();
         }
 
         // Check cookie is empty
-        if(userUuidCookieWrapped.isEmpty()) {
+        if (userUuidCookieWrapped.isEmpty()) {
             log.debug("preHandle(): user uuid cookie is null");
             Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
             userUuidCookie.setHttpOnly(true);

@@ -11,11 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -91,16 +93,16 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO 리스트
      */
     @Override
-    public List<SaleResponseDto> requestGetSales() {
+    public PagedResponse<List<SaleResponseDto>> requestGetSales(Integer page, Integer size) {
 
         HttpEntity<List<SaleResponseDto>> requestEntity = new HttpEntity<>(getHttpHeaders());
 
-        ResponseEntity<List<SaleResponseDto>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + SALE_URL,
+        ResponseEntity<PagedResponse<List<SaleResponseDto>>> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "?page={page}&size={size}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                });
+                }, page, size);
 
         return exchange.getBody();
     }
@@ -112,12 +114,32 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto requestGetSaleInformation(Long saleId) {
+    public SaleResponseDto requestGetSaleDetail(Long saleId) {
 
         HttpEntity<SaleResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<SaleResponseDto> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleId);
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 조회할 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    @Override
+    public SaleWithBookResponseDto requestGetSaleWithBooks(Long saleId) {
+        HttpEntity<SaleWithBookResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleWithBookResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}/books",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

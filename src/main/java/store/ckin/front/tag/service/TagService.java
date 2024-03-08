@@ -1,11 +1,12 @@
 package store.ckin.front.tag.service;
 
-import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.tag.dto.request.TagCreateRequestDto;
 import store.ckin.front.tag.dto.request.TagDeleteRequestDto;
 import store.ckin.front.tag.dto.request.TagUpdateRequestDto;
 import store.ckin.front.tag.dto.response.TagResponseDto;
+
+import java.util.List;
 
 /**
  * 태그 서비스 인터페이스
@@ -23,15 +24,18 @@ public interface TagService {
 
     /**
      * 태그 리스트 반환 메서드
+     *
      * @return 현재까지 저장된 태그 리스트
      */
     PagedResponse<List<TagResponseDto>> readTagList(int page, int size);
 
     /**
      * 태그 수정 메서드
+     *
      * @param tagUpdateRequestDto 태그 수정 요청 DTO
      */
     void updateTag(TagUpdateRequestDto tagUpdateRequestDto);
+
     /**
      * 태그 삭제 메서드
      *

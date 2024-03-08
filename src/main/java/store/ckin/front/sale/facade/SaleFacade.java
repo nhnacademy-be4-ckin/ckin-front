@@ -3,12 +3,14 @@ package store.ckin.front.sale.facade;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.booksale.dto.request.BookSaleCreateRequestDto;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.service.CartService;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
@@ -17,6 +19,7 @@ import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.service.SaleService;
 
 /**
@@ -26,6 +29,7 @@ import store.ckin.front.sale.service.SaleService;
  * @version 2024. 02. 27.
  */
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SaleFacade {
@@ -87,11 +91,19 @@ public class SaleFacade {
      */
     public Long createSale(SaleCreateRequestDto requestDto) {
 
+        // TODO : 쿠폰과 주문은 서버가 다르기 때문에 하나의 트랜잭션으로 묶으려면 어떻게 ?
+        //  분산 트랜잭션 (Message Queue)에 대해서 찾아보기
+
         List<Long> couponIds = requestDto.getBookSaleList().stream()
                 .map(BookSaleCreateRequestDto::getAppliedCouponId)
+                .filter(appliedCouponId -> appliedCouponId != 0)
                 .collect(Collectors.toList());
 
-        couponService.updateCouponUsed(couponIds);
+        log.debug("couponIds = {}", couponIds);
+
+        if (!couponIds.isEmpty()) {
+            couponService.updateCouponUsed(couponIds);
+        }
 
         return saleService.createSale(requestDto);
     }
@@ -99,10 +111,12 @@ public class SaleFacade {
     /**
      * 모든 주문을 조회하는 메서드입니다.
      *
+     * @param page 페이지 번호
+     * @param size 페이지 사이즈
      * @return 주문 응답 DTO 리스트
      */
-    public List<SaleResponseDto> getSales() {
-        return saleService.getSales();
+    public PagedResponse<List<SaleResponseDto>> getSales(Integer page, Integer size) {
+        return saleService.getSales(page, size);
     }
 
     /**
@@ -122,5 +136,25 @@ public class SaleFacade {
      */
     public void deleteCartItemAll(String value) {
         cartService.deleteCartItemAll(value);
+    }
+
+    /**
+     * 주문 상세 정보를 조회하는 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문 응답 DTO
+     */
+    public SaleResponseDto getSaleDetail(Long saleId) {
+        return saleService.getSaleDetail(saleId);
+    }
+
+    /**
+     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
+        return saleService.getSaleWithBooks(saleId);
     }
 }

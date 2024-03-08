@@ -1,10 +1,8 @@
 package store.ckin.front.member.filter;
 
-import com.auth0.jwt.JWT;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,6 +26,7 @@ import store.ckin.front.token.exception.TokenAuthenticationFailedException;
 import store.ckin.front.token.exception.TokenExpiredException;
 import store.ckin.front.token.service.TokenService;
 import store.ckin.front.util.CookieUtil;
+import store.ckin.front.util.JwtUtil;
 
 /**
  * JWT 토큰을 인증하는 클래스 입니다.
@@ -59,13 +58,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
             log.debug("Request URI : {}", request.getRequestURI());
 
-            Cookie accessTokenCookie = CookieUtil.findCookie(request, "accessToken");
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
             String accessToken = accessTokenCookie.getValue();
 
-            // TODO: AccessToken 유효성 검사
-
             // Access 토큰이 만료되었는지 확인
-            if (!isExpired(accessToken)) {
+            if (!JwtUtil.isExpired(accessToken)) {
                 log.debug("Access Token is still available to use");
                 if (request.getRequestURI().equals("/login")
                         || request.getRequestURI().equals("/signup")) {
@@ -78,11 +75,11 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = CookieUtil.findCookie(request, "refreshToken");
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_REFRESH_TOKEN);
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
-            if (isExpired(refreshToken)) {
+            if (JwtUtil.isExpired(refreshToken)) {
                 throw new TokenExpiredException("Refresh Token is expired");
             }
 
@@ -97,6 +94,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (CookieNotFoundException ex) {
+            //TODO: 정상적이지 않은 Token 을 갖고 있는 쿠키의 상태일 때 CookieNotFoundException 호출이 되면 로그아웃이 정상적으로 작동하도록 처리"
+
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
@@ -117,7 +116,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
     private void setSecurityContextHolder(String accessToken) {
-        String uuid = getUuid(accessToken);
+        String uuid = JwtUtil.getUuid(accessToken);
         String memberId = getMemberId(uuid);
 
         MemberInfoDetailResponseDto memberInfo = memberDetailsService.loadUserById(memberId);
@@ -138,26 +137,14 @@ public class JwtFilter extends OncePerRequestFilter {
                         .get(uuid, "id"));
     }
 
-    private String getUuid(String token) {
-        return JWT.decode(token.replace("Bearer ", ""))
-                .getClaim("uuid")
-                .asString();
-    }
-
-    private boolean isExpired(String token) {
-        return JWT.decode(token.replace("Bearer ", ""))
-                .getExpiresAt()
-                .before(new Date());
-    }
-
     private void updateJwtTokenCookie(HttpServletRequest request,
                                       HttpServletResponse response,
                                       TokenResponseDto tokenResponseDto) {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
 
-        CookieUtil.updateCookie(request, response, "accessToken", reissuedAccessToken);
-        CookieUtil.updateCookie(request, response, "refreshToken", reissuedRefreshToken);
+        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_ACCESS_TOKEN, reissuedAccessToken);
+        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_REFRESH_TOKEN, reissuedRefreshToken);
     }
 
     private static boolean isResourceFile(String requestUri) {

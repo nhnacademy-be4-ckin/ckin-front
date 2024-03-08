@@ -1,6 +1,8 @@
 package store.ckin.front.coupon.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -15,14 +17,14 @@ import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * description:
  *
  * @author : gaeun
  * @version : 2024. 02. 26
  */
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/coupon")
@@ -35,13 +37,19 @@ public class CouponController {
     public String getCouponPage(@PathVariable("typeId") Long typeId,
                                 @PageableDefault(page = 0, size = 9) Pageable pageable,
                                 Model model) {
-        PageDto<GetCouponTemplateResponseDto> couponResponseDtoPage = couponTemplateService.getCouponTemplateList(pageable, typeId);
+
+        log.info("typeId = {}", typeId);
+
+
+        PageDto<GetCouponTemplateResponseDto> couponResponseDtoPage =
+                couponTemplateService.getCouponTemplateList(pageable, typeId);
 
         model.addAttribute("memberId", 1);
         model.addAttribute("couponList", couponResponseDtoPage.getContent());
         model.addAttribute("isPrevious", couponResponseDtoPage.getNumber() > 0);
         model.addAttribute("isNext", couponResponseDtoPage.getNumber() < couponResponseDtoPage.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponResponseDtoPage.getTotalPages() == 0 ? 1 : couponResponseDtoPage.getTotalPages());
+        model.addAttribute("totalPages",
+                couponResponseDtoPage.getTotalPages() == 0 ? 1 : couponResponseDtoPage.getTotalPages());
         model.addAttribute("currentPage", couponResponseDtoPage.getNumber());
         switch (typeId.intValue()) {
             case 1:

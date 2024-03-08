@@ -20,6 +20,7 @@ import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
 /**
@@ -77,12 +78,12 @@ public class SaleController {
                              @Valid SaleCreateRequestDto requestDto,
                              RedirectAttributes redirectAttributes) {
 
+        log.debug("requestDto = {}", requestDto);
 
         Long saleId = saleFacade.createSale(requestDto);
         saleFacade.deleteCartItemAll(cookie.getValue());
-        redirectAttributes.addFlashAttribute("SALE", requestDto);
-        redirectAttributes.addFlashAttribute("SALE_ID", saleId);
 
+        redirectAttributes.addFlashAttribute("SALE_ID", saleId);
         return "redirect:/sale/success";
     }
 
@@ -95,11 +96,12 @@ public class SaleController {
     @GetMapping("/success")
     public String getSaleInformation(Model model) {
 
-        SaleCreateRequestDto sale = (SaleCreateRequestDto) model.getAttribute("SALE");
         Long saleId = (Long) model.getAttribute("SALE_ID");
+        SaleWithBookResponseDto sale = saleFacade.getSaleWithBooks(saleId);
+
+        log.debug("sale = {}", sale);
 
         model.addAttribute("sale", sale);
-        model.addAttribute("saleId", saleId);
         return "sale/success";
     }
 }

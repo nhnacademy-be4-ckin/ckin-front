@@ -1,6 +1,8 @@
 package store.ckin.front.coupon.controller;
 
 import groovy.util.logging.Slf4j;
+import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  * 포인트 정책 페이지를 호출하는 컨트롤러입니다.

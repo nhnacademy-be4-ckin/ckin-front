@@ -1,9 +1,11 @@
 package store.ckin.front.sale.adapter;
 
 import java.util.List;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 
 /**
  * 주문 어댑터 인터페이스.
@@ -34,9 +36,11 @@ public interface SaleAdapter {
     /**
      * 모든 주문을 조회합니다.
      *
+     * @param page 페이지 번호
+     * @param size 페이지 사이즈
      * @return 주문 응답 DTO 리스트
      */
-    List<SaleResponseDto> requestGetSales();
+    PagedResponse<List<SaleResponseDto>> requestGetSales(Integer page, Integer size);
 
     /**
      * 주문 ID를 통해 주문 정보를 조회합니다.
@@ -44,5 +48,13 @@ public interface SaleAdapter {
      * @param saleId 조회할 주문 ID
      * @return 주문 응답 DTO
      */
-    SaleResponseDto requestGetSaleInformation(Long saleId);
+    SaleResponseDto requestGetSaleDetail(Long saleId);
+
+    /**
+     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     *
+     * @param saleId 조회할 주문 ID
+     * @return 주문과 관련된 도서 정보 응답 DTO
+     */
+    SaleWithBookResponseDto requestGetSaleWithBooks(Long saleId);
 }

@@ -1,6 +1,7 @@
 package store.ckin.front.member.service;
 
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 
 /**
@@ -19,4 +20,6 @@ public interface MemberService {
      * @return 회원 포인트 응답 DTO
      */
     MemberPointResponseDto getMemberPoint(String memberId);
+
+    MemberMyPageResponseDto getMyPageInfo(String memberId);
 }

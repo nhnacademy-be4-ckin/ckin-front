@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+/* opilsol-N18 [ldLTfQMc79] */
+.opilsol-N18 .content-container {
+    margin-top: 8rem;
+    padding: 8rem 0;
+    background-color: var(--con-bg-gray);
+}
+
+.opilsol-N18 .content-desc {
+    padding: 2rem 48.2% 2rem 0;
+    word-break: keep-all;
+}
+
+.opilsol-N18 .content-desc .textset-tit.acc-txt {
+    line-height: var(--lh-h6);
+    font-size: var(--fs-h6);
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.opilsol-N18 .content-desc .textset-desc {
+    padding: 2rem 0;
+    letter-spacing: var(--lt-sp);
+}
+
+.opilsol-N18 .col-group {
+    display: grid;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 1.2rem;
+    width: 100%;
+    grid-template-columns: 500px 500px 500px;
+}
+
+.opilsol-N18 .col-group .item {
+    margin-right: 4rem;
+    width: 40rem;
+}
+
+.opilsol-N18 .col-group .item:nth-of-type(3n) {
+    margin-right: 0;
+}
+
+.opilsol-N18 .col-group .item .cardset-figure {
+    height: 46rem;
+}
+
+.opilsol-N18 .col-group .item .cardset-figure .mobile-img {
+    display: none;
+}
+
+.opilsol-N18 .col-group .item .cardset .cardset-tit {
+    margin-bottom: 2rem;
+    font-size: var(--fs-h4);
+    font-weight: 700;
+}
+
+.opilsol-N18 .col-group .item .cardset .cardset-body {
+    background-color: transparent;
+}
+
+.opilsol-N18 .col-group .item .cardset .cardset-desc {
+    color: var(--text-color3);
+}
+
+@media (max-width: 1366px) {
+    .opilsol-N18 .container-md {
+        padding: 0 1.6rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .opilsol-N18 .content-container {
+        margin-top: 4rem;
+        padding: 4rem 0;
+    }
+
+    .opilsol-N18 .content-desc {
+        padding-right: 30.2%;
+    }
+
+    .opilsol-N18 .col-group .item .cardset-figure {
+        height: 32rem;
+    }
+}
+
+@media (max-width: 922px) {
+    .opilsol-N18 .content-desc {
+        padding: 2rem 0;
+        width: 100%;
+        word-break: normal;
+    }
+
+    .opilsol-N18 .content-desc .textset-desc {
+        padding: 1rem 0;
+        width: 100%;
+        line-height: var(--lh-h3);
+        letter-spacing: -0.2rem;
+    }
+
+    .opilsol-N18 .col-group {
+        flex-direction: column;
+    }
+
+    .opilsol-N18 .col-group .item {
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .opilsol-N18 .col-group .item .cardset-figure .pc-img {
+        display: none;
+    }
+
+    .opilsol-N18 .col-group .item .cardset-figure .mobile-img {
+        display: block;
+    }
+
+    .opilsol-N18 .col-group .item .cardset .cardset-tit {
+        margin-bottom: 1rem;
+    }
+}

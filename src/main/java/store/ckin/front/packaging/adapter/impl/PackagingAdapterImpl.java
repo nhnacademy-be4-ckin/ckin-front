@@ -1,8 +1,5 @@
 package store.ckin.front.packaging.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -15,6 +12,10 @@ import store.ckin.front.packaging.adapter.PackagingAdapter;
 import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
 import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
+
+import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 포인트 정책 어댑터 구현 클래스입니다.
