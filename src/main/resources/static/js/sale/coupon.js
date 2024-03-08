@@ -12,7 +12,6 @@ $(document).ready(function () {
         success: function (coupons) {
             coupons.forEach(coupon => {
                 couponList.push(coupon);
-                console.log(coupon);
             });
         },
         error: function (xhr, status, error) {
@@ -34,10 +33,15 @@ function renderCoupon(bookId) {
     // 쿠폰 목록을 비웁니다.
     couponTableBody.innerHTML = '';
 
+    console.log(couponList);
+
     let selectableCoupons = [];
 
     // 쿠폰을 분류합니다.
     couponList.forEach(coupon => {
+
+        console.log("분류")
+        console.log(coupon)
 
         /**
          * 1. coupon.typeId === 1 : 모든 상품에 적용 가능
@@ -51,6 +55,7 @@ function renderCoupon(bookId) {
         }
     });
 
+
     // 이미 적용된 쿠폰이 있다면 해당 쿠폰을 selectableCoupons에서 제외
     appliedCoupons.forEach((appliedCouponId, appliedBookId) => {
         if (appliedBookId !== bookId) {
@@ -61,6 +66,9 @@ function renderCoupon(bookId) {
 
     // 선택 가능한 쿠폰을 HTML로 변환하여 출력합니다.
     selectableCoupons.forEach(coupon => {
+
+        console.log("selectableCoupons.forEach(coupon => {)")
+        console.log(coupon);
 
         /**
          * coupon.couponCodeId == 1 : 정액할인
