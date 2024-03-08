@@ -3,10 +3,14 @@ package store.ckin.front.member.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
 
 /**
@@ -54,8 +58,21 @@ public class MemberController {
         return "member/login";
     }
 
+    /**
+     * [GET] 마이 페이지.
+     *
+     * @param model Model
+     * @return 마이 페이지 View
+     */
     @GetMapping("/member/mypage")
-    public String getMypage() {
+    public String getMyPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = authentication.getName();
+
+        MemberMyPageResponseDto responseDto = memberService.getMyPageInfo(memberId);
+
+        model.addAttribute("member", responseDto);
+
         return "member/mypage";
     }
 }
