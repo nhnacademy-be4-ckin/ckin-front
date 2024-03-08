@@ -133,7 +133,7 @@
                                 <form th:action="@{/admin/authors}" th:object="${authorCreateRequestDto}" method="post">
                                     <div class="form-group">
                                         <label for="authorName">저자 이름</label>
-                                        <input type="text" class="form-control" id="authorName" th:field="*{authorName}"
+                                        <input type="text" class="form-control" id="authorName" name="authorName" th:field="*{authorName}"
                                                placeholder="저자 이름" required>
                                         <div class="invalid-feedback">최소 1글자, 최대 200글자</div>
                                     </div>
