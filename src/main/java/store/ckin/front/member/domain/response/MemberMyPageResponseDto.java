@@ -1,7 +1,7 @@
 package store.ckin.front.member.domain.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 마이페이지 정보 요청에 대한 응답 DTO 클래스 입니다.
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @version : 2024. 03. 08.
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class MemberMyPageResponseDto {
     private String name;
 
@@ -19,4 +19,6 @@ public class MemberMyPageResponseDto {
     private Integer accumulateAmount;
 
     private Integer point;
+
+    private Long countReview;
 }
