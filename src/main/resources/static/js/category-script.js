@@ -1,4 +1,11 @@
+let categoryCreateModal, topCategoryCreateModal, editCategoryModal;
+
 document.addEventListener('DOMContentLoaded', function () {
+    categoryCreateModal = new bootstrap.Modal(document.getElementById('categoryCreateModal'));
+    topCategoryCreateModal = new bootstrap.Modal(document.getElementById('topCategoryCreateModal'));
+    editCategoryModal = new bootstrap.Modal(document.getElementById('editCategoryModal'));
+
+
     fetch('/categories/topCategories')
         .then(response => response.json())
         .then(categories => {
@@ -6,20 +13,19 @@ document.addEventListener('DOMContentLoaded', function () {
             categories.forEach(category => {
                 const categoryCol = document.createElement('div');
                 categoryCol.setAttribute('data-category-id', category.categoryId);
-                categoryCol.className = 'col-md-4 mb-3';
-                categoryCol.innerHTML =
-                    `<div class="card">
-            <div class="card-body">
-                <h5 class="card-title">${category.categoryName}</h5>
-                <button class="btn btn-primary" onclick="editCategory(${category.categoryId})">수정</button>
-                <button class="btn btn-info" onclick="showSubcategories(${category.categoryId}, this)">하위 카테고리 보기</button>
-                <button class="btn btn-success" onclick="showCreateCategoryModal(${category.categoryId})">하위 카테고리 생성</button>
-            </div>
-        </div>`;
-
-
+                categoryCol.className = 'col-md-4';
+                categoryCol.innerHTML = `
+            <div class="category-card card">
+                <div class="card-body">
+                    <h5 class="card-title">${category.categoryName}</h5>
+                    <button class="btn btn-primary category-button" onclick="openEditCategoryModal(${category.categoryId}, '${category.categoryName}')">수정</button>
+                    <button class="btn btn-info category-button" onclick="showSubcategories(${category.categoryId}, this)">하위 카테고리 보기</button>
+                    <button class="btn btn-success category-button" onclick="showCreateCategoryModal(${category.categoryId})">하위 카테고리 생성</button>
+                </div>
+            </div>`;
                 categoryContainer.appendChild(categoryCol);
             });
+
         })
         .catch(error => console.error('Error:', error));
 });
@@ -48,21 +54,22 @@ function showSubcategories(categoryId, buttonElement, depth = 1) {
 
                 subcategories.forEach(subcategory => {
                     const subcategoryCard = document.createElement('div');
-                    subcategoryCard.className = 'card';
+                    subcategoryCard.className = 'subcategory-card card';
                     subcategoryCard.innerHTML = `
-        <div class="card-body">
-            <h5 class="card-title d-inline-block mr-2">${subcategory.categoryName}</h5>
-            <button class="btn btn-primary btn-sm" onclick="editCategory(${subcategory.categoryId})">수정</button>
-        </div>`;
-                    // 2단계 카테고리에 '하위 카테고리 생성' 버튼 추가
+           <div class="card-body">
+                <h5 class="card-title d-inline-block mr-2">${subcategory.categoryName}</h5>
+                <button class="btn btn-primary" onclick="openEditCategoryModal(${subcategory.categoryId}, '${subcategory.categoryName}')">수정</button>
+                <!-- 추가 버튼 -->
+            </div>`;
+
                     if (depth === 1) {
                         subcategoryCard.innerHTML += `
-            <button class="btn btn-success" onclick="showCreateCategoryModal(${subcategory.categoryId})">하위 카테고리 생성</button>`;
+                <button class="btn btn-success" onclick="showCreateCategoryModal(${subcategory.categoryId})">하위 카테고리 생성</button>`;
                     }
 
                     if (depth < 2) {
                         subcategoryCard.innerHTML += `
-            <button class="btn btn-info" onclick="showSubcategories(${subcategory.categoryId}, this, ${depth + 1})">하위 카테고리 보기</button>`;
+                <button class="btn btn-info" onclick="showSubcategories(${subcategory.categoryId}, this, ${depth + 1})">하위 카테고리 보기</button>`;
                     }
 
                     subcategoryList.appendChild(subcategoryCard);
@@ -77,9 +84,6 @@ function showSubcategories(categoryId, buttonElement, depth = 1) {
 
 window.showSubcategories = showSubcategories;
 
-function editCategory(categoryId) {
-
-}
 
 document.addEventListener('DOMContentLoaded', function () {
     const parentCategorySelect = document.getElementById('parentCategoryId');
@@ -121,14 +125,14 @@ document.addEventListener('DOMContentLoaded', function () {
 // 모달 표시 함수
 function showCreateCategoryModal(parentCategoryId) {
     document.getElementById('parentCategoryId').value = parentCategoryId;
-    $('#categoryCreateModal').modal('show');
+    categoryCreateModal.show();  // jQuery 대신 Bootstrap 5 API 사용
 }
 
 function createCategory() {
     const parentCategoryId = document.getElementById('parentCategoryId').value;
     const categoryName = document.getElementById('newCategoryName').value; // ID가 'newCategoryName'인 요소의 값을 가져옵니다.
 
-    fetch('/categories/create', {
+    fetch('/categories/admin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -161,7 +165,7 @@ function createCategory() {
 
 function refreshCategoryList() {
     const categoryContainer = document.getElementById('categoryContainer');
-    fetch('/categories/topCategories')
+    fetch('/admin/categories')
         .then(response => response.json())
         .then(categories => {
             // 기존 목록 제거
@@ -191,21 +195,15 @@ function refreshCategoryList() {
 }
 
 
-// 모달의 '생성' 버튼에 이벤트 리스너 추가
-document.getElementById('createCategoryButton').addEventListener('click', createCategory);
-
 function showCreateTopCategoryModal() {
-    // 최상위 카테고리 이름 입력 필드 초기화
     document.getElementById('topCategoryName').value = '';
-
-    // 모달 창 표시
-    $('#topCategoryCreateModal').modal('show');
+    topCategoryCreateModal.show();  // jQuery 대신 Bootstrap 5 API 사용
 }
 
 function createTopCategory() {
     const categoryName = document.getElementById('topCategoryName').value; // 최상위 카테고리 이름을 입력 필드에서 가져옵니다.
 
-    fetch('/categories/create', {
+    fetch('/categories/admin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -235,14 +233,80 @@ function createTopCategory() {
 }
 
 
+// closeModal 함수를 수정합니다.
 function closeModal(modalId) {
-    $('#' + modalId).modal('hide');
+    document.getElementById(modalId);
+    let modalInstance;
+
+    switch(modalId) {
+        case 'categoryCreateModal':
+            modalInstance = categoryCreateModal;
+            break;
+        case 'topCategoryCreateModal':
+            modalInstance = topCategoryCreateModal;
+            break;
+        case 'editCategoryModal':
+            modalInstance = editCategoryModal;
+            break;
+        default:
+            console.error("Invalid modal ID");
+            return;
+    }
+
+    if (modalInstance) {
+        modalInstance.hide();
+    } else {
+        console.error("Modal instance not found for:", modalId);
+    }
 }
 
-$(document).ready(function() {
-    // x 버튼 클릭 시 모달 닫기
-    $('.modal .close').click(function() {
-        closeModal($(this).closest('.modal').attr('id'));
-    });
-});
+
+
+// 수정 모달을 열고 카테고리 ID를 설정하는 함수
+function openEditCategoryModal(categoryId, categoryName) {
+    document.getElementById('editCategoryId').value = categoryId;
+    document.getElementById('editCategoryName').value = categoryName;
+    editCategoryModal.show();  // jQuery 대신 Bootstrap 5 API 사용
+}
+
+
+function editCategory() {
+    // 수정할 카테고리의 ID와 새로운 카테고리 이름을 가져와서 요청 본문에 포함합니다.
+    const categoryId = document.getElementById('editCategoryId').value;
+    const categoryName = document.getElementById('editCategoryName').value;
+    const requestBody = {
+        categoryId: categoryId,
+        categoryName: categoryName
+    };
+
+    // 수정할 카테고리의 ID를 이용하여 수정 요청을 보냅니다.
+    fetch(`/categories/admin/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('카테고리가 성공적으로 수정되었습니다.');
+                $('#editCategoryModal').modal('hide'); // 모달 닫기
+
+                refreshCategoryList(); // 카테고리 리스트 새로고침
+            } else {
+                // 오류 메시지 처리
+                response.json().then(data => {
+                    alert('오류: ' + data.message);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('카테고리 수정 중 오류가 발생했습니다.');
+        });
+}
+
+
+
+
 

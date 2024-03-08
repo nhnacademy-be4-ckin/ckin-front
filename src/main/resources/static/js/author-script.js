@@ -13,25 +13,7 @@ const setFormAction = (formId, actionPath) => {
     if (form) form.action = actionPath;
 };
 
-// 부모 카테고리에 따라 서브카테고리를 로드하는 함수
-function loadSubcategories(parentId, level) {
-    const container = getElement('subcategoryContainer');
-    // 여기에 서브카테고리를 로드하는 추가 로직을 넣을 수 있습니다
-}
 
-// 선택된 카테고리 ID 업데이트
-function updateSelectedCategoryId(selectedId) {
-    setElementValue('selectedCategoryId', selectedId);
-}
-
-// DOMContentLoaded 이벤트 리스너
-document.addEventListener('DOMContentLoaded', () => {
-    const parentCategorySelect = getElement('parentCategoryId');
-    parentCategorySelect?.addEventListener('change', () => {
-        updateSelectedCategoryId(parentCategorySelect.value);
-        loadSubcategories(parentCategorySelect.value, 1);
-    });
-});
 
 // 편집 모달 준비
 function prepareEditModal(button) {

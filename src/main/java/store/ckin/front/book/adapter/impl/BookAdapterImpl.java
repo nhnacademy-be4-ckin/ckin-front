@@ -1,12 +1,15 @@
 package store.ckin.front.book.adapter.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,9 +20,13 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.response.BookListResponseDto;
+import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
+import store.ckin.front.coupontemplate.dto.response.PageDto;
 
 /**
  * BookAdapter 구현 클래스.
@@ -32,8 +39,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 public class BookAdapterImpl implements BookAdapter {
     private static final String BOOK_URL = "/api/books";
     private final RestTemplate restTemplate;
-    private final GatewayProperties gatewayProperties;
-    private final ObjectMapper objectMapper;
+    private final GatewayProperties portProperties;
 
     @Override
     public String requestUploadDescriptionImage(MultipartFile file) {
@@ -46,7 +52,7 @@ public class BookAdapterImpl implements BookAdapter {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + BOOK_URL + "/upload/description",
+                portProperties.getGatewayUri() + BOOK_URL + "/upload/description",
                 HttpMethod.POST,
                 requestEntity,
                 String.class); // String 타입으로 응답을 받음
@@ -67,17 +73,56 @@ public class BookAdapterImpl implements BookAdapter {
                 throw new RuntimeException(e);
             }
         }
-        body.add("requestDto", bookCreateRequestDto );
+        body.add("requestDto", bookCreateRequestDto);
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL,
+        restTemplate.exchange(portProperties.getGatewayUri() + BOOK_URL,
                 HttpMethod.POST,
                 requestEntity,
-                new ParameterizedTypeReference<Void>() {});
+                new ParameterizedTypeReference<Void>() {
+                });
+    }
+    @Override
+    public PageDto<BookListResponseDto> findAllBooks(Pageable pageable) {
+        HttpHeaders headers = getHttpHeaders(); // 필요한 헤더를 설정
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, headers);
+
+        // URI 구성
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + BOOK_URL)
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .queryParam("sort", String.join(",", pageable.getSort().toString()));
+
+        // RestTemplate를 사용하여 요청을 보내고 응답 받기
+        ResponseEntity<PageDto<BookListResponseDto>> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        return response.getBody(); // 결과 반환
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BookResponseDto findProductById(Long bookId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<BookResponseDto> exchange =
+                restTemplate.exchange(portProperties.getGatewayUri() + "/api/books/" + bookId,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+        return exchange.getBody();
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
+        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
