@@ -67,7 +67,13 @@
                         <a href="/cart" class="material-symbols-sharp">shopping_cart_checkout</a>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                    <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+                         class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="/admin" class="material-symbols-sharp">shield_person</a>
+                    </div>
+
+                    <div th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}"
+                         class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                         <a href="/member/mypage" class="material-symbols-sharp">account_circle</a>
                     </div>
 
