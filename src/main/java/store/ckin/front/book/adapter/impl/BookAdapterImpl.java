@@ -2,14 +2,9 @@ package store.ckin.front.book.adapter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -69,20 +64,17 @@ public class BookAdapterImpl implements BookAdapter {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
         if (file != null && !file.isEmpty()) {
-            try {
-                body.add("file", new FileSystemResource(convertMultiPartToFile(file)));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        body.add("requestDto", bookCreateRequestDto);
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+            body.add("file", file);
 
-        restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL,
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<Void>() {
-                });
+            body.add("requestDto", bookCreateRequestDto);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+            restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL,
+                    HttpMethod.POST,
+                    requestEntity,
+                    new ParameterizedTypeReference<Void>() {
+                    });
+        }
     }
 
     @Override
@@ -91,10 +83,11 @@ public class BookAdapterImpl implements BookAdapter {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, headers);
 
         // URI 구성
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + BOOK_URL)
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .queryParam("sort", String.join(",", pageable.getSort().toString()));
+        UriComponentsBuilder builder =
+                UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + BOOK_URL)
+                        .queryParam("page", pageable.getPageNumber())
+                        .queryParam("size", pageable.getPageSize())
+                        .queryParam("sort", String.join(",", pageable.getSort().toString()));
 
         // RestTemplate를 사용하여 요청을 보내고 응답 받기
         ResponseEntity<PageDto<BookListResponseDto>> response = restTemplate.exchange(
@@ -145,13 +138,4 @@ public class BookAdapterImpl implements BookAdapter {
 
         return exchange.getBody();
     }
-
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
-        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
-    }
-
 }
