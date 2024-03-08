@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.token.adapter.TokenAdapter;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenRequestDto;
@@ -24,23 +27,31 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenResponseDto getToken(TokenRequestDto tokenRequestDto) {
-        return tokenAdapter.getToken(tokenRequestDto).getBody();
+        try {
+            return tokenAdapter.getToken(tokenRequestDto).getBody();
+        } catch (Exception ex) {
+            throw new ServerErrorException();
+        }
     }
 
     @Override
     public TokenResponseDto reissueToken(TokenAuthRequestDto tokenAuthRequestDto) {
-        ResponseEntity<Void> responseEntity = tokenAdapter.reissueToken(tokenAuthRequestDto);
+        try {
+            ResponseEntity<Void> responseEntity = tokenAdapter.reissueToken(tokenAuthRequestDto);
 
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
-            throw new TokenAuthenticationFailedException(
-                    "Token Authentication failed (HttpStatusCode = "
-                            + responseEntity.getStatusCode()
-                            + ")");
+            String accessToken = responseEntity.getHeaders().getFirst("AccessToken");
+            String refreshToken = responseEntity.getHeaders().getFirst("RefreshToken");
+
+            return new TokenResponseDto(accessToken, refreshToken);
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
+                throw new TokenAuthenticationFailedException("Token Authentication failed");
+            }
+
+            throw new ServerErrorException();
+        } catch (HttpServerErrorException ex) {
+            throw new ServerErrorException();
         }
 
-        String accessToken = responseEntity.getHeaders().getFirst("AccessToken");
-        String refreshToken = responseEntity.getHeaders().getFirst("RefreshToken");
-
-        return new TokenResponseDto(accessToken, refreshToken);
     }
 }

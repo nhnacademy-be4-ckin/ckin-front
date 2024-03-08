@@ -1,8 +1,10 @@
 package store.ckin.front.book.service;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
@@ -27,6 +29,7 @@ public interface BookService {
      * @return 상품 상세 정보 DTO
      */
     BookResponseDto findProductById(Long bookId);
+    List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds);
 
 
 

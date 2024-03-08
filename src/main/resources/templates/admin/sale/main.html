@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin-default}">
+
+<div layout:fragment="admin-content" id="layoutSidenav_content">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">주문 목록</h1>
+        <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+            <thead>
+            <tr>
+                <th class="column-3" scope="col">주문 번호</th>
+                <th class="column-2" scope="col">회원 ID</th>
+                <th class="column-4" scope="col">결제 금액</th>
+                <th class="column-5" scope="col">주문 결제 상태</th>
+                <th class="column-1" scope="col">주문일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sale : ${sales.getData()}">
+                <td><a th:text="${sale.saleId}" th:href="@{/admin/sale/{id}(id=${sale.saleId})}"></a></td>
+                <th:block th:if="${sale.getMemberEmail() != null}">
+                    <td th:text="${sale.getMemberEmail()}"></td>
+                </th:block>
+                <th:block th:if="${sale.getMemberEmail() == null}">
+                    <td>비회원</td>
+                </th:block>
+                <td th:text="${sale.saleTotalPrice}"></td>
+                <td th:text="${sale.salePaymentStatus}"></td>
+                <td th:text="${#temporals.format(sale.saleDate, 'yyyy.MM.dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item" th:each="num : ${#numbers.sequence(1, sales.getPageInfo().getTotalPages())}">
+                    <a class="page-link" th:href="@{/admin/sale(page=${num})}" th:text="${num}"></a>
+                </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</html>

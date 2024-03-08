@@ -1,11 +1,13 @@
 package store.ckin.front.book.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.book.service.BookService;
@@ -35,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public PageDto<BookListResponseDto> findAllBooks (Pageable pageable) {
+    public PageDto<BookListResponseDto> findAllBooks(Pageable pageable) {
         return bookAdapter.findAllBooks(pageable);
     }
 
@@ -45,6 +47,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponseDto findProductById(Long bookId) {
         return bookAdapter.findProductById(bookId);
+    }
+
+    @Override
+    public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
+        return bookAdapter.requestBookSaleList(bookIds);
     }
 
 }
