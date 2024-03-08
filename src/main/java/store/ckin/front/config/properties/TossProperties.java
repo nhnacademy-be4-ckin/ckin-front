@@ -17,4 +17,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class TossProperties {
 
     private String secretKey;
+
+    private String clientKey;
 }
