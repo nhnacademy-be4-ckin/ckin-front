@@ -44,12 +44,13 @@ public class AuthorController {
         model.addAttribute("isSearch", false);
         model.addAttribute("authors", authors.getContent());
         model.addAttribute("totalPages", authors.getTotalPages());
+        model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
         model.addAttribute("currentPage", authors.getNumber());
         model.addAttribute("isPrevious", authors.isPrevious());
         model.addAttribute("isNext", authors.isNext());
         model.addAttribute("pageButtonNum", pageButtonNum);
 
-        return "admin/author/authorIndex";
+        return "admin/author/index";
     }
 
     @PostMapping
@@ -77,15 +78,18 @@ public class AuthorController {
 
         model.addAttribute("isSearch", true);
         model.addAttribute("authors", authors.getContent());
+        model.addAttribute("authorCreateRequestDto", new AuthorCreateRequestDto());
         model.addAttribute("totalPages", authors.getTotalPages());
         model.addAttribute("currentPage", authors.getNumber());
         model.addAttribute("isPrevious", authors.isPrevious());
         model.addAttribute("isNext", authors.isNext());
         model.addAttribute("pageButtonNum", pageButtonNum);
         model.addAttribute("searchName", name);
-        return "admin/author/authorIndex";
+        return "/admin/author/index";
     }
 
+
+    //TODO: RestController로 분리
     @GetMapping("/authorList")
     @ResponseBody
     public PageResponse<AuthorResponseDto> findAllAuthors(@PageableDefault Pageable pageable) {
