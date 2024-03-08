@@ -94,6 +94,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (CookieNotFoundException ex) {
+            //TODO: 정상적이지 않은 Token 을 갖고 있는 쿠키의 상태일 때 CookieNotFoundException 호출이 되면 로그아웃이 정상적으로 작동하도록 처리"
+
             log.debug("{} : Cookie not found", ex.getClass().getName());
 
             filterChain.doFilter(request, response);
