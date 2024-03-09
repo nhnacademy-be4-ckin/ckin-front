@@ -19,6 +19,8 @@ public class BookExtractionResponseDto {
 
     private Long bookId;
 
+    private String bookImageUrl;
+
     private String bookTitle;
 
     private Boolean bookPackaging;
