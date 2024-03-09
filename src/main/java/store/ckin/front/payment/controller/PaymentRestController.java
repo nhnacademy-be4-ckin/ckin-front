@@ -1,5 +1,6 @@
 package store.ckin.front.payment.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -9,10 +10,12 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +29,9 @@ import store.ckin.front.skm.util.KeyManager;
  * @version 2024. 03. 08.
  */
 
+@Slf4j
 @RestController
+@RequestMapping("/toss")
 @RequiredArgsConstructor
 public class PaymentRestController {
 
@@ -35,6 +40,13 @@ public class PaymentRestController {
 
     private final TossProperties tossProperties;
 
+    /**
+     * 결제 요청 API
+     *
+     * @param jsonBody 결제 요청 JSON
+     * @return 결제 요청 결과
+     * @throws Exception 예외 처리
+     */
     @RequestMapping(value = "/confirm")
     public ResponseEntity<JSONObject> confirmPayment(@RequestBody String jsonBody) throws Exception {
 
@@ -82,7 +94,7 @@ public class PaymentRestController {
         outputStream.write(obj.toString().getBytes("UTF-8"));
 
         int code = connection.getResponseCode();
-        boolean isSuccess = code == 200 ? true : false;
+        boolean isSuccess = code == 200;
 
         InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
 
@@ -90,6 +102,15 @@ public class PaymentRestController {
         Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         responseStream.close();
+
+        if (isSuccess) {
+
+        } else {
+
+        }
+
+        log.info("결제 성공 여부: {}", isSuccess);
+        log.info("결제 응답: {}", jsonObject);
 
         return ResponseEntity.status(code).body(jsonObject);
     }
