@@ -56,15 +56,12 @@ public class PaymentController {
      * @param request 요청 객체
      * @param model   Model 객체
      * @return 결제 성공 페이지
-     * @throws Exception 예외 처리
      */
     @GetMapping("/success")
-    public String paymentRequest(HttpServletRequest request, Model model) throws Exception {
-
-        log.info("requestURI = {}", request.getRequestURI());
+    public String paymentRequest(HttpServletRequest request, Model model) {
 
         request.getParameterMap()
-                .forEach((k, v) -> log.info("key = {}, value = {}", k, v));
+                .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
         return "payment/success";
     }
 
@@ -73,7 +70,7 @@ public class PaymentController {
 
         paymentFacade.createPayment(requestDto);
 
-        log.info("SUCCESS requestDto = {}", requestDto);
+        log.debug("SUCCESS requestDto = {}", requestDto);
         return "redirect:/";
     }
 
@@ -89,9 +86,9 @@ public class PaymentController {
     @GetMapping("/fail")
     public String failPayment(HttpServletRequest request, Model model) throws Exception {
 
-        log.info("requestURI = {}", request.getRequestURI());
+        log.debug("requestURI = {}", request.getRequestURI());
         request.getParameterMap()
-                .forEach((k, v) -> log.info("key = {}, value = {}", k, v));
+                .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
 
         String failCode = request.getParameter("code");
         String failMessage = request.getParameter("message");
@@ -105,7 +102,7 @@ public class PaymentController {
     @PostMapping("/fail")
     public String failPayment(@RequestBody PaymentRequestDto requestDto) {
 
-        log.info("FAIL requestDto = {}", requestDto);
+        log.debug("FAIL requestDto = {}", requestDto);
 
 //        paymentFacade.failPayment(requestDto);
         return "redirect:/";
