@@ -3,6 +3,7 @@ package store.ckin.front.payment.adpter.impl;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
 
         Base64.Encoder encoder = Base64.getEncoder();
-        byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes("UTF-8"));
+        byte[] encodedBytes = encoder.encode((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
         String authorizations = new String(encodedBytes);
 
         HttpHeaders httpHeaders = getHttpHeaders();

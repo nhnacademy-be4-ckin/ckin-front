@@ -28,7 +28,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto) throws UnsupportedEncodingException {
+    public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto)
+            throws UnsupportedEncodingException {
         return paymentAdapter.requestConfirmPayment(requestDto);
     }
 }

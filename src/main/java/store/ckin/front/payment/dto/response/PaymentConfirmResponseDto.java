@@ -34,13 +34,13 @@ public class PaymentConfirmResponseDto {
     /**
      * 결제 확인 응답 DTO.
      *
-     * @param orderId
-     * @param paymentKey
-     * @param status
-     * @param totalAmount
-     * @param requestedAt
-     * @param approvedAt
-     * @param receipt
+     * @param orderId     주문 ID
+     * @param paymentKey  결제 키
+     * @param status      결제 상태
+     * @param totalAmount 총 결제 금액
+     * @param requestedAt 결제 요청 시간
+     * @param approvedAt  결제 승인 시간
+     * @param receipt     영수증
      */
     public PaymentConfirmResponseDto(String orderId, String paymentKey, String status, String totalAmount,
                                      OffsetDateTime requestedAt, OffsetDateTime approvedAt, Receipt receipt) {

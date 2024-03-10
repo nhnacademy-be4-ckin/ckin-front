@@ -15,5 +15,6 @@ public interface PaymentAdapter {
 
     void requestCreatePayment(PaymentRequestDto requestDto);
 
-    PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto) throws UnsupportedEncodingException;
+    PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
+            throws UnsupportedEncodingException;
 }
