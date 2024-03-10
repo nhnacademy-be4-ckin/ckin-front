@@ -1,9 +1,12 @@
 package store.ckin.front.payment.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.payment.adpter.PaymentAdapter;
+import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
+import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
 import store.ckin.front.payment.service.PaymentService;
 
 /**
@@ -22,5 +25,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void createPayment(PaymentRequestDto requestDto) {
         paymentAdapter.requestCreatePayment(requestDto);
+    }
+
+    @Override
+    public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto) throws UnsupportedEncodingException {
+        return paymentAdapter.requestConfirmPayment(requestDto);
     }
 }
