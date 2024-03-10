@@ -83,8 +83,7 @@
 
                                     <td class="column-sj-1">
                                         <div class="how-itemcart1">
-                                            <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
-                                                 alt="IMG">
+                                            <img th:src="${bookSale.bookImageUrl}" alt="IMG">
                                         </div>
                                     </td>
 
@@ -465,7 +464,7 @@
 
             console.log(memberId)
         </script>
-        <script  src="/js/sale/coupon.js"></script>
+        <script src="/js/sale/coupon.js"></script>
     </th:block>
 </div>
 </html>
