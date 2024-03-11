@@ -13,6 +13,7 @@ import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
+import store.ckin.front.cart.exception.ItemAlreadyExistException;
 import store.ckin.front.cart.service.CartService;
 
 /**
@@ -44,8 +45,15 @@ public class CartServiceImpl implements CartService {
         // Set을 고려하는 것은 어떤지?
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
-        currentUserCart.add(item);
+        Optional<CartItem>
+                selectedItem =
+                currentUserCart.stream().filter(cartItem -> cartItem.getId() == item.getId())
+                        .findFirst();
 
+        if (selectedItem.isPresent()) {
+            throw new ItemAlreadyExistException(item.getId());
+        }
+        currentUserCart.add(item);
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
     }
 
