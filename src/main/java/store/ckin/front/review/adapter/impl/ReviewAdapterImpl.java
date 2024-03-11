@@ -35,6 +35,12 @@ public class ReviewAdapterImpl implements ReviewAdapter {
     private final GatewayProperties gatewayProperties;
 
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param createReviewRequestDto 도서 아이디, 리뷰 점수, 리뷰 코멘트를 담고 있는 DTO 입니다.
+     * @param imageList              리뷰의 이미지 리스트를 담고 있는 MultipartFile 리스트 입니다.
+     */
     @Override
     public void postReview(@Valid CreateReviewRequestDto createReviewRequestDto,
                            List<MultipartFile> imageList) {

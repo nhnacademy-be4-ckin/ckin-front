@@ -2,12 +2,9 @@ package store.ckin.front.review.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
- * description:
+ * 리뷰 생성 요청 DTO입니다.
  *
  * @author : gaeun
  * @version : 2024. 03. 09

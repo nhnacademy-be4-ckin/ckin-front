@@ -1,24 +1,15 @@
 package store.ckin.front.review.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.Text;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
 import store.ckin.front.review.service.ReviewService;
 
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,14 +25,20 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final ObjectMapper objectMapper;
 
+    /**
+     * 리뷰 업로드를 호출하는 메소드 입니다.
+     *
+     * @param bookId        도서 아이디
+     * @param reviewRate    리뷰 점수
+     * @param reviewComment 리뷰 코멘트
+     * @param imageList     리뷰의 이미지 리스트를 담고 있는 MultipartFile 리스트 입니다.
+     */
     @PostMapping("/{bookId}")
     public String postReview(@PathVariable("bookId") Long bookId,
                              @RequestParam("reviewRate") String reviewRate,
                              @RequestParam("reviewComment") String reviewComment,
-                             @RequestPart("imageList") List<MultipartFile> imageList,
-                             Model model) throws IOException {
+                             @RequestPart("imageList") List<MultipartFile> imageList) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String memberId = authentication.getName();
@@ -52,12 +49,4 @@ public class ReviewController {
 
         return "redirect:/product/view/" + bookId;
     }
-//    review를 모든 사람이 남길 수 있음.
-//    1) 모든 사람? -> 구매자인지 확인하는 컬럼
-//    2) 구매자만? -> 구매자인지 확인하고 리뷰 달도록,
-//    회원인지 조회 -> 회원만 접근할 수 있습니다.
-//    회원 아이디와 도서 아이디 넘겨서 주문 기록이 있는지
-//    주문 기록이 있으면 진행
-//
-//
 }
