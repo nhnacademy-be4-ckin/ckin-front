@@ -1,89 +1,39 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="utf-8"/>
-    <link
-            rel="icon"
-            href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
-    />
-    <link rel="stylesheet" type="text/css" href="/css/toss.css"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
-    <title>CKIN | 토스페이먼츠</title>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
 </head>
-<body>
-<div class="result wrapper">
-    <div class="box_section">
-        <h2 style="padding: 20px 0px 10px 0px">
-            <img
-                    width="35px"
-                    src="https://static.toss.im/3d-emojis/u1F389_apng.png"
-            />
-            결제 성공
-        </h2>
 
-        <p id="paymentKey"></p>
-        <p id="orderId"></p>
-        <p id="amount"></p>
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row m-t-150">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+
+                    <p class="h1"> 🙇🏻‍♂️ 결제가 완료되었습니다. </p>
+                    <p class="h3" th:text="'주문번호: ' + ${payment.saleNumber}"></p>
+                    <p style="color: darkred">[비회원일 경우 위의 주문번호를 꼭 저장해두세요! 주문 조회할 때 사용됩니다.]</p>
+
+                    <br/>
+                    <p class="h4" th:text="'수령인: ' + ${payment.receiverName}"></p>
+                    <p class="h4" th:text="'수령인 번호: ' + ${payment.receiverContact}"></p>
+                    <p class="h4" th:text="'주소 : ' + ${payment.address}"></p>
+                    <p class="h4" th:text="'예상 배송일 : ' + ${payment.deliveryDate}"></p>
+
+                    <br/>
+                    <p class="h4 text-info" th:text="'결제 금액: ' + ${payment.saleTotalPrice}"></p>
+
+                    <div class="m-t-20 btn btn-outline-primary">
+                        <button class="button"
+                                th:onclick="|location.href='@{${payment.receiptUrl}}'|">
+                            주문서 확인하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<script>
-    // 쿼리 파라미터 값이 결제 요청할 때 보낸 데이터와 동일한지 반드시 확인하세요.
-    // 클라이언트에서 결제 금액을 조작하는 행위를 방지할 수 있습니다.
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // 서버로 결제 승인에 필요한 결제 정보를 보내세요.
-    async function confirm() {
-        const requestData = {
-            paymentKey: urlParams.get("paymentKey"),
-            orderId: urlParams.get("orderId"),
-            amount: urlParams.get("amount"),
-        };
-
-        const response = await fetch("/toss/confirm", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
-        });
-
-        const json = await response.json();
-
-        if (!response.ok) {
-            console.log(json);
-            // window.location.href = `/fail?message=${json.message}&code=${json.code}`;
-        }
-
-        console.log(json);
-        $.ajax({
-            type: "POST",
-            url: "/toss/success",
-            contentType: "application/json",
-            data: JSON.stringify({
-                paymentKey: json.paymentKey,
-                saleNumber: json.orderId,
-                paymentStatus: 200,
-                requestedAt: json.requestedAt,
-                approvedAt: json.approvedAt,
-                amount: json.totalAmount,
-                receiptUrl: json.receipt.url
-            }),
-            success: function (response) {
-                console.log(response);
-                // 메인 페이지로 redirect
-                window.location.href = "/";
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    }
-
-    confirm();
-
-</script>
-</body>
 </html>
