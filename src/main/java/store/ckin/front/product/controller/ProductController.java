@@ -77,12 +77,21 @@ public class ProductController {
         }
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
+        model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
         model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
         model.addAttribute("isPrevious", reviewListDtoPageDto.getNumber() > 0);
         model.addAttribute("isNext", reviewListDtoPageDto.getNumber() < reviewListDtoPageDto.getTotalPages() - 1);
         model.addAttribute("totalPages", reviewListDtoPageDto.getTotalPages() == 0 ? 1 : reviewListDtoPageDto.getTotalPages());
         model.addAttribute("currentPage", reviewListDtoPageDto.getNumber());
         return "product/view";
+    }
+
+    private double getTotalRate(List<ReviewDto> reviewDtoList) {
+        double total = 0;
+        for(ReviewDto reviewDto : reviewDtoList) {
+            total += reviewDto.getReviewRate();
+        }
+        return total / reviewDtoList.size();
     }
 
 }
