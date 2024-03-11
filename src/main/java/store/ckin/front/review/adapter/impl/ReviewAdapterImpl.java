@@ -2,17 +2,23 @@ package store.ckin.front.review.adapter.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.properties.GatewayProperties;
+import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.adapter.ReviewAdapter;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
+import store.ckin.front.review.dto.response.ReviewDto;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -65,5 +71,32 @@ public class ReviewAdapterImpl implements ReviewAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param pageable 리뷰 페이지
+     * @param bookId   도서 아이디
+     * @return 리뷰 목록 페이지 DTO
+     */
+    @Override
+    public PageDto<ReviewDto> getReviewListByBookId(Pageable pageable, Long bookId) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/review/" + bookId)
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<ReviewDto>> exchange = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<PageDto<ReviewDto>>() {
+                }
+        );
+        return exchange.getBody();
     }
 }

@@ -600,9 +600,10 @@
                                             <div class="user_info_box"><span class="badge_box"><span
                                                     class="badge_sm badge_pill badge_kyobo"><span
                                                     class="text">종이책</span></span></span><span
-                                                    class="info_item">fu********</span><span
+                                                    class="info_item" th:text="${review.author}"></span><span
                                                     class="gap"> | </span><span
-                                                    class="info_item">2023.07.11</span><span
+                                                    class="info_item"
+                                                    th:text="${review.reviewDate}">2023.07.11</span><span
                                                     class="gap"> | </span><span
                                                     class="info_item"><button class="btn_comment_util" type="button"
                                                                               data-role="report"><span
@@ -642,7 +643,8 @@
                                                             class="glyphicon glyphicon-star"></i></span></span>
                                                     </div>
                                                     <div class="caption"><span
-                                                            class="caption-badge caption-success">10점 중 5점</span>
+                                                            class="caption-badge caption-success"
+                                                            th:text="${review.reviewRate}">10점 중 5점</span>
                                                     </div>
                                                 </div>
                                                 <input class="form_rating rating-input" type="number" value="5"
@@ -656,7 +658,7 @@
                                         <div class="comment_contents_inner">
                                             <div class="comment_view_wrap">
                                                 <div class="comment_text_box">
-                                                    <div class="comment_text">번역의 중요성을 느끼게하는 책</div>
+                                                    <div class="comment_text" th:text="${review.getMessage()}"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -719,25 +721,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <div class="pagination" style="">-->
-                            <!--                                <nav aria-label="Page navigation example">-->
-                            <!--                                    <ul class="pagination justify-content-center">-->
-                            <!--                                        <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">-->
-                            <!--                                            <a class="page-link"-->
-                            <!--                                               th:href="@{'/product/' + ${categoryId}(page=${currentPage - 1})}">Previous</a>-->
-                            <!--                                        </li>-->
-                            <!--                                        <th:block th:with="start=1, end=${totalPages}">-->
-                            <!--                                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">-->
-                            <!--                                                <a class="page-link" th:href="@{'/product/' + ${categoryId}(page=${page - 1})}"-->
-                            <!--                                                   th:text="${page}"></a></li>-->
-                            <!--                                        </th:block>-->
-                            <!--                                        <li class="page-item" th:classappend="${!isNext} ? 'disabled'">-->
-                            <!--                                            <a class="page-link"-->
-                            <!--                                               th:href="@{'/product/' + ${categoryId}(page=${currentPage+1})}">Next</a>-->
-                            <!--                                        </li>-->
-                            <!--                                    </ul>-->
-                            <!--                                </nav>-->
-                            <!--                            </div>-->
+                            <div class="pagination" style="justify-content: center">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
+                                            <a class="page-link"
+                                               th:href="@{'/product/view/' + ${book.bookId}(page=${currentPage - 1})}">Previous</a>
+                                        </li>
+                                        <th:block th:with="start=1, end=${totalPages}">
+                                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                                                <a class="page-link"
+                                                   th:href="@{'/product/view/' + ${book.bookId}(page=${page - 1})}"
+                                                   th:text="${page}"></a></li>
+                                        </th:block>
+                                        <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
+                                            <a class="page-link"
+                                               th:href="@{'/product/view/' + ${book.bookId}(page=${currentPage+1})}">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -753,7 +756,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="reviewForm" th:action="@{'/review/' + ${book.bookId}}" method="post" enctype="multipart/form-data" >
+                    <form id="reviewForm" th:action="@{'/review/' + ${book.bookId}}" method="post"
+                          enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">리뷰 점수</label>
                             <input type="number" name="reviewRate" class="form-control" id="recipient-name">
@@ -772,7 +776,8 @@
                                         </label>
                                         <span class="attach_img_box">
                                             <span class="attach_img_view" id="attach1"></span>
-                                            <button class="btn_remove_img" type="button" onclick="removeFileListItem(this)">
+                                            <button class="btn_remove_img" type="button"
+                                                    onclick="removeFileListItem(this)">
                                                 <span class="hidden">첨부파일 삭제</span>
                                             </button>
                                         </span>

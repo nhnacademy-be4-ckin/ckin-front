@@ -1,9 +1,11 @@
-package store.ckin.front.product.dto.response;
+package store.ckin.front.review.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * description:
@@ -14,7 +16,9 @@ import java.sql.Date;
 @Getter
 @AllArgsConstructor
 public class ReviewDto {
+    private Long reviewId;
     private String author;
     private String message;
-    private Date reviewDate;
+    private Integer reviewRate;
+    private String reviewDate;
 }

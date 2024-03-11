@@ -1,6 +1,7 @@
 package store.ckin.front.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
+import store.ckin.front.review.dto.response.ReviewDto;
+import store.ckin.front.review.service.ReviewService;
 
 import java.util.List;
 
@@ -23,6 +26,7 @@ import java.util.List;
  * @author : gaeun
  * @version 2024. 03. 07.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
@@ -30,6 +34,7 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ReviewService reviewService;
 
     @GetMapping("/{categoryId}")
     public String getCouponPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
@@ -61,9 +66,10 @@ public class ProductController {
      */
     @GetMapping("/view/{bookId}")
     public String getProductById(@PathVariable("bookId") Long bookId,
+                                 @PageableDefault(page = 0, size = 5) Pageable pageable,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
-//        PageDto<ReviewDto> reviewListDtoPageDto = productService.getReviewListByBookId(bookId);
+        PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
         String authorNames = "";
         for (String author : bookResponseDto.getAuthorNames()) {
             authorNames += author;
@@ -71,10 +77,11 @@ public class ProductController {
         }
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-//        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
-//        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
-//        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
-//        model.addAttribute("currentPage", bookPageDto.getNumber());
+        model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
+        model.addAttribute("isPrevious", reviewListDtoPageDto.getNumber() > 0);
+        model.addAttribute("isNext", reviewListDtoPageDto.getNumber() < reviewListDtoPageDto.getTotalPages() - 1);
+        model.addAttribute("totalPages", reviewListDtoPageDto.getTotalPages() == 0 ? 1 : reviewListDtoPageDto.getTotalPages());
+        model.addAttribute("currentPage", reviewListDtoPageDto.getNumber());
         return "product/view";
     }
 
