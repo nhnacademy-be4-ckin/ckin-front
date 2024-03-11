@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +30,6 @@ import store.ckin.front.skm.util.KeyManager;
  * @version 2024. 03. 09.
  */
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PaymentAdapterImpl implements PaymentAdapter {
