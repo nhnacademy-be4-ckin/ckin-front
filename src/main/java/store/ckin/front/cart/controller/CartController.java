@@ -58,6 +58,7 @@ public class CartController {
      */
     @PostMapping("/create")
     public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItem cartItem) {
+        log.debug("add Item -> {}, {}, {}", cartItem.getName(), cartItem.getId(), cartItem.getQuantity());
         cartService.createCartItem(cookie.getValue(), cartItem);
         return REDIRECT_CART_URL;
     }
