@@ -1,8 +1,8 @@
 package store.ckin.front.payment.dto.response;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -14,6 +14,7 @@ import lombok.ToString;
 
 @ToString
 @Getter
+@NoArgsConstructor
 public class PaymentConfirmResponseDto {
 
     private String orderId;
@@ -24,32 +25,24 @@ public class PaymentConfirmResponseDto {
 
     private String totalAmount;
 
-    private LocalDateTime requestedAt;
+    private OffsetDateTime requestedAt;
 
-    private LocalDateTime approvedAt;
+    private OffsetDateTime approvedAt;
 
     private Receipt receipt;
 
-
     /**
-     * 결제 확인 응답 DTO.
-     *
-     * @param orderId     주문 ID
-     * @param paymentKey  결제 키
-     * @param status      결제 상태
-     * @param totalAmount 총 결제 금액
-     * @param requestedAt 결제 요청 시간
-     * @param approvedAt  결제 승인 시간
-     * @param receipt     영수증
+     * 토스 페이먼츠 API 영수증 DTO.
      */
-    public PaymentConfirmResponseDto(String orderId, String paymentKey, String status, String totalAmount,
-                                     OffsetDateTime requestedAt, OffsetDateTime approvedAt, Receipt receipt) {
-        this.orderId = orderId;
-        this.paymentKey = paymentKey;
-        this.status = status;
-        this.totalAmount = totalAmount;
-        this.requestedAt = requestedAt.toLocalDateTime();
-        this.approvedAt = approvedAt.toLocalDateTime();
-        this.receipt = receipt;
+    @ToString
+    @Getter
+    @NoArgsConstructor
+    public static class Receipt {
+
+        /**
+         * 토스 페이먼츠에서 조회할 수 있는 영수증 URL.
+         */
+        private String url;
     }
+
 }

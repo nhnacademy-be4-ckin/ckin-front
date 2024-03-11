@@ -45,6 +45,11 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
     private static final String TOSS_API_URL = "https://api.tosspayments.com/v1/payments/confirm";
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param requestDto 결제 요청 객체
+     */
     @Override
     public void requestCreatePayment(PaymentRequestDto requestDto) {
         HttpEntity<PaymentRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
@@ -57,6 +62,13 @@ public class PaymentAdapterImpl implements PaymentAdapter {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param requestDto 결제 확인 요청 객체
+     * @return 결제 확인 응답 객체
+     * @throws UnsupportedEncodingException 인코딩 예외
+     */
     @Override
     public PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException {

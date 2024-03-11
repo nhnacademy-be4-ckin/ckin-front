@@ -13,8 +13,20 @@ import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
  */
 public interface PaymentAdapter {
 
+    /**
+     * 결제 생성 요청 메서드입니다.
+     *
+     * @param requestDto 결제 요청 객체
+     */
     void requestCreatePayment(PaymentRequestDto requestDto);
 
+    /**
+     * 결제 확인 요청 메서드입니다.
+     *
+     * @param requestDto 결제 확인 요청 객체
+     * @return 결제 확인 응답 객체
+     * @throws UnsupportedEncodingException 인코딩 예외
+     */
     PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException;
 }

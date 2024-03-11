@@ -22,11 +22,23 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentAdapter paymentAdapter;
 
+    /**
+     * 결제 생성 메서드입니다.
+     *
+     * @param requestDto 결제 요청 객체
+     */
     @Override
     public void createPayment(PaymentRequestDto requestDto) {
         paymentAdapter.requestCreatePayment(requestDto);
     }
 
+    /**
+     * 결제 확인 메서드입니다.
+     *
+     * @param requestDto 결제 확인 요청 객체
+     * @return 결제 확인 응답 객체
+     * @throws UnsupportedEncodingException 인코딩 예외
+     */
     @Override
     public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException {

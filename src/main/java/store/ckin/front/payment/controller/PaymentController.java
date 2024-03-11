@@ -51,7 +51,7 @@ public class PaymentController {
     }
 
     /**
-     * 결제 성공 페이지.
+     * 결제 성공 페이지 요청 메서드입니다.
      *
      * @param request 요청 객체
      * @param model   Model 객체
@@ -62,49 +62,30 @@ public class PaymentController {
 
         request.getParameterMap()
                 .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
+
         return "payment/success";
     }
 
-    @PostMapping("/success")
-    public String successPayment(@RequestBody PaymentRequestDto requestDto) {
 
-        paymentFacade.createPayment(requestDto);
-
-        log.debug("SUCCESS requestDto = {}", requestDto);
-        return "redirect:/";
-    }
 
     /**
-     * 결제 실패 페이지.
+     * 결제 실패 페이지 요청 메서드입니다.
      *
-     * @param request
-     * @param model
-     * @return
-     * @throws Exception
+     * @param request 요청 객체
+     * @param model   Model 객체
+     * @return 결제 실패 페이지
      */
 
     @GetMapping("/fail")
-    public String failPayment(HttpServletRequest request, Model model) throws Exception {
-
-        log.debug("requestURI = {}", request.getRequestURI());
-        request.getParameterMap()
-                .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
+    public String failPayment(HttpServletRequest request, Model model) {
 
         String failCode = request.getParameter("code");
-        String failMessage = request.getParameter("message");
+        String orderId = request.getParameter("orderId");
 
-        model.addAttribute("code", failCode);
-        model.addAttribute("message", failMessage);
+        if (failCode.equals("DUPLICATED_ORDER_ID")) {
+            return "redirect:/";
+        }
 
-        return "payment/fail";
-    }
-
-    @PostMapping("/fail")
-    public String failPayment(@RequestBody PaymentRequestDto requestDto) {
-
-        log.debug("FAIL requestDto = {}", requestDto);
-
-//        paymentFacade.failPayment(requestDto);
-        return "redirect:/";
+        return "redirect:/payment/" + orderId;
     }
 }
