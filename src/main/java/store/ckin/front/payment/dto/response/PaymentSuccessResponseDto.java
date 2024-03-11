@@ -1,6 +1,7 @@
 package store.ckin.front.payment.dto.response;
 
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 결제 성공 응답 DTO 클래스입니다.
+ * <p>응답 객체를 생성하고, @ModelAttribute 를 통해 View 에서 사용할 수 있도록 합니다.</p>
  *
  * @author 정승조
  * @version 2024. 03. 11.
@@ -16,6 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @ToString
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PaymentSuccessResponseDto {
 
     private String saleNumber;
