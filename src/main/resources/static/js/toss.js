@@ -5,7 +5,6 @@ const generateRandomString = () =>
 
 // ------  결제위젯 초기화 ------
 // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
-const customerKey = generateRandomString();
 const paymentWidget = PaymentWidget(widgetClientKey, customerKey); // 회원 결제
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS); // 비회원 결제
 

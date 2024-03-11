@@ -50,7 +50,7 @@
                                class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 text-center p-all-5"
                                th:value="|${sale.totalPrice}원|" readonly>
 
-                        <form action="#" method="get" th:action="@{'/payment/' + ${sale.saleId}}">
+                        <form action="#" method="get" th:action="@{'/payment/' + ${sale.saleNumber}}">
                             <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                                 🚀 결제하기
                             </button>

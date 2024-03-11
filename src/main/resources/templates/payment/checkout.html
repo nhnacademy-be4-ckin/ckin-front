@@ -41,7 +41,7 @@
     const paymentData = {
         orderId: sale.saleNumber,
         orderName: sale.saleTitle,
-        successUrl: window.location.origin + "/payment/success",
+        successUrl: window.location.origin + "/payment/approve",
         failUrl: window.location.origin + "/payment/fail",
         customerEmail: sale.memberEmail,
         customerName: sale.saleOrdererName,
@@ -49,9 +49,8 @@
     }
 
     const amount = sale.totalPrice;
-
     const widgetClientKey = [[${clientKey}]];
-
+    const customerKey = [[${customerKey}]];
 </script>
 
 <script src="/js/toss.js"></script>

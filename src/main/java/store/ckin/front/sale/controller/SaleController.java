@@ -57,7 +57,7 @@ public class SaleController {
         log.debug("authentication = {}", authentication.getName());
         if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
-            log.info("memberPoint = {}", memberPoint.getPoint());
+            log.debug("memberPoint = {}", memberPoint.getPoint());
             model.addAttribute("memberPoint", memberPoint.getPoint());
         }
 

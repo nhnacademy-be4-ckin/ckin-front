@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.service.CartService;
@@ -52,13 +53,15 @@ public class CartController {
     /**
      * 장바구니에 상품을 추가하는 메서드
      *
-     * @param cookie   현재 유저의 UUID (Cart_Id)
-     * @param cartItem 장바구니에 추가할 아이템
+     * @param cookie                   현재 유저의 UUID (Cart_Id)
+     * @param CartItemCreateRequestDto 장바구니에 추가할 아이템
      * @return 장바구니 페이지 리다이렉트 URL
      */
     @PostMapping("/create")
-    public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute CartItem cartItem) {
-        cartService.createCartItem(cookie.getValue(), cartItem);
+    public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
+    CartItemCreateRequestDto cartItemCreateRequestDto) {
+        log.debug("add Item -> {}", cartItemCreateRequestDto.getId());
+        cartService.createCartItem(cookie.getValue(), cartItemCreateRequestDto);
         return REDIRECT_CART_URL;
     }
 

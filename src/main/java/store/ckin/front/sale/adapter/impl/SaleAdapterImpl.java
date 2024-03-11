@@ -16,6 +16,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 
@@ -144,6 +145,27 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, saleId);
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 조회할 주문 번호 (UUID)
+     * @return 결제 정보 응답 DTO
+     */
+    @Override
+    public SaleInfoResponseDto requestGetPaymentInfo(String saleNumber) {
+
+        HttpEntity<SaleInfoResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleInfoResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleNumber}/paymentInfo",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleNumber);
 
         return exchange.getBody();
     }
