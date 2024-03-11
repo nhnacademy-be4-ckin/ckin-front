@@ -383,10 +383,12 @@
 
                         <form action="/cart/create" method="post">
                             <div class="btn_wrap justify overlap">
-                                <input name="name" th:value="${book.bookTitle}" hidden>
                                 <input name="id" th:value="${book.bookId}" hidden>
+                                <input name="name" th:value="${book.bookTitle}" hidden>
                                 <input name="quantity" value="1" hidden>
-                                <input name="unitPrice" th:value="${book.bookSalePrice}" hidden>
+                                <input name="regularPrice" th:value="${book.bookRegularPrice}" hidden>
+                                <input name="salePrice" th:value="${book.bookSalePrice}" hidden>
+                                <input name="thumbnail" th:value="${book.thumbnail}" hidden>
                                 <button type="submit" class="btn_sm btn_line_gray" data-role="btn-dialog"
                                         data-target="#popStock"
                                         onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
