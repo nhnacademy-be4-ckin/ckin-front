@@ -54,8 +54,10 @@ public class SaleController {
         List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(Objects.requireNonNull(cartItems));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("authentication = {}", authentication.getName());
         if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
+            log.debug("memberPoint = {}", memberPoint.getPoint());
             model.addAttribute("memberPoint", memberPoint.getPoint());
         }
 

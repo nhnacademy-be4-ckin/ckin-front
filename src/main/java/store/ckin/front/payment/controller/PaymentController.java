@@ -6,12 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.config.properties.TossProperties;
-import store.ckin.front.payment.dto.request.PaymentRequestDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.facde.PaymentFacade;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 
@@ -51,63 +50,49 @@ public class PaymentController {
     }
 
     /**
-     * 결제 성공 페이지.
+     * 결제 승인 페이지 요청 메서드입니다.
      *
-     * @param request 요청 객체
-     * @param model   Model 객체
      * @return 결제 성공 페이지
-     * @throws Exception 예외 처리
      */
-    @GetMapping("/success")
-    public String paymentRequest(HttpServletRequest request, Model model) throws Exception {
-
-        log.info("requestURI = {}", request.getRequestURI());
-
-        request.getParameterMap()
-                .forEach((k, v) -> log.info("key = {}, value = {}", k, v));
-        return "payment/success";
+    @GetMapping("/approve")
+    public String paymentRequest() {
+        return "payment/approve";
     }
 
-    @PostMapping("/success")
-    public String successPayment(@RequestBody PaymentRequestDto requestDto) {
-
-        paymentFacade.createPayment(requestDto);
-
-        log.info("SUCCESS requestDto = {}", requestDto);
-        return "redirect:/";
-    }
 
     /**
-     * 결제 실패 페이지.
+     * 결제 실패 페이지 요청 메서드입니다.
      *
-     * @param request
-     * @param model
-     * @return
-     * @throws Exception
+     * @param request 요청 객체
+     * @return 결제 실패 페이지
      */
 
     @GetMapping("/fail")
-    public String failPayment(HttpServletRequest request, Model model) throws Exception {
-
-        log.info("requestURI = {}", request.getRequestURI());
-        request.getParameterMap()
-                .forEach((k, v) -> log.info("key = {}, value = {}", k, v));
+    public String failPayment(HttpServletRequest request) {
 
         String failCode = request.getParameter("code");
-        String failMessage = request.getParameter("message");
+        String orderId = request.getParameter("orderId");
 
-        model.addAttribute("code", failCode);
-        model.addAttribute("message", failMessage);
+        if (failCode.equals("DUPLICATED_ORDER_ID")) {
+            return "redirect:/";
+        }
 
-        return "payment/fail";
+        return "redirect:/payment/" + orderId;
     }
 
-    @PostMapping("/fail")
-    public String failPayment(@RequestBody PaymentRequestDto requestDto) {
+    /**
+     * 결제 완료 페이지 요청 메서드입니다.
+     *
+     * @param payment 결제 완료 응답 DTO
+     * @param model   Model 객체
+     * @return 결제 완료 페이지
+     */
+    @GetMapping("/success")
+    public String successPayment(@ModelAttribute PaymentSuccessResponseDto payment, Model model) {
 
-        log.info("FAIL requestDto = {}", requestDto);
+        log.debug("payment = {}", payment);
 
-//        paymentFacade.failPayment(requestDto);
-        return "redirect:/";
+        model.addAttribute("payment", payment);
+        return "payment/success";
     }
 }
