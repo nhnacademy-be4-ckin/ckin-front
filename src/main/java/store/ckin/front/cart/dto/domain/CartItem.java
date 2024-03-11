@@ -14,10 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 public class CartItem {
-    private String name;
     private long id;
+    private String name;
     private int quantity;
-    private int unitPrice;
+    private int regularPrice;
+    private int salePrice;
+    private String thumbnail;
 
     /**
      * 상품의 수량을 변경하기 위한 메서드
