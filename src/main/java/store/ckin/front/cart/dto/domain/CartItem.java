@@ -1,8 +1,10 @@
 package store.ckin.front.cart.dto.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 
 /**
  * 장바구니에 저장되는 상품에 대한 정보를 저장하는 클래스
@@ -12,12 +14,15 @@ import lombok.Setter;
  */
 @Getter
 @NoArgsConstructor
-@Setter
+@AllArgsConstructor
+@Builder
 public class CartItem {
-    private String name;
     private long id;
+    private String name;
     private int quantity;
-    private int unitPrice;
+    private int regularPrice;
+    private int salePrice;
+    private String thumbnail;
 
     /**
      * 상품의 수량을 변경하기 위한 메서드
@@ -26,5 +31,16 @@ public class CartItem {
      */
     public void updateQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public static CartItem toCartItem(CartItemCreateRequestDto dto) {
+        return CartItem.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .quantity(dto.getQuantity())
+                .regularPrice(dto.getRegularPrice())
+                .salePrice(dto.getSalePrice())
+                .thumbnail(dto.getThumbnail())
+                .build();
     }
 }

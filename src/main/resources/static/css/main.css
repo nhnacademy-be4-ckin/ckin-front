@@ -35,7 +35,6 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 -------------------------------------------------------------------*/
 
 
-
 /*//////////////////////////////////////////////////////////////////
 [ RS PLUGIN ]*/
 
@@ -1891,7 +1890,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .column-1 {
     width: 133px;
-    padding-left: 50px;
+    padding-left: 30px;
 }
 
 .table-shopping-cart .column-2 {
@@ -2567,6 +2566,7 @@ input.num-product::-webkit-inner-spin-button {
     min-width: 134px;
     height: 50px;
 }
+
 /*//////////////////////////////////////////////////////////////////
 [ Width ]*/
 .size-201 {

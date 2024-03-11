@@ -1,10 +1,10 @@
 package store.ckin.front.cart.service;
 
+import java.util.List;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
-
-import java.util.List;
 
 /**
  * 장바구니 임시 저장을 담당하는 서비스 클래스
@@ -20,7 +20,7 @@ public interface CartService {
      * @param key  현재 유저의 UUID
      * @param item 추가하고자 하는 상품에 대한 정보를 담은 Dto
      */
-    void createCartItem(String key, CartItem item);
+    void createCartItem(String key, CartItemCreateRequestDto item);
 
     /**
      * 장바구니 상품들을 읽어오는 메서드
