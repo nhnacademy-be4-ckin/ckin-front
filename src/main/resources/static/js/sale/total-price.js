@@ -58,6 +58,11 @@ function updateTotalPrice() {
 
     totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - totalCouponDiscount - pointUsage).toFixed(0);
 
+    if (totalPrice.textContent < 100) {
+        alert('최소 결제 금액은 100원입니다.');
+        return;
+    }
+
     document.getElementById('totalSalePrice').value = totalPrice.textContent;
 }
 
