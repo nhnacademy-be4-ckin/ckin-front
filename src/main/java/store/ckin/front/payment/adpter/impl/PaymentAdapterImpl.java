@@ -21,6 +21,7 @@ import store.ckin.front.payment.adpter.PaymentAdapter;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.skm.util.KeyManager;
 
 /**
@@ -39,28 +40,14 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
     private final GatewayProperties gatewayProperties;
 
+    private static final String PAYMENT_URL = "/api/payments";
+
     private final TossProperties tossProperties;
 
     private final KeyManager keyManager;
 
     private static final String TOSS_API_URL = "https://api.tosspayments.com/v1/payments/confirm";
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param requestDto 결제 요청 객체
-     */
-    @Override
-    public void requestCreatePayment(PaymentRequestDto requestDto) {
-        HttpEntity<PaymentRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
-
-        restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/payment",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<Void>() {
-                });
-    }
 
     /**
      * {@inheritDoc}
@@ -102,4 +89,24 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
         return responseDto;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param requestDto 결제 요청 객체
+     */
+    @Override
+    public PaymentSuccessResponseDto requestCreatePayment(PaymentRequestDto requestDto) {
+        HttpEntity<PaymentRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
+
+        ResponseEntity<PaymentSuccessResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + PAYMENT_URL,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        return exchange.getBody();
+    }
+
 }

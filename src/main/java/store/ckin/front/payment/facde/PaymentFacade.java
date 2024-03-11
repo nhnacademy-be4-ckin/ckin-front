@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.service.PaymentService;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -35,14 +36,6 @@ public class PaymentFacade {
         return saleService.getPaymentInfo(saleNumber);
     }
 
-    /**
-     * 결제 생성 메서드입니다.
-     *
-     * @param requestDto 결제 요청 객체
-     */
-    public void createPayment(PaymentRequestDto requestDto) {
-        paymentService.createPayment(requestDto);
-    }
 
     /**
      * 결제 확인 메서드입니다.
@@ -54,5 +47,15 @@ public class PaymentFacade {
     public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException {
         return paymentService.isConfirmPayment(requestDto);
+    }
+
+    /**
+     * 결제 생성 메서드입니다.
+     *
+     * @param requestDto 결제 요청 객체
+     * @return 결제 확인 응답 객체
+     */
+    public PaymentSuccessResponseDto createPayment(PaymentRequestDto requestDto) {
+        return paymentService.createPayment(requestDto);
     }
 }

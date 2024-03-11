@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 
 /**
  * 결제 어댑터 인터페이스입니다.
@@ -13,12 +14,6 @@ import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
  */
 public interface PaymentAdapter {
 
-    /**
-     * 결제 생성 요청 메서드입니다.
-     *
-     * @param requestDto 결제 요청 객체
-     */
-    void requestCreatePayment(PaymentRequestDto requestDto);
 
     /**
      * 결제 확인 요청 메서드입니다.
@@ -29,4 +24,12 @@ public interface PaymentAdapter {
      */
     PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException;
+
+    /**
+     * 결제 생성 요청 메서드입니다.
+     *
+     * @param requestDto 결제 요청 객체
+     */
+    PaymentSuccessResponseDto requestCreatePayment(PaymentRequestDto requestDto);
+
 }

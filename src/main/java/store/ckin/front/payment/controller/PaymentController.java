@@ -6,12 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.config.properties.TossProperties;
-import store.ckin.front.payment.dto.request.PaymentRequestDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.facde.PaymentFacade;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 
@@ -51,33 +50,30 @@ public class PaymentController {
     }
 
     /**
-     * 결제 성공 페이지 요청 메서드입니다.
+     * 결제 승인 페이지 요청 메서드입니다.
      *
      * @param request 요청 객체
-     * @param model   Model 객체
      * @return 결제 성공 페이지
      */
-    @GetMapping("/success")
-    public String paymentRequest(HttpServletRequest request, Model model) {
+    @GetMapping("/approve")
+    public String paymentRequest(HttpServletRequest request) {
 
         request.getParameterMap()
                 .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
 
-        return "payment/success";
+        return "payment/approve";
     }
-
 
 
     /**
      * 결제 실패 페이지 요청 메서드입니다.
      *
      * @param request 요청 객체
-     * @param model   Model 객체
      * @return 결제 실패 페이지
      */
 
     @GetMapping("/fail")
-    public String failPayment(HttpServletRequest request, Model model) {
+    public String failPayment(HttpServletRequest request) {
 
         String failCode = request.getParameter("code");
         String orderId = request.getParameter("orderId");
@@ -87,5 +83,21 @@ public class PaymentController {
         }
 
         return "redirect:/payment/" + orderId;
+    }
+
+    /**
+     * 결제 완료 페이지 요청 메서드입니다.
+     *
+     * @param payment 결제 완료 응답 DTO
+     * @param model   Model 객체
+     * @return 결제 완료 페이지
+     */
+    @GetMapping("/success")
+    public String successPayment(@ModelAttribute PaymentSuccessResponseDto payment, Model model) {
+
+        log.debug("payment = {}", payment);
+
+        model.addAttribute("payment", payment);
+        return "payment/success";
     }
 }

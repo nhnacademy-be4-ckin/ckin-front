@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.facde.PaymentFacade;
 
 /**
@@ -54,14 +55,12 @@ public class PaymentRestController {
      * 결제 성공 (POST) 요청 메서드입니다.
      *
      * @param requestDto 결제 요청 DTO
-     * @return 메인 페이지로 리다이렉트
+     * @return 결제 성공 응답 DTO
      */
     @PostMapping("/success")
-    public ResponseEntity<Void> successPayment(@RequestBody PaymentRequestDto requestDto) {
-
-        paymentFacade.createPayment(requestDto);
+    public ResponseEntity<PaymentSuccessResponseDto> successPayment(@RequestBody PaymentRequestDto requestDto) {
 
         log.debug("SUCCESS requestDto = {}", requestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(paymentFacade.createPayment(requestDto));
     }
 }

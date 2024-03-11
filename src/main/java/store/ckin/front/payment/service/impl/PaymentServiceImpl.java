@@ -7,6 +7,7 @@ import store.ckin.front.payment.adpter.PaymentAdapter;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.service.PaymentService;
 
 /**
@@ -22,15 +23,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentAdapter paymentAdapter;
 
-    /**
-     * 결제 생성 메서드입니다.
-     *
-     * @param requestDto 결제 요청 객체
-     */
-    @Override
-    public void createPayment(PaymentRequestDto requestDto) {
-        paymentAdapter.requestCreatePayment(requestDto);
-    }
+
 
     /**
      * 결제 확인 메서드입니다.
@@ -43,5 +36,15 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException {
         return paymentAdapter.requestConfirmPayment(requestDto);
+    }
+
+    /**
+     * 결제 생성 메서드입니다.
+     *
+     * @param requestDto 결제 요청 객체
+     */
+    @Override
+    public PaymentSuccessResponseDto createPayment(PaymentRequestDto requestDto) {
+        return paymentAdapter.requestCreatePayment(requestDto);
     }
 }
