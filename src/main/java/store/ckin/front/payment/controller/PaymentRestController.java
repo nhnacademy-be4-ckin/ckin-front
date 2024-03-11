@@ -39,10 +39,7 @@ public class PaymentRestController {
     public ResponseEntity<PaymentConfirmResponseDto> confirmPayment(@RequestBody PaymentConfirmRequestDto requestDto)
             throws Exception {
 
-        log.debug("confirm requestDto = {}", requestDto);
         PaymentConfirmResponseDto confirmPayment = paymentFacade.isConfirmPayment(requestDto);
-
-        log.debug("confirmPayment = {}", confirmPayment);
 
         if (confirmPayment.getStatus().equals("DONE")) {
             return ResponseEntity.ok(confirmPayment);
@@ -59,8 +56,6 @@ public class PaymentRestController {
      */
     @PostMapping("/success")
     public ResponseEntity<PaymentSuccessResponseDto> successPayment(@RequestBody PaymentRequestDto requestDto) {
-
-        log.debug("SUCCESS requestDto = {}", requestDto);
         return ResponseEntity.ok(paymentFacade.createPayment(requestDto));
     }
 }

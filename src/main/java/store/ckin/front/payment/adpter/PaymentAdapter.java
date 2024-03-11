@@ -25,10 +25,12 @@ public interface PaymentAdapter {
     PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
             throws UnsupportedEncodingException;
 
+
     /**
      * 결제 생성 요청 메서드입니다.
      *
-     * @param requestDto 결제 요청 객체
+     * @param requestDto 결제 생성 요청 객체
+     * @return 결제 성공 응답 객체
      */
     PaymentSuccessResponseDto requestCreatePayment(PaymentRequestDto requestDto);
 

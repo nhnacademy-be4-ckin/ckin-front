@@ -80,20 +80,15 @@ public class PaymentAdapterImpl implements PaymentAdapter {
                 });
 
 
-        log.debug("status = {}", exchange.getStatusCode());
-        log.debug("body = {}", exchange.getBody());
-
-        PaymentConfirmResponseDto responseDto = Objects.requireNonNull(exchange.getBody());
-
-        log.debug("responseDto = {}", responseDto);
-
-        return responseDto;
+        return Objects.requireNonNull(exchange.getBody());
     }
+
 
     /**
      * {@inheritDoc}
      *
      * @param requestDto 결제 요청 객체
+     * @return 결제 성공 응답 객체
      */
     @Override
     public PaymentSuccessResponseDto requestCreatePayment(PaymentRequestDto requestDto) {

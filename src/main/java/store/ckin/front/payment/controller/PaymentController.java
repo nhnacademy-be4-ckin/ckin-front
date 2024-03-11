@@ -52,15 +52,10 @@ public class PaymentController {
     /**
      * 결제 승인 페이지 요청 메서드입니다.
      *
-     * @param request 요청 객체
      * @return 결제 성공 페이지
      */
     @GetMapping("/approve")
-    public String paymentRequest(HttpServletRequest request) {
-
-        request.getParameterMap()
-                .forEach((k, v) -> log.debug("key = {}, value = {}", k, v));
-
+    public String paymentRequest() {
         return "payment/approve";
     }
 

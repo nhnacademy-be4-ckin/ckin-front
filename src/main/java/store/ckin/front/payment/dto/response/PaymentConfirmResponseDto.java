@@ -39,9 +39,6 @@ public class PaymentConfirmResponseDto {
     @NoArgsConstructor
     public static class Receipt {
 
-        /**
-         * 토스 페이먼츠에서 조회할 수 있는 영수증 URL.
-         */
         private String url;
     }
 

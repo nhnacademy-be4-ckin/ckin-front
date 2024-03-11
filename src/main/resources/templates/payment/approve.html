@@ -56,7 +56,6 @@
             console.log(json);
         }
 
-        console.log(json);
         $.ajax({
             type: "POST",
             url: "/toss/success",
@@ -71,7 +70,6 @@
                 receiptUrl: json.receipt.url
             }),
             success: function (response) {
-                console.log(response);
 
                 // 주문 완료 페이지로 redirect
                 window.location.href = "/payment/success?saleNumber=" + response.saleNumber +

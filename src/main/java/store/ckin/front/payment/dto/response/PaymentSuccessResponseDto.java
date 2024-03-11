@@ -1,8 +1,8 @@
 package store.ckin.front.payment.dto.response;
 
 import java.time.LocalDate;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @ToString
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentSuccessResponseDto {
 
     private String saleNumber;
