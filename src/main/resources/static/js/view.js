@@ -59,3 +59,21 @@ function removeFileListItem(buttonElement) {
     var listItem = buttonElement.closest('.list_item');
     listItem.remove();
 }
+
+
+$.ajax({
+    type:"GET",
+    url: '/review/use',
+    dataType: 'json',
+    success: function (data) {
+        console.log(data);
+        if(data) {
+            let html = `<button type="button" class="btn btn_primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" >
+                                <span class="ico_review"></span>
+                                <span class="text">리뷰 작성</span>
+                            </button>`;
+            $("#reviewButton").append(html);
+        }
+    }
+})

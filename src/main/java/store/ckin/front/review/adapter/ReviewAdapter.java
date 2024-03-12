@@ -28,7 +28,7 @@ public interface ReviewAdapter {
      * 도서 아이디로 해당되는 리뷰 목록을 요청하는 메소드 입니다.
      *
      * @param pageable 리뷰 페이지
-     * @param bookId 도서 아이디
+     * @param bookId   도서 아이디
      * @return 리뷰 DTO 페이지
      */
     PageDto<ReviewDto> getReviewListByBookId(Pageable pageable, Long bookId);

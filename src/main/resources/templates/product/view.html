@@ -11,66 +11,7 @@
               href="https://contents.kyobobook.co.kr/resources/fo/css/components_ink.css">
         <link rel="stylesheet" type="text/css" href="https://contents.kyobobook.co.kr/resources/fo/css/product_ink.css">
 
-        <style>
-            /* 추가한 CSS 스타일 */
-            .product-info-head {
-                width: 170px;
-                border: 1px solid #dee2e6;
-                padding: 8px;
-                text-align: center;
-                background-color: #f8f9fa;
-            }
-
-            .product-info-body {
-                border: 1px solid #dee2e6;
-                padding: 8px;
-            }
-
-            .klover_review_box {
-                display: flex;
-                padding: 35px 49px;
-            }
-
-            .title_heading {
-                font-size: 20px;
-                line-height: 30px;
-                letter-spacing: -0.01em;
-                display: inline-block;
-                position: relative;
-                font-weight: 700;
-                overflow-wrap: anywhere;
-            }
-
-            .title_wrap.title_size_md.has_btn {
-                justify-content: space-between;
-            }
-
-            .tab_wrap.prod_detail_body .klover_review_wrap .klover_review_box {
-                padding: 35px 49px;
-            }
-
-            .product_detail_area {
-                margin-top: 70px;
-            }
-
-            .product_detail_area klover_review_wrap {
-                display: inline-block;
-                margin: 10%;
-            }
-
-            .klover_review_box {
-                height: 300px;
-            }
-
-            textarea.form-control {
-                height: 200px;
-            }
-
-            .right_area {
-                display: flex;
-                float: right;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/css/view.css">
     </head>
     <body>
 
@@ -445,7 +386,6 @@
                 <h2 data-nodeid="1" class="title_heading">책소개</h2>
                 <div class="product_detail_area detail_img">
                     <div class="inner" th:utext="${book.bookDescription}">
-                        <!--                        TODO: editor view -->
                     </div>
                 </div>
             </div>
@@ -464,120 +404,39 @@
             <div class="header_contents_inner">
                 <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
                     <!-- 타이틀 영역 -->
-                    <p class="title_heading" data-review-label="title">Klover 리뷰 (1,137)</p>
+                    <p class="title_heading" data-review-label="title" th:text="'총 리뷰 ' + ${totalCount} + '건'"></p>
                     <div data-kbbfn-role="title">
-                        <div class="right_area">
-                            <p class="bul_item_asterisk font_size_xxs">구매 후 리뷰 작성 시, e교환권 200원 적립</p>
-                            <button type="button" class="btn btn_primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                <span class="ico_review"></span>
-                                <span class="text">리뷰 작성</span>
-                            </button>
+                        <div class="right_area" id="reviewButton">
+                            <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="klover_review_box">
                     <div class="klover_box_left">
-                        <div class="box_top">
-                            <p class="text_user_score">사용자 총점</p>
-                            <div class="rating-container theme-krajee-gly rating-md rating-animate rating-disabled has_caption">
-                                <div class="clear-rating " title="초기화"><i class="glyphicon glyphicon-minus-sign"></i>
-                                </div>
-                                <div class="rating-stars" tabindex="0">
-                                    <span class="empty-stars"><span class="star"
-                                                                    title="One Star"><i
-                                            class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                    title="Two Stars"><i
-                                            class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                    title="Three Stars"><i
-                                            class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                    title="Four Stars"><i
-                                            class="glyphicon glyphicon-star-empty"></i></span></span><span
-                                        class="filled-stars"
-                                        style="width: 94%;"><span
-                                        class="star" title="One Star"><i
-                                        class="glyphicon glyphicon-star"></i></span><span
-                                        class="star" title="Two Stars"><i
-                                        class="glyphicon glyphicon-star"></i></span><span
-                                        class="star" title="Three Stars"><i
-                                        class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                          title="Four Stars"><i
-                                        class="glyphicon glyphicon-star"></i></span></span></div>
-                                <div class="caption"><span class="caption-badge caption-secondary">10점 중 9.4점<span
-                                        class="val" aria-hidden="true">9.4</span><span class="total"
-                                                                                       aria-hidden="true">10</span></span>
-                                </div>
-                            </div>
+                        <div class="rating-stars" tabindex="0">
+                            <span class="filled-stars">
+                                <span class="star">
+                                    <i class="glyphicon glyphicon-star"></i>
+                                </span>
+                            </span>
                         </div>
                     </div>
                     <div class="klover_box_right">
-                        <div class="box_top">
-                            <p class="text_good_respon">
-                                39%의 구매자가<br>
-                                <span class="fc_spot"><span class="review_quotes_text">도움돼요</span></span> 라고 응답했어요
-                            </p>
-                        </div>
-                        <div class="box_bottom">
-                            <div class="reply_score_list">
-                                <div class="reply_score_item ">
-                                    <div class="score_bar_box">
-                                        <span class="num_score_bar">29%</span>
-                                        <div class="score_bar"><span class="score_bar_inner"
-                                                                     style="height: 29%;"></span>
-                                        </div>
-                                    </div>
-                                    <p class="text_reply">집중돼요</p>
-                                </div>
-
-                                <div class="reply_score_item score_best">
-                                    <div class="score_bar_box">
-                                        <span class="num_score_bar">39%</span>
-                                        <div class="score_bar"><span class="score_bar_inner"
-                                                                     style="height: 39%;"></span>
-                                        </div>
-                                    </div>
-                                    <p class="text_reply">도움돼요</p>
-                                </div>
-
-                                <div class="reply_score_item ">
-                                    <div class="score_bar_box">
-                                        <span class="num_score_bar">7%</span>
-                                        <div class="score_bar"><span class="score_bar_inner" style="height: 7%;"></span>
-                                        </div>
-                                    </div>
-                                    <p class="text_reply">쉬웠어요</p>
-                                </div>
-
-                                <div class="reply_score_item ">
-                                    <div class="score_bar_box">
-                                        <span class="num_score_bar">7%</span>
-                                        <div class="score_bar"><span class="score_bar_inner" style="height: 7%;"></span>
-                                        </div>
-                                    </div>
-                                    <p class="text_reply">최고예요</p>
-                                </div>
-
-                                <div class="reply_score_item ">
-                                    <div class="score_bar_box">
-                                        <span class="num_score_bar">19%</span>
-                                        <div class="score_bar"><span class="score_bar_inner"
-                                                                     style="height: 19%;"></span>
-                                        </div>
-                                    </div>
-                                    <p class="text_reply">추천해요</p>
-                                </div>
-                            </div>
+                        <div class="caption"><span class="caption-badge caption-secondary"><span
+                                class="val" aria-hidden="true" th:text="${totalRate}"></span><span class="total"
+                                                                                                   aria-hidden="true">/5</span></span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="tab_wrap type_sm" data-kbbfn-role="tab-view" data-type-btn="">
                     <div class="tab_list_wrap">
                         <ul class="tabs">
                             <li class="tab_item ui-state-active" data-value="000">
-                                <button class="tab_link" type="button"
-                                        onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상세탭_리뷰', 'Klover리뷰', '탭_전체 리뷰', '');">
+                                <button class="tab_link" type="button">
                                     <span class="tab_text">전체 리뷰</span></button>
                             </li>
                         </ul>
@@ -604,7 +463,7 @@
                                                     class="info_item" th:text="${review.author}"></span><span
                                                     class="gap"> | </span><span
                                                     class="info_item"
-                                                    th:text="${review.reviewDate}">2023.07.11</span><span
+                                                    th:text="${review.reviewDate}"></span><span
                                                     class="gap"> | </span><span
                                                     class="info_item"><button class="btn_comment_util" type="button"
                                                                               data-role="report"><span
@@ -618,30 +477,25 @@
                                                         <i class="glyphicon glyphicon-minus-sign"></i>
                                                     </div>
                                                     <div class="rating-stars" tabindex="0">
-                                                        <span class="empty-stars">
+                                                        <span class="empty-stars" th:if="${review.reviewRate != 5}">
                                                             <span class="star"
-                                                                  th:each="i : ${#numbers.sequence(1, review.getReviewRate())}">
+                                                                  th:each="i : ${#numbers.sequence(1, 5 - review.getReviewRate())}">
                                                                 <i class="glyphicon glyphicon-star-empty"></i>
                                                             </span>
                                                         </span>
-                                                        <span class="filled-stars" style="width: 50%;">
+                                                        <span class="filled-stars" th:if="${review.reviewRate > 0}">
                                                             <span class="star"
-                                                                  th:each="i : ${#numbers.sequence(1, (5 - review.getReviewRate()))}">
-                                                                <i class="glyphicon glyphicon-star">
-
-                                                                </i>
+                                                                  th:each="i : ${#numbers.sequence(1, review.getReviewRate())}">
+                                                                <i class="glyphicon glyphicon-star"></i>
                                                             </span>
                                                         </span>
                                                     </div>
+
                                                     <div class="caption"><span
                                                             class="caption-badge caption-success"
                                                             th:text="${totalRate}"></span>
                                                     </div>
                                                 </div>
-                                                <input class="form_rating rating-input" type="number" value="5"
-                                                       title="평가점수 선택"
-                                                       readonly="readonly" data-size="sm" tabindex="-1"><span
-                                                    class="gap">/</span><span class="review_quotes_text">집중돼요</span>
                                             </div>
                                         </div>
                                     </div>
@@ -651,18 +505,6 @@
                                                 <div class="comment_text_box">
                                                     <div class="comment_text" th:text="${review.message}"></div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="comment_footer">
-                                        <div class="comment_util_box">
-                                            <div class="right_area">
-                                                <button class="btn_like" type="button"><span
-                                                        class="ico_like"></span><span
-                                                        class="text">42</span></button>
-                                                <button class="btn_reply" type="button"><span
-                                                        class="ico_reply"></span><span
-                                                        class="text">답글 <span class="count">0</span></span></button>
                                             </div>
                                         </div>
                                     </div>

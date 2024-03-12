@@ -83,19 +83,4 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 new HttpEntity<>(getHttpHeaders()),
                 Void.class);
     }
-
-    @Override
-    public List<CategoryResponseDto> getSubcategories(Long parentId) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-
-        ResponseEntity<List<CategoryResponseDto>> exchange =
-                restTemplate.exchange(gatewayProperties.getGatewayUri() + "/api/categories/" + parentId + "/subcategories",
-                        HttpMethod.GET,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
-
-        return exchange.getBody();
-    }
-
 }

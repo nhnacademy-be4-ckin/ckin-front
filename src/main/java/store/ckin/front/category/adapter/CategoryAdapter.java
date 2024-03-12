@@ -19,19 +19,19 @@ public interface CategoryAdapter {
     List<CategoryResponseDto> requestGetTopCategories();
 
 
-    List<CategoryResponseDto> requestGetSubcategories(Long parentId);
-
-    void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto);
-
-
-    void requestDeleteCategory(Long categoryId);
     /**
      * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
      *
      * @param parentId the parent id
      * @return the subcategories
      */
-    List<CategoryResponseDto> getSubcategories(Long parentId);
+    List<CategoryResponseDto> requestGetSubcategories(Long parentId);
+
+    void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto);
+
+
+    void requestDeleteCategory(Long categoryId);
+
 
 
 }

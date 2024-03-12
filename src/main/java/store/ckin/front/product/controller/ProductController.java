@@ -79,6 +79,8 @@ public class ProductController {
         model.addAttribute("authorNames", authorNames);
         model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
         model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
+
+        model.addAttribute("totalCount", reviewListDtoPageDto.getTotalElements());
         model.addAttribute("isPrevious", reviewListDtoPageDto.getNumber() > 0);
         model.addAttribute("isNext", reviewListDtoPageDto.getNumber() < reviewListDtoPageDto.getTotalPages() - 1);
         model.addAttribute("totalPages", reviewListDtoPageDto.getTotalPages() == 0 ? 1 : reviewListDtoPageDto.getTotalPages());

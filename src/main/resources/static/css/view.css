@@ -1,0 +1,190 @@
+
+/* review rate */
+.rating-container.rating-sm .empty-stars .star .glyphicon-star-empty:before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+    background-image: url(../images/icons/free-icon-star-1012299.png);
+}
+
+.rating-container .rating-stars .empty-stars .star .glyphicon-star-empty:before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    background-image: url(../images/icons/free-icon-star-1012299.png);
+}
+
+.rating-container.rating-sm .filled-stars .star .glyphicon-star:before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+    background-image: url(../images/icons/free-icon-star-1012350.png);
+}
+
+.rating-container .rating-stars .filled-stars .star .glyphicon-star:before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    background-image: url(../images/icons/free-icon-star-1012350.png);
+}
+
+.klover_review_box .klover_box_left .rating-stars .filled-stars .star .glyphicon-star:before {
+    content: "";
+    display: flex;
+    width: 150px;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 150px;
+    background-image: url(../images/icons/free-icon-star-1012350.png);
+}
+
+.klover_review_wrap .klover_review_box .klover_box_left {
+    flex: 1;
+    padding-right: 0px;
+    border-right: 1px solid #eaeaea;
+    display: flex;
+    justify-content: center;
+}
+
+.rating-stars {
+    align-items: center;
+}
+
+.caption .caption-badge .val {
+    font-size: 100px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    color: #5055b1;
+    font-weight: 700;
+    line-height: 1;
+}
+/**/
+.product-info-head {
+    width: 170px;
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.product-info-body {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+}
+
+.klover_review_box {
+    display: flex;
+    padding: 35px 49px;
+}
+
+.title_heading {
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    display: inline-block;
+    position: relative;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.title_wrap.title_size_md.has_btn {
+    justify-content: space-between;
+}
+
+.tab_wrap.prod_detail_body .klover_review_wrap .klover_review_box {
+    padding: 35px 49px;
+}
+
+.product_detail_area {
+    margin-top: 70px;
+}
+
+.product_detail_area klover_review_wrap {
+    display: inline-block;
+    margin: 10%;
+}
+
+.klover_review_box {
+    height: 300px;
+}
+
+textarea.form-control {
+    height: 200px;
+}
+
+.right_area {
+    display: flex;
+    float: right;
+}
+
+
+.caption .caption-badge .total {
+    padding-top: 5px;
+    margin-left: 5px;
+    font-size: 50px;
+    line-height: 50px;
+    letter-spacing: -0.01em;
+    color: #767676;
+    font-weight: 400;
+    line-height: 1;
+}
+/* 사용자 총점 */
+.klover_review_wrap .klover_review_box .klover_box_left .box_top .text_user_score {
+    margin-bottom: 4px;
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+}
+.klover_review_wrap .klover_review_box .klover_box_right .box_top .text_user_score {
+    margin-bottom: 4px;
+    font-size: 25px;
+    line-height: 23px;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+}
+/* 리뷰 사용자 총 리뷰 점수 칸 */
+.klover_review_wrap .klover_review_box {
+    padding: 39px 109px 34px 108px;
+    margin-bottom: 30px;
+    background-color: #f7f7f7;
+    border: 1px solid #d5d5d5;
+    border-radius: 20px;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: center;
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
