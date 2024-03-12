@@ -393,7 +393,7 @@
 
         function loadCategories(selector, parentId) {
             if (parentId) {
-                fetch("/categories/subcategories/" + parentId)
+                fetch("/categories/" + parentId)
                     .then((response) => response.json())
                     .then((categories) => {
                         $(selector)
