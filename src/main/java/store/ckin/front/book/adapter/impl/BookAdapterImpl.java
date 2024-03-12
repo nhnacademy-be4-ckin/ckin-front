@@ -38,7 +38,9 @@ public class BookAdapterImpl implements BookAdapter {
     private static final String BOOK_URL = "/api/books";
     private final RestTemplate restTemplate;
     private final GatewayProperties gatewayProperties;
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String requestUploadDescriptionImage(MultipartFile file) {
         HttpHeaders headers = new HttpHeaders();
@@ -57,7 +59,9 @@ public class BookAdapterImpl implements BookAdapter {
         return response.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file) {
         HttpHeaders headers = new HttpHeaders();
@@ -77,7 +81,9 @@ public class BookAdapterImpl implements BookAdapter {
                     });
         }
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageDto<BookListResponseDto> findAllBooks(Pageable pageable) {
         HttpHeaders headers = getHttpHeaders(); // 필요한 헤더를 설정
@@ -117,7 +123,9 @@ public class BookAdapterImpl implements BookAdapter {
                         });
         return exchange.getBody();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<BookExtractionResponseDto> requestBookSaleList(List<Long> request) {
 
@@ -139,7 +147,9 @@ public class BookAdapterImpl implements BookAdapter {
 
         return exchange.getBody();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestUpdateBook(BookModifyRequestDto bookModifyRequestDto, Long bookId) {
         HttpHeaders headers = new HttpHeaders();
@@ -155,7 +165,9 @@ public class BookAdapterImpl implements BookAdapter {
                 });
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestUpdateBookThumbnail(Long bookId, MultipartFile file) {
         HttpHeaders headers = new HttpHeaders();
