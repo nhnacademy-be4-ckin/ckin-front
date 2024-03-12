@@ -1,15 +1,19 @@
 package store.ckin.front.payment.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.config.properties.TossProperties;
-import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
-import store.ckin.front.sale.facade.SaleFacade;
+import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
+import store.ckin.front.payment.facde.PaymentFacade;
+import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 결제 컨트롤러 클래스입니다.
@@ -18,40 +22,78 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 03. 07.
  */
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/payment")
 public class PaymentController {
 
-    private final SaleFacade saleFacade;
+    private final PaymentFacade paymentFacade;
 
     private final TossProperties tossProperties;
 
-    @GetMapping("/{saleId}")
-    public String getPaymentPage(@PathVariable("saleId") Long saleId, Model model) {
+    /**
+     * 결제 페이지를 요청하는 메서드입니다.
+     *
+     * @param saleNumber 주문 번호
+     * @param model      Model 객체 (주문 정보)
+     * @return 결제 페이지
+     */
+    @GetMapping("/{saleNumber}")
+    public String getPaymentPage(@PathVariable("saleNumber") String saleNumber, Model model) {
 
-        SaleWithBookResponseDto sale = saleFacade.getSaleWithBooks(saleId);
-        model.addAttribute("sale", sale);
+        SaleInfoResponseDto saleInfo = paymentFacade.getPaymentInfo(saleNumber);
+
+        model.addAttribute("sale", saleInfo);
         model.addAttribute("clientKey", tossProperties.getClientKey());
+        model.addAttribute("customerKey", saleNumber);
         return "payment/checkout";
     }
 
-    @GetMapping("/success")
-    public String paymentRequest(HttpServletRequest request, Model model) throws Exception {
-        return "payment/success";
+    /**
+     * 결제 승인 페이지 요청 메서드입니다.
+     *
+     * @return 결제 성공 페이지
+     */
+    @GetMapping("/approve")
+    public String paymentRequest() {
+        return "payment/approve";
     }
 
+
+    /**
+     * 결제 실패 페이지 요청 메서드입니다.
+     *
+     * @param request 요청 객체
+     * @return 결제 실패 페이지
+     */
 
     @GetMapping("/fail")
-    public String failPayment(HttpServletRequest request, Model model) throws Exception {
+    public String failPayment(HttpServletRequest request) {
+
         String failCode = request.getParameter("code");
-        String failMessage = request.getParameter("message");
+        String orderId = request.getParameter("orderId");
 
-        model.addAttribute("code", failCode);
-        model.addAttribute("message", failMessage);
+        if (failCode.equals("DUPLICATED_ORDER_ID")) {
+            return "redirect:/";
+        }
 
-        return "payment/fail";
+        return "redirect:/payment/" + orderId;
     }
 
+    /**
+     * 결제 완료 페이지 요청 메서드입니다.
+     *
+     * @param payment 결제 완료 응답 DTO
+     * @param model   Model 객체
+     * @return 결제 완료 페이지
+     */
+    @GetMapping("/success")
+    public String successPayment(@ModelAttribute PaymentSuccessResponseDto payment, Model model) {
 
+        log.debug("payment = {}", payment);
+
+        model.addAttribute("payment", payment);
+        return "payment/success";
+    }
 }

@@ -1,8 +1,9 @@
 package store.ckin.front.author.dto.response;
 
-import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * PageResponse.

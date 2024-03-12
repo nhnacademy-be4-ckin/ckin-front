@@ -1,8 +1,5 @@
 package store.ckin.front.sale.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -16,8 +13,13 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
+
+import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -144,6 +146,27 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, saleId);
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 조회할 주문 번호 (UUID)
+     * @return 결제 정보 응답 DTO
+     */
+    @Override
+    public SaleInfoResponseDto requestGetPaymentInfo(String saleNumber) {
+
+        HttpEntity<SaleInfoResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleInfoResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleNumber}/paymentInfo",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleNumber);
 
         return exchange.getBody();
     }

@@ -1,9 +1,5 @@
 package store.ckin.front.sale.controller;
 
-import java.util.List;
-import java.util.Objects;
-import javax.servlet.http.Cookie;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -22,6 +18,11 @@ import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
+
+import javax.servlet.http.Cookie;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 주문 Controller 클래스입니다.
@@ -57,7 +58,7 @@ public class SaleController {
         log.debug("authentication = {}", authentication.getName());
         if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
-            log.info("memberPoint = {}", memberPoint.getPoint());
+            log.debug("memberPoint = {}", memberPoint.getPoint());
             model.addAttribute("memberPoint", memberPoint.getPoint());
         }
 

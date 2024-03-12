@@ -14,7 +14,6 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 public interface ProductService {
 
     /**
-     *
      * @param categoryId 부모 카테고리 아이디
      * @param pageable
      * @return

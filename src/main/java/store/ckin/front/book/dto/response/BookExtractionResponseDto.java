@@ -1,9 +1,10 @@
 package store.ckin.front.book.dto.response;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * 도서 정보 추출 응답 DTO 클래스입니다.
@@ -18,6 +19,8 @@ import lombok.ToString;
 public class BookExtractionResponseDto {
 
     private Long bookId;
+
+    private String bookImageUrl;
 
     private String bookTitle;
 

@@ -83,8 +83,7 @@
 
                                     <td class="column-sj-1">
                                         <div class="how-itemcart1">
-                                            <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
-                                                 alt="IMG">
+                                            <img th:src="${bookSale.bookImageUrl}" alt="IMG">
                                         </div>
                                     </td>
 
@@ -199,7 +198,7 @@
                             <th:block sec:authorize="isAuthenticated()">
 
                                 <p class="stext-111 p-t-2" style="color: #760c0c;">
-                                    쿠폰을 사용하여 구매할 경우 환불할 때 쿠폰은 환불되지 않습니다.</p>
+                                    쿠폰을 사용하여 구매할 경우 환불할 때 쿠폰은 반환되지 않습니다.</p>
                             </th:block>
 
                             <th:block sec:authorize="isAnonymous()">
@@ -448,7 +447,6 @@
         let freeDeliveryPrice = [[${policyList.getDeliveryPolicy().deliveryPolicyCondition}]];
         /*]]>*/
 
-        console.log('freeDeliveryPrice : ' + freeDeliveryPrice);
     </script>
     <script src="/js/sale/total-price.js"></script>
 
@@ -462,10 +460,8 @@
             bookInfo.set([[${book.bookId}]], [[${book}]]);
             /*[/]*/
             /*]]>*/
-
-            console.log(memberId)
         </script>
-        <script  src="/js/sale/coupon.js"></script>
+        <script src="/js/sale/coupon.js"></script>
     </th:block>
 </div>
 </html>

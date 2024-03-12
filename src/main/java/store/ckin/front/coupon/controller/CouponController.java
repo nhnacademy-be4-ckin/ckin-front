@@ -1,6 +1,5 @@
 package store.ckin.front.coupon.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +15,8 @@ import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * description:

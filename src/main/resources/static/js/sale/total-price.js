@@ -53,10 +53,15 @@ function updateTotalPackagingPrice(packagingPrice) {
 // 결제 총 금액 계산
 function updateTotalPrice() {
     let totalPrice = document.getElementById('totalPrice');
-    let couponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
-    let memberPoint = parseInt(document.getElementById('memberPoint').value);
+    let totalCouponDiscount = parseInt(document.getElementById('totalCouponDiscount').textContent);
+    let pointUsage = parseInt(document.getElementById('pointUsage').value);
 
-    totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - couponDiscount - memberPoint).toFixed(0);
+    totalPrice.textContent = (totalOrderPrice + totalPackagingPrice + deliveryPrice - totalCouponDiscount - pointUsage).toFixed(0);
+
+    if (totalPrice.textContent < 100) {
+        alert('최소 결제 금액은 100원입니다.');
+        return;
+    }
 
     document.getElementById('totalSalePrice').value = totalPrice.textContent;
 }
@@ -93,6 +98,9 @@ function applyPoint() {
 
     let holdingMemberPoint = parseInt(document.getElementById('holdingMemberPoint').textContent);
 
+    // 결제할 금액보다 많이 사용하지 못해야 함.
+    let totalSalePrice = document.getElementById('totalSalePrice').value;
+
     // 보유한 포인트보다 더 많이 사용하지 못해야 함.
     applyMemberPoint = parseInt(applyMemberPoint);
     if (isNaN(applyMemberPoint)) {
@@ -103,6 +111,9 @@ function applyPoint() {
         return;
     } else if (applyMemberPoint < 0) {
         alert('0보다 작은 값을 입력할 수 없습니다.');
+        return;
+    } else if (applyMemberPoint > totalSalePrice - 100) {
+        alert('최대 사용 가능한 포인트는 ' + (totalSalePrice - 100) + ' 포인트 입니다.');
         return;
     }
 

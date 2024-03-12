@@ -1,12 +1,13 @@
 package store.ckin.front.couponpolicy.service.impl;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
+
+import java.util.List;
 
 /**
  * CouponPolicyServiceImpl

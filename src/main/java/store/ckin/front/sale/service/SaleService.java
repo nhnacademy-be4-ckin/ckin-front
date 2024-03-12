@@ -1,11 +1,13 @@
 package store.ckin.front.sale.service;
 
-import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
+
+import java.util.List;
 
 /**
  * 주문 서비스 인터페이스입니다.
@@ -58,4 +60,12 @@ public interface SaleService {
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
     SaleWithBookResponseDto getSaleWithBooks(Long saleId);
+
+    /**
+     * 주문 번호를 통해 결제 정보를 조회합니다.
+     *
+     * @param saleNumber 주문 번호
+     * @return 결제 정보 응답 DTO
+     */
+    SaleInfoResponseDto getPaymentInfo(String saleNumber);
 }
