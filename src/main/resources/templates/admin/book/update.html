@@ -538,7 +538,7 @@
 
         // selectedTags 초기화 함수
         function initializeSelectedTags() {
-            // 'storedBook.tagNames'로부터 초기 데이터 설정 (가정)
+            // 'storedBook.tagNames'로부터 초기 데이터 설정
             var tagNames = /*[[${storedBook.tagNames}]]*/ []; // Thymeleaf를 사용하여 서버에서 데이터를 주입
             tagNames.forEach(function(name, index) {
                 selectedTags[index] = name; // 인덱스 또는 고유 ID를 키로 사용

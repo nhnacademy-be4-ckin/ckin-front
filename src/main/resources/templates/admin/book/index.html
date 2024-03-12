@@ -19,19 +19,16 @@
     <script>
         $(document).ready(function () {
             $('.btn-edit').click(function () {
-                var bookId = $(this).data('book-id');
-
-                // 'viewBookUpdate' 메서드로 이동하는 URL 경로 생성
-                var url = '/admin/books/update/' + bookId;
+                const bookId = $(this).data('book-id');
 
                 // 생성된 URL로 리디렉션
-                window.location.href = url;
+                window.location.href = '/admin/books/update/' + bookId;
             });
         });
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var addButton = document.getElementById('addBookButton');
+            const addButton = document.getElementById('addBookButton');
 
             addButton.addEventListener('click', function () {
                 window.location.href = '/admin/books/register';
@@ -42,7 +39,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var addButton = document.getElementById('addBookButton');
+            const addButton = document.getElementById('addBookButton');
 
             addButton.addEventListener('click', function () {
                 window.location.href = '/admin/books/register';
@@ -55,8 +52,8 @@
 
             // Add event listener for 'Edit Thumbnail' buttons
             $('.btn-edit-thumbnail').click(function () {
-                var bookId = $(this).data('book-id');
-                var thumbnailUrl = $(this).data('thumbnail-url');
+                const bookId = $(this).data('book-id');
+                const thumbnailUrl = $(this).data('thumbnail-url');
                 $('#thumbnailBookId').val(bookId); // Set the book ID in the modal form
                 $('#currentThumbnail').attr('src', thumbnailUrl);
                 $('#editThumbnailModal').modal('show');
@@ -64,7 +61,7 @@
 
             $('#thumbnailInput').change(function () {
                 if (this.files && this.files[0]) {
-                    var reader = new FileReader();
+                    const reader = new FileReader();
                     reader.onload = function (e) {
                         $('#newThumbnailPreview').attr('src', e.target.result).show();
                     };
@@ -78,13 +75,13 @@
             document.getElementById('thumbnailForm').addEventListener('submit', function (event) {
                 event.preventDefault(); // Prevent the default form submission
 
-                var bookId = document.getElementById('thumbnailBookId').value;
+                const bookId = document.getElementById('thumbnailBookId').value;
                 if (!bookId) {
                     console.error('Book ID is missing');
                     return; // Exit the function if no book ID
                 }
 
-                var formData = new FormData(this);
+                const formData = new FormData(this);
                 if (!formData.get('thumbnail')) {
                     console.error('No file selected');
                     return; // Exit the function if no file is attached
@@ -119,6 +116,7 @@
 
         <h1 class="mt-4">책 조회 - 관리자 페이지</h1>
         <div class="search-container">
+            <label for="searchInput" class="visually-hidden">책 제목 검색</label>
             <input type="text" class="form-control" id="searchInput" placeholder="책 제목을 입력해주세요..."
                    style="width: auto; display: inline-block;">
             <button class="btn btn-primary ms-2" id="searchButton">검색</button>

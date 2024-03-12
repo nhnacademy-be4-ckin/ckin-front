@@ -25,6 +25,7 @@ public interface CategoryAdapter {
 
 
     void requestDeleteCategory(Long categoryId);
+
     /**
      * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
      *

@@ -46,8 +46,10 @@ public class BookRestController {
     public BookResponseDto getBookResponse(@PathVariable Long bookId) {
         return bookService.findProductById(bookId);
     }
+
     @PutMapping("/{bookId}")
-    public ResponseEntity<Map<String, String>> updateBook(@PathVariable Long bookId, @RequestBody BookModifyRequestDto requestDto) {
+    public ResponseEntity<Map<String, String>> updateBook(@PathVariable Long bookId,
+                                                          @RequestBody BookModifyRequestDto requestDto) {
 
         bookService.updateBook(requestDto, bookId);
 
@@ -55,7 +57,8 @@ public class BookRestController {
     }
 
     @PutMapping("/thumbnail/{bookId}")
-    public ResponseEntity<Map<String, String>> updateBookThumbnail(@PathVariable Long bookId,@RequestPart MultipartFile thumbnail) {
+    public ResponseEntity<Map<String, String>> updateBookThumbnail(@PathVariable Long bookId,
+                                                                   @RequestPart MultipartFile thumbnail) {
 
         bookService.updateBookThumbnail(bookId, thumbnail);
 

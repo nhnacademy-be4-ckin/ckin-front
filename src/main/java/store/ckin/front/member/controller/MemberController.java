@@ -1,5 +1,6 @@
 package store.ckin.front.member.controller;
 
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
-
-import javax.validation.Valid;
 
 /**
  * Member 에 관련된 페이지를 호출하는 Controller 입니다.
