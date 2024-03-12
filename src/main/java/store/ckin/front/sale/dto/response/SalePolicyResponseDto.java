@@ -1,11 +1,12 @@
 package store.ckin.front.sale.dto.response;
 
-import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
+
+import java.util.List;
 
 /**
  * 판매 페이지의 포장 및 배송 정책을 담당하는 DTO 클래스입니다.

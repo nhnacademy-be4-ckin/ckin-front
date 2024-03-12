@@ -1,8 +1,9 @@
 package store.ckin.front.member.domain.request;
 
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * SecurityContextHolder 에 담을 멤버 정보를 요청하는 DTO 입니다.

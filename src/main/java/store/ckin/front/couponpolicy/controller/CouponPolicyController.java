@@ -1,8 +1,6 @@
 package store.ckin.front.couponpolicy.controller;
 
 import groovy.util.logging.Slf4j;
-import java.util.List;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 쿠폰 정책 페이지를 호출하는 컨트롤러입니다.

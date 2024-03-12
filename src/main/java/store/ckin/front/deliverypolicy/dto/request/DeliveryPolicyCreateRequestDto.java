@@ -1,9 +1,10 @@
 package store.ckin.front.deliverypolicy.dto.request;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 /**
  * 배송비 정책 생성 요청 DTO.

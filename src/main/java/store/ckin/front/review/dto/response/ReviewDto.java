@@ -1,11 +1,10 @@
-package store.ckin.front.product.dto.response;
+package store.ckin.front.review.dto.response;
 
-import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * description:
+ * 리뷰 응답 DTO입니다.
  *
  * @author : gaeun
  * @version : 2024. 03. 08
@@ -13,7 +12,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ReviewDto {
+    private Long reviewId;
     private String author;
     private String message;
-    private Date reviewDate;
+    private Integer reviewRate;
+    private String reviewDate;
 }

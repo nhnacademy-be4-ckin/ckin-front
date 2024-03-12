@@ -1,11 +1,7 @@
 package store.ckin.front.category.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +13,10 @@ import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
+
+import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * CategoryAdapter 구현 클래스.
@@ -96,24 +96,6 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 HttpMethod.DELETE,
                 new HttpEntity<>(getHttpHeaders()),
                 Void.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<CategoryResponseDto> getSubcategories(Long parentId) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-
-        ResponseEntity<List<CategoryResponseDto>> exchange =
-                restTemplate.exchange(
-                        gatewayProperties.getGatewayUri() + "/api/categories/" + parentId + "/subcategories",
-                        HttpMethod.GET,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
-
-        return exchange.getBody();
     }
 
 }

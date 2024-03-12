@@ -1,8 +1,5 @@
 package store.ckin.front.coupon.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,6 +14,10 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.adapter.CouponAdapter;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+
+import java.util.List;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 
 /**

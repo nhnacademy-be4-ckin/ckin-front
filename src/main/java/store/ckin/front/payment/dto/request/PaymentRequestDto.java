@@ -1,9 +1,10 @@
 package store.ckin.front.payment.dto.request;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * 결제 요청 DTO 클래스입니다.

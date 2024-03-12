@@ -1,7 +1,5 @@
 package store.ckin.front.product.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +14,8 @@ import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.adapter.ProductAdapter;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 
 /**

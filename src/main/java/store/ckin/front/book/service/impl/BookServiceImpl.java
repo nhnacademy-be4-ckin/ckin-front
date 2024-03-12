@@ -1,6 +1,5 @@
 package store.ckin.front.book.service.impl;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,8 @@ import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+
+import java.util.List;
 
 /**
  * BookService 구현 클래스.

@@ -1,10 +1,5 @@
 package store.ckin.front.member.filter;
 
-import java.io.IOException;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +11,12 @@ import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
 import store.ckin.front.util.CookieUtil;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 로그인 처리를 하는 Filter 클래스 입니다.

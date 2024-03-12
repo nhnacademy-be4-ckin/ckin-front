@@ -1,9 +1,10 @@
 package store.ckin.front.author.dto.request;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * AuthorModifyRequestDto.

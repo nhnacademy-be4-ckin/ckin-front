@@ -10,7 +10,7 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
 
 /**
- * CouponPolicyServiceImpl
+ * productService 구현체 클래스 입니다.
  *
  * @author 이가은
  * @version 2024. 03. 07.
@@ -37,4 +37,5 @@ public class ProductServiceImpl implements ProductService {
     public BookResponseDto findProductById(Long bookId) {
         return productAdapter.findProductById(bookId);
     }
+
 }

@@ -1,9 +1,10 @@
 package store.ckin.front.category.service;
 
-import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
+
+import java.util.List;
 
 /**
  * CategoryService 인터페이스입니다.

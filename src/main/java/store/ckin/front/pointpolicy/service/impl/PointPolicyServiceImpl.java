@@ -1,6 +1,7 @@
 package store.ckin.front.pointpolicy.service.impl;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.pointpolicy.adapter.PointPolicyAdapter;

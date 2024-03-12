@@ -1,9 +1,10 @@
 package store.ckin.front.category.adapter;
 
-import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
+
+import java.util.List;
 
 /**
  * CategoryAdapter.
@@ -52,14 +53,6 @@ public interface CategoryAdapter {
      * @param categoryId 카테고리 ID
      */
     void requestDeleteCategory(Long categoryId);
-
-    /**
-     * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
-     *
-     * @param parentId the parent id
-     * @return the subcategories
-     */
-    List<CategoryResponseDto> getSubcategories(Long parentId);
 
 
 }
