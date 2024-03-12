@@ -32,6 +32,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
     private final GatewayProperties gatewayProperties;
 
     private static final String CATEGORY_URL = "/api/categories";
+
     /**
      * {@inheritDoc}
      */
@@ -40,6 +41,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL;
         restTemplate.postForEntity(url, new HttpEntity<>(categoryCreateRequestDto, getHttpHeaders()), Void.class);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -55,6 +57,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
         return response.getBody();
 
     }
+
     /**
      * {@inheritDoc}
      */
@@ -70,6 +73,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 });
         return response.getBody();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -81,6 +85,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 new HttpEntity<>(categoryUpdateDto, getHttpHeaders()),
                 Void.class);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -92,6 +97,7 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 new HttpEntity<>(getHttpHeaders()),
                 Void.class);
     }
+
     /**
      * {@inheritDoc}
      */

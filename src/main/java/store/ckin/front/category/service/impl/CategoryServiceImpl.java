@@ -28,6 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void createCategory(CategoryCreateRequestDto categoryCreateRequestDto) {
         categoryAdapter.requestCreateCategory(categoryCreateRequestDto);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -35,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDto> getTopCategories() {
         return categoryAdapter.requestGetTopCategories();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -42,6 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDto> getSubcategories(Long parentId) {
         return categoryAdapter.requestGetSubcategories(parentId);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -49,6 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void updateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto) {
         categoryAdapter.requestUpdateCategory(categoryId, categoryUpdateDto);
     }
+
     /**
      * {@inheritDoc}
      */

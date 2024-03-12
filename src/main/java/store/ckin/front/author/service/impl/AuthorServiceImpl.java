@@ -29,6 +29,7 @@ public class AuthorServiceImpl implements AuthorService {
     public PageResponse<AuthorResponseDto> getAuthors(Pageable pageable) {
         return authorAdaptor.requestGetAllAuthors(pageable);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -36,6 +37,7 @@ public class AuthorServiceImpl implements AuthorService {
     public PageResponse<AuthorResponseDto> getAuthorsByName(String name, Pageable pageable) {
         return authorAdaptor.requestGetAuthorsByName(name, pageable);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -43,6 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorResponseDto getAuthorById(Long id) {
         return authorAdaptor.requestGetAuthorById(id);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -50,6 +53,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void createAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
         authorAdaptor.requestCreateAuthor(authorCreateRequestDto);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -57,6 +61,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void updateAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
         authorAdaptor.requestModifyAuthor(id, authorModifyRequestDto);
     }
+
     /**
      * {@inheritDoc}
      */

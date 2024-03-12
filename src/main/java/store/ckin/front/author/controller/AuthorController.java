@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import store.ckin.front.author.dto.request.AuthorCreateRequestDto;
 import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
@@ -32,6 +31,8 @@ import store.ckin.front.author.service.AuthorService;
 public class AuthorController {
 
     private final AuthorService authorService;
+
+    private static final String REDIRECT_ADMIN_INDEX = "redirect:/admin/authors";
 
 
     /**
@@ -70,13 +71,13 @@ public class AuthorController {
     public String addAuthor(@ModelAttribute AuthorCreateRequestDto authorCreateRequestDto) {
         authorService.createAuthor(authorCreateRequestDto);
 
-        return "redirect:/admin/authors";
+        return REDIRECT_ADMIN_INDEX;
     }
 
     /**
      * 주어진 ID의 작가 정보를 수정합니다.
      *
-     * @param authorId 작가 ID
+     * @param authorId               작가 ID
      * @param authorModifyRequestDto 작가 수정 요청 DTO
      * @return 작가 목록 페이지로의 리다이렉트 경로
      */
@@ -85,7 +86,7 @@ public class AuthorController {
                                @ModelAttribute AuthorModifyRequestDto authorModifyRequestDto) {
         authorService.updateAuthor(authorId, authorModifyRequestDto);
 
-        return "redirect:/admin/authors";
+        return REDIRECT_ADMIN_INDEX;
     }
 
     /**
@@ -117,10 +118,6 @@ public class AuthorController {
     }
 
 
-
-
-
-
     /**
      * 주어진 ID의 작가를 삭제합니다.
      *
@@ -130,7 +127,7 @@ public class AuthorController {
     @DeleteMapping("/{authorId}")
     public String deleteAuthor(@PathVariable Long authorId) {
         authorService.deleteAuthor(authorId);
-        return "redirect:/admin/authors";
+        return REDIRECT_ADMIN_INDEX;
     }
 
 

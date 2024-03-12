@@ -61,7 +61,6 @@ public class CategoryRestController {
     }
 
 
-
     /**
      * 지정된 부모 ID에 해당하는 하위 카테고리 목록을 조회합니다.
      *

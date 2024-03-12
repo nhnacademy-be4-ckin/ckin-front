@@ -37,7 +37,7 @@ public class BookRestController {
      * 새로운 도서를 생성하고 생성 후 리다이렉트 URL을 반환합니다.
      *
      * @param requestDto 도서 생성 요청 DTO
-     * @param file 도서 썸네일 이미지 파일
+     * @param file       도서 썸네일 이미지 파일
      * @return 도서 생성 후 리다이렉트할 URL이 담긴 ResponseEntity 객체
      */
     @PostMapping("/admin/books/upload")
@@ -63,7 +63,7 @@ public class BookRestController {
     /**
      * 주어진 ID의 도서 정보를 수정하고 리다이렉트 URL을 반환합니다.
      *
-     * @param bookId 도서 ID
+     * @param bookId     도서 ID
      * @param requestDto 도서 수정 요청 DTO
      * @return 도서 수정 후 리다이렉트할 URL이 담긴 ResponseEntity 객체
      */
@@ -79,7 +79,7 @@ public class BookRestController {
     /**
      * 주어진 ID의 도서 썸네일 이미지를 업데이트하고 리다이렉트 URL을 반환합니다.
      *
-     * @param bookId 도서 ID
+     * @param bookId    도서 ID
      * @param thumbnail 새 썸네일 이미지 파일
      * @return 도서 썸네일 업데이트 후 리다이렉트할 URL이 담긴 ResponseEntity 객체
      */

@@ -55,6 +55,7 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
 
         return exchange.getBody();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -94,27 +95,25 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
      * {@inheritDoc}
      */
     @Override
-    public AuthorResponseDto requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
+    public void requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL;
         ResponseEntity<AuthorResponseDto> response = restTemplate.postForEntity(url,
                 new HttpEntity<>(authorCreateRequestDto, getHttpHeaders()),
                 AuthorResponseDto.class);
 
-        return response.getBody();
+        response.getBody();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AuthorResponseDto requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
+    public void requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
-        ResponseEntity<AuthorResponseDto> response = restTemplate.exchange(url,
+        restTemplate.exchange(url,
                 HttpMethod.PUT,
                 new HttpEntity<>(authorModifyRequestDto, getHttpHeaders()),
-                AuthorResponseDto.class);
-
-        return response.getBody();
+                Void.class);
     }
 
     /**

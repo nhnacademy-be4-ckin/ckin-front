@@ -64,11 +64,11 @@ public class BookController {
      * 도서 목록 페이지 뷰를 반환합니다.
      *
      * @param pageable 페이지 정보
-     * @param model 모델 객체
+     * @param model    모델 객체
      * @return 도서 목록 페이지 경로
      */
     @GetMapping
-    public String viewIndex(@PageableDefault(page = 0, size = 10) Pageable pageable,
+    public String viewIndex(@PageableDefault() Pageable pageable,
                             Model model) {
         PageDto<BookListResponseDto> bookPageDto = bookService.findAllBooks(pageable);
         model.addAttribute("bookList", bookPageDto.getContent());
@@ -82,7 +82,7 @@ public class BookController {
     /**
      * 도서 수정 페이지 뷰를 반환합니다.
      *
-     * @param model 모델 객체
+     * @param model  모델 객체
      * @param bookId 수정할 도서의 ID
      * @return 도서 수정 페이지 경로
      */

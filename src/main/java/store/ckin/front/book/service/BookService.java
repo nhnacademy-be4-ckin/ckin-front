@@ -21,7 +21,7 @@ public interface BookService {
      * 새로운 도서를 생성합니다.
      *
      * @param requestDto 도서 생성 요청 DTO
-     * @param file 도서의 표지 이미지 파일
+     * @param file       도서의 표지 이미지 파일
      */
     void createBook(BookCreateRequestDto requestDto, MultipartFile file);
 
@@ -61,7 +61,7 @@ public interface BookService {
      * 지정된 ID의 도서 정보를 수정합니다.
      *
      * @param requestDto 수정할 도서 정보가 담긴 요청 DTO
-     * @param bookId 도서 ID
+     * @param bookId     도서 ID
      */
     void updateBook(BookModifyRequestDto requestDto, Long bookId);
 
@@ -69,7 +69,7 @@ public interface BookService {
      * 도서의 표지 이미지를 업데이트합니다.
      *
      * @param bookId 도서 ID
-     * @param file 새 표지 이미지 파일
+     * @param file   새 표지 이미지 파일
      */
     void updateBookThumbnail(Long bookId, MultipartFile file);
 }

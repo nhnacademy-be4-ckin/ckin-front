@@ -32,6 +32,7 @@ public class BookServiceImpl implements BookService {
     public void createBook(BookCreateRequestDto requestDto, MultipartFile file) {
         bookAdapter.requestCreateBook(requestDto, file);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -40,6 +41,7 @@ public class BookServiceImpl implements BookService {
         // 이미지 파일을 BookAdapter를 통해 업로드하고, 업로드된 이미지의 URL을 반환
         return bookAdapter.requestUploadDescriptionImage(file);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -55,6 +57,7 @@ public class BookServiceImpl implements BookService {
     public BookResponseDto findProductById(Long bookId) {
         return bookAdapter.findProductById(bookId);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -62,6 +65,7 @@ public class BookServiceImpl implements BookService {
     public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
         return bookAdapter.requestBookSaleList(bookIds);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -69,6 +73,7 @@ public class BookServiceImpl implements BookService {
     public void updateBook(BookModifyRequestDto requestDto, Long bookId) {
         bookAdapter.requestUpdateBook(requestDto, bookId);
     }
+
     /**
      * {@inheritDoc}
      */

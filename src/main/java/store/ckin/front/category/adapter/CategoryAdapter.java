@@ -40,11 +40,10 @@ public interface CategoryAdapter {
     /**
      * 특정 카테고리를 업데이트합니다.
      *
-     * @param categoryId 카테고리 ID
+     * @param categoryId        카테고리 ID
      * @param categoryUpdateDto 카테고리 업데이트 요청 DTO
      */
     void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto);
-
 
 
     /**

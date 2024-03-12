@@ -29,7 +29,7 @@ public interface BookAdapter {
      * 새로운 도서를 생성합니다.
      *
      * @param bookCreateRequestDto 도서 생성 요청 DTO
-     * @param file 도서 표지 이미지 파일
+     * @param file                 도서 표지 이미지 파일
      */
     void requestCreateBook(BookCreateRequestDto bookCreateRequestDto, MultipartFile file);
 
@@ -62,7 +62,7 @@ public interface BookAdapter {
      * 특정 ID의 도서 정보를 수정합니다.
      *
      * @param bookModifyRequestDto 도서 수정 요청 DTO
-     * @param bookId 도서 ID
+     * @param bookId               도서 ID
      */
     void requestUpdateBook(BookModifyRequestDto bookModifyRequestDto, Long bookId);
 
@@ -70,7 +70,7 @@ public interface BookAdapter {
      * 도서의 표지 이미지를 업데이트합니다.
      *
      * @param bookId 도서 ID
-     * @param file 새 표지 이미지 파일
+     * @param file   새 표지 이미지 파일
      */
     void requestUpdateBookThumbnail(Long bookId, MultipartFile file);
 }

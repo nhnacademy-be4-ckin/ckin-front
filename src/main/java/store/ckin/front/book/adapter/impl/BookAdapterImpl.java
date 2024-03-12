@@ -38,6 +38,7 @@ public class BookAdapterImpl implements BookAdapter {
     private static final String BOOK_URL = "/api/books";
     private final RestTemplate restTemplate;
     private final GatewayProperties gatewayProperties;
+
     /**
      * {@inheritDoc}
      */
@@ -81,6 +82,7 @@ public class BookAdapterImpl implements BookAdapter {
                     });
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -123,6 +125,7 @@ public class BookAdapterImpl implements BookAdapter {
                         });
         return exchange.getBody();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -147,6 +150,7 @@ public class BookAdapterImpl implements BookAdapter {
 
         return exchange.getBody();
     }
+
     /**
      * {@inheritDoc}
      */
