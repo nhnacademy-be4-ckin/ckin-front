@@ -1,14 +1,13 @@
 package store.ckin.front.util;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Adapter 에서 사용할 헤더를 만드는 클래스입니다.
@@ -42,5 +41,26 @@ public class AdapterHeaderUtil {
 
         return httpHeaders;
     }
+
+    /**
+     * MediaType 을 지정할 수 있는 헤더 생성 메서드입니다.
+     */
+    public static HttpHeaders getHttpHeaders(MediaType mediaType) {
+        ServletRequestAttributes servletRequestAttributes =
+                (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(mediaType);
+        headers.setAccept(List.of(mediaType));
+
+        String accessToken = (String) request.getAttribute(JwtUtil.HEADER_AUTHORIZATION);
+        if (Objects.nonNull(accessToken)) {
+            headers.add(JwtUtil.HEADER_AUTHORIZATION, accessToken);
+        }
+
+        return headers;
+    }
+
 
 }

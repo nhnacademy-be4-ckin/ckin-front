@@ -1,6 +1,5 @@
 package store.ckin.front.coupon.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +15,8 @@ import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * description:
@@ -45,12 +46,8 @@ public class CouponController {
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
 
         model.addAttribute("memberId", 1);
+        model.addAttribute("pagination", couponResponseDtoPage);
         model.addAttribute("couponList", couponResponseDtoPage.getContent());
-        model.addAttribute("isPrevious", couponResponseDtoPage.getNumber() > 0);
-        model.addAttribute("isNext", couponResponseDtoPage.getNumber() < couponResponseDtoPage.getTotalPages() - 1);
-        model.addAttribute("totalPages",
-                couponResponseDtoPage.getTotalPages() == 0 ? 1 : couponResponseDtoPage.getTotalPages());
-        model.addAttribute("currentPage", couponResponseDtoPage.getNumber());
         switch (typeId.intValue()) {
             case 1:
                 return "coupon/birth";

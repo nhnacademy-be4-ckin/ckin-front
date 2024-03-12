@@ -1,6 +1,5 @@
 package store.ckin.front.payment.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,8 @@ import store.ckin.front.config.properties.TossProperties;
 import store.ckin.front.payment.dto.response.PaymentSuccessResponseDto;
 import store.ckin.front.payment.facde.PaymentFacade;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 결제 컨트롤러 클래스입니다.

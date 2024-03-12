@@ -4,7 +4,6 @@
       layout:decorate="~{layouts/admin-default}">
 
 <div layout:fragment="admin-content">
-    <!-- 본문 내용 -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
             <main>
@@ -13,17 +12,15 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">CKIN 작가 관리 페이지입니다.</li>
                     </ol>
-                    <!-- 검색 폼 -->
                     <div class="card-header">
                         <form th:action="@{/admin/authors/search}" method="get">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="작가 이름 검색" name="name"
-                                       th:value="${searchName}" aria-label="작가 이름 검색">  <!-- 검색어 유지 -->
+                                       th:value="${searchName}" aria-label="작가 이름 검색">
                                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
                             </div>
                         </form>
                     </div>
-                    <!-- 작가 목록 테이블 -->
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -34,14 +31,13 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Actions</th> <!-- 액션 컬럼 추가 -->
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="author : ${authors}">
                                     <td th:text="${author.authorName}">Author Name</td>
                                     <td>
-                                        <!-- 수정 버튼 -->
                                         <button type="button" class="btn btn-success"
                                                 th:data-author-id="${author.authorId}"
                                                 th:data-author-name="${author.authorName}"
@@ -49,7 +45,6 @@
                                                 onclick="prepareEditModal(this)">
                                             수정
                                         </button>
-                                        <!-- 삭제 버튼 -->
                                         <button type="button" class="btn btn-danger"
                                                 th:data-author-id="${author.authorId}"
                                                 data-bs-toggle="modal" data-bs-target="#authorDeleteModal"
@@ -65,8 +60,6 @@
                         </div>
                     </div>
 
-                    <!-- 페이지네이션 컨트롤 -->
-                    <!-- 페이지네이션 컨트롤 -->
                     <nav aria-label="Page navigation example" th:if="${totalPages > 0}">
                         <ul class="pagination justify-content-center">
                             <th:block
@@ -114,12 +107,10 @@
 
                 </div>
 
-                <!-- 작가 추가 버튼 -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authorAddModal">
                     작가 추가
                 </button>
 
-                <!-- 작가 추가 모달 -->
                 <div class="modal fade" id="authorAddModal" tabindex="-1" aria-labelledby="authorAddModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">
@@ -146,7 +137,6 @@
                     </div>
                 </div>
 
-                <!-- 작가 수정 모달 -->
                 <div class="modal fade" id="authorEditModal" tabindex="-1" aria-labelledby="authorEditModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">
@@ -164,14 +154,12 @@
                                         <label for="editAuthorName" class="form-label">이름</label>
                                         <input type="text" class="form-control" id="editAuthorName" name="authorName">
                                     </div>
-                                    <!-- 여기에 필요한 다른 필드 추가 -->
                                     <button type="submit" class="btn btn-success">수정</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- 작가 삭제 모달 -->
                 <div class="modal fade" id="authorDeleteModal" tabindex="-1" aria-labelledby="authorDeleteModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">

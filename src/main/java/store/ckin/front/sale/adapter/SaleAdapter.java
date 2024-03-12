@@ -1,12 +1,13 @@
 package store.ckin.front.sale.adapter;
 
-import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
+
+import java.util.List;
 
 /**
  * 주문 어댑터 인터페이스.

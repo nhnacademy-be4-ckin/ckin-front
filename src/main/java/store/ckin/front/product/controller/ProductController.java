@@ -14,8 +14,11 @@ import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
+import store.ckin.front.review.dto.response.ReviewDto;
+import store.ckin.front.review.service.ReviewService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description:
@@ -30,25 +33,22 @@ public class ProductController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ReviewService reviewService;
 
     @GetMapping("/{categoryId}")
-    public String getCouponPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
-                                @PathVariable("categoryId") Long categoryId,
-                                Model model) {
+    public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
+                                 @PathVariable("categoryId") Long categoryId,
+                                 Model model) {
 
         PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(categoryId);
         String categoryName = "국내도서";
         //TODO: categoryId로 단일 조회
 
+        model.addAttribute("pagination", bookPageDto);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("categoryName", categoryName);
-        model.addAttribute("bookList", bookPageDto.getContent());
-        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
-        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
-        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
-        model.addAttribute("currentPage", bookPageDto.getNumber());
 
         return "category/initial";
     }
@@ -61,21 +61,26 @@ public class ProductController {
      */
     @GetMapping("/view/{bookId}")
     public String getProductById(@PathVariable("bookId") Long bookId,
+                                 @PageableDefault(page = 0, size = 5) Pageable pageable,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
-//        PageDto<ReviewDto> reviewListDtoPageDto = productService.getReviewListByBookId(bookId);
-        String authorNames = "";
-        for (String author : bookResponseDto.getAuthorNames()) {
-            authorNames += author;
-            authorNames += " ";
-        }
+        PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
+        String authorNames = bookResponseDto.getAuthorNames()
+                .stream().collect(Collectors.joining(", "));
+
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-//        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
-//        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
-//        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
-//        model.addAttribute("currentPage", bookPageDto.getNumber());
+        model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
+        model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
+    }
+
+    private double getTotalRate(List<ReviewDto> reviewDtoList) {
+        double total = 0;
+        for (ReviewDto reviewDto : reviewDtoList) {
+            total += reviewDto.getReviewRate();
+        }
+        return total / reviewDtoList.size();
     }
 
 }
