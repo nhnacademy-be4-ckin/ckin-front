@@ -6,6 +6,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -65,7 +66,7 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto getSaleDetail(Long saleId) {
+    public SaleDetailResponseDto getSaleDetail(Long saleId) {
         return saleAdapter.requestGetSaleDetail(saleId);
     }
 
@@ -89,5 +90,16 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public SaleInfoResponseDto getPaymentInfo(String saleNumber) {
         return saleAdapter.requestGetPaymentInfo(saleNumber);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param memberId 회원 ID
+     * @return 페이징 처리된 주문 응답 DTO 리스트
+     */
+    @Override
+    public PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId) {
+        return saleAdapter.requestGetSalesByMemberId(memberId);
     }
 }

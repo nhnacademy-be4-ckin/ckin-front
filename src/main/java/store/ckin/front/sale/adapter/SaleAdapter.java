@@ -3,6 +3,7 @@ package store.ckin.front.sale.adapter;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -50,7 +51,7 @@ public interface SaleAdapter {
      * @param saleId 조회할 주문 ID
      * @return 주문 응답 DTO
      */
-    SaleResponseDto requestGetSaleDetail(Long saleId);
+    SaleDetailResponseDto requestGetSaleDetail(Long saleId);
 
     /**
      * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
@@ -67,4 +68,12 @@ public interface SaleAdapter {
      * @return 결제 정보 응답 DTO
      */
     SaleInfoResponseDto requestGetPaymentInfo(String saleNumber);
+
+    /**
+     * 회원 ID를 API 서버로 보내 해당 회원이 주문한 모든 주문 내역을 조회합니다.
+     *
+     * @param memberId 조회할 회원 ID
+     * @return 해당 회원이 주문한 페이징 처리된 주문 내역
+     */
+    PagedResponse<List<SaleResponseDto>> requestGetSalesByMemberId(String memberId);
 }
