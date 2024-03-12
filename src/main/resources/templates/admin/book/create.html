@@ -238,8 +238,9 @@
                             type="number"
                             class="form-control"
                             id="bookRegularPrice"
-                            min="0"
+                            min="100"
                             step="100"
+                            value="100"
                             placeholder="정가를 입력해주세요..."
                             required
                     />
@@ -354,7 +355,7 @@
                     })
                     .then(data => {
                         // 서버로부터 성공적인 응답을 받은 후 리다이렉트 수행
-                        window.location.href = 'admin/book/index'; // 예: '/admin'
+                        window.location.href = ''; // 예: '/admin'
                     })
                     .catch(error => {
                         console.error("Error:", error);
