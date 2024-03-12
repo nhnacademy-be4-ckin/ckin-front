@@ -33,7 +33,7 @@ public class BookRestController {
      * @param file       도서 썸네일 이미지 파일
      * @return 도서 생성 후 리다이렉트할 URL이 담긴 ResponseEntity 객체
      */
-    @PostMapping("/admin/books/upload")
+    @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> createBook(@ModelAttribute BookCreateRequestDto requestDto,
                                                           @RequestPart("bookThumbnail") MultipartFile file) {
 
