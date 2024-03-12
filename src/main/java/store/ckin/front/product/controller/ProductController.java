@@ -38,7 +38,7 @@ public class ProductController {
     private final ReviewService reviewService;
 
     @GetMapping("/{categoryId}")
-    public String getCouponPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
+    public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
                                 @PathVariable("categoryId") Long categoryId,
                                 Model model) {
 
@@ -51,7 +51,6 @@ public class ProductController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("categoryName", categoryName);
-        model.addAttribute("bookList", bookPageDto.getContent());
 
         return "category/initial";
     }
@@ -78,7 +77,6 @@ public class ProductController {
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
         model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
-        model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }

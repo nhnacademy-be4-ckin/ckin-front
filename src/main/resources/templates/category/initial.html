@@ -70,7 +70,7 @@
                                             <p class="title_heading">믿고 읽는! 오늘의 선택</p>
                                         </div>
                                         <ul class="prod_row_list has_line col2">
-                                            <li class="prod_item" th:each="book : ${bookList}">
+                                            <li class="prod_item" th:each="book : ${pagination.content}">
                                                 <div class="prod_area horizontal">
                                                     <div class="prod_thumb_box size_lg">
                                                         <a th:href="@{'/product/' + ${book.bookId}}" class="prod_link">
