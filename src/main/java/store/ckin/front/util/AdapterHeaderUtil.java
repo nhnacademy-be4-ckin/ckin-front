@@ -42,26 +42,4 @@ public class AdapterHeaderUtil {
 
         return httpHeaders;
     }
-
-    /**
-     * MediaType 을 지정할 수 있는 헤더 생성 메서드입니다.
-     */
-    public static HttpHeaders getHttpHeaders(MediaType mediaType) {
-        ServletRequestAttributes servletRequestAttributes =
-                (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(mediaType);
-        headers.setAccept(List.of(mediaType));
-
-        String accessToken = (String) request.getAttribute(JwtUtil.HEADER_AUTHORIZATION);
-        if (Objects.nonNull(accessToken)) {
-            headers.add(JwtUtil.HEADER_AUTHORIZATION, accessToken);
-        }
-
-        return headers;
-    }
-
-
 }
