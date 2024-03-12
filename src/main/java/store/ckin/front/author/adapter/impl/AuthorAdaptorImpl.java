@@ -33,7 +33,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
 
     private static final String AUTHOR_URL = "/api/authors";
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAllAuthors(Pageable pageable) {
 
@@ -53,7 +55,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
 
         return exchange.getBody();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAuthorsByName(String name, Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
@@ -71,7 +75,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto requestGetAuthorById(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
@@ -84,7 +90,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL;
@@ -95,6 +103,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return response.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
@@ -106,7 +117,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return response.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestDeleteAuthor(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
