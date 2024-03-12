@@ -1,5 +1,8 @@
 package store.ckin.front.category.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +17,6 @@ import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * CategoryAdapter 구현 클래스.
@@ -34,12 +33,18 @@ public class CategoryAdapterImpl implements CategoryAdapter {
 
     private static final String CATEGORY_URL = "/api/categories";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestCreateCategory(CategoryCreateRequestDto categoryCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL;
         restTemplate.postForEntity(url, new HttpEntity<>(categoryCreateRequestDto, getHttpHeaders()), Void.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> requestGetTopCategories() {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/top";
@@ -53,6 +58,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> requestGetSubcategories(Long parentId) {
         String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + CATEGORY_URL)
@@ -66,6 +74,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
         return response.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/" + categoryId;
@@ -75,6 +86,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 Void.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestDeleteCategory(Long categoryId) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/" + categoryId;
@@ -84,12 +98,16 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 Void.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> getSubcategories(Long parentId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<List<CategoryResponseDto>> exchange =
-                restTemplate.exchange(gatewayProperties.getGatewayUri() + "/api/categories/" + parentId + "/subcategories",
+                restTemplate.exchange(
+                        gatewayProperties.getGatewayUri() + "/api/categories/" + parentId + "/subcategories",
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {

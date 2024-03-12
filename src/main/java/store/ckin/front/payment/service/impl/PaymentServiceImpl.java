@@ -24,7 +24,6 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentAdapter paymentAdapter;
 
 
-
     /**
      * 결제 확인 메서드입니다.
      *

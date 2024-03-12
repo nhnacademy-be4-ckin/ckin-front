@@ -1,16 +1,19 @@
 package store.ckin.front.deliverypolicy.controller;
 
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * 배송 정책 페이지를 호출하는 컨트롤러입니다.

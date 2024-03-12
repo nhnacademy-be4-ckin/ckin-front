@@ -75,45 +75,25 @@
 <body>
 <div layout:fragment="admin-content" id="layoutSidenav_content">
 
+    <p th:value="storedBook.bookId"></p>
+
     <div class="w-full p-all-60">
         <form id="book-form">
-            <div class="thumbnail-container form-group">
-                <label for="bookThumbnail">책 썸네일:</label>
-                <input
-                        type="file"
-                        class="form-control-file"
-                        id="bookThumbnail"
-                        name="bookThumbnail"
-                        accept="image/*"
-                />
-                <div class="thumbnail-preview-box">
-                    <img id="thumbnailPreview" src="#" alt="Thumbnail Preview"/>
-                </div>
+            <input type="hidden" id="bookId" th:value="${storedBook.bookId}" />
+            <div style="margin-top: 20px; font-size: 20px; font-weight: bold;">
+                <div id="editingBookTitle" th:text="|'${storedBook.bookTitle}' 수정 페이지|"></div>
+                <img th:if="${storedBook.thumbnail}" th:src="@{${storedBook.thumbnail}}" alt="Thumbnail"
+                     style="max-width: 200px; height: auto;"/>
             </div>
-            <!-- ISBN 입력 필드 -->
             <div class="form-group">
                 <label for="bookIsbn">ISBN:</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="bookIsbn"
-                        maxlength="17"
-                        placeholder="ISBN을 입력해주세요..."
-                        required
-                />
+                <input type="text" class="form-control" id="bookIsbn" th:value="${storedBook.bookIsbn}" maxlength="17"
+                       placeholder="ISBN을 입력해주세요..." required/>
             </div>
-
-            <!-- 제목 입력 필드 -->
             <div class="form-group">
                 <label for="bookTitle">제목:</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="bookTitle"
-                        maxlength="100"
-                        placeholder="제목을 입력해주세요..."
-                        required
-                />
+                <input type="text" class="form-control" id="bookTitle" th:value="${storedBook.bookTitle}"
+                       maxlength="100" placeholder="제목을 입력해주세요..." required/>
             </div>
 
             <div class="row form-group">
@@ -158,12 +138,8 @@
 
             <div class="form-group">
                 <label for="bookPublisher">출판사:</label>
-                <input
-                        type="text"
-                        class="form-control"
-                        id="bookPublisher"
-                        placeholder="출판사를 입력해주세요..."
-                />
+                <input type="text" class="form-control" id="bookPublisher" th:value="${storedBook.bookPublisher}"
+                       placeholder="출판사를 입력해주세요..."/>
             </div>
 
             <div class="form-group">
@@ -177,96 +153,71 @@
             </div>
             <div class="form-group">
                 <label for="bookPublicationDate">출판일:</label>
-                <input type="date" id="bookPublicationDate"/>
+                <input type="date" class="form-control" id="bookPublicationDate"
+                       th:value="${storedBook.bookPublicationDate}"/>
             </div>
             <div class="form-group">
-                <label for="bookDescription">책 설명:</label>
-                <div id="bookDescription"></div>
+                <label for="bookDescriptionEditor">책 설명:</label>
+                <div id="bookDescriptionEditor"></div>
             </div>
+
             <div class="form-group">
                 <label for="bookIndex">책 목차:</label>
-                <textarea
-                        class="form-control"
-                        id="bookIndex"
-                        rows="5"
-                        placeholder="책 목차를 입력해주세요..."
-                ></textarea>
+                <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..." th:text="${storedBook.bookIndex}"></textarea>
             </div>
             <div class="form-group">
                 <label for="bookPackaging">포장 여부:</label>
                 <select class="form-control" id="bookPackaging">
-                    <option value="true">예</option>
-                    <option value="false">아니오</option>
+                    <option value="true" th:selected="${storedBook.bookPackaging == true}">예</option>
+                    <option value="false" th:selected="${storedBook.bookPackaging == false}">아니오</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="bookState">책 상태:</label>
                 <select class="form-control" id="bookState">
-                    <option value="ON_SALE">판매중</option>
-                    <option value="SOLD_OUT">품절</option>
-                    <option value="DELETED">삭제됨</option>
-                    <option value="SALE_END">판매 종료</option>
+                    <option value="ON_SALE" th:selected="${storedBook.bookState == 'ON_SALE'}">판매중</option>
+                    <option value="SOLD_OUT" th:selected="${storedBook.bookState == 'SOLD_OUT'}">품절</option>
+                    <option value="DELETED" th:selected="${storedBook.bookState == 'DELETED'}">삭제됨</option>
+                    <option value="SALE_END" th:selected="${storedBook.bookState == 'SALE_END'}">판매 종료</option>
                 </select>
             </div>
 
+            <!-- 재고 입력 필드 -->
             <div class="form-group">
                 <label for="bookStock">재고:</label>
-                <input
-                        type="number"
-                        class="form-control"
-                        id="bookStock"
-                        min="0"
-                        placeholder="재고를 입력해주세요..."
-                        required
-                />
+                <input type="number" class="form-control" id="bookStock" th:value="${storedBook.bookStock}" min="0"
+                       placeholder="재고를 입력해주세요..." required/>
             </div>
 
+            <!-- 정가 입력 필드 -->
             <div class="form-group">
                 <label for="bookRegularPrice">정가:</label>
-                <div class="input-group">
-                    <input
-                            type="number"
-                            class="form-control"
-                            id="bookRegularPrice"
-                            min="100"
-                            step="100"
-                            value="100"
-                            placeholder="정가를 입력해주세요..."
-                            required
-                    />
-                    <div class="input-group-append">
-                        <span class="input-group-text">원</span>
-                    </div>
-                </div>
+                <input type="number" class="form-control" id="bookRegularPrice"
+                       th:value="${storedBook.bookRegularPrice}" min="0" step="100"
+                       placeholder="정가를 입력해주세요..." required/>
             </div>
+
+            <!-- 할인율 입력 필드 -->
             <div class="form-group">
                 <label for="bookDiscountRate">할인율:</label>
-                <div class="input-group">
-                    <input
-                            type="number"
-                            class="form-control"
-                            id="bookDiscountRate"
-                            min="0"
-                            max="100"
-                            placeholder="할인율을 입력해주세요..."
-                            required
-                    />
-                    <div class="input-group-append">
-                        <span class="input-group-text">%</span>
-                    </div>
-                </div>
+                <input type="number" class="form-control" id="bookDiscountRate"
+                       th:value="${storedBook.bookDiscountRate}" min="0" max="100"
+                       placeholder="할인율을 입력해주세요..." required/>
             </div>
-            <button type="submit" class="btn-submit">등록하기</button>
+            <button type="submit" class="btn-submit">수정하기</button>
         </form>
     </div>
 
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    <script>
+    <script th:inline="javascript">
+        var initialDescription = /*[[${storedBook.bookDescription}]]*/ '기본 설명';
+
         const descriptionEditor = new toastui.Editor({
-            el: document.querySelector("#bookDescription"),
+            el: document.querySelector("#bookDescriptionEditor"),
             height: "300px",
             initialEditType: "wysiwyg",
+            initialValue: initialDescription,
             hooks: {
                 addImageBlobHook: function (blob, callback) {
                     const formData = new FormData();
@@ -290,46 +241,43 @@
         });
 
 
+        // Form Submit
         document
             .getElementById("book-form")
             .addEventListener("submit", function (e) {
                 e.preventDefault();
                 const editorContent = descriptionEditor.getHTML();
+                var bookId = document.getElementById('bookId').value;
 
 
-                const formData = new FormData();
+                const requestDto = {};
 
-                formData.append('bookIsbn', document.getElementById('bookIsbn').value);
-                formData.append('bookTitle', document.getElementById('bookTitle').value);
-                formData.append('bookDescription', descriptionEditor.getHTML());
-                formData.append('bookPublisher', document.getElementById('bookPublisher').value);
-                formData.append('bookPublicationDate', document.getElementById('bookPublicationDate').value);
-                formData.append('bookIndex', document.getElementById('bookIndex').value);
-                formData.append('bookPackaging', document.getElementById('bookPackaging').value === 'true');
-                formData.append('bookState', document.getElementById('bookState').value);
-                formData.append('bookStock', parseInt(document.getElementById('bookStock').value));
-                formData.append('bookRegularPrice', parseInt(document.getElementById('bookRegularPrice').value));
-                formData.append('bookDiscountRate', parseInt(document.getElementById('bookDiscountRate').value));
-                Object.keys(selectedAuthors).forEach((authorId) => {
-                    formData.append('authorIds', authorId);
-                });
-                [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value]
-                    .filter(Boolean)
-                    .forEach((categoryId) => {
-                        formData.append('categoryIds', categoryId);
-                    });
-                Object.keys(selectedTags).forEach((tagId) => {
-                    formData.append('tagIds', tagId);
-                });
+// JSON 데이터를 객체에 직접 할당
+                requestDto.bookIsbn = document.getElementById('bookIsbn').value;
+                requestDto.bookTitle = document.getElementById('bookTitle').value;
+                requestDto.bookDescription = descriptionEditor.getHTML();
+                requestDto.bookPublisher = document.getElementById('bookPublisher').value;
+                requestDto.bookPublicationDate = document.getElementById('bookPublicationDate').value;
+                requestDto.bookIndex = document.getElementById('bookIndex').value;
+                requestDto.bookPackaging = document.getElementById('bookPackaging').value === 'true';
+                requestDto.bookState = document.getElementById('bookState').value;
+                requestDto.bookStock = parseInt(document.getElementById('bookStock').value);
+                requestDto.bookRegularPrice = parseInt(document.getElementById('bookRegularPrice').value);
+                requestDto.bookDiscountRate = parseInt(document.getElementById('bookDiscountRate').value);
 
-                const thumbnailFile = document.getElementById("bookThumbnail").files[0];
-                if (thumbnailFile) {
-                    formData.append("bookThumbnail", thumbnailFile);
-                }
+                requestDto.authorIds = Object.keys(selectedAuthors);
 
-                fetch("/admin/books/upload", {
-                    method: "POST",
-                    body: formData,
+                requestDto.categoryIds = [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value].filter(Boolean);
+
+                requestDto.tagIds = Object.keys(selectedTags);
+
+
+                fetch("/admin/books/" + bookId, {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestDto)
                 })
                     .then(response => {
                         if (response.ok) {
@@ -338,8 +286,8 @@
                         throw new Error("Network response was not ok.");
                     })
                     .then(data => {
-
-                        window.location.href = '';
+                        // Use the redirect URL from the response to redirect
+                        window.location.href = data.redirectUrl;
                     })
                     .catch(error => {
                         console.error("Error:", error);
@@ -347,25 +295,15 @@
                     });
             });
 
-        // 이미지 미리보기 기능
-        document
-            .getElementById("bookThumbnail")
-            .addEventListener("change", function (event) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const preview = document.getElementById("thumbnailPreview");
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
-                };
-                reader.readAsDataURL(event.target.files[0]);
-            });
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script>
         $(document).ready(function () {
+            // 최상위 카테고리 로드
             loadTopCategories("#category1");
 
+            // 카테고리 변경 시 하위 카테고리 로드
             $("#category1").change(function () {
                 loadCategories("#category2", $(this).val());
                 $("#category3").empty();
@@ -413,19 +351,6 @@
             }
         }
 
-        document
-            .getElementById("bookThumbnail")
-            .addEventListener("change", function (event) {
-                if (event.target.files && event.target.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const preview = document.getElementById("thumbnailPreview");
-                        preview.src = e.target.result;
-                        preview.style.display = "block";
-                    };
-                    reader.readAsDataURL(event.target.files[0]);
-                }
-            });
         document
             .getElementById("bookRegularPrice")
             .addEventListener("input", function (e) {
@@ -576,6 +501,29 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadTags);
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeSelectedAuthors();
+            initializeSelectedTags();
+            loadTags();
+        });
+        // selectedAuthors 초기화 함수
+        function initializeSelectedAuthors() {
+            var authorNames = /*[[${storedBook.authorNames}]]*/ [];
+            authorNames.forEach(function(name, index) {
+                selectedAuthors[index] = name;
+            });
+            updateSelectedAuthorsDisplay();
+        }
+
+        function initializeSelectedTags() {
+            var tagNames = /*[[${storedBook.tagNames}]]*/ [];
+            tagNames.forEach(function(name, index) {
+                selectedTags[index] = name;
+            });
+            updateSelectedTagsDisplay();
+        }
+
+
     </script>
 </div>
 </body>

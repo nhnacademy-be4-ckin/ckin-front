@@ -1,10 +1,9 @@
 package store.ckin.front.product.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 import java.time.LocalDate;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * BookResponseDto 단일 조회 dto클래스.

@@ -33,7 +33,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
 
     private static final String AUTHOR_URL = "/api/authors";
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAllAuthors(Pageable pageable) {
 
@@ -54,6 +56,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAuthorsByName(String name, Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
@@ -71,7 +76,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto requestGetAuthorById(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
@@ -84,29 +91,34 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
+    public void requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL;
         ResponseEntity<AuthorResponseDto> response = restTemplate.postForEntity(url,
                 new HttpEntity<>(authorCreateRequestDto, getHttpHeaders()),
                 AuthorResponseDto.class);
 
-        return response.getBody();
+        response.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
+    public void requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
-        ResponseEntity<AuthorResponseDto> response = restTemplate.exchange(url,
+        restTemplate.exchange(url,
                 HttpMethod.PUT,
                 new HttpEntity<>(authorModifyRequestDto, getHttpHeaders()),
-                AuthorResponseDto.class);
-
-        return response.getBody();
+                Void.class);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestDeleteAuthor(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
