@@ -41,6 +41,7 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
             log.debug("preHandle(): user uuid cookie is null");
             Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
             userUuidCookie.setHttpOnly(true);
+            userUuidCookie.setPath("/");
             // 브라우저(JS)에서 쿠키 접근 불가
             userUuidCookie.setSecure(true);
             // HTTPS 일때에만 쿠키 사용

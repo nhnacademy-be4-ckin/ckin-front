@@ -53,7 +53,7 @@ public class PaymentController {
     /**
      * 결제 승인 페이지 요청 메서드입니다.
      *
-     * @return 결제 성공 페이지
+     * @return 결제 승인 페이지
      */
     @GetMapping("/approve")
     public String paymentRequest() {

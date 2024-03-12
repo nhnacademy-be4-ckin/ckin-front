@@ -1,5 +1,7 @@
 package store.ckin.front.member.controller;
 
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -8,11 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
-
-import javax.validation.Valid;
+import store.ckin.front.sale.dto.response.SaleResponseDto;
+import store.ckin.front.sale.service.SaleService;
 
 /**
  * Member 에 관련된 페이지를 호출하는 Controller 입니다.
@@ -24,7 +27,10 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
+
     private final MemberService memberService;
+
+    private final SaleService saleService;
 
     /**
      * [GET] 회원가입 페이지.
@@ -75,5 +81,17 @@ public class MemberController {
         model.addAttribute("member", responseDto);
 
         return "member/mypage";
+    }
+
+    @GetMapping("/member/orders")
+    public String getMemberOrders() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberId = authentication.getName();
+
+        PagedResponse<List<SaleResponseDto>> saleList = saleService.getSalesByMemberId(memberId);
+
+
+        return "member/orders";
     }
 }
