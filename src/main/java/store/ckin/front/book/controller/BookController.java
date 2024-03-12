@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.response.BookListResponseDto;
+import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
@@ -57,6 +59,15 @@ public class BookController {
         model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
         model.addAttribute("currentPage", bookPageDto.getNumber());
         return "admin/book/index";
+    }
+
+    @GetMapping("/update/{bookId}")
+    public String viewBookUpdate(Model model, @PathVariable Long bookId) {
+        BookResponseDto storedBook = bookService.findProductById(bookId);
+
+        model.addAttribute("storedBook", storedBook);
+
+        return "admin/book/update";
     }
 
 }
