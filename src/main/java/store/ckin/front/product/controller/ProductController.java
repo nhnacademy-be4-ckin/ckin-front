@@ -46,14 +46,11 @@ public class ProductController {
         String categoryName = "국내도서";
         //TODO: categoryId로 단일 조회
 
+        model.addAttribute("pagination", bookPageDto);
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("categoryName", categoryName);
         model.addAttribute("bookList", bookPageDto.getContent());
-        model.addAttribute("isPrevious", bookPageDto.getNumber() > 0);
-        model.addAttribute("isNext", bookPageDto.getNumber() < bookPageDto.getTotalPages() - 1);
-        model.addAttribute("totalPages", bookPageDto.getTotalPages() == 0 ? 1 : bookPageDto.getTotalPages());
-        model.addAttribute("currentPage", bookPageDto.getNumber());
 
         return "category/initial";
     }
@@ -79,12 +76,7 @@ public class ProductController {
         model.addAttribute("authorNames", authorNames);
         model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
         model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
-
-        model.addAttribute("totalCount", reviewListDtoPageDto.getTotalElements());
-        model.addAttribute("isPrevious", reviewListDtoPageDto.getNumber() > 0);
-        model.addAttribute("isNext", reviewListDtoPageDto.getNumber() < reviewListDtoPageDto.getTotalPages() - 1);
-        model.addAttribute("totalPages", reviewListDtoPageDto.getTotalPages() == 0 ? 1 : reviewListDtoPageDto.getTotalPages());
-        model.addAttribute("currentPage", reviewListDtoPageDto.getNumber());
+        model.addAttribute("pagenation", reviewListDtoPageDto);
         return "product/view";
     }
 

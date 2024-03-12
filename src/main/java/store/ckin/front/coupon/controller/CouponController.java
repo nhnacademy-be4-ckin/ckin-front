@@ -45,12 +45,8 @@ public class CouponController {
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
 
         model.addAttribute("memberId", 1);
+        model.addAttribute("pagination", couponResponseDtoPage);
         model.addAttribute("couponList", couponResponseDtoPage.getContent());
-        model.addAttribute("isPrevious", couponResponseDtoPage.getNumber() > 0);
-        model.addAttribute("isNext", couponResponseDtoPage.getNumber() < couponResponseDtoPage.getTotalPages() - 1);
-        model.addAttribute("totalPages",
-                couponResponseDtoPage.getTotalPages() == 0 ? 1 : couponResponseDtoPage.getTotalPages());
-        model.addAttribute("currentPage", couponResponseDtoPage.getNumber());
         switch (typeId.intValue()) {
             case 1:
                 return "coupon/birth";

@@ -99,18 +99,19 @@
     </div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!isPrevious} ? 'disabled'">
+            <li class="page-item" th:classappend="${!(pagination.number > 0)} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/coupon/2(page=${currentPage - 1})}">Previous</a>
+                   th:href="@{/coupon/2(page=${pagination.number - 1})}">Previous</a>
             </li>
-            <th:block th:with="start=1, end=${totalPages}">
+            <th:block th:with="start=1, end=${(pagination.totalPages == 0) ? 1 : pagination.totalPages}">
                 <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
                     <a class="page-link" th:href="@{/coupon/2(page=${page - 1})}"
                        th:text="${page}"></a></li>
             </th:block>
-            <li class="page-item" th:classappend="${!isNext} ? 'disabled'">
+            <li class="page-item"
+                th:classappend="${!(pagination.number < pagination.totalPages - 1)} ? 'disabled'">
                 <a class="page-link"
-                   th:href="@{/coupon/2(page=${currentPage+1})}">Next</a>
+                   th:href="@{/coupon/2(page=${pagination.getNumber()+1})}">Next</a>
             </li>
         </ul>
     </nav>
