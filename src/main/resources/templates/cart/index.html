@@ -13,113 +13,128 @@
         .container {
             width: 80%;
         }
+
+        p {
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <!-- 본문 내용 -->
 <div layout:fragment="content" class="container">
-        <div class="container">
-            <div class="row">
-                <div class="m-lr-auto m-b-50">
-                    <div class="m-l-25 m-r--38 m-lr-0-xl">
-                        <h2 class="ltext-101 m-t-150">Order / Payment</h2> <br>
-                        <div class="wrap-table-shopping-cart">
-                            <table class="table-shopping-cart" style="text-align: center;">
-                                <tr class="table_head">
-                                    <th class="column-1"></th>
-                                    <th class="column-2">상품명</th>
-                                    <th class="column-3">판매가</th>
-                                    <th class="column-4">수량</th>
-                                    <th class="column-6">주문금액</th>
-                                    <th class="column-5">주문관리</th>
-                                </tr>
+    <div class="container">
+        <div class="row">
+            <div class="m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <h2 class="ltext-101 m-t-150">Order / Payment</h2> <br>
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart" style="text-align: center;">
+                            <tr class="table_head">
+                                <th class="column-1"></th>
+                                <th class="column-2">상품명</th>
+                                <th class="column-3">정상가</th>
+                                <th class="column-3">판매가</th>
+                                <th class="column-4">수량</th>
+                                <th class="column-6">주문금액</th>
+                                <th class="column-5">주문관리</th>
+                            </tr>
 
-                                <tr th:if="${CART_ITEMS.isEmpty()}">
-                                    <td colspan="6" class="mtext-101">
-                                        장바구니가 현재 비어 있습니다
-                                    </td>
-                                </tr>
-                                <tr class="table_row" th:each="item: ${CART_ITEMS}">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_c20e3b10d61749a2a52346ed0261d79e/bookpub/product/thumbnail/03331c62-d8db-40c8-8f25-2f4160ad8122.png"
-                                                 alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2" th:text="${item.name}"></td>
-                                    <td class="column-3" th:text="${item.unitPrice}"></td>
-                                    <td class="column-4" th:text="${item.quantity}"></td>
-                                    <td class="column-6" th:text="${item.unitPrice * item.quantity}"></td>
-                                    <td class="column-5">
-                                        <button type="button"
-                                                class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
-                                                data-toggle="modal" data-target="#updateQuantityModal"
-                                                th:onclick="clickUpdateBtn([[${item.id}]])">
-                                            수량 변경
-                                        </button>
-                                        <!-- Quantity Update Modal -->
-                                            <div class="modal fade" id="updateQuantityModal" tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="modalTitle">
-                                                                수량 변경</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <form method="post" action="cart/update">
-                                                        <div class="modal-body">
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" class="form-control" name="quantity" style="width: 80%" placeholder="변경할 수량을 입력하세요" aria-label="quantity" aria-describedby="basic-addon2">
-                                                                <span class="input-group-text" style="width: 20%" id="basic-addon2">개</span>
-                                                            </div>
-                                                            <h4 class="stext-111" style="color: #760c0c;">현재 남은 수량은 2개 입니다.</h4>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">취소
-                                                            </button>
-                                                            <input id="updateItemId" name="id" hidden>
-                                                                <button type="submit" class="btn btn-dark">수량 변경</button>
-                                                        </div>
-                                                        </form>
-                                                    </div>
+                            <tr th:if="${CART_ITEMS.isEmpty()}">
+                                <td colspan="6" class="mtext-101">
+                                    장바구니가 현재 비어 있습니다
+                                </td>
+                            </tr>
+                            <tr class="table_row" th:each="item: ${CART_ITEMS}">
+                                <td class="column-1">
+                                    <div style="position: relative; width: 100%; height: 100%; justify-content: center; align-items: center">
+                                        <img style="width: 100%; height: 100%"
+                                             th:src="${item.thumbnail}"
+                                             th:data-src="${item.thumbnail}"
+                                             alt="상품 이미지">
+                                    </div>
+                                </td>
+                                <td class="column-2" th:text="${item.name}"></td>
+                                <td class="column-3" th:text="${item.regularPrice}"></td>
+                                <td class="column-3" th:text="${item.salePrice}"></td>
+                                <td class="column-4" th:text="${item.quantity}"></td>
+                                <td class="column-6" th:text="${item.salePrice * item.quantity}"></td>
+                                <td class="column-5">
+                                    <button type="button"
+                                            class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10"
+                                            data-toggle="modal" data-target="#updateQuantityModal"
+                                            th:onclick="clickUpdateBtn([[${item.id}]])">
+                                        수량 변경
+                                    </button>
+                                    <!-- Quantity Update Modal -->
+                                    <div class="modal fade" id="updateQuantityModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalTitle">
+                                                        수량 변경</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
+                                                <form method="post" action="cart/update">
+                                                    <div class="modal-body">
+                                                        <div class="input-group-cart mb-3">
+                                                            <p>
+                                                                <input type="text" class="form-control" name="quantity"
+                                                                       placeholder="변경할 수량을 입력하세요"
+                                                                       aria-label="quantity"
+                                                                       aria-describedby="basic-addon2"
+                                                                >
+                                                            </p>
+                                                        </div>
+                                                        <h4 class="stext-111" style="color: #760c0c;">현재 남은 수량은 2개
+                                                            입니다.</h4>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">취소
+                                                        </button>
+                                                        <input id="updateItemId" name="id" hidden>
+                                                        <button type="submit" class="btn btn-dark">수량 변경</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        <form method="post" action="cart/delete">
-                                            <input th:value="${item.id}" id="deleteItemId" name="id" hidden>
-                                            <button type="submit"
-                                                    class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                                                삭제
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                            <ul class="stext-111 p-t-2" style="color: #760c0c;">
-                                <li>쿠폰 적용은 결제 페이지에서 가능합니다.</li>
-                                <li>결제 시 각종 할인 적용이 달라질 수 있습니다.</li>
+                                        </div>
+                                    </div>
+                                    <form method="post" action="cart/delete">
+                                        <input th:value="${item.id}" id="deleteItemId" name="id" hidden>
+                                        <button type="submit"
+                                                class="flex-c-m stext-101 cl2 size-112 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                            삭제
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        <ul class="stext-111 p-t-2" style="color: #760c0c;">
+                            <li>쿠폰 적용은 결제 페이지에서 가능합니다.</li>
+                            <li>결제 시 각종 할인 적용이 달라질 수 있습니다.</li>
 
-                                <li>해외배송 상품은 배송료가 추가로 발생될 수 있습니다.</li>
-                                <li>장바구니 상품은 최대 1년 보관(비회원 2일)되며 담은 시점과 현재의 판매 가격이 달라질 수 있습니다.</li>
-                                <li>장바구니에는 최대 100개의 상품을 보관할 수 있으며, 주문당 한번에 주문 가능한 상품수는 100개로 제한됩니다.</li>
-                            </ul>
-                        </div>
-                        <div style="text-align: center">
-                            <form th:unless="${CART_ITEMS.isEmpty()}" action="cart/order" method="get">
-                                <button class="flex-c-m stext-101 cl0 size-117 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-b-50 m-t-30 d-inline-block">
-                                    주문하기
-                                </button>
-                            </form>
-                        </div>
+                            <li>해외배송 상품은 배송료가 추가로 발생될 수 있습니다.</li>
+                            <li>장바구니 상품은 최대 1년 보관(비회원 2일)되며 담은 시점과 현재의 판매 가격이 달라질 수 있습니다.</li>
+                            <li>장바구니에는 최대 100개의 상품을 보관할 수 있으며, 주문당 한번에 주문 가능한 상품수는 100개로 제한됩니다.</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: center">
+                        <form th:unless="${CART_ITEMS.isEmpty()}" action="cart/order" method="get">
+                            <button class="flex-c-m stext-101 cl0 size-117 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-b-50 m-t-30 d-inline-block">
+                                주문하기
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
 </html>
