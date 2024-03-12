@@ -1,7 +1,5 @@
 package store.ckin.front.author.adapter.impl;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +14,8 @@ import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
 import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.config.properties.GatewayProperties;
+
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 작가 어댑터 구현 클래스입니다.
@@ -33,7 +33,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
 
     private static final String AUTHOR_URL = "/api/authors";
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAllAuthors(Pageable pageable) {
 
@@ -54,6 +56,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> requestGetAuthorsByName(String name, Pageable pageable) {
         int pageNumber = pageable.getPageNumber();
@@ -71,7 +76,9 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto requestGetAuthorById(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
@@ -84,29 +91,34 @@ public class AuthorAdaptorImpl implements AuthorAdaptor {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
+    public void requestCreateAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL;
         ResponseEntity<AuthorResponseDto> response = restTemplate.postForEntity(url,
                 new HttpEntity<>(authorCreateRequestDto, getHttpHeaders()),
                 AuthorResponseDto.class);
 
-        return response.getBody();
+        response.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
+    public void requestModifyAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;
-        ResponseEntity<AuthorResponseDto> response = restTemplate.exchange(url,
+        restTemplate.exchange(url,
                 HttpMethod.PUT,
                 new HttpEntity<>(authorModifyRequestDto, getHttpHeaders()),
-                AuthorResponseDto.class);
-
-        return response.getBody();
+                Void.class);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestDeleteAuthor(Long id) {
         String url = gatewayProperties.getGatewayUri() + AUTHOR_URL + "/" + id;

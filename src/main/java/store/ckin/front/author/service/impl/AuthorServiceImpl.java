@@ -11,7 +11,7 @@ import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.author.service.AuthorService;
 
 /**
- * {class name}.
+ * AuthorService 구현 클래스.
  *
  * @author 나국로
  * @version 2024. 02. 20.
@@ -22,32 +22,49 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorAdaptor authorAdaptor;
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> getAuthors(Pageable pageable) {
         return authorAdaptor.requestGetAllAuthors(pageable);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageResponse<AuthorResponseDto> getAuthorsByName(String name, Pageable pageable) {
         return authorAdaptor.requestGetAuthorsByName(name, pageable);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AuthorResponseDto getAuthorById(Long id) {
         return authorAdaptor.requestGetAuthorById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto createAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
-        return authorAdaptor.requestCreateAuthor(authorCreateRequestDto);
+    public void createAuthor(AuthorCreateRequestDto authorCreateRequestDto) {
+        authorAdaptor.requestCreateAuthor(authorCreateRequestDto);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AuthorResponseDto updateAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
-        return authorAdaptor.requestModifyAuthor(id, authorModifyRequestDto);
+    public void updateAuthor(Long id, AuthorModifyRequestDto authorModifyRequestDto) {
+        authorAdaptor.requestModifyAuthor(id, authorModifyRequestDto);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteAuthor(Long id) {
         authorAdaptor.requestDeleteAuthor(id);

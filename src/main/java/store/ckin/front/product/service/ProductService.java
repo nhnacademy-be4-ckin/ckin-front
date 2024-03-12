@@ -14,17 +14,16 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 public interface ProductService {
 
     /**
-     * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
-     *
-     * @param parentId the parent id
-     * @return the subcategories
+     * @param categoryId 부모 카테고리 아이디
+     * @param pageable
+     * @return
      */
     PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable);
 
     /**
      * bookId로 상품 상세 정보를 가져오는 메서드 입니다.
      *
-     * @param bookId
+     * @param bookId 도서 아이디
      * @return 상품 상세 정보 DTO
      */
     BookResponseDto findProductById(Long bookId);

@@ -1,9 +1,10 @@
 package store.ckin.front.category.adapter;
 
-import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
+
+import java.util.List;
 
 /**
  * CategoryAdapter.
@@ -14,24 +15,44 @@ import store.ckin.front.category.dto.response.CategoryResponseDto;
 public interface CategoryAdapter {
 
 
+    /**
+     * 새로운 카테고리를 생성합니다.
+     *
+     * @param categoryCreateRequestDto 카테고리 생성 요청 DTO
+     */
     void requestCreateCategory(CategoryCreateRequestDto categoryCreateRequestDto);
 
+    /**
+     * 최상위 카테고리 목록을 조회합니다.
+     *
+     * @return 카테고리 응답 DTO 리스트
+     */
     List<CategoryResponseDto> requestGetTopCategories();
 
 
+    /**
+     * 주어진 부모 ID에 해당하는 하위 카테고리 목록을 조회합니다.
+     *
+     * @param parentId 부모 카테고리 ID
+     * @return 카테고리 응답 DTO 리스트
+     */
     List<CategoryResponseDto> requestGetSubcategories(Long parentId);
 
+    /**
+     * 특정 카테고리를 업데이트합니다.
+     *
+     * @param categoryId        카테고리 ID
+     * @param categoryUpdateDto 카테고리 업데이트 요청 DTO
+     */
     void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto);
 
 
-    void requestDeleteCategory(Long categoryId);
     /**
-     * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
+     * 특정 카테고리를 삭제합니다.
      *
-     * @param parentId the parent id
-     * @return the subcategories
+     * @param categoryId 카테고리 ID
      */
-    List<CategoryResponseDto> getSubcategories(Long parentId);
+    void requestDeleteCategory(Long categoryId);
 
 
 }

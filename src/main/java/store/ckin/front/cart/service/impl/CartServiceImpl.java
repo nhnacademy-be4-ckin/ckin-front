@@ -1,10 +1,5 @@
 package store.ckin.front.cart.service.impl;
 
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,6 +11,12 @@ import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
 import store.ckin.front.cart.exception.ItemAlreadyExistException;
 import store.ckin.front.cart.service.CartService;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 사용자 장바구니에 대한 아이템 추가, 갱신, 삭제, 조회를 담당하는 서비스 클래스

@@ -1,23 +1,20 @@
 package store.ckin.front.coupontemplate.controller;
 
 import groovy.util.logging.Slf4j;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
+
+import java.util.List;
 
 /**
  * CouponTemplateController
@@ -50,11 +47,7 @@ public class CouponTemplateController {
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
-        model.addAttribute("isPrevious", couponTemplateList.getNumber() > 0);
-        model.addAttribute("isNext", couponTemplateList.getNumber() < couponTemplateList.getTotalPages() - 1);
-        model.addAttribute("totalPages",
-                couponTemplateList.getTotalPages() == 0 ? 1 : couponTemplateList.getTotalPages());
-        model.addAttribute("currentPage", couponTemplateList.getNumber());
+        model.addAttribute("pagination", couponTemplateList);
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
         switch (typeId.intValue()) {

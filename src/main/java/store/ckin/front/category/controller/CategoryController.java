@@ -18,6 +18,11 @@ import store.ckin.front.category.service.CategoryService;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    /**
+     * 카테고리 인덱스 페이지를 반홥니다
+     *
+     * @return 카테고리 인덱스 페이지
+     */
     @GetMapping
     public String showCategoryIndex() {
         return "admin/category/index";

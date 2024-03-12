@@ -1,8 +1,6 @@
 package store.ckin.front.coupon.controller;
 
 import groovy.util.logging.Slf4j;
-import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 포인트 정책 페이지를 호출하는 컨트롤러입니다.
@@ -39,7 +40,7 @@ public class CouponAdminController {
      */
     @GetMapping
     public String getCouponAllList(Model model,
-                                   @PageableDefault(page = 0, size = 5) Pageable pageable,
+                                   @PageableDefault(page = 0, size = 20) Pageable pageable,
                                    @RequestParam(required = false, name = "id") Long couponId) {
         PageDto<GetCouponResponseDto> couponAllList;
 
@@ -50,10 +51,7 @@ public class CouponAdminController {
             couponAllList = new PageDto<>(List.of(responseDto), 0, 1, 1, 1);
         }
 
-        model.addAttribute("isPrevious", couponAllList.getNumber() > 0);
-        model.addAttribute("isNext", couponAllList.getNumber() < couponAllList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponAllList.getTotalPages() == 0 ? 1 : couponAllList.getTotalPages());
-        model.addAttribute("currentPage", couponAllList.getNumber());
+        model.addAttribute("pagenation", couponAllList);
         model.addAttribute("couponAllList", couponAllList.getContent());
         return "admin/coupon/main";
     }
@@ -71,10 +69,7 @@ public class CouponAdminController {
                                 @PathVariable("typeId") Long typeId) {
         PageDto<GetCouponResponseDto> couponList = couponService.getCouponList(pageable, typeId);
 
-        model.addAttribute("isPrevious", couponList.getNumber() > 0);
-        model.addAttribute("isNext", couponList.getNumber() < couponList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponList.getTotalPages() == 0 ? 1 : couponList.getTotalPages());
-        model.addAttribute("currentPage", couponList.getNumber());
+        model.addAttribute("pagenation", couponList);
         model.addAttribute("couponAllList", couponList.getContent());
         return "admin/coupon/main";
     }
@@ -97,10 +92,7 @@ public class CouponAdminController {
         } else {
             couponList = couponService.getCouponByMemberId(pageable, memberId);
         }
-        model.addAttribute("isPrevious", couponList.getNumber() > 0);
-        model.addAttribute("isNext", couponList.getNumber() < couponList.getTotalPages() - 1);
-        model.addAttribute("totalPages", couponList.getTotalPages() == 0 ? 1 : couponList.getTotalPages());
-        model.addAttribute("currentPage", couponList.getNumber());
+        model.addAttribute("pagenation", couponList);
         model.addAttribute("couponAllList", couponList.getContent());
         return "admin/coupon/main";
     }

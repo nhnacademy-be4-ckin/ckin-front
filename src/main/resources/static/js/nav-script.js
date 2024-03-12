@@ -19,7 +19,7 @@ function activateAnbWrap() {
 
     // ::before를 추가
     $ul.prepend('<span class="before-element"></span>');
-    document.getElementById("mainDiv").style.minHeight = "50vh";
+    document.getElementById("mainDiv").style.minHeight = "70vh";
 
     // ::after를 추가
     $ul.append('<span class="after-element"></span>');
