@@ -31,6 +31,12 @@ public interface BookService {
      */
     BookResponseDto findProductById(Long bookId);
 
+    /**
+     * 상품 ID 리스트로 상품 판매 정보를 가져오는 메서드 입니다.
+     *
+     * @param bookIds 상품 ID 리스트
+     * @return 상품 판매 정보 DTO 리스트
+     */
     List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds);
 
     void updateBook(BookModifyRequestDto requestDto, Long bookId);

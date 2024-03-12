@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import store.ckin.front.booksale.dto.response.BookSaleResponseDto;
 
 /**
@@ -14,19 +15,25 @@ import store.ckin.front.booksale.dto.response.BookSaleResponseDto;
  * @version 2024. 03. 07.
  */
 
+@ToString
 @Getter
 @AllArgsConstructor
 public class SaleWithBookResponseDto {
 
     private final List<BookSaleResponseDto> bookSaleList = new ArrayList<>();
 
+
     private String saleTitle;
+
+    private Long saleId;
+
+    private String saleNumber;
 
     private String memberEmail;
 
-    private String saleOrderName;
+    private String saleOrdererName;
 
-    private String saleOrderContact;
+    private String saleOrdererContact;
 
     private String saleReceiverName;
 

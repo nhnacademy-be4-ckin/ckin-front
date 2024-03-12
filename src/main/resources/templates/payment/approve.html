@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <link
+            rel="icon"
+            href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
+    />
+    <link rel="stylesheet" type="text/css" href="/css/toss.css"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <title>CKIN | 토스페이먼츠</title>
+</head>
+<body>
+<div class="result wrapper">
+    <div class="box_section">
+        <h2 style="padding: 20px 0px 10px 0px">
+            <img
+                    width="35px"
+                    src="https://static.toss.im/3d-emojis/u1F389_apng.png"
+            />
+            결제가 거의 완료되었어요 !
+        </h2>
+
+        <p id="paymentKey"></p>
+        <p id="orderId"></p>
+        <p id="amount"></p>
+    </div>
+</div>
+<script>
+    // 쿼리 파라미터 값이 결제 요청할 때 보낸 데이터와 동일한지 반드시 확인하세요.
+    // 클라이언트에서 결제 금액을 조작하는 행위를 방지할 수 있습니다.
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // 서버로 결제 승인에 필요한 결제 정보를 보내세요.
+    async function confirm() {
+        const requestData = {
+            paymentKey: urlParams.get("paymentKey"),
+            orderId: urlParams.get("orderId"),
+            amount: urlParams.get("amount"),
+        };
+
+        const response = await fetch("/toss/confirm", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+
+        const json = await response.json();
+
+        if (!response.ok) {
+            console.log(json);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/toss/success",
+            contentType: "application/json",
+            data: JSON.stringify({
+                paymentKey: json.paymentKey,
+                saleNumber: json.orderId,
+                paymentStatus: "DONE",
+                requestedAt: json.requestedAt,
+                approvedAt: json.approvedAt,
+                amount: json.totalAmount,
+                receiptUrl: json.receipt.url
+            }),
+            success: function (response) {
+
+                // 주문 완료 페이지로 redirect
+                window.location.href = "/payment/success?saleNumber=" + response.saleNumber +
+                    "&receiverName=" + response.receiverName +
+                    "&receiverContact=" + response.receiverContact +
+                    "&address=" + response.address +
+                    "&deliveryDate=" + response.deliveryDate +
+                    "&saleTotalPrice=" + response.saleTotalPrice +
+                    "&receiptUrl=" + response.receiptUrl;
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    confirm();
+
+</script>
+</body>
+</html>

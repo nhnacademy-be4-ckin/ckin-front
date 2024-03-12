@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+</head>
+
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row m-t-150">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+
+                    <p class="h1"> 🙇🏻‍♂️ 결제가 완료되었습니다. </p>
+                    <p class="h3" th:text="'주문번호: ' + ${payment.saleNumber}"></p>
+                    <p style="color: darkred">[비회원일 경우 위의 주문번호를 꼭 저장해두세요! 주문 조회할 때 사용됩니다.]</p>
+
+                    <br/>
+                    <p class="h4" th:text="'수령인: ' + ${payment.receiverName}"></p>
+                    <p class="h4" th:text="'수령인 번호: ' + ${payment.receiverContact}"></p>
+                    <p class="h4" th:text="'주소 : ' + ${payment.address}"></p>
+                    <p class="h4" th:text="'예상 배송일 : ' + ${payment.deliveryDate}"></p>
+
+                    <br/>
+                    <p class="h4 text-info" th:text="'결제 금액: ' + ${payment.saleTotalPrice}"></p>
+
+                    <div class="m-t-20 btn btn-outline-primary">
+                        <button class="button"
+                                th:onclick="|location.href='@{${payment.receiptUrl}}'|">
+                            주문서 확인하기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

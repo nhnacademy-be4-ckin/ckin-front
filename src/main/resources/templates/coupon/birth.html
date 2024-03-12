@@ -3,17 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
 <head>
-    <meta charset="UTF-8">
-    <title>Coupon</title>
-    <!-- Add your CSS and other head elements here -->
-</head>
-
-<h1><strong>Coupon</strong></h1>
-<div layout:fragment="content" id="layoutSidenav_content">
-    <div id="image">
-        <img src="/images/birth-coupon.jpg" id="birth"/>
-    </div>
-    <br>
     <style>
         #image {
             text-align: center;
@@ -24,8 +13,14 @@
             height: 100%;
         }
     </style>
+</head>
+
+<div layout:fragment="content">
+    <h1>Coupon</h1>
+    <div id="image">
+        <img src="/images/birth-coupon.jpg" id="birth" alt="image"/>
+    </div>
+    <br>
+
 </div>
-
-
-</footer>
 </html>

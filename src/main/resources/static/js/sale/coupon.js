@@ -33,10 +33,12 @@ function renderCoupon(bookId) {
     // 쿠폰 목록을 비웁니다.
     couponTableBody.innerHTML = '';
 
+
     let selectableCoupons = [];
 
     // 쿠폰을 분류합니다.
     couponList.forEach(coupon => {
+
 
         /**
          * 1. coupon.typeId === 1 : 모든 상품에 적용 가능
@@ -49,6 +51,7 @@ function renderCoupon(bookId) {
             selectableCoupons.push(coupon);
         }
     });
+
 
     // 이미 적용된 쿠폰이 있다면 해당 쿠폰을 selectableCoupons에서 제외
     appliedCoupons.forEach((appliedCouponId, appliedBookId) => {
@@ -112,6 +115,16 @@ function applyCoupon(bookId) {
     let couponApplyBtn = document.getElementById('couponApplyBtn-' + bookId);
 
     if (selectedCouponId) {
+        let saleOrderPrice = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) - parseInt(document.getElementById('discountPrice-' + selectedCouponId).innerText.replace('원', ''));
+
+        let totalSalePrice = document.getElementById('totalSalePrice').value;
+
+        // 적용하려는 쿠폰의 할인 금액보다 totalSalePrice 가 작다면 쿠폰을 적용할 수 없습니다.
+        if (totalSalePrice - 100 < saleOrderPrice) {
+            alert('쿠폰을 적용할 수 없습니다.');
+            couponApplyBtn.removeAttribute('data-dismiss');
+            return;
+        }
 
         // 선택된 쿠폰을 적용합니다.
         appliedCoupons.set(parseInt(bookId), parseInt(selectedCouponId));
@@ -121,8 +134,6 @@ function applyCoupon(bookId) {
         couponApplyBtn.setAttribute('data-dismiss', 'modal');
 
         document.getElementById(bookId + '-coupon').value = selectedCouponId;
-
-        let saleOrderPrice = parseInt(document.getElementById(bookId + '-saleOrderPrice').innerText) - parseInt(document.getElementById('discountPrice-' + selectedCouponId).innerText.replace('원', ''));
 
         document.getElementById(bookId + '-saleOrderPrice').innerText
             = saleOrderPrice;

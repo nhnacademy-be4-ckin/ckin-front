@@ -12976,6 +12976,7 @@ iframe {
 .pointer-none {
     pointer-events: none;
 }
+
 .bg3.p-t-75.p-b-32 {
-    width:2400px;
+    width: 100%;
 }
