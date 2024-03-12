@@ -3,12 +3,8 @@ package store.ckin.front.review.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 /**
- * description:
+ * 리뷰 응답 DTO입니다.
  *
  * @author : gaeun
  * @version : 2024. 03. 08

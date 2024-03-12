@@ -50,7 +50,7 @@ public class ReviewAdapterImpl implements ReviewAdapter {
     @Override
     public void postReview(@Valid CreateReviewRequestDto createReviewRequestDto,
                            List<MultipartFile> imageList) {
-        String url = gatewayProperties.getGatewayUri() + "/api/review/";
+        String url = gatewayProperties.getGatewayUri() + "/api/review";
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("createRequestDto", createReviewRequestDto);

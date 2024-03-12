@@ -19,6 +19,7 @@ import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * description:
@@ -67,16 +68,18 @@ public class ProductController {
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
         PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
-        String authorNames = "";
+        String authorNames = bookResponseDto.getAuthorNames()
+                .stream().collect(Collectors.joining(", "));
         for (String author : bookResponseDto.getAuthorNames()) {
             authorNames += author;
             authorNames += " ";
         }
+
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
         model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
         model.addAttribute("reviewList", reviewListDtoPageDto.getContent());
-        model.addAttribute("pagenation", reviewListDtoPageDto);
+        model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }
 
