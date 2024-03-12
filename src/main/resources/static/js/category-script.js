@@ -45,7 +45,7 @@ function showSubcategories(categoryId, buttonElement, depth = 1) {
         }
     } else if (!buttonElement.dataset.loaded) {
         // 하위 카테고리 데이터를 로드합니다.
-        fetch(`/categories/subcategories/${categoryId}`)
+        fetch(`/categories/${categoryId}`)
             .then(response => response.json())
             .then(subcategories => {
                 subcategoryList = document.createElement('div');
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     parentCategorySelect.addEventListener('change', function () {
         const selectedParentId = this.value;
         if (selectedParentId) {
-            fetch(`/categories/subcategories/${selectedParentId}`)
+            fetch(`/categories/${selectedParentId}`)
                 .then(response => response.json())
                 .then(subcategories => {
                     // 이전에 생성된 하위 카테고리 드롭다운을 삭제합니다.

@@ -32,13 +32,17 @@ public class CategoryAdapterImpl implements CategoryAdapter {
     private final GatewayProperties gatewayProperties;
 
     private static final String CATEGORY_URL = "/api/categories";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestCreateCategory(CategoryCreateRequestDto categoryCreateRequestDto) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL;
         restTemplate.postForEntity(url, new HttpEntity<>(categoryCreateRequestDto, getHttpHeaders()), Void.class);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> requestGetTopCategories() {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/top";
@@ -51,7 +55,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
         return response.getBody();
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> requestGetSubcategories(Long parentId) {
         String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + CATEGORY_URL)
@@ -64,7 +70,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 });
         return response.getBody();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestUpdateCategory(Long categoryId, CategoryUpdateRequestDto categoryUpdateDto) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/" + categoryId;
@@ -73,7 +81,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 new HttpEntity<>(categoryUpdateDto, getHttpHeaders()),
                 Void.class);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void requestDeleteCategory(Long categoryId) {
         String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/" + categoryId;
@@ -82,7 +92,9 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 new HttpEntity<>(getHttpHeaders()),
                 Void.class);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CategoryResponseDto> getSubcategories(Long parentId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
