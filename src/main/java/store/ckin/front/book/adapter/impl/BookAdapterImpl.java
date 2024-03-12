@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.request.BookModifyRequestDto;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
@@ -64,7 +65,7 @@ public class BookAdapterImpl implements BookAdapter {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
         if (file != null && !file.isEmpty()) {
-            body.add("file", file);
+            body.add("file", file.getResource());
 
             body.add("requestDto", bookCreateRequestDto);
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
@@ -138,4 +139,39 @@ public class BookAdapterImpl implements BookAdapter {
 
         return exchange.getBody();
     }
+
+    @Override
+    public void requestUpdateBook(BookModifyRequestDto bookModifyRequestDto, Long bookId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<BookModifyRequestDto> requestEntity = new HttpEntity<>(bookModifyRequestDto, headers);
+        // restTemplate.exchange를 사용하여 PUT 요청을 전송
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL + "/" + bookId,
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                });
+    }
+
+
+    @Override
+    public void requestUpdateBookThumbnail(Long bookId, MultipartFile file) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+
+        if (file != null && !file.isEmpty()) {
+            body.add("thumbnail", file.getResource());
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+            restTemplate.exchange(gatewayProperties.getGatewayUri() + BOOK_URL + "/thumbnail/" + bookId,
+                    HttpMethod.PUT,
+                    requestEntity,
+                    new ParameterizedTypeReference<Void>() {
+                    });
+        }
+    }
+
 }

@@ -11,7 +11,7 @@ import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.author.service.AuthorService;
 
 /**
- * {class name}.
+ * AuthorService 구현 클래스.
  *
  * @author 나국로
  * @version 2024. 02. 20.
