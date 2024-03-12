@@ -14,14 +14,12 @@
             margin-bottom: 1rem;
         }
     </style>
-    <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.btn-edit').click(function () {
                 const bookId = $(this).data('book-id');
 
-                // 생성된 URL로 리디렉션
                 window.location.href = '/admin/books/update/' + bookId;
             });
         });
@@ -48,13 +46,11 @@
     </script>
     <script>
         $(document).ready(function () {
-            // ... existing code for '.btn-edit' ...
 
-            // Add event listener for 'Edit Thumbnail' buttons
             $('.btn-edit-thumbnail').click(function () {
                 const bookId = $(this).data('book-id');
                 const thumbnailUrl = $(this).data('thumbnail-url');
-                $('#thumbnailBookId').val(bookId); // Set the book ID in the modal form
+                $('#thumbnailBookId').val(bookId);
                 $('#currentThumbnail').attr('src', thumbnailUrl);
                 $('#editThumbnailModal').modal('show');
             });
@@ -73,18 +69,18 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('thumbnailForm').addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent the default form submission
+                event.preventDefault();
 
                 const bookId = document.getElementById('thumbnailBookId').value;
                 if (!bookId) {
                     console.error('Book ID is missing');
-                    return; // Exit the function if no book ID
+                    return;
                 }
 
                 const formData = new FormData(this);
                 if (!formData.get('thumbnail')) {
                     console.error('No file selected');
-                    return; // Exit the function if no file is attached
+                    return;
                 }
 
                 fetch('/admin/books/thumbnail/' + bookId, {
@@ -98,7 +94,7 @@
                         return response.json();
                     })
                     .then(data => {
-                        window.location.href = data.redirectUrl; // Redirect on success
+                        window.location.href = data.redirectUrl;
                     })
                     .catch(error => {
                         console.error('Error:', error);
@@ -158,17 +154,14 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
                 <li th:class="${isPrevious} ? 'page-item' : 'page-item disabled'">
-                    <!-- 페이지가 0부터 시작하므로 1을 빼줄 필요 없음 -->
                     <a class="page-link" th:href="@{/admin/books(page=${currentPage} - 1)}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li th:class="'page-item' + (${pageNum - 1} == ${currentPage} ? ' active' : '')" th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
-                    <!-- pageNum - 1을 사용하여 실제 페이지 인덱스와 맞춤 -->
                     <a class="page-link" th:href="@{/admin/books(page=${pageNum - 1})}" th:text="${pageNum}"></a>
                 </li>
                 <li th:class="${isNext} ? 'page-item' : 'page-item disabled'">
-                    <!-- 페이지가 0부터 시작하므로 1을 더할 필요 없음 -->
                     <a class="page-link" th:href="@{/admin/books(page=${currentPage} + 1)}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>

@@ -18,7 +18,6 @@
             width: 60%;
             min-width: 500px;
 
-            /* 기본 폼 스타일링 */
 
             .form-group {
                 margin-bottom: 2rem;
@@ -39,7 +38,7 @@
             }
 
             & textarea.form-control {
-                resize: vertical; /* 세로 크기 조절 가능 */
+                resize: vertical;
             }
 
             .thumbnail-preview-box {
@@ -55,7 +54,7 @@
             .thumbnail-preview-box img {
                 max-width: 100%;
                 max-height: 100%;
-                display: none; /* 초기에는 숨김 */
+                display: none;
             }
 
             .row {
@@ -80,21 +79,17 @@
 
     <div class="w-full p-all-60">
         <form id="book-form">
-            <!-- 책 제목 및 썸네일 이미지 표시 -->
             <input type="hidden" id="bookId" th:value="${storedBook.bookId}" />
             <div style="margin-top: 20px; font-size: 20px; font-weight: bold;">
                 <div id="editingBookTitle" th:text="|'${storedBook.bookTitle}' 수정 페이지|"></div>
-                <!-- 썸네일 이미지가 있으면 표시 -->
                 <img th:if="${storedBook.thumbnail}" th:src="@{${storedBook.thumbnail}}" alt="Thumbnail"
                      style="max-width: 200px; height: auto;"/>
             </div>
-            <!-- ISBN 입력 필드 -->
             <div class="form-group">
                 <label for="bookIsbn">ISBN:</label>
                 <input type="text" class="form-control" id="bookIsbn" th:value="${storedBook.bookIsbn}" maxlength="17"
                        placeholder="ISBN을 입력해주세요..." required/>
             </div>
-            <!-- 제목 입력 필드 -->
             <div class="form-group">
                 <label for="bookTitle">제목:</label>
                 <input type="text" class="form-control" id="bookTitle" th:value="${storedBook.bookTitle}"
@@ -121,7 +116,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 작가 입력 필드 -->
             <div class="form-group">
                 <label for="authorSearch">작가 검색:</label>
                 <input
@@ -134,17 +128,14 @@
 
             <div class="form-group">
                 <label for="authorList">작가:</label>
-                <!-- 여기에 작가 목록을 추가할 것입니다 -->
                 <div id="authorList"></div>
             </div>
 
-            <!-- 선택된 작가를 표시할 요소 추가 -->
             <div class="form-group">
                 <label for="selectedAuthors">선택된 작가:</label>
                 <div id="selectedAuthors"></div>
             </div>
 
-            <!-- 출판사 입력 필드 -->
             <div class="form-group">
                 <label for="bookPublisher">출판사:</label>
                 <input type="text" class="form-control" id="bookPublisher" th:value="${storedBook.bookPublisher}"
@@ -156,24 +147,20 @@
                 <div id="tagList"></div>
             </div>
 
-            <!-- 선택된 태그를 표시할 요소 -->
             <div class="form-group">
                 <label for="selectedTags">선택된 태그:</label>
                 <div id="selectedTags"></div>
             </div>
-            <!-- 출판일 입력 필드 -->
             <div class="form-group">
                 <label for="bookPublicationDate">출판일:</label>
                 <input type="date" class="form-control" id="bookPublicationDate"
                        th:value="${storedBook.bookPublicationDate}"/>
             </div>
-            <!-- 책 설명 입력 필드 -->
             <div class="form-group">
                 <label for="bookDescriptionEditor">책 설명:</label>
-                <div id="bookDescriptionEditor"></div> <!-- 에디터용 새로운 ID -->
+                <div id="bookDescriptionEditor"></div>
             </div>
 
-            <!-- 책 목차 입력 필드 -->
             <div class="form-group">
                 <label for="bookIndex">책 목차:</label>
                 <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..." th:text="${storedBook.bookIndex}"></textarea>
@@ -224,11 +211,10 @@
 
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
         var initialDescription = /*[[${storedBook.bookDescription}]]*/ '기본 설명';
 
         const descriptionEditor = new toastui.Editor({
-            el: document.querySelector("#bookDescriptionEditor"), // 수정된 에디터 ID 사용
+            el: document.querySelector("#bookDescriptionEditor"),
             height: "300px",
             initialEditType: "wysiwyg",
             initialValue: initialDescription,
@@ -238,19 +224,18 @@
                     formData.append("image", blob);
 
                     fetch("/admin/books/upload/description", {
-                        // 서버의 이미지 업로드 엔드포인트
                         method: "POST",
                         body: formData,
                     })
                         .then((response) => response.json())
                         .then((data) => {
-                            callback(data.imageUrl, "image description"); // 반환된 이미지 URL
+                            callback(data.imageUrl, "image description");
                         })
                         .catch((error) => {
                             console.error("Error:", error);
                         });
 
-                    return false; // Default image upload behavior를 막음
+                    return false;
                 },
             },
         });
@@ -262,7 +247,7 @@
             .addEventListener("submit", function (e) {
                 e.preventDefault();
                 const editorContent = descriptionEditor.getHTML();
-                var bookId = document.getElementById('bookId').value; // bookId 값을 가져옴
+                var bookId = document.getElementById('bookId').value;
 
 
                 const requestDto = {};
@@ -280,26 +265,23 @@
                 requestDto.bookRegularPrice = parseInt(document.getElementById('bookRegularPrice').value);
                 requestDto.bookDiscountRate = parseInt(document.getElementById('bookDiscountRate').value);
 
-// 선택된 작가 ID들을 배열로 추가
                 requestDto.authorIds = Object.keys(selectedAuthors);
 
-// 선택된 카테고리 ID들을 배열로 추가
                 requestDto.categoryIds = [document.getElementById('category1').value, document.getElementById('category2').value, document.getElementById('category3').value].filter(Boolean);
 
-// 선택된 태그 ID들을 배열로 추가
                 requestDto.tagIds = Object.keys(selectedTags);
 
 
                 fetch("/admin/books/" + bookId, {
                     method: "PUT",
                     headers: {
-                        'Content-Type': 'application/json' // Specify JSON format in request header
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestDto) // Convert JavaScript object to JSON string
+                    body: JSON.stringify(requestDto)
                 })
                     .then(response => {
                         if (response.ok) {
-                            return response.json(); // Parse the JSON response
+                            return response.json();
                         }
                         throw new Error("Network response was not ok.");
                     })
@@ -373,14 +355,12 @@
             .getElementById("bookRegularPrice")
             .addEventListener("input", function (e) {
                 let value = parseInt(e.target.value, 10);
-                value = Math.round(value / 100) * 100; // 100원 단위로 반올림
+                value = Math.round(value / 100) * 100;
                 e.target.value = isNaN(value) ? "" : value;
             });
 
-        // 작가를 검색하는 함수
         function searchAuthors(name) {
             if (name.length < 1) {
-                // 최소 3글자 이상 입력되었을 때 검색 시작
                 return;
             }
 
@@ -437,7 +417,7 @@
                             selectedAuthors[authorId] = authorName;
                             updateSelectedAuthorsDisplay();
                         } else {
-                            event.target.checked = false; // 중복 선택 방지
+                            event.target.checked = false;
                         }
                     } else {
                         if (selectedAuthors.hasOwnProperty(authorId)) {
@@ -481,7 +461,7 @@
                     data.forEach((tag) => {
                         const tagDiv = document.createElement("div");
                         tagDiv.textContent = tag.tagName;
-                        tagDiv.classList.add("tag-item"); // 스타일링을 위한 클래스 추가
+                        tagDiv.classList.add("tag-item");
                         tagDiv.onclick = function () {
                             selectTag(tag.tagId, tag.tagName);
                         };
@@ -524,26 +504,23 @@
         document.addEventListener("DOMContentLoaded", function() {
             initializeSelectedAuthors();
             initializeSelectedTags();
-            loadTags(); // 기존에 있던 태그 로드 함수
+            loadTags();
         });
         // selectedAuthors 초기화 함수
         function initializeSelectedAuthors() {
-            // 'storedBook.authorNames'로부터 초기 데이터 설정 (가정)
-            var authorNames = /*[[${storedBook.authorNames}]]*/ []; // Thymeleaf를 사용하여 서버에서 데이터를 주입
+            var authorNames = /*[[${storedBook.authorNames}]]*/ [];
             authorNames.forEach(function(name, index) {
-                selectedAuthors[index] = name; // 인덱스 또는 고유 ID를 키로 사용
+                selectedAuthors[index] = name;
             });
-            updateSelectedAuthorsDisplay(); // UI 업데이트 함수 호출
+            updateSelectedAuthorsDisplay();
         }
 
-        // selectedTags 초기화 함수
         function initializeSelectedTags() {
-            // 'storedBook.tagNames'로부터 초기 데이터 설정
-            var tagNames = /*[[${storedBook.tagNames}]]*/ []; // Thymeleaf를 사용하여 서버에서 데이터를 주입
+            var tagNames = /*[[${storedBook.tagNames}]]*/ [];
             tagNames.forEach(function(name, index) {
-                selectedTags[index] = name; // 인덱스 또는 고유 ID를 키로 사용
+                selectedTags[index] = name;
             });
-            updateSelectedTagsDisplay(); // UI 업데이트 함수 호출
+            updateSelectedTagsDisplay();
         }
 
 

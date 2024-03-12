@@ -18,7 +18,6 @@
             width: 60%;
             min-width: 500px;
 
-            /* 기본 폼 스타일링 */
 
             .form-group {
                 margin-bottom: 2rem;
@@ -39,7 +38,7 @@
             }
 
             & textarea.form-control {
-                resize: vertical; /* 세로 크기 조절 가능 */
+                resize: vertical;
             }
 
             .thumbnail-preview-box {
@@ -55,7 +54,7 @@
             .thumbnail-preview-box img {
                 max-width: 100%;
                 max-height: 100%;
-                display: none; /* 초기에는 숨김 */
+                display: none;
             }
 
             .row {
@@ -137,7 +136,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 작가 입력 필드 -->
             <div class="form-group">
                 <label for="authorSearch">작가 검색:</label>
                 <input
@@ -150,17 +148,14 @@
 
             <div class="form-group">
                 <label for="authorList">작가:</label>
-                <!-- 여기에 작가 목록을 추가할 것입니다 -->
                 <div id="authorList"></div>
             </div>
 
-            <!-- 선택된 작가를 표시할 요소 추가 -->
             <div class="form-group">
                 <label for="selectedAuthors">선택된 작가:</label>
                 <div id="selectedAuthors"></div>
             </div>
 
-            <!-- 출판사 입력 필드 -->
             <div class="form-group">
                 <label for="bookPublisher">출판사:</label>
                 <input
@@ -176,7 +171,6 @@
                 <div id="tagList"></div>
             </div>
 
-            <!-- 선택된 태그를 표시할 요소 -->
             <div class="form-group">
                 <label for="selectedTags">선택된 태그:</label>
                 <div id="selectedTags"></div>
@@ -189,7 +183,6 @@
                 <label for="bookDescription">책 설명:</label>
                 <div id="bookDescription"></div>
             </div>
-            <!-- 책 목차 입력 필드 -->
             <div class="form-group">
                 <label for="bookIndex">책 목차:</label>
                 <textarea
@@ -217,7 +210,6 @@
                 </select>
             </div>
 
-            <!-- 재고 입력 필드 -->
             <div class="form-group">
                 <label for="bookStock">재고:</label>
                 <input
@@ -230,7 +222,6 @@
                 />
             </div>
 
-            <!-- 정가 입력 필드 -->
             <div class="form-group">
                 <label for="bookRegularPrice">정가:</label>
                 <div class="input-group">
@@ -249,8 +240,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- 할인율 입력 필드 -->
             <div class="form-group">
                 <label for="bookDiscountRate">할인율:</label>
                 <div class="input-group">
@@ -274,7 +263,6 @@
 
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
-        // Toast UI Editors
         const descriptionEditor = new toastui.Editor({
             el: document.querySelector("#bookDescription"),
             height: "300px",
@@ -285,25 +273,23 @@
                     formData.append("image", blob);
 
                     fetch("/admin/books/upload/description", {
-                        // 서버의 이미지 업로드 엔드포인트
                         method: "POST",
                         body: formData,
                     })
                         .then((response) => response.json())
                         .then((data) => {
-                            callback(data.imageUrl, "image description"); // 반환된 이미지 URL
+                            callback(data.imageUrl, "image description");
                         })
                         .catch((error) => {
                             console.error("Error:", error);
                         });
 
-                    return false; // Default image upload behavior를 막음
+                    return false;
                 },
             },
         });
 
 
-        // Form Submit
         document
             .getElementById("book-form")
             .addEventListener("submit", function (e) {
@@ -313,7 +299,6 @@
 
                 const formData = new FormData();
 
-// JSON 데이터를 개별 필드로 추가
                 formData.append('bookIsbn', document.getElementById('bookIsbn').value);
                 formData.append('bookTitle', document.getElementById('bookTitle').value);
                 formData.append('bookDescription', descriptionEditor.getHTML());
@@ -337,7 +322,6 @@
                     formData.append('tagIds', tagId);
                 });
 
-// 이미지 파일 처리
                 const thumbnailFile = document.getElementById("bookThumbnail").files[0];
                 if (thumbnailFile) {
                     formData.append("bookThumbnail", thumbnailFile);
@@ -349,13 +333,13 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            return response.json(); // 또는 response.text() 등 서버의 응답 형식에 맞춰 사용
+                            return response.json();
                         }
                         throw new Error("Network response was not ok.");
                     })
                     .then(data => {
-                        // 서버로부터 성공적인 응답을 받은 후 리다이렉트 수행
-                        window.location.href = ''; // 예: '/admin'
+
+                        window.location.href = '';
                     })
                     .catch(error => {
                         console.error("Error:", error);
@@ -380,10 +364,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script>
         $(document).ready(function () {
-            // 최상위 카테고리 로드
             loadTopCategories("#category1");
 
-            // 카테고리 변경 시 하위 카테고리 로드
             $("#category1").change(function () {
                 loadCategories("#category2", $(this).val());
                 $("#category3").empty();
@@ -439,7 +421,7 @@
                     reader.onload = function (e) {
                         const preview = document.getElementById("thumbnailPreview");
                         preview.src = e.target.result;
-                        preview.style.display = "block"; // 이미지가 있을 때만 표시
+                        preview.style.display = "block";
                     };
                     reader.readAsDataURL(event.target.files[0]);
                 }
@@ -448,14 +430,12 @@
             .getElementById("bookRegularPrice")
             .addEventListener("input", function (e) {
                 let value = parseInt(e.target.value, 10);
-                value = Math.round(value / 100) * 100; // 100원 단위로 반올림
+                value = Math.round(value / 100) * 100;
                 e.target.value = isNaN(value) ? "" : value;
             });
 
-        // 작가를 검색하는 함수
         function searchAuthors(name) {
             if (name.length < 1) {
-                // 최소 3글자 이상 입력되었을 때 검색 시작
                 return;
             }
 
@@ -512,7 +492,7 @@
                             selectedAuthors[authorId] = authorName;
                             updateSelectedAuthorsDisplay();
                         } else {
-                            event.target.checked = false; // 중복 선택 방지
+                            event.target.checked = false;
                         }
                     } else {
                         if (selectedAuthors.hasOwnProperty(authorId)) {
@@ -556,7 +536,7 @@
                     data.forEach((tag) => {
                         const tagDiv = document.createElement("div");
                         tagDiv.textContent = tag.tagName;
-                        tagDiv.classList.add("tag-item"); // 스타일링을 위한 클래스 추가
+                        tagDiv.classList.add("tag-item");
                         tagDiv.onclick = function () {
                             selectTag(tag.tagId, tag.tagName);
                         };
