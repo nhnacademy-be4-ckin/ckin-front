@@ -17,6 +17,7 @@ import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -142,9 +143,9 @@ public class SaleFacade {
      * 주문 상세 정보를 조회하는 메서드입니다.
      *
      * @param saleId 주문 ID
-     * @return 주문 응답 DTO
+     * @return 주문 상세 정보 응답 DTO
      */
-    public SaleResponseDto getSaleDetail(Long saleId) {
+    public SaleDetailResponseDto getSaleDetail(Long saleId) {
         return saleService.getSaleDetail(saleId);
     }
 

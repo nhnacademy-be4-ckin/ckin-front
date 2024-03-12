@@ -16,6 +16,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -115,11 +116,11 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto requestGetSaleDetail(Long saleId) {
+    public SaleDetailResponseDto requestGetSaleDetail(Long saleId) {
 
-        HttpEntity<SaleResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
+        HttpEntity<Long> requestEntity = new HttpEntity<>(getHttpHeaders());
 
-        ResponseEntity<SaleResponseDto> exchange = restTemplate.exchange(
+        ResponseEntity<SaleDetailResponseDto> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}",
                 HttpMethod.GET,
                 requestEntity,
@@ -166,6 +167,27 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, saleNumber);
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param memberId 조회할 회원 ID
+     * @return 해당 회원이 주문한 페이징 처리된 주문 내역
+     */
+    @Override
+    public PagedResponse<List<SaleResponseDto>> requestGetSalesByMemberId(String memberId) {
+
+        HttpEntity<Long> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<PagedResponse<List<SaleResponseDto>>> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/member/{memberId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId);
 
         return exchange.getBody();
     }
