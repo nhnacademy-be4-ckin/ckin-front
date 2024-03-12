@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.request.BookModifyRequestDto;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
@@ -32,5 +33,7 @@ public interface BookService {
 
     List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds);
 
+    void updateBook(BookModifyRequestDto requestDto, Long bookId);
 
+    void updateBookThumbnail(Long bookId, MultipartFile file);
 }

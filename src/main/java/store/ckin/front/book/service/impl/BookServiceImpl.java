@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.adapter.BookAdapter;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
+import store.ckin.front.book.dto.request.BookModifyRequestDto;
 import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
@@ -52,6 +53,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookExtractionResponseDto> getBookSaleList(List<Long> bookIds) {
         return bookAdapter.requestBookSaleList(bookIds);
+    }
+
+    @Override
+    public void updateBook(BookModifyRequestDto requestDto, Long bookId) {
+        bookAdapter.requestUpdateBook(requestDto, bookId);
+    }
+
+    @Override
+    public void updateBookThumbnail(Long bookId, MultipartFile file) {
+        bookAdapter.requestUpdateBookThumbnail(bookId, file);
     }
 
 }
