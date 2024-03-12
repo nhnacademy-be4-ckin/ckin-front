@@ -9,117 +9,121 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4" style="margin-bottom: 50px;">주문 상세</h1>
 
-        <table class="table table-hover" style="text-align: center; vertical-align: middle;">
+        <table class="table" style="text-align: center; vertical-align: middle;">
             <thead>
-            <tr class="table_head">
-                <th class="column-1"></th>
-                <th class="column-2">상품명</th>
-                <th class="column-3">판매가</th>
-                <th class="column-4">수량</th>
-                <th class="column-5">쿠폰</th>
-                <th class="column-6">주문금액</th>
-                <th class="column-7">🎁 포장지</th>
+            <tr>
+                <th scope="col" class="column-sj-1">상품 이미지</th>
+                <th scope="col" class="column-sj-2">상품명</th>
+                <th scope="col" class="column-sj-3">수량</th>
+                <th scope="col" class="column-sj-4">포장 타입</th>
+                <th scope="col" class="column-sj-5">포장 가격</th>
+                <th scope="col" class="column-sj-6">결제 금액</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr class="table_row" th:each="bookSale, iterStat : ${bookSaleList}">
-                <td class="column-1">
-
+            <tr class="tabl" th:each="book : ${saleDetail.booksaleList}">
+                <td class="column-sj-1">
+                    <img height="125px" th:src="${book.fileUrl}" alt="썸네일 사진">
                 </td>
-
-                <td class="column-2" th:text="${bookSale.bookTitle}"></td>
-                <td class="column-3">
-                </td>
-
-                <td class="column-4" th:text="${bookSale.quantity}"></td>
-                <td class="column-5">
-
-                </td>
-                <td class="column-6">
-
-                </td>
-                <td class="column-7">
-
-
-                </td>
+                <td class="column-sj-2" th:text="${book.bookTitle}"></td>
+                <td class="column-sj-3" th:text="${book.quantity}"></td>
+                <td class="column-sj-4" th:text="${book.packagingType}"></td>
+                <td class="column-sj-5" th:text="${book.packagingPrice}"></td>
+                <td class="column-sj-6" th:text="${book.paymentAmount}"></td>
             </tr>
             </tbody>
         </table>
+
+        <div th:object="${saleDetail.saleResponseDto}">
+
+            <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                <h4 class="m-t-15 m-b-5">주문자 정보</h4>
+
+                <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                    회원 정보 :
+                    <th:block th:if="*{memberEmail == null}">
+                        <span>비회원</span>
+                    </th:block>
+
+                    <th:block th:if="*{memberEmail != null}">
+                        <span th:text="*{memberEmail}"></span>
+                    </th:block>
+
+                </div>
+
+                <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                    주문자 : <span th:text="*{saleOrdererName}"></span>
+                </div>
+
+                <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                    주문자 전화번호: <span th:text="*{saleOrdererContact}"></span>
+                </div>
+            </div>
+
+
+            <div style="margin-top: 30px">
+                <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                    <h4 class="m-t-15 m-b-5">수령자 정보</h4>
+
+                    <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                        수령자 : <span th:text="*{saleReceiverName}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                        수령자 전화번호 : <span th:text="*{saleReceiverContact}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                        배송 주소 : <span th:text="*{saleReceiverAddress}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                    <h4 class="m-t-15 m-b-5">배송 정보</h4>
+
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                        배송 예약일 : <span th:text="*{#temporals.format(saleDeliveryDate, 'yyyy.MM.dd')}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                        배송 상태 : <span th:text="*{saleDeliveryStatus}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                        배송비 : <span th:text="*{saleDeliveryFee}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px">
+                <h4 class="m-t-15" style="color: dodgerblue" th:text="'결제 정보 : ' + *{salePaymentStatus}"> 결제 정보 </h4>
+            </div>
+        </div>
+
+        <th:block th:if="${saleDetail.paymentResponseDto != null}" th:object="${saleDetail.paymentResponseDto}">
+            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                결제 상태 : <span th:text="*{paymentStatus}"></span>
+            </div>
+
+            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                결제 요청일 : <span th:text="*{#temporals.format(requestedAt, 'yyyy.MM.dd')}"></span>
+            </div>
+
+            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                결제 승인일 : <span th:text="*{#temporals.format(approvedAt, 'yyyy.MM.dd')}"></span>
+            </div>
+
+            <button class="m-t-20 btn-outline-primary btn" style="margin-top: 30px;"
+                    th:onclick="|location.href='@{*{receiptUrl}}'|">
+                결제 영수증
+            </button>
+        </th:block>
     </div>
 
-    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-
-        <h4>주문자 정보</h4>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            회원 정보 :
-            <th:block th:if="${sale.memberEmail == null}">
-                <span>비회원</span>
-            </th:block>
-
-            <th:block th:if="${sale.memberEmail != null}">
-                <span th:text="${sale.memberEmail}"></span>
-            </th:block>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            주문자 : <span th:text="${sale.saleOrdererName}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            주문자 전화번호: <span th:text="${sale.saleOrdererContact}"></span>
-        </div>
-    </div>
-
-    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-
-        <h4>수령자 정보</h4>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            수령자 : <span th:text="${sale.saleReceiverName}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            수령자 전화번호 : <span th:text="${sale.saleReceiverContact}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
-            배송 주소 : <span th:text="${sale.saleReceiverAddress}"></span>
-        </div>
-    </div>
-
-    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-
-    </div>
-
-    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-
-        <h4>배송 정보</h4>
-
-        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
-            배송 예약일 : <span th:text="${#temporals.format(sale.saleDeliveryDate, 'yyyy.MM.dd')}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
-            배송 상태 : <span th:text="${sale.saleDeliveryStatus}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
-            배송비 : <span th:text="${sale.saleDeliveryFee}"></span>
-        </div>
-    </div>
-
-    <div>
-        <h4> 결제 정보 </h4>
-
-        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
-            결제 총액 : <span th:text="${sale.saleTotalPrice}"></span>
-        </div>
-
-        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
-            결제 상태 : <span th:text="${sale.salePaymentStatus}"></span>
-        </div>
-    </div>
 </div>
 </html>
