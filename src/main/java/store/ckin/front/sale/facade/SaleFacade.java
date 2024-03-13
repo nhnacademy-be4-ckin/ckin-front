@@ -1,5 +1,7 @@
 package store.ckin.front.sale.facade;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,6 @@ import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.service.SaleService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 주문 퍼사드 클래스입니다.
@@ -93,9 +92,6 @@ public class SaleFacade {
      */
     public Long createSale(SaleCreateRequestDto requestDto) {
 
-        // TODO : 쿠폰과 주문은 서버가 다르기 때문에 하나의 트랜잭션으로 묶으려면 어떻게 ?
-        //  분산 트랜잭션 (Message Queue)에 대해서 찾아보기
-
         List<Long> couponIds = requestDto.getBookSaleList().stream()
                 .map(BookSaleCreateRequestDto::getAppliedCouponId)
                 .filter(appliedCouponId -> appliedCouponId != 0)
@@ -158,5 +154,15 @@ public class SaleFacade {
      */
     public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
         return saleService.getSaleWithBooks(saleId);
+    }
+
+    /**
+     * 장바구니에 담긴 상품을 조회하는 메서드입니다.
+     *
+     * @param cartId 장바구니 ID
+     * @return 장바구니 도서 리스트
+     */
+    public List<CartItem> readCartItems(String cartId) {
+        return cartService.readCartItems(cartId);
     }
 }
