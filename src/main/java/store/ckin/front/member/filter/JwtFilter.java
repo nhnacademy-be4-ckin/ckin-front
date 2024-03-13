@@ -117,6 +117,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setSecurityContextHolder(String accessToken) {
         String uuid = JwtUtil.getUuid(accessToken);
+
+        log.debug("UUID : {}", uuid);
+
         String memberId = getMemberId(uuid);
 
         MemberInfoDetailResponseDto memberInfo = memberDetailsService.loadUserById(memberId);
