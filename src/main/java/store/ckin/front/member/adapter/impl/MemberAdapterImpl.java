@@ -3,6 +3,7 @@ package store.ckin.front.member.adapter.impl;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +27,7 @@ import store.ckin.front.member.domain.response.MemberPointResponseDto;
  * @author : jinwoolee
  * @version : 2024. 02. 16.
  */
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MemberAdapterImpl implements MemberAdapter {
@@ -105,6 +106,12 @@ public class MemberAdapterImpl implements MemberAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, memberId);
+
+        MemberMyPageResponseDto responseDto = exchange.getBody();
+
+        log.info("memberAdpater : {}", responseDto.toString());
+        log.info("memberAdpater name : {}", responseDto.getName());
+        log.info("memberAdpater grade name: {}", responseDto.getGradeName());
 
         return exchange.getBody();
     }
