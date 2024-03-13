@@ -1,36 +1,56 @@
-function activateAnbWrap() {
-    // anb_wrap에 'active'와 'animated' 클래스 추가
-    $('.anb_wrap').addClass('active animated');
+function activateAnbWrap(btn) {
 
-    // tabAnbCategory에 'ui-tabs-active'와 'ui-state-active' 클래스 추가
-    $('#tabAnbCategory').addClass('ui-tabs-active ui-state-active');
+    var btnId = btn.value;
+    if(btnId == "none") {
+        document.getElementById("category").style = "background-image: url(/images/icons/free-icon-cancel-3482248.png)";
+        // anb_wrap에 'active'와 'animated' 클래스 추가
+        $('.anb_wrap').addClass('active animated');
 
-    // '카테고리 전체보기' 탭 활성화, '서비스 전체보기' 탭 비활성화
-    $('#ui-id-6').attr({
-        'aria-selected': 'true',
-        'tabindex': '0'
-    });
-    $('#ui-id-7').attr({
-        'aria-selected': 'false',
-        'tabindex': '-1'
-    });
+        // tabAnbCategory에 'ui-tabs-active'와 'ui-state-active' 클래스 추가
+        $('#tabAnbCategory').addClass('ui-tabs-active ui-state-active');
 
-    var $ul = $('.tabs');
+        // '카테고리 전체보기' 탭 활성화, '서비스 전체보기' 탭 비활성화
+        $('#ui-id-6').attr({
+            'aria-selected': 'true',
+            'tabindex': '0'
+        });
+        $('#ui-id-7').attr({
+            'aria-selected': 'false',
+            'tabindex': '-1'
+        });
 
-    // ::before를 추가
-    $ul.prepend('<span class="before-element"></span>');
-    document.getElementById("mainDiv").style.minHeight = "70vh";
+        var $ul = $('.tabs');
 
-    // ::after를 추가
-    $ul.append('<span class="after-element"></span>');
+        // ::before를 추가
+        $ul.prepend('<span class="before-element"></span>');
+        document.getElementById("mainDiv").style.minHeight = "70vh";
 
-    tabAndCategorySub01();
+        // ::after를 추가
+        $ul.append('<span class="after-element"></span>');
+
+        tabAndCategorySub01();
+        let category = document.getElementById("category");
+        // value 속성 변경
+        category.value = "active";
+        $('#category').addClass('active');
+
+    } else {
+        deactivateAnbWrap(btn);
+    }
+
 }
 
-function deactivateAnbWrap() {
+function deactivateAnbWrap(btn) {
+    document.getElementById("category").style = "background-image: url(../images/main-category.png)";
     // 전체 메뉴가 감춰지도록 하는 로직 추가
     $('.anb_wrap').removeClass('active animated');
     document.getElementById("mainDiv").style.minHeight = "0vh";
+    let category = document.getElementById("category");
+    // value 속성 변경
+    category.value = "none";
+    $('#category').css("backgroud-image", "url(/images/icons/free-icon-x-657059.png)");
+
+
 }
 
 function tabAndCategorySub01() {
@@ -247,3 +267,15 @@ function category2(categoryId) {
 }
 
 document.getElementById("mainDiv")
+
+function birthCouponList(btn) {
+    let couponBtn = document.getElementById("navbarDropdownMenuLink");
+
+    if(btn.value == "none") {
+        document.getElementById("mainDiv").style.minHeight = "0vh";
+        couponBtn.value = "active";
+    } else {
+        document.getElementById("mainDiv").style.minHeight = "20vh";
+        couponBtn.value = "none";
+    }
+}

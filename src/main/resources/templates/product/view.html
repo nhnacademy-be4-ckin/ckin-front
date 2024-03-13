@@ -40,7 +40,7 @@
                                     <div class="auto_overflow_inner">
                                         <div class="author">
                                             <a href="#" th:text="${authorNames}">
-                                            </a>저자(글)
+                                            </a> 저자(글)
                                         </div>
                                     </div>
                                 </div>
@@ -56,41 +56,8 @@
 
                             <div class="prod_review_box">
                                 <div class="col_review">
-                                    <span class="review_score feel_lucky" th:text="${book.bookReviewRate}">9.4</span>
-                                    <div class="rating-container theme-krajee-gly rating-md rating-animate rating-disabled">
-                                        <div class="clear-rating " title="초기화"><i
-                                                class="glyphicon glyphicon-minus-sign"></i></div>
-                                        <div class="rating-stars" tabindex="0"><span class="empty-stars"><span
-                                                class="star" title="One Star"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Two Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Three Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Four Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span></span><span
-                                                class="filled-stars" style="width: 94%;"><span class="star"
-                                                                                               title="One Star"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Two Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Three Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Four Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span></span></div>
-                                        <div class="caption"><span
-                                                class="caption-badge caption-secondary">10점 중 9.4점</span></div>
-                                    </div>
-                                    <input type="number" class="form_rating rating-input" value="9.4" title="이 책의 평점"
-                                           readonly="readonly" tabindex="-1">
-
-
-                                    <span class="review_desc">(<span class="val">1137</span>개의 리뷰)</span>
-                                </div>
-                                <div class="col_review">
                                     <span class="review_quotes_text">도움돼요</span>
-                                    <span class="review_desc">(<span class="val">39%</span>의
-        구매자)</span>
+                                    <span class="review_desc">(<span class="val">39%</span>의 구매자)</span>
                                 </div>
 
                                 <button type="button" class="btn_go_review"><span class="hidden">리뷰 영역으로 가기</span>
@@ -154,11 +121,13 @@
                                 <div class="prod_price">
                                     <span class="percent" th:text="${book.bookDiscountRate} + '%'"></span>
                                     <span class="price">
-                                        <span class="val" th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'">
+                                        <span class="val"
+                                              th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'">
                                         </span>
                                     </span>
                                     <span class="sale_price">
-                                        <s class="val" th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s>
+                                        <s class="val"
+                                           th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s>
                                     </span>
                                 </div>
                             </div>
@@ -412,7 +381,8 @@
             <div class="header_contents_inner">
                 <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
                     <!-- 타이틀 영역 -->
-                    <p class="title_heading" data-review-label="title" th:text="'총 리뷰 ' + ${pagination.totalElements} + '건'"></p>
+                    <p class="title_heading" data-review-label="title"
+                       th:text="'총 리뷰 ' + ${pagination.totalElements} + '건'"></p>
                     <div data-kbbfn-role="title">
                         <div class="right_area" id="reviewButton">
                             <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
@@ -597,7 +567,8 @@
                           enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">리뷰 점수</label>
-                            <input type="number" name="reviewRate" class="form-control" id="recipient-name" min="1" max="5" placeholder="1에서 5사이의 정수를 입력해주세요.">
+                            <input type="number" name="reviewRate" class="form-control" id="recipient-name" min="1"
+                                   max="5" placeholder="1에서 5사이의 정수를 입력해주세요.">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">리뷰 작성*</label>
