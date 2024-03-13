@@ -91,7 +91,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth -> oauth
-                        .loginPage("/login/auth")
+                        .loginPage("/login")
                         .userInfoEndpoint()
                         .userService(customOAuth2UserService));
 
