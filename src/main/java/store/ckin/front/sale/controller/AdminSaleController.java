@@ -15,8 +15,6 @@ import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
-import javax.validation.constraints.Positive;
-
 /**
  * 관리자 주문 Controller 클래스입니다.
  *
@@ -43,11 +41,10 @@ public class AdminSaleController {
                            Model model) {
 
         PagedResponse<List<SaleResponseDto>> sales
-                = saleFacade.getSales(pageable.getPageNumber(), pageable.getPageSize());
+                = saleFacade.getSales(pageable.getPageNumber() - 1, pageable.getPageSize());
 
-        log.debug("sales = {}", sales.getData());
-
-        model.addAttribute("sales", sales);
+        model.addAttribute("sales", sales.getData());
+        model.addAttribute("pageInfo", sales.getPageInfo());
         return "admin/sale/main";
     }
 
