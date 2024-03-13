@@ -6,6 +6,8 @@
       layout:decorate="~{layouts/default}">
 
 <head>
+
+    <title> CKIN | 주문 </title>
     <style>
 
         table {
@@ -182,7 +184,7 @@
                                                     class="packaging form-control form-control-sm">
                                                 <option selected value="0">선택 X</option>
                                                 <option th:if="${bookSale.bookPackaging}"
-                                                        th:each="packaging : ${policyList.getPackagingPolicies()}"
+                                                        th:each="packaging : ${policyList.packagingPolicies}"
                                                         th:value="${packaging.packagingId}"
                                                         th:text="${packaging.packagingType} + ' / ' + ${packaging.packagingPrice} + '원'">
                                                 </option>
@@ -341,9 +343,9 @@
 								<span class="stext-117 cl2">
                                     <input type="hidden" name="deliveryFee"
                                            th:id="deliveryFee"
-                                           th:value="${policyList.getDeliveryPolicy().deliveryPolicyFee}">
+                                           th:value="${policyList.deliveryPolicy.deliveryPolicyFee}">
 									<span id="deliveryPrice"
-                                          th:text="${policyList.getDeliveryPolicy().deliveryPolicyFee}"></span> 원
+                                          th:text="${policyList.deliveryPolicy.deliveryPolicyFee}"></span> 원
 								</span>
                             </div>
                         </div>
@@ -440,11 +442,11 @@
         /*<![CDATA[*/
         let packagingPrices = new Map();
         packagingPrices.set(0, 0);
-        /*[# th:each="packaging : ${policyList.getPackagingPolicies()}"]*/
+        /*[# th:each="packaging : ${policyList.packagingPolicies}"]*/
         packagingPrices.set([[${packaging.packagingId}]], [[${packaging.packagingPrice}]]);
         /*[/]*/
 
-        let freeDeliveryPrice = [[${policyList.getDeliveryPolicy().deliveryPolicyCondition}]];
+        let freeDeliveryPrice = [[${policyList.deliveryPolicy.deliveryPolicyCondition}]];
         /*]]>*/
 
     </script>
