@@ -15,8 +15,6 @@ import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
-import javax.validation.constraints.Positive;
-
 /**
  * 관리자 주문 Controller 클래스입니다.
  *
