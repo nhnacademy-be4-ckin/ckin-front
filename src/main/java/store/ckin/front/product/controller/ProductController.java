@@ -72,17 +72,8 @@ public class ProductController {
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-        model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
+        model.addAttribute("totalRate", bookResponseDto.getBookReviewRate());
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }
-
-    private double getTotalRate(List<ReviewDto> reviewDtoList) {
-        double total = 0;
-        for (ReviewDto reviewDto : reviewDtoList) {
-            total += reviewDto.getReviewRate();
-        }
-        return total / reviewDtoList.size();
-    }
-
 }

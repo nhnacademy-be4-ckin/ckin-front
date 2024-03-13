@@ -84,9 +84,7 @@ function toggleButton(button) {
     button.classList.toggle("active");
 
     // span의 텍스트 값 변경
-    // var commentContentsInner = document.querySelector('.comment_wrap .comment_list .comment_item .comment_contents .comment_contents_inner');
     var commentContentsInner = document.getElementById(button.value);
-    // var smallImageBox = document.querySelector('.comment_thumb_box');
     var smallImageBox = document.getElementById('thumb' + button.value);
     var spanText = button.querySelector('.text');
     if (spanText.innerText === "펼치기") {

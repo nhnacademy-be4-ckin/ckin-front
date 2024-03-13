@@ -412,7 +412,7 @@
             <div class="header_contents_inner">
                 <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
                     <!-- 타이틀 영역 -->
-                    <p class="title_heading" data-review-label="title" th:text="'총 리뷰 ' + ${totalCount} + '건'"></p>
+                    <p class="title_heading" data-review-label="title" th:text="'총 리뷰 ' + ${pagination.totalElements} + '건'"></p>
                     <div data-kbbfn-role="title">
                         <div class="right_area" id="reviewButton">
                             <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
@@ -432,9 +432,9 @@
                         </div>
                     </div>
                     <div class="klover_box_right">
-                        <div class="caption"><span class="caption-badge caption-secondary"><span
-                                class="val" aria-hidden="true" th:text="${totalRate}"></span><span class="total"
-                                                                                                   aria-hidden="true">/5</span></span>
+                        <div class="caption"><span class="caption-badge caption-secondary">
+                            <span class="val" aria-hidden="true" th:text="${totalRate}"></span>
+                            <span class="total" aria-hidden="true">/5</span></span>
                         </div>
                     </div>
 
