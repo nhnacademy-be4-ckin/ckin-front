@@ -1,6 +1,7 @@
 package store.ckin.front.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import store.ckin.front.member.service.MemberService;
  * @author : jinwoolee
  * @version : 2024. 02. 16.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -51,6 +53,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberMyPageResponseDto getMyPageInfo(String memberId) {
+        log.info("my page memberid: {}", memberId);
+
+        MemberMyPageResponseDto responseDto = memberAdapter.getMyPageInfo(memberId);
+
+        log.info("my page name : {}", responseDto.getName());
+        log.info("my page grade name : {}", responseDto.getGradeName());
+
         return memberAdapter.getMyPageInfo(memberId);
     }
 }
