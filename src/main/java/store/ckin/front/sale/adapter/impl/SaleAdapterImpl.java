@@ -1,5 +1,8 @@
 package store.ckin.front.sale.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -17,10 +20,6 @@ import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 주문 어댑터 구현 클래스.
@@ -78,10 +77,10 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 생성된 주문 ID
      */
     @Override
-    public Long requestCreateSale(SaleCreateRequestDto requestDto) {
+    public String requestCreateSale(SaleCreateRequestDto requestDto) {
         HttpEntity<SaleCreateRequestDto> requestEntity = new HttpEntity<>(requestDto, getHttpHeaders());
 
-        ResponseEntity<Long> exchange = restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
+        ResponseEntity<String> exchange = restTemplate.exchange(gatewayProperties.getGatewayUri() + SALE_URL,
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
@@ -134,19 +133,19 @@ public class SaleAdapterImpl implements SaleAdapter {
     /**
      * {@inheritDoc}
      *
-     * @param saleId 조회할 주문 ID
+     * @param saleNumber 조회할 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
     @Override
-    public SaleWithBookResponseDto requestGetSaleWithBooks(Long saleId) {
+    public SaleWithBookResponseDto requestGetSaleWithBooks(String saleNumber) {
         HttpEntity<SaleWithBookResponseDto> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<SaleWithBookResponseDto> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}/books",
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleNumber}/books",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                }, saleId);
+                }, saleNumber);
 
         return exchange.getBody();
     }
