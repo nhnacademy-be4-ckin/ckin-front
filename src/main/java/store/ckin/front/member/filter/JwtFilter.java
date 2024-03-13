@@ -48,7 +48,6 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
-
             // 정적 파일인지 확인
             if (isResourceFile(request.getRequestURI())) {
                 filterChain.doFilter(request, response);
