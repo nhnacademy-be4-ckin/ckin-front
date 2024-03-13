@@ -23,6 +23,7 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.oauth.CustomOAuth2UserService;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -41,6 +42,8 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
+    private final CustomOAuth2UserService customOAuth2UserService;
+
 
     /**
      * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
@@ -51,10 +54,12 @@ public class SecurityConfig {
      */
     public SecurityConfig(@Qualifier("authRedisTemplate") RedisTemplate<String, Object> redisTemplate,
                           MemberDetailsService memberDetailsService,
-                          TokenService tokenService) {
+                          TokenService tokenService,
+                          CustomOAuth2UserService customOAuth2UserService) {
         this.redisTemplate = redisTemplate;
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
+        this.customOAuth2UserService = customOAuth2UserService;
     }
 
 
@@ -84,7 +89,11 @@ public class SecurityConfig {
                         .requestMatchers("/member/**").hasAuthority("MEMBER")
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
-                .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/login/auth")
+                        .userInfoEndpoint()
+                        .userService(customOAuth2UserService));
 
         return http.build();
     }
