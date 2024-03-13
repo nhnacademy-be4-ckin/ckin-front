@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mypage-default}">
     <div layout:fragment="mypage-content" class="my-page-body">
-        <h1 class="mt-4" th:text="${member.getName() + '님 환영합니다!'}"></h1>
+        <h1 class="mt-4" th:text="${member.name + '님 환영합니다!'}"></h1>
 
         <div class="card mt-4 my-page-header">
             <div class="my-page-header-nav">
                 <div class="d-flex justify-content-center">
                     <span>나의 CKIN 등급</span>
-                    <span class="memberName" th:text="${' ' + member.getGradeName()}"></span>
+                    <span class="memberName" th:text="${' ' + member.gradeName}"></span>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="circle" th:classappend="${member.gradeName == '일반' ? 'normal' : ''}">Normal</div>
@@ -28,7 +28,7 @@
                             <span>포인트</span>
                             <i class="fas fa-angle-right"></i>
                         </div>
-                        <div th:text="${member.getPoint()}" style="color: black;"></div>
+                        <div th:text="${member.point}" style="color: black;"></div>
                     </div>
                 </a>
             </div>
@@ -41,7 +41,7 @@
                             <span>보유쿠폰</span>
                             <i class="fas fa-angle-right"></i>
                         </div>
-                        <div th:text="${member.getCountReview()}" style="color: black;"></div>
+                        <div th:text="${member.countReview}" style="color: black;"></div>
                     </div>
                 </a>
             </div>
@@ -51,7 +51,7 @@
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">3개월 간 구매 금액</h5>
-                <p class="card-text" th:text="${member.getAccumulateAmount() + '원'}"></p>
+                <p class="card-text" th:text="${member.accumulateAmount + '원'}"></p>
             </div>
         </div>
     </div>
