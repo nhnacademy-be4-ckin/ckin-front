@@ -45,7 +45,7 @@ public class SaleServiceImpl implements SaleService {
      * @return 생성된 주문 ID
      */
     @Override
-    public Long createSale(SaleCreateRequestDto requestDto) {
+    public String createSale(SaleCreateRequestDto requestDto) {
         return saleAdapter.requestCreateSale(requestDto);
     }
 
@@ -77,8 +77,8 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
     @Override
-    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
-        return saleAdapter.requestGetSaleWithBooks(saleId);
+    public SaleWithBookResponseDto getSaleWithBooks(String saleNumber) {
+        return saleAdapter.requestGetSaleWithBooks(saleNumber);
     }
 
     /**

@@ -34,7 +34,7 @@ public interface SaleAdapter {
      * @param requestDto 주문 생성 요청 DTO
      * @return 생성된 주문 ID
      */
-    Long requestCreateSale(SaleCreateRequestDto requestDto);
+    String requestCreateSale(SaleCreateRequestDto requestDto);
 
     /**
      * 모든 주문을 조회합니다.
@@ -59,7 +59,7 @@ public interface SaleAdapter {
      * @param saleId 조회할 주문 ID
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
-    SaleWithBookResponseDto requestGetSaleWithBooks(Long saleId);
+    SaleWithBookResponseDto requestGetSaleWithBooks(String saleNumber);
 
     /**
      * 주문 번호를 통해 결제 정보를 조회합니다.

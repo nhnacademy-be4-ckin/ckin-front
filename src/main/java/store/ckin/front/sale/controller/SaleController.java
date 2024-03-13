@@ -11,13 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
-import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
 /**
@@ -52,6 +51,11 @@ public class SaleController {
         }
 
         List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
+
+        if (cartItems.isEmpty()) {
+            return "redirect:/cart";
+        }
+
         model.addAttribute("policyList", saleFacade.getPolicyList());
         model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
         return "sale/main";
@@ -66,16 +70,14 @@ public class SaleController {
      */
     @PostMapping
     public String createSale(@CookieValue("CART_ID") Cookie cookie,
-                             @Valid SaleCreateRequestDto requestDto,
-                             RedirectAttributes redirectAttributes) {
+                             @Valid SaleCreateRequestDto requestDto) {
 
         log.debug("requestDto = {}", requestDto);
 
-        Long saleId = saleFacade.createSale(requestDto);
+        String saleNumber = saleFacade.createSale(requestDto);
         saleFacade.deleteCartItemAll(cookie.getValue());
 
-        redirectAttributes.addFlashAttribute("SALE_ID", saleId);
-        return "redirect:/sale/success";
+        return "redirect:/sale/success/" + saleNumber;
     }
 
     /**
@@ -84,15 +86,11 @@ public class SaleController {
      * @param model 주문 정보가 담은 Model 객체
      * @return 주문 완료 페이지
      */
-    @GetMapping("/success")
-    public String getSaleInformation(Model model) {
+    @GetMapping("/success/{saleNumber}")
+    public String getSaleInformation(@PathVariable String saleNumber,
+                                     Model model) {
 
-        Long saleId = (Long) model.getAttribute("SALE_ID");
-        SaleWithBookResponseDto sale = saleFacade.getSaleWithBooks(saleId);
-
-        log.debug("sale = {}", sale);
-
-        model.addAttribute("sale", sale);
+        model.addAttribute("sale", saleFacade.getSaleWithBooks(saleNumber));
         return "sale/success";
     }
 }

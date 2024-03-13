@@ -53,12 +53,12 @@ public class CartController {
      * 장바구니에 상품을 추가하는 메서드
      *
      * @param cookie                   현재 유저의 UUID (Cart_Id)
-     * @param CartItemCreateRequestDto 장바구니에 추가할 아이템
+     * @param cartItemCreateRequestDto 장바구니에 추가할 아이템
      * @return 장바구니 페이지 리다이렉트 URL
      */
     @PostMapping("/create")
-    public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
-    CartItemCreateRequestDto cartItemCreateRequestDto) {
+    public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie,
+                              @ModelAttribute CartItemCreateRequestDto cartItemCreateRequestDto) {
         log.debug("add Item -> {}", cartItemCreateRequestDto.getId());
         cartService.createCartItem(cookie.getValue(), cartItemCreateRequestDto);
         return REDIRECT_CART_URL;
@@ -88,8 +88,8 @@ public class CartController {
      * @return 장바구니 페이지로 리다이렉트
      */
     @PostMapping("/delete")
-    public String deleteCartItem(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
-    CartItemDeleteRequestDto cartItemDeleteRequestDto) {
+    public String deleteCartItem(@CookieValue(name = "CART_ID") Cookie cookie,
+                                 @ModelAttribute CartItemDeleteRequestDto cartItemDeleteRequestDto) {
         log.debug("deleteCartItem(): request(id: {})", cartItemDeleteRequestDto.getId());
         cartService.deleteCartItem(cookie.getValue(), cartItemDeleteRequestDto);
         return REDIRECT_CART_URL;
