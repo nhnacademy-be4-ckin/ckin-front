@@ -1,5 +1,8 @@
 package store.ckin.front.sale.controller;
 
+import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -11,18 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
-import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
-
-import javax.servlet.http.Cookie;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * 주문 Controller 클래스입니다.
@@ -47,23 +43,17 @@ public class SaleController {
      * @return 주문 등록 페이지
      */
     @GetMapping
-    public String getSaleForm(Model model) {
-
-        SalePolicyResponseDto policyList = saleFacade.getPolicyList();
-
-        List<CartItem> cartItems = (List<CartItem>) model.getAttribute("PLACE_ITEMS");
-        List<BookExtractionResponseDto> bookSaleList = saleFacade.getBookSaleList(Objects.requireNonNull(cartItems));
+    public String getSaleForm(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("authentication = {}", authentication.getName());
         if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
-            log.debug("memberPoint = {}", memberPoint.getPoint());
             model.addAttribute("memberPoint", memberPoint.getPoint());
         }
 
-        model.addAttribute("policyList", policyList);
-        model.addAttribute("bookSaleList", bookSaleList);
+        List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
+        model.addAttribute("policyList", saleFacade.getPolicyList());
+        model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
         return "sale/main";
     }
 

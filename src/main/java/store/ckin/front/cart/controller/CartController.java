@@ -1,19 +1,21 @@
 package store.ckin.front.cart.controller;
 
+import java.util.List;
+import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.service.CartService;
-
-import javax.servlet.http.Cookie;
-import java.util.List;
 
 /**
  * 장바구니의 임시 저장을 담당하는 컨트롤러 클래스
@@ -96,14 +98,10 @@ public class CartController {
     /**
      * 장바구니 상품을 주문하기 위한 메서드
      *
-     * @param cookie             현재 유저의 UUID
-     * @param redirectAttributes 상품들의 리스트를 결제 페이지로 넘겨주기 위한 RedirectAttributes
      * @return 결제 페이지로 리다이렉트
      */
     @GetMapping("/order")
-    public String placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("PLACE_ITEMS", cartService.readCartItems(cookie.getValue()));
-        // 주문시 카트 비워지는 로직 추가
+    public String placeOrder() {
         return "redirect:/sale";
     }
 }
