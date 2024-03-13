@@ -1,6 +1,7 @@
 package store.ckin.front.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * @author : gaeun
  * @version 2024. 03. 07.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
