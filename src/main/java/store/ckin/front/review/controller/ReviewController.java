@@ -38,7 +38,7 @@ public class ReviewController {
     public String postReview(@PathVariable("bookId") Long bookId,
                              @RequestParam("reviewRate") String reviewRate,
                              @RequestParam("reviewComment") String reviewComment,
-                             @RequestPart("imageList") List<MultipartFile> imageList) {
+                             @RequestPart(value = "imageList", required = false) List<MultipartFile> imageList) {
 
         for (MultipartFile img : imageList) {
             log.info("img : {}", img.getResource());
