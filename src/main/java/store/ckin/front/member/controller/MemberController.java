@@ -78,6 +78,10 @@ public class MemberController {
 
         MemberMyPageResponseDto responseDto = memberService.getMyPageInfo(memberId);
 
+        log.info("Controller : {}=", responseDto);
+        log.info("Controller Name: {}=", responseDto.getName());
+        log.info("Controller Name: {}=", responseDto.getGradeName());
+
         model.addAttribute("member", responseDto);
 
         return "member/mypage";
