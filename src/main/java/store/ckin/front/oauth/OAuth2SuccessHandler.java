@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author : jinwoolee
  * @version : 2024. 03. 13.
  */
+@Slf4j
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Override
@@ -31,7 +33,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         attributes.forEach(targetUrl::queryParam);
 
+        String finalUrl = targetUrl.build().toUriString();
 
-        getRedirectStrategy().sendRedirect(request, response, targetUrl.build().toUriString());
+        log.info("finalUrl : {}", finalUrl);
+
+        getRedirectStrategy().sendRedirect(request, response, finalUrl);
     }
 }
