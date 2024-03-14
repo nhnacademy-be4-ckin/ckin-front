@@ -1,6 +1,7 @@
 package store.ckin.front.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
  * @author : gaeun
  * @version 2024. 03. 07.
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
@@ -38,11 +41,11 @@ public class ProductController {
     @GetMapping("/{categoryId}")
     public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
                                  @PathVariable("categoryId") Long categoryId,
+                                 @RequestParam(value = "categoryName", required = false) String categoryName,
                                  Model model) {
 
         PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(categoryId);
-        String categoryName = "국내도서";
         //TODO: categoryId로 단일 조회
 
         model.addAttribute("pagination", bookPageDto);
@@ -70,17 +73,9 @@ public class ProductController {
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-        model.addAttribute("totalRate", getTotalRate(reviewListDtoPageDto.getContent()));
+        model.addAttribute("totalRate",
+                "0".equals(bookResponseDto.getBookReviewRate()) ? 0 : String.format("%.2f", Double.parseDouble(bookResponseDto.getBookReviewRate()) / reviewListDtoPageDto.getTotalElements()));
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }
-
-    private double getTotalRate(List<ReviewDto> reviewDtoList) {
-        double total = 0;
-        for (ReviewDto reviewDto : reviewDtoList) {
-            total += reviewDto.getReviewRate();
-        }
-        return total / reviewDtoList.size();
-    }
-
 }

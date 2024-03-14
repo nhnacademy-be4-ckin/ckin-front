@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="/css/template.css">
         <link rel="stylesheet" href="/css/common.css">
         <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/main-initial.css">
     </head>
 
     <body>
@@ -35,26 +36,20 @@
                 <aside class="aside_wrap sub_category">
                     <div class="aside_header">
                         <div class="title_wrap title_size_xxl">
-                            <a href="https://product.kyobobook.co.kr/KOR" class="title_heading" th:text="${categoryName}"></a>
+                            <a href="#" class="title_heading" th:text="${categoryName}"></a>
                         </div>
                     </div>
                     <div class="aside_body">
                         <div class="snb_wrap">
                             <ul class="snb_list">
                                 <li class="snb_item" th:each="category : ${categoryList}">
-                                    <a th:href="@{'/product/' + ${category.categoryId}}" class="snb_link" th:text="${category.categoryName}">
+                                    <a th:href="@{'/product/' + ${category.categoryId}}" class="snb_link"
+                                       th:text="${category.categoryName}">
                                     </a>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="showcase_side_wrap">
-                            <div class="blurb_thumb_box" id="lnb_adv">
-                                <a href="http://imac.kyobobook.co.kr/click/INK/ink_showcase_new/ink_showcase@ca_03?adsno=145335&amp;ctvno=112401&amp;clkno=112441"
-                                   class="img_box"><span class="img_box"><img
-                                        src="https://contents.kyobobook.co.kr/advrcntr/IMAC/creatives/2024/02/23/72441/I_category_0223_2.png"
-                                        alt="메리골드 마음 사진관"></span></a></div>
-                        </div>
                     </div>
                 </aside>
                 <section id="contents2" class="section_wrap">
@@ -75,7 +70,7 @@
                                                     <div class="prod_thumb_box size_lg">
                                                         <a th:href="@{'/product/' + ${book.bookId}}" class="prod_link">
                                         <span class="img_box">
-                                            <img data-kbbfn="s3-image" alt="로즈웰 가는 길" loading="lazy"
+                                            <img data-kbbfn="s3-image" alt="" loading="lazy"
                                                  th:src="${book.thumbnail}"
                                                  th:data-src="${book.thumbnail}">
                                          </span>
@@ -96,12 +91,11 @@
                                                                   th:text="${book.bookDiscountRate} + '%'"></span>
                                                             <span class="price">
                                                                 <span class="val"
-                                                                      th:text="${book.bookSalePrice}"></span>
-                                                                <span class="unit">원</span>
+                                                                      th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'"></span>
                                                                 <span class="price_normal"><span
                                                                         class="text">정가</span>
                                                                     <s class="val"
-                                                                       th:text="${book.bookRegularPrice} + '원'"></s></span>
+                                                                       th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s></span>
                                                             </span>
                                                         </div>
                                                         <p class="prod_introduction"
@@ -142,14 +136,6 @@
         </section>
     </main>
 
-    <!-- [E]opilsol-N18 -->
-    <script src="/js/setting.js"></script>
-    <script src="/js/plugin.js"></script>
-    <script src="/js/template.js"></script>
-    <script src="/js/script.js"></script>
-    <script>
-
-    </script>
     </body>
 </div>
 </html>

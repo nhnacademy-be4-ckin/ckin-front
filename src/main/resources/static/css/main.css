@@ -1989,9 +1989,15 @@ input.num-product::-webkit-inner-spin-button {
     transform: translateY(250%);
 }
 
+.img-banner:hover {
+    transform: scale(1.2);
+    transition: .5s;
+}
+
 /*---------------------------------------------*/
 .block1-txt:hover {
-    background-color: rgba(103, 117, 214, 0.8);
+    /*background-color: rgba(93, 252, 203, 0.72);*/
+    transform: scale(1.4);
 }
 
 .block1-txt:hover .block1-txt-child2 {
