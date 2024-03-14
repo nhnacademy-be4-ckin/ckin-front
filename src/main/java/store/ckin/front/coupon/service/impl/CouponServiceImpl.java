@@ -2,6 +2,8 @@ package store.ckin.front.coupon.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import store.ckin.front.coupon.adapter.CouponAdapter;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
@@ -56,8 +58,14 @@ public class CouponServiceImpl implements CouponService {
         return couponAdapter.getCouponByMemberId(pageable, memberId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean createCouponByIds(Long memberId, Long couponTemplateId) {
+    public boolean createCouponByIds(Long couponTemplateId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long memberId = Long.parseLong((authentication.getName()));
+
         return couponAdapter.createCouponByIds(memberId, couponTemplateId);
     }
 
@@ -70,4 +78,5 @@ public class CouponServiceImpl implements CouponService {
     public void updateCouponUsed(List<Long> couponIds) {
         couponAdapter.updateCouponUsed(couponIds);
     }
+
 }

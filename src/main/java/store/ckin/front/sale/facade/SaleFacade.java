@@ -90,7 +90,7 @@ public class SaleFacade {
      * @param requestDto 주문 생성 요청 DTO
      * @return 주문 ID
      */
-    public Long createSale(SaleCreateRequestDto requestDto) {
+    public String createSale(SaleCreateRequestDto requestDto) {
 
         List<Long> couponIds = requestDto.getBookSaleList().stream()
                 .map(BookSaleCreateRequestDto::getAppliedCouponId)
@@ -147,13 +147,13 @@ public class SaleFacade {
     }
 
     /**
-     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     * 주문 번호를 통해 주문과 관련된 도서 정보를 조회합니다.
      *
-     * @param saleId 주문 ID
+     * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
-    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
-        return saleService.getSaleWithBooks(saleId);
+    public SaleWithBookResponseDto getSaleWithBooks(String saleNumber) {
+        return saleService.getSaleWithBooks(saleNumber);
     }
 
     /**
@@ -164,5 +164,15 @@ public class SaleFacade {
      */
     public List<CartItem> readCartItems(String cartId) {
         return cartService.readCartItems(cartId);
+    }
+
+    /**
+     * 주문 번호를 통해 주문의 상세 정보를 조회하는 메서드입니다.
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
+        return saleService.getSaleDetailBySaleNumber(saleNumber);
     }
 }

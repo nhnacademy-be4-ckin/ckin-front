@@ -25,7 +25,7 @@ function handleFiles(fileInputId, imgViewId) {
                 newListItem.innerHTML = `
                     <span class="file_item">
                         <span class="btn_box">
-                            <input id="${newFileInputId}" type="file" accept="image/*">
+                            <input id="${newFileInputId}" name="imageList" type="file" accept="image/*">
                             <label for="${newFileInputId}">
                                 <span class="hidden">첨부파일 추가</span>
                             </label>
@@ -77,3 +77,30 @@ $.ajax({
         }
     }
 })
+
+//리뷰 사진 펼치기
+function toggleButton(button) {
+    // 버튼 클래스에 active 추가 및 제거
+    button.classList.toggle("active");
+
+    // span의 텍스트 값 변경
+    var commentContentsInner = document.getElementById(button.value);
+    var smallImageBox = document.getElementById('thumb' + button.value);
+    var spanText = button.querySelector('.text');
+    if (spanText.innerText === "펼치기") {
+        spanText.innerText = "접기";
+        commentContentsInner.style.maxHeight = 'none';
+        smallImageBox.style.display = 'none';
+    } else {
+        spanText.innerText = "펼치기";
+        commentContentsInner.style.maxHeight = '66px';
+        smallImageBox.style.display = 'block';
+    }
+}
+
+// 이미지 URL을 새 창에서 열기
+function openImage(element) {
+    var backgroundImage = element.style.backgroundImage;
+    var imageUrl = backgroundImage.replace('url("', '').replace('")', ''); // 배경 이미지 URL 추출
+    window.open(imageUrl, '_blank');
+}

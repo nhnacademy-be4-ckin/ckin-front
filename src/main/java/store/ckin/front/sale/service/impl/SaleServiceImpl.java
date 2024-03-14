@@ -1,5 +1,6 @@
 package store.ckin.front.sale.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.common.dto.PagedResponse;
@@ -11,8 +12,6 @@ import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
 import store.ckin.front.sale.service.SaleService;
-
-import java.util.List;
 
 /**
  * 주문 서비스 구현 클래스입니다.
@@ -45,7 +44,7 @@ public class SaleServiceImpl implements SaleService {
      * @return 생성된 주문 ID
      */
     @Override
-    public Long createSale(SaleCreateRequestDto requestDto) {
+    public String createSale(SaleCreateRequestDto requestDto) {
         return saleAdapter.requestCreateSale(requestDto);
     }
 
@@ -73,12 +72,12 @@ public class SaleServiceImpl implements SaleService {
     /**
      * {@inheritDoc}
      *
-     * @param saleId 주문 ID
+     * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
     @Override
-    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
-        return saleAdapter.requestGetSaleWithBooks(saleId);
+    public SaleWithBookResponseDto getSaleWithBooks(String saleNumber) {
+        return saleAdapter.requestGetSaleWithBooks(saleNumber);
     }
 
     /**
@@ -101,5 +100,16 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId) {
         return saleAdapter.requestGetSalesByMemberId(memberId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    @Override
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
+        return saleAdapter.requestGetSaleDetailBySaleNumber(saleNumber);
     }
 }
