@@ -277,6 +277,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    margin-bottom: 5px;
 }
 
 .search {
@@ -311,13 +312,20 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     margin-bottom: 3px;
 }
 
-.search-button-container {
+.search-button-a {
     height: 100%;
     width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 20px;
+}
+.search-button-container {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-button {
