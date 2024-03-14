@@ -98,4 +98,16 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 Void.class);
     }
 
+    @Override
+    public String getCategoryName(Long categoryId) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<String> exchange = restTemplate.exchange(gatewayProperties.getGatewayUri() + CATEGORY_URL + "/get/" + categoryId,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+        return exchange.getBody();
+    }
+
 }

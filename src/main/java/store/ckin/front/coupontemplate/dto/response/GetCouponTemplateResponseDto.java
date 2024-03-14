@@ -1,8 +1,9 @@
 package store.ckin.front.coupontemplate.dto.response;
 
 import lombok.Getter;
+import lombok.ToString;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 /**
  * 쿠폰 템플릿 응답 DTO
@@ -12,6 +13,7 @@ import java.time.LocalDate;
  */
 
 @Getter
+@ToString
 public class GetCouponTemplateResponseDto {
     private Long id;
     private Long policyId;
@@ -25,5 +27,5 @@ public class GetCouponTemplateResponseDto {
     private Long amount;
     private Long typeId;
     private Integer duration;
-    private LocalDate expirationDate;
+    private Date expirationDate;
 }

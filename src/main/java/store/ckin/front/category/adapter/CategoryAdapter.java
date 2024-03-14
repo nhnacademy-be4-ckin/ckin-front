@@ -54,5 +54,11 @@ public interface CategoryAdapter {
      */
     void requestDeleteCategory(Long categoryId);
 
-
+    /**
+     * 해당 카테고리의 이름을 가져옵니다.
+     *
+     * @param bookId
+     * @return
+     */
+    String getCategoryName(Long bookId);
 }

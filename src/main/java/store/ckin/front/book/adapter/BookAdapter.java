@@ -74,4 +74,5 @@ public interface BookAdapter {
      * @param file   새 표지 이미지 파일
      */
     void requestUpdateBookThumbnail(Long bookId, MultipartFile file);
+
 }
