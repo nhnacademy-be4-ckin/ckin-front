@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="/css/template.css">
         <link rel="stylesheet" href="/css/common.css">
         <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/main-initial.css">
     </head>
 
     <body>
@@ -69,7 +70,7 @@
                                                     <div class="prod_thumb_box size_lg">
                                                         <a th:href="@{'/product/' + ${book.bookId}}" class="prod_link">
                                         <span class="img_box">
-                                            <img data-kbbfn="s3-image" alt="로즈웰 가는 길" loading="lazy"
+                                            <img data-kbbfn="s3-image" alt="" loading="lazy"
                                                  th:src="${book.thumbnail}"
                                                  th:data-src="${book.thumbnail}">
                                          </span>
@@ -135,14 +136,6 @@
         </section>
     </main>
 
-    <!-- [E]opilsol-N18 -->
-    <script src="/js/setting.js"></script>
-    <script src="/js/plugin.js"></script>
-    <script src="/js/template.js"></script>
-    <script src="/js/script.js"></script>
-    <script>
-
-    </script>
     </body>
 </div>
 </html>

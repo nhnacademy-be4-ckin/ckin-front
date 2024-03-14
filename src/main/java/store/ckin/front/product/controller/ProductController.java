@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
@@ -40,11 +41,11 @@ public class ProductController {
     @GetMapping("/{categoryId}")
     public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
                                  @PathVariable("categoryId") Long categoryId,
+                                 @RequestParam(value = "categoryName", required = false) String categoryName,
                                  Model model) {
 
         PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(categoryId);
-        String categoryName = "국내도서";
         //TODO: categoryId로 단일 조회
 
         model.addAttribute("pagination", bookPageDto);

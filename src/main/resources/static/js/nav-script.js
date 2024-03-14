@@ -68,7 +68,7 @@ function tabAndCategorySub01() {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
-                        category.categoryId + `">`
+                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -143,7 +143,7 @@ function tabAndCategorySub02() {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category2(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
-                        category.categoryId + `">`
+                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -217,7 +217,7 @@ function category(categoryId) {
                 data.forEach(function (category) {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
-                        category.categoryId + `">`
+                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -249,7 +249,7 @@ function category2(categoryId) {
                 data.forEach(function (category) {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
-                        category.categoryId + `">`
+                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
