@@ -35,11 +35,12 @@
                         <a href="/" class="search-image-container">
                             <img src="/images/logo.png" alt="IMG-LOGO" class="search-image">
                         </a>
-                        <form class="searchForm" th:action="@{/product/search(keyword=${keyword})}" method="get">
+                        <form id="searchForm" class="searchForm" th:action="@{/product/search(keyword=${keyword})}"
+                              method="get">
                             <input name="keyword" id="keyword" type="text" class="searchInputText inherit"
                                    placeholder="검색어를 입력해 주세요">
                         </form>
-                        <a th:href="@{/product/search(keyword=${keyword})}" class="search-button-a">
+                        <a onclick="clickSearchBtn()" class="search-button-a">
                             <svg id="search-btn" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"
                                  style="fill: #03c75a" class="search-button-container">
                                 <path class="search-button"

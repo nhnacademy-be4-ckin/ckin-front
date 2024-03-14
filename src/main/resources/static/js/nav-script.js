@@ -1,7 +1,16 @@
+function clickSearchBtn() {
+    let keyword = document.getElementById("keyword");
+    if (keyword.value !== '') {
+        let searchForm = document.getElementById("searchForm");
+        searchForm.submit();
+    }
+    keyword.value = '';
+}
+
 function activateAnbWrap(btn) {
 
     var btnId = btn.value;
-    if(btnId == "none") {
+    if (btnId == "none") {
         document.getElementById("category").style = "background-image: url(/images/icons/free-icon-cancel-3482248.png)";
         // anb_wrap에 'active'와 'animated' 클래스 추가
         $('.anb_wrap').addClass('active animated');
@@ -68,7 +77,7 @@ function tabAndCategorySub01() {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
-                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
+                        category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -143,7 +152,7 @@ function tabAndCategorySub02() {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category2(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
-                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
+                        category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -217,7 +226,7 @@ function category(categoryId) {
                 data.forEach(function (category) {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
-                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
+                        category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -249,7 +258,7 @@ function category2(categoryId) {
                 data.forEach(function (category) {
                     console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
-                        category.categoryId + `?categoryName=`+ category.categoryName + `">`
+                        category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
                 });
 
@@ -271,7 +280,7 @@ document.getElementById("mainDiv")
 function birthCouponList(btn) {
     let couponBtn = document.getElementById("navbarDropdownMenuLink");
 
-    if(btn.value == "none") {
+    if (btn.value == "none") {
         document.getElementById("mainDiv").style.minHeight = "0vh";
         couponBtn.value = "active";
     } else {
