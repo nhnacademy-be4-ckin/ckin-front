@@ -1,7 +1,9 @@
 package store.ckin.front.oauth;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,12 +29,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         Authentication authentication)
             throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> attributes = (Map) oAuth2User.getAttributes().get("member");
 
-        UriComponentsBuilder targetUrl = UriComponentsBuilder.fromUriString("/signup");
-
-        attributes.forEach(targetUrl::queryParam);
-
+        UriComponentsBuilder targetUrl = UriComponentsBuilder
+                .fromUriString("/signup")
+                .encode(StandardCharsets.UTF_8);
+        attributes.forEach((key, value) -> {
+            if (Objects.nonNull(value)) {
+                targetUrl.queryParam(key, value);
+            }
+        });
         String finalUrl = targetUrl.build().toUriString();
 
         log.info("finalUrl : {}", finalUrl);

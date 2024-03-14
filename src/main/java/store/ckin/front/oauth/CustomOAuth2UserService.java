@@ -1,9 +1,7 @@
 package store.ckin.front.oauth;
 
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,8 +9,10 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -41,13 +41,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         log.info("OAuth start");
 
         String platform = userRequest.getClientRegistration().getClientName();
-        String userNameAttributeName = userRequest
-                .getClientRegistration()
-                .getProviderDetails()
-                .getUserInfoEndpoint()
-                .getUserNameAttributeName();
-
-        log.info("CustomOAuth2UserService : userNameAttributeName [{}]", userNameAttributeName);
 
         if (platform.equals("payco")) {
             log.info("Payco OAuth");
@@ -61,8 +54,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             Set<GrantedAuthority> authorities = new LinkedHashSet<>();
             authorities.add(new OAuth2UserAuthority(userAttributes));
+            OAuth2AccessToken token = userRequest.getAccessToken();
 
-            return new DefaultOAuth2User(authorities, userAttributes, userNameAttributeName);
+            for (String authority : token.getScopes()) {
+                authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority));
+            }
+
+            return new DefaultOAuth2User(authorities, userAttributes, "member");
         }
 
         return super.loadUser(userRequest);
