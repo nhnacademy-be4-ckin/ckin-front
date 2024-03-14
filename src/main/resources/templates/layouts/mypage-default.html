@@ -21,8 +21,8 @@
 
         <link rel="stylesheet" type="text/css" href="/css/util.css">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/animate.css">
         <link rel="stylesheet" type="text/css" href="/css/adminStyle.css">
+        <link rel="stylesheet" type="text/css" href="/css/animate.css">
         <link rel="stylesheet" type="text/css" href="/css/mypageStyle.css">
 
         <!-- font-awesome -->
@@ -37,9 +37,13 @@
         <header th:replace="fragments/index-header :: index-fragment-header"></header>
 
         <div id="layoutSidenav">
-            <div th:replace="fragments/mypage-sidebar :: mypage-fragment-sidebar"></div>
+            <div th:replace="fragments/mypage/mypage-sidebar :: mypage-fragment-sidebar"></div>
 
-            <div layout:fragment="mypage-content"></div>
+            <div class="my-page-content">
+                <header th:replace="fragments/mypage/mypage-header :: mypage-fragment-header"></header>
+
+                <div layout:fragment="mypage-content"></div>
+            </div>
         </div>
 
         <footer th:replace="fragments/index-footer :: index-fragment-footer"></footer>
