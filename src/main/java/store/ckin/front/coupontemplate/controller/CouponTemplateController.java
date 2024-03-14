@@ -15,7 +15,6 @@ import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 
