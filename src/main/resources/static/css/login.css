@@ -50,6 +50,7 @@ button, .login_btn {
 button {
     background-color: black;
     color : white;
+    font-size: 20px;
 }
 
 .login_btn {
