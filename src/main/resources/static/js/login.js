@@ -13,3 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+
+    if (error === 'invalid') {
+        alert('이메일이나 비밀번호를 확인하세요.');
+    }
+});
