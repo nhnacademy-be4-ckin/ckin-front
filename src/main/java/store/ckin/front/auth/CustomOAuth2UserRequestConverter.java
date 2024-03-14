@@ -2,6 +2,7 @@ package store.ckin.front.auth;
 
 import java.net.URI;
 import java.util.Collections;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,12 +18,16 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author : jinwoolee
  * @version : 2024. 03. 14.
  */
+@Slf4j
 public class CustomOAuth2UserRequestConverter
         implements Converter<OAuth2UserRequest, RequestEntity<?>> {
-    private static final MediaType DEFAULT_CONTENT_TYPE = MediaType.valueOf("application/x-www-form-urlencoded;charset=UTF-8");
+    private static final MediaType DEFAULT_CONTENT_TYPE
+            = MediaType.valueOf("application/x-www-form-urlencoded;charset=UTF-8");
 
     @Override
     public RequestEntity<?> convert(OAuth2UserRequest userRequest) {
+        log.info("Convert Start");
+
         ClientRegistration clientRegistration = userRequest.getClientRegistration();
 
         HttpHeaders headers = new HttpHeaders();
@@ -39,6 +44,6 @@ public class CustomOAuth2UserRequestConverter
                 .build()
                 .toUri();
 
-        return new RequestEntity<>(HttpMethod.POST, uri);
+        return new RequestEntity<>(headers, HttpMethod.POST, uri);
     }
 }
