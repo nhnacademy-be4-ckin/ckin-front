@@ -169,10 +169,11 @@ public class SaleFacade {
     /**
      * 주문 번호를 통해 주문의 상세 정보를 조회하는 메서드입니다.
      *
-     * @param saleNumber 주문 번호
+     * @param saleNumber     주문 번호
+     * @param ordererContact 주문자 연락처
      * @return 주문 상세 정보 응답 DTO
      */
-    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
-        return saleService.getSaleDetailBySaleNumber(saleNumber);
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+        return saleService.getSaleDetailBySaleNumber(saleNumber, ordererContact);
     }
 }

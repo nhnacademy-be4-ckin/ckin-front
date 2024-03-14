@@ -10,16 +10,18 @@
         <table class="table table-hover" style="text-align: center; vertical-align: middle;">
             <thead>
             <tr>
-                <th class="column-3" scope="col">주문 번호</th>
+                <th class="column-1" scope="col">주문 번호</th>
+                <th class="column-2" scope="col">주문명</th>
                 <th class="column-2" scope="col">회원 ID</th>
-                <th class="column-4" scope="col">결제 금액</th>
-                <th class="column-5" scope="col">주문 결제 상태</th>
-                <th class="column-1" scope="col">주문일시</th>
+                <th class="column-3" scope="col">결제 금액</th>
+                <th class="column-4" scope="col">주문 결제 상태</th>
+                <th class="column-5" scope="col">주문일시</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="sale : ${sales}">
-                <td><a th:text="${sale.saleId}" th:href="@{/admin/sale/{id}(id=${sale.saleId})}"></a></td>
+                <td><a th:text="${sale.saleId}"></a></td>
+                <td><a th:text="${sale.title}" th:href="@{/admin/sale/{id}(id=${sale.saleId})}"></a></td>
                 <th:block th:if="${sale.getMemberEmail() != null}">
                     <td th:text="${sale.getMemberEmail()}"></td>
                 </th:block>

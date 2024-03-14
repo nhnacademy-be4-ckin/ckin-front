@@ -71,17 +71,20 @@ public interface SaleAdapter {
     /**
      * 회원 ID를 API 서버로 보내 해당 회원이 주문한 모든 주문 내역을 조회합니다.
      *
-     * @param memberId 조회할 회원 ID
-     * @return 해당 회원이 주문한 페이징 처리된 주문 내역
+     * @param memberId 회원 ID
+     * @param page 페이지 번호
+     * @param size 페이지 사이즈
+     * @return 주문 응답 DTO 리스트
      */
-    PagedResponse<List<SaleResponseDto>> requestGetSalesByMemberId(String memberId);
+    PagedResponse<List<SaleInfoResponseDto>> requestGetSalesByMemberId(String memberId, Integer page, Integer size);
 
 
     /**
      * 주문 번호를 통해 주문 상세 정보를 요청합니다..
      *
-     * @param saleNumber 주문 번호
+     * @param saleNumber     주문 번호
+     * @param ordererContact 주문자 전화번호
      * @return 주문 상세 정보 응답 DTO
      */
-    SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber);
+    SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber, String ordererContact);
 }

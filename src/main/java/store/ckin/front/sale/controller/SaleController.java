@@ -58,6 +58,11 @@ public class SaleController {
             return "redirect:/cart";
         }
 
+        String saleTitle =
+                cartItems.size() == 1 ? cartItems.get(0).getName() :
+                        cartItems.get(0).getName() + " 외 " + (cartItems.size() - 1) + " 권";
+
+        model.addAttribute("saleTitle", saleTitle);
         model.addAttribute("policyList", saleFacade.getPolicyList());
         model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
         return "sale/main";
@@ -116,11 +121,12 @@ public class SaleController {
      */
     @GetMapping("/guest/lookup")
     public String getGuestSaleDetail(@RequestParam("saleNumber") String saleNumber,
+                                     @RequestParam("ordererContact") String ordererContact,
                                      Model model) {
 
         log.info("saleNumber = {}", saleNumber);
 
-        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetailBySaleNumber(saleNumber);
+        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetailBySaleNumber(saleNumber, ordererContact);
         log.debug("saleDetail = {}", saleDetail);
 
         model.addAttribute("saleDetail", saleDetail);

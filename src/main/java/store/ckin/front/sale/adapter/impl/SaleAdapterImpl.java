@@ -178,31 +178,34 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @return 해당 회원이 주문한 페이징 처리된 주문 내역
      */
     @Override
-    public PagedResponse<List<SaleResponseDto>> requestGetSalesByMemberId(String memberId) {
+    public PagedResponse<List<SaleInfoResponseDto>> requestGetSalesByMemberId(String memberId,
+                                                                              Integer page,
+                                                                              Integer size) {
 
         HttpEntity<Long> requestEntity = new HttpEntity<>(getHttpHeaders());
 
-        ResponseEntity<PagedResponse<List<SaleResponseDto>>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + SALE_URL + "/member/{memberId}",
+        ResponseEntity<PagedResponse<List<SaleInfoResponseDto>>> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/member/{memberId}?page={page}&size={size}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                }, memberId);
+                }, memberId, page, size);
 
         return exchange.getBody();
     }
 
     @Override
-    public SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber) {
+    public SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<SaleDetailResponseDto> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + SALE_URL + "/guest/{saleNumber}",
+                gatewayProperties.getGatewayUri() + SALE_URL
+                        + "/guest?saleNumber={saleNumber}&ordererContact={ordererContact}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                }, saleNumber);
+                }, saleNumber, ordererContact);
 
         return exchange.getBody();
     }

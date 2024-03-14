@@ -27,6 +27,9 @@ public class SaleCreateRequestDto {
 
     private Long memberId;
 
+    @NotBlank(message = "주문명을 입력해주세요")
+    private String saleTitle;
+
     @NotBlank(message = "주문자 이름을 입력해주세요.")
     @Size(min = 1, max = 10, message = "주문자 이름은 1자 이상 10자 이하로 입력해주세요.")
     private String saleOrdererName;

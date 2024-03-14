@@ -1,72 +1,74 @@
 <!DOCTYPE html>
 <html lang="kr"
       xmlns:th="http://www.thymeleaf.org">
-    <div th:fragment="mypage-fragment-sidebar" id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <!-- 주문 -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><span class="material-symbols-sharp">shopping_basket</span></div>
-                        주문
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseOrder" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link">주문내역/배송조회</a>
-                            <a class="nav-link">반품/교환 신청 및 조회</a>
-                            <a class="nav-link">취소 주문내역</a>
-                        </nav>
-                    </div>
 
-                    <!-- 포인트 -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePoint"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><span class="material-symbols-sharp">local_parking</span></div>
-                        포인트
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePoint" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link">포인트 적립 현황</a>
-                            <a class="nav-link">포인트 사용 내역</a>
-                        </nav>
-                    </div>
+<div th:fragment="mypage-fragment-sidebar" id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <!-- 주문 -->
+                <a class="nav-link collapsed" th:href="@{/member/mypage/order-list}" data-bs-toggle="collapse"
+                   data-bs-target="#collapseOrder"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">shopping_basket</span></div>
+                    주문
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseOrder" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link">주문내역/배송조회</a>
+                        <a class="nav-link">반품/교환 신청 및 조회</a>
+                        <a class="nav-link">취소 주문내역</a>
+                    </nav>
+                </div>
 
-                    <!-- 쿠폰 -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupon"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><span class="material-symbols-sharp">local_activity</span></div>
-                        쿠폰
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseCoupon" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link">나의 쿠폰</a>
-                            <a class="nav-link">쿠폰 사용 내역</a>
-                        </nav>
-                    </div>
+                <!-- 포인트 -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePoint"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">local_parking</span></div>
+                    포인트
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapsePoint" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link">포인트 적립 현황</a>
+                        <a class="nav-link">포인트 사용 내역</a>
+                    </nav>
+                </div>
 
-                    <!-- 계정 -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><span class="material-symbols-sharp">face</span></div>
-                        나의 정보
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseAccount" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link">계정 정보 수정</a>
-                            <a class="nav-link">회원 탈퇴</a>
-                        </nav>
-                    </div>
+                <!-- 쿠폰 -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupon"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">local_activity</span></div>
+                    쿠폰
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseCoupon" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link">나의 쿠폰</a>
+                        <a class="nav-link">쿠폰 사용 내역</a>
+                    </nav>
+                </div>
+
+                <!-- 계정 -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">face</span></div>
+                    나의 정보
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseAccount" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link">계정 정보 수정</a>
+                        <a class="nav-link">회원 탈퇴</a>
+                    </nav>
                 </div>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
 </html>

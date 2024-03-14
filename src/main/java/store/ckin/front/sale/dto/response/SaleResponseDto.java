@@ -38,6 +38,8 @@ public class SaleResponseDto {
 
     private Long saleId;
 
+    private String title;
+
     private String memberEmail;
 
     private String saleNumber;
