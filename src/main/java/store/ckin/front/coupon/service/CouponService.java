@@ -48,7 +48,7 @@ public interface CouponService {
      */
     PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId);
 
-    boolean createCouponByIds(Long memberId, Long couponTemplateId);
+    boolean createCouponByIds(Long couponTemplateId);
 
     /**
      * 사용한 쿠폰의 상태를 변경하는 메서드입니다.
@@ -56,4 +56,5 @@ public interface CouponService {
      * @param couponIds 사용한 쿠폰 ID 리스트
      */
     void updateCouponUsed(List<Long> couponIds);
+
 }

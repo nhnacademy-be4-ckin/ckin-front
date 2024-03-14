@@ -3,6 +3,8 @@ package store.ckin.front.review.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 /**
  * 리뷰 응답 DTO입니다.
  *
@@ -17,4 +19,5 @@ public class ReviewDto {
     private String message;
     private Integer reviewRate;
     private String reviewDate;
+    private List<String> filePath;
 }

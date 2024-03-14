@@ -40,7 +40,7 @@
                                     <div class="auto_overflow_inner">
                                         <div class="author">
                                             <a href="#" th:text="${authorNames}">
-                                            </a>저자(글)
+                                            </a> 저자(글)
                                         </div>
                                     </div>
                                 </div>
@@ -56,41 +56,8 @@
 
                             <div class="prod_review_box">
                                 <div class="col_review">
-                                    <span class="review_score feel_lucky" th:text="${book.bookReviewRate}">9.4</span>
-                                    <div class="rating-container theme-krajee-gly rating-md rating-animate rating-disabled">
-                                        <div class="clear-rating " title="초기화"><i
-                                                class="glyphicon glyphicon-minus-sign"></i></div>
-                                        <div class="rating-stars" tabindex="0"><span class="empty-stars"><span
-                                                class="star" title="One Star"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Two Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Three Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span><span class="star"
-                                                                                                        title="Four Stars"><i
-                                                class="glyphicon glyphicon-star-empty"></i></span></span><span
-                                                class="filled-stars" style="width: 94%;"><span class="star"
-                                                                                               title="One Star"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Two Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Three Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span><span class="star"
-                                                                                                  title="Four Stars"><i
-                                                class="glyphicon glyphicon-star"></i></span></span></div>
-                                        <div class="caption"><span
-                                                class="caption-badge caption-secondary">10점 중 9.4점</span></div>
-                                    </div>
-                                    <input type="number" class="form_rating rating-input" value="9.4" title="이 책의 평점"
-                                           readonly="readonly" tabindex="-1">
-
-
-                                    <span class="review_desc">(<span class="val">1137</span>개의 리뷰)</span>
-                                </div>
-                                <div class="col_review">
                                     <span class="review_quotes_text">도움돼요</span>
-                                    <span class="review_desc">(<span class="val">39%</span>의
-        구매자)</span>
+                                    <span class="review_desc">(<span class="val">39%</span>의 구매자)</span>
                                 </div>
 
                                 <button type="button" class="btn_go_review"><span class="hidden">리뷰 영역으로 가기</span>
@@ -154,11 +121,13 @@
                                 <div class="prod_price">
                                     <span class="percent" th:text="${book.bookDiscountRate} + '%'"></span>
                                     <span class="price">
-                                        <span class="val" th:text="${book.bookSalePrice} + '원'">
+                                        <span class="val"
+                                              th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'">
                                         </span>
                                     </span>
                                     <span class="sale_price">
-                                        <s class="val" th:text="${book.bookRegularPrice} + '원'"></s>
+                                        <s class="val"
+                                           th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s>
                                     </span>
                                 </div>
                             </div>
@@ -336,20 +305,20 @@
                                 <input name="thumbnail" th:value="${book.thumbnail}" hidden>
                                 <button type="submit" class="btn_sm btn_line_gray" data-role="btn-dialog"
                                         data-target="#popStock"
-                                        onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                        onclick="">
                                     <span class="text">장바구니 담기</span></button>
                             </div>
                         </form>
                         <div class="btn_wrap justify overlap">
                             <button type="button" class="btn_sm btn_line_gray" data-role="btn-dialog"
                                     data-target="#popStock"
-                                    onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                    onclick="">
                                 <span class="text">주문 하기</span></button>
                         </div>
                         <div class="btn_wrap justify overlap">
                             <button type="button" class="btn_sm btn_line_gray" data-role="btn-dialog"
                                     data-target="#popStock"
-                                    onclick="ga360.GA_Event('click_종이책_상품상세_PC', '상단', '', '매장재고위치', '');">
+                                    onclick="">
                                 <span class="text">♥️ 위시리스트 담기</span></button>
                         </div>
                     </div>
@@ -412,7 +381,8 @@
             <div class="header_contents_inner">
                 <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
                     <!-- 타이틀 영역 -->
-                    <p class="title_heading" data-review-label="title" th:text="'총 리뷰 ' + ${totalCount} + '건'"></p>
+                    <p class="title_heading" data-review-label="title"
+                       th:text="'총 리뷰 ' + ${pagination.totalElements} + '건'"></p>
                     <div data-kbbfn-role="title">
                         <div class="right_area" id="reviewButton">
                             <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
@@ -432,9 +402,9 @@
                         </div>
                     </div>
                     <div class="klover_box_right">
-                        <div class="caption"><span class="caption-badge caption-secondary"><span
-                                class="val" aria-hidden="true" th:text="${totalRate}"></span><span class="total"
-                                                                                                   aria-hidden="true">/5</span></span>
+                        <div class="caption"><span class="caption-badge caption-secondary">
+                            <span class="val" aria-hidden="true" th:text="${totalRate}"></span>
+                            <span class="total" aria-hidden="true">/5</span></span>
                         </div>
                     </div>
 
@@ -474,8 +444,9 @@
                                                     th:text="${review.reviewDate}"></span><span
                                                     class="gap"> | </span><span
                                                     class="info_item"><button class="btn_comment_util" type="button"
-                                                                              data-role="report"><span
-                                                    class="text">신고/차단</span></button></span>
+                                                                              data-role="report">
+                                                <span class="text">신고/차단</span></button>
+                                            </span>
                                             </div>
                                         </div>
                                         <div class="right_area">
@@ -508,13 +479,49 @@
                                         </div>
                                     </div>
                                     <div class="comment_contents">
-                                        <div class="comment_contents_inner">
+                                        <div class="comment_contents_inner" th:id="${review.reviewId}">
                                             <div class="comment_view_wrap">
                                                 <div class="comment_text_box">
                                                     <div class="comment_text" th:text="${review.message}"></div>
+                                                    <div class="thumb_box_div">
+                                                        <div class="comment_thumb_box"
+                                                             th:id="'thumb' + ${review.reviewId}">
+                                                        <span class="comment_thumb_view"
+                                                              th:each="img : ${review.filePath}"
+                                                              th:style="'background-image: url(' + ${img} + ');'">
+                                                            <img th:src="${img}" alt="리뷰 썸네일"/>
+                                                        </span>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
+                                            <div class="comment_swiper_wrap">
+                                                <div class="swiper-container">
+                                                    <ul class="swiper-wrapper">
+                                                        <li class="swiper-slide" th:each="img : ${review.filePath}">
+                                                            <div class="comment_img_box"
+                                                                 th:style="'background-image: url(' + ${img} + ');'"
+                                                                 onclick="openImage(this)">
+                                                                <button class="btn_view_img" type="button">
+                                                                    <img th:src="${img}">
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="swiper-button-next" style="display: none;"><span
+                                                        class="hidden">다음</span></div>
+                                                <div class="swiper-button-prev" style="display: none;"><span
+                                                        class="hidden">이전</span></div>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="comment_footer">
+                                        <button class="btn_more_body" type="button" data-btn-toggle=""
+                                                th:value="${review.reviewId}"
+                                                onclick="toggleButton(this)"><span
+                                                class="text" th:text="펼치기"></span><span class="ico_arw"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -560,7 +567,8 @@
                           enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">리뷰 점수</label>
-                            <input type="number" name="reviewRate" class="form-control" id="recipient-name">
+                            <input type="number" name="reviewRate" class="form-control" id="recipient-name" min="1"
+                                   max="5" placeholder="1에서 5사이의 정수를 입력해주세요.">
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">리뷰 작성*</label>
