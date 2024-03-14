@@ -195,7 +195,7 @@ public class SaleAdapterImpl implements SaleAdapter {
     }
 
     @Override
-    public SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+    public SaleDetailResponseDto requestGetGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
 
         HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
 
@@ -206,6 +206,22 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, saleNumber, ordererContact);
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public SaleDetailResponseDto requestGetMemberSaleDetailBySaleNumber(String saleNumber, String memberId) {
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleDetailResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL
+                        + "/member?saleNumber={saleNumber}&memberId={memberId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleNumber, memberId);
 
         return exchange.getBody();
     }

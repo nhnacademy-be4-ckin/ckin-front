@@ -81,11 +81,20 @@ public interface SaleService {
     PagedResponse<List<SaleInfoResponseDto>> getSalesByMemberId(String memberId, Integer page, Integer size);
 
     /**
-     * 주문 번호를 통해 주문 상세 정보를 조회합니다.
+     * 비회원의 주문 번호를 통해 주문 상세 정보를 조회합니다.
      *
      * @param saleNumber     주문 번호
      * @param ordererContact 주문자 전화번호
      * @return 주문 상세 정보 응답 DTO
      */
-    SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber, String ordererContact);
+    SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact);
+
+    /**
+     * 회원의 주문 번호를 통해 주문 상세 정보를 조회합니다.
+     *
+     * @param saleNumber 주문 번호
+     * @param memberId   회원 ID
+     * @return 주문 상세 정보 응답 DTO
+     */
+    SaleDetailResponseDto getMemberSaleDetailBySaleNumber(String saleNumber, String memberId);
 }

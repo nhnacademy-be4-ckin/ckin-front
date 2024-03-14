@@ -26,7 +26,7 @@
                     <a th:text="${sale.saleTitle}"></a>
                 </td>
                 <td><a th:text="${sale.saleNumber}"
-                       th:href="@{/member/order/{saleNumber}(saleNumber=${sale.saleNumber})}"></a></td>
+                       th:href="@{/member/mypage/order/{saleNumber}(saleNumber=${sale.saleNumber})}"></a></td>
                 <td th:text="${#numbers.formatInteger(sale.totalPrice, 3, 'COMMA')} + '원'"></td>
                 <td th:text="${#temporals.format(sale.saleDate, 'yyyy-MM-dd')}"></td>
             </tr>

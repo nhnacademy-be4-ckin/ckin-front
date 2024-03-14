@@ -108,7 +108,7 @@ public class SaleController {
      */
     @GetMapping("/guest")
     public String getGuestSaleLookup() {
-        return "sale/guest";
+        return "sale/guest-order";
     }
 
 
@@ -124,12 +124,8 @@ public class SaleController {
                                      @RequestParam("ordererContact") String ordererContact,
                                      Model model) {
 
-        log.info("saleNumber = {}", saleNumber);
-
-        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetailBySaleNumber(saleNumber, ordererContact);
-        log.debug("saleDetail = {}", saleDetail);
-
+        SaleDetailResponseDto saleDetail = saleFacade.getGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
         model.addAttribute("saleDetail", saleDetail);
-        return "sale/guest-lookup";
+        return "sale/guest-order-detail";
     }
 }

@@ -113,7 +113,19 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문 상세 정보 응답 DTO
      */
     @Override
-    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
-        return saleAdapter.requestGetSaleDetailBySaleNumber(saleNumber, ordererContact);
+    public SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+        return saleAdapter.requestGetGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 주문 번호
+     * @param memberId   회원 ID
+     * @return 주문 상세 정보 응답 DTO
+     */
+    @Override
+    public SaleDetailResponseDto getMemberSaleDetailBySaleNumber(String saleNumber, String memberId) {
+        return saleAdapter.requestGetMemberSaleDetailBySaleNumber(saleNumber, memberId);
     }
 }

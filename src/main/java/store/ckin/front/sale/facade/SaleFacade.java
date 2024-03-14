@@ -173,7 +173,7 @@ public class SaleFacade {
      * @param ordererContact 주문자 연락처
      * @return 주문 상세 정보 응답 DTO
      */
-    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
-        return saleService.getSaleDetailBySaleNumber(saleNumber, ordererContact);
+    public SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+        return saleService.getGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
     }
 }
