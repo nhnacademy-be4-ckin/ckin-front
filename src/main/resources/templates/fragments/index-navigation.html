@@ -2,29 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
-</head>
-<div class="header-v4" th:fragment="index-fragment-navigation">
-
-    <script src="/js/nav-script.js">
-
-    </script>
     <style>
         /* ::before와 ::after에 스타일 추가 */
         .tabs::before, .tabs::after {
             /* 스타일을 여기에 추가 */
         }
     </style>
+</head>
+<div class="header-v4" th:fragment="index-fragment-navigation">
+
+    <script src="/js/nav-script.js">
+
+    </script>
     <div class="wrapper welcome" id="mainDiv" style="min-height: 0vh">
 
 
-        <header class="header_wrapper has_banner perform sps sps--abv sps-abv" id="welcome_header_wrap"
-                data-sps-offset="121">
-            <div class="header_inner">
-                <nav class="gnb_wrap" style="align-items: center">
+        <div class="header_wrapper has_banner perform sps sps--abv sps-abv" id="welcome_header_wrap"
+             data-sps-offset="121">
+            <div class="header_inner mx-auto">
+                <div class="gnb_wrap" style="align-items: center">
                     <div class="anb_wrap" style="display: inline-block">
-                        <button type="button" class="btn_anb" onmouseover="activateAnbWrap()"
-                                onclick="deactivateAnbWrap()">
+                        <button type="button" class="btn_anb" value="none" id="category"
+                                onclick="activateAnbWrap(this)">
                             <span class="hidden">전체메뉴</span>
                         </button>
                         <div class="anb_area">
@@ -198,18 +197,16 @@
                     </div>
 
                     <ul class="gnb_list" style="display: inline-block">
-                        <li class="gnb_item"><a href="https://event.kyobobook.co.kr/detail/217649" class="gnb_link"
-                                                onclick="ga360.GA_Event('click_공통_PC', 'GNB', '종이책', '대학교재🎓', '');">
+                        <li class="gnb_item"><a href="#" class="gnb_link">
                             <em>대학교재🎓</em> <span class="ico_new"> <span class="hidden">추천 메뉴</span> </span> </a></li>
-                        <li class="gnb_item"><a href="https://event.kyobobook.co.kr/detail/217774" class="gnb_link"
-                                                onclick="ga360.GA_Event('click_공통_PC', 'GNB', '종이책', '어린이🧒', '');"> <em>어린이🧒</em>
+                        <li class="gnb_item"><a href="#" class="gnb_link"> <em>어린이🧒</em>
                             <span class="ico_new"> <span class="hidden">추천 메뉴</span> </span> </a></li>
-                        <li class="gnb_item"><a href="https://event.kyobobook.co.kr/" class="gnb_link"
-                                                onclick="ga360.GA_Event('click_공통_PC', 'GNB', '종이책', '이벤트', '');">
+                        <li class="gnb_item"><a href="#" class="gnb_link">
                             이벤트 </a></li>
                         <li class="gnb_item">-->
                             <a class="gnb_link nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
+                               th:value="none"
+                               data-bs-toggle="dropdown" aria-expanded="false" onclick="birthCouponList(this)">
                                 Coupon
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -218,121 +215,15 @@
                                 <li><a class="dropdown-item" th:href="@{/coupon/3}">카테고리 쿠폰</a></li>
                             </ul>
                         </li>
+                        <!-- 비회원 주문 조회 링크 -->
+                        <li class="gnb_item">
+                            <a class="gnb_link" th:href="@{/sale/guest}">
+                                <em>비회원 주문 조회 🧾</em>
+                            </a>
+                        </li>
                     </ul>
-                </nav>
-            </div>
-        </header>
-
-
-        <!--            </nav>-->
-        <!--        </div>-->
-        <!--    </div>-->
-
-        <!-- Header Mobile -->
-        <div class="wrap-header-mobile">
-            <!-- Logo moblie -->
-            <div class="logo-mobile">
-                <a href="/">
-                    <img src="/images/main-category.png" alt="IMG-LOGO">
-                </a>
-            </div>
-
-            <!-- Icon header -->
-            <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
-                    <i class="zmdi zmdi-search"></i>
                 </div>
-
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 js-show-cart">
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
-
-                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10">
-                    <i class="zmdi zmdi-favorite-outline"></i>
-                </a>
             </div>
-
-            <!-- Button show menu -->
-            <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
-            </div>
-        </div>
-
-
-        <!-- Menu Mobile -->
-        <div class="menu-mobile">
-            <ul class="topbar-mobile">
-                <li>
-                    <div class="left-top-bar">
-                        Free shipping for standard order over $100
-                    </div>
-                </li>
-
-                <li>
-                    <div class="right-top-bar flex-w h-full">
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            Help & FAQs
-                        </a>
-
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            My Account
-                        </a>
-
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            EN
-                        </a>
-
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            USD
-                        </a>
-                    </div>
-                </li>
-            </ul>
-
-            <ul class="main-menu-m">
-                <li>
-                    <a href="index.html">Home</a>
-                    <ul class="sub-menu-m">
-                        <li><a href="index.html">Homepage 1</a></li>
-                        <li><a href="home-02.html">Homepage 2</a></li>
-                        <li><a href="home-03.html">Homepage 3</a></li>
-                    </ul>
-                    <span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-                </li>
-
-                <li>
-                    <a href="product.html">Shop</a>
-                </li>
-
-                <li>
-                    <a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Coupon
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" th:href="@{/coupon/1}">생일 쿠폰</a></li>
-                        <li><a class="dropdown-item" th:href="@{/coupon/2}">도서 쿠폰</a></li>
-                        <li><a class="dropdown-item" th:href="@{/coupon/3}">카테고리 쿠폰</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="about.html">About</a>
-                </li>
-
-                <li>
-                    <a href="contact.html">Contact</a>
-                </li>
-            </ul>
         </div>
     </div>
 </div>

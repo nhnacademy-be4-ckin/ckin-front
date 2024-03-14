@@ -70,10 +70,9 @@
                                             text-align: right;
                                         }
                                     </style>
-                                    <form id="downloadForm"
-                                          th:action="@{'/coupon/' + ${memberId} + '/' + ${coupon.id}}"
-                                          method="post">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary" id="request">
+                                    <form id="downloadForm">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="request"
+                                                th:onclick="'checkCoupon(\'' + ${coupon.id} + '\')'">
                                             Download
                                         </button>
                                     </form>
@@ -115,15 +114,10 @@
             </li>
         </ul>
     </nav>
-    <div id="message" th:value="${message}"></div>
-    <script>
-        const message = document.querySelector('#message').getAttribute('value');
-        if (message === 'true') {
-            alert("이미 발급된 쿠폰입니다.");
-        } else if (message === 'false') {
-            alert("발급되었습니다.");
-        }
-    </script>
+
+
+    <script src="/js/main-coupon.js"></script>
+
 </div>
 
 
