@@ -1,13 +1,12 @@
 package store.ckin.front.util;
 
+import java.util.List;
+import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Adapter 에서 사용할 헤더를 만드는 클래스입니다.
