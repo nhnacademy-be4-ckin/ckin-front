@@ -6,12 +6,20 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.token.domain.TokenRequestDto;
+import store.ckin.front.token.domain.TokenResponseDto;
+import store.ckin.front.token.service.TokenService;
+import store.ckin.front.util.CookieUtil;
 
 /**
  * OAuth 에 성공한 이후 로직을 처리하는 클래스 입니다.
@@ -21,7 +29,12 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private final MemberDetailsService memberDetailsService;
+
+    private final TokenService tokenService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
@@ -30,17 +43,32 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = (Map) oAuth2User.getAttributes().get("member");
 
-        UriComponentsBuilder targetUrl = UriComponentsBuilder
-                .fromUriString("/signup")
-                .encode(StandardCharsets.UTF_8);
+        try {
+            log.debug("OAuth Login");
 
-        setQueryParams(attributes, targetUrl);
+            String email = String.valueOf(attributes.get("email"));
+            UserDetails user = memberDetailsService.loadUserByUsername(email);
+            String memberId = user.getUsername();
 
-        String finalUrl = targetUrl.build().toUriString();
+            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId));
+            addTokenCookie(response, tokenResponseDto);
 
-        log.debug("finalUrl : {}", finalUrl);
+            response.sendRedirect("/");
+        } catch (UsernameNotFoundException ex) {
+            log.debug("OAuth Signup");
 
-        getRedirectStrategy().sendRedirect(request, response, finalUrl);
+            UriComponentsBuilder targetUrl = UriComponentsBuilder
+                    .fromUriString("/signup")
+                    .encode(StandardCharsets.UTF_8);
+
+            setQueryParams(attributes, targetUrl);
+
+            String finalUrl = targetUrl.build().toUriString();
+
+            log.debug("finalUrl : {}", finalUrl);
+
+            getRedirectStrategy().sendRedirect(request, response, finalUrl);
+        }
     }
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
@@ -57,5 +85,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {
         targetUrl.queryParam(key, value);
+    }
+
+    private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
+        String accessToken = tokenResponseDto.getAccessToken();
+        String refreshToken = tokenResponseDto.getRefreshToken();
+
+        CookieUtil.makeCookie(response, CookieUtil.HEADER_ACCESS_TOKEN, accessToken);
+        CookieUtil.makeCookie(response, CookieUtil.HEADER_REFRESH_TOKEN, refreshToken);
     }
 }
