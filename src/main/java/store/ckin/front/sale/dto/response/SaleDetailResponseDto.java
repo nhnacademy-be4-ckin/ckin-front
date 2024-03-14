@@ -19,7 +19,7 @@ import store.ckin.front.payment.dto.response.PaymentResponseDto;
 @NoArgsConstructor
 public class SaleDetailResponseDto {
 
-    private List<BookAndBookSaleResponseDto> booksaleList;
+    private List<BookAndBookSaleResponseDto> bookSaleList;
 
     private SaleResponseDto saleResponseDto;
 
