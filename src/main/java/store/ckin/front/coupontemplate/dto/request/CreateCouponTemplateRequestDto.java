@@ -6,6 +6,7 @@ import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
 
 /**
  * 쿠폰 템플릿 생성 및 수정 요청 DTO
@@ -31,4 +32,11 @@ public class CreateCouponTemplateRequestDto {
     private String name;
     @PositiveOrZero(message = "0보다 큰 값을 입력해주세요")
     private Long amount;
+    @PositiveOrZero(message = "0보다 큰 값을 입력해주세요")
+    private Integer duration;
+    private LocalDate expirationDate;
+
+    public void updateExpiration(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 }

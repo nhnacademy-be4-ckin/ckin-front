@@ -1,9 +1,10 @@
 package store.ckin.front.coupontemplate.controller;
 
-import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,9 @@ import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
 
+import java.time.LocalDate;
 import java.util.List;
+
 
 /**
  * CouponTemplateController
@@ -71,22 +74,30 @@ public class CouponTemplateController {
     @PostMapping("/{typeId}")
     public String createCouponTemplate(@RequestParam("policyId") Long policyId,
                                        @PathVariable("typeId") Long typeId,
-                                       @RequestParam("value") Long value) {
+                                       @RequestParam("value") Long value,
+                                       @RequestParam(name = "duration", required = false) Integer duration,
+                                       @RequestParam(name = "expirationDate", required = false)
+                                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate expirationDate) {
+        log.info("duration : {}", duration);
+        log.info("expirationDate : {}", expirationDate);
         CreateCouponTemplateRequestDto couponTemplateRequestDto;
         switch (typeId.intValue()) {
             case 1:
                 couponTemplateRequestDto =
-                        new CreateCouponTemplateRequestDto(policyId, null, null, typeId, value + "월 생일 쿠폰", 1L);
+                        new CreateCouponTemplateRequestDto(policyId, null, null, typeId, value
+                                + "월 생일 쿠폰", 1L, duration, expirationDate);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/1";
             case 2:
                 couponTemplateRequestDto =
-                        new CreateCouponTemplateRequestDto(policyId, value, null, typeId, value + "도서 쿠폰", 1L);
+                        new CreateCouponTemplateRequestDto(policyId, value, null, typeId,
+                                value + "도서 쿠폰", 1L, duration, expirationDate);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/2";
             default:
                 couponTemplateRequestDto =
-                        new CreateCouponTemplateRequestDto(policyId, null, value, typeId, value + "카테고리 쿠폰", 1L);
+                        new CreateCouponTemplateRequestDto(policyId, null, value, typeId,
+                                value + "카테고리 쿠폰", 1L, duration, expirationDate);
                 couponTemplateService.createCouponTemplate(couponTemplateRequestDto);
                 return "redirect:/admin/coupon/template/3";
         }

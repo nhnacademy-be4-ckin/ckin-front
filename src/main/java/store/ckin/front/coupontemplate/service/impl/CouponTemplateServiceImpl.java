@@ -9,6 +9,9 @@ import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 /**
  * CouponTemplateServiceImpl
  *
@@ -40,6 +43,10 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      */
     @Override
     public void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto) {
+        if (Objects.nonNull(couponTemplateRequestDto.getDuration())) {
+            LocalDate expirationDate = LocalDate.now().plusDays(couponTemplateRequestDto.getDuration());
+            couponTemplateRequestDto.updateExpiration(expirationDate);
+        }
         couponTemplateAdapter.createCouponTemplate(couponTemplateRequestDto);
     }
 
