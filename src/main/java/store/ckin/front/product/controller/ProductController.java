@@ -82,8 +82,9 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword) {
+    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword, Model model) {
         log.debug(keyword);
+        model.addAttribute("KEY_WORD", keyword);
         return "product/search";
     }
 }
