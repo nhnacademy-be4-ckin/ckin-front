@@ -9,6 +9,11 @@
     <div class="container">
         <div class="row m-t-150">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+
+
+                <h3 class="h3 m-b-15"
+                    th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice}"></h3>
+
                 <table class="table" style="text-align: center; vertical-align: middle;">
                     <thead>
                     <tr>
@@ -41,7 +46,7 @@
 
                         <h3 class="h3 m-t-15 m-b-5">주문자 정보</h3>
 
-                        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
+                        <div class="stext-104 cl2 plh4 size-116 p-lr-20 m-r-10 m-tb-5">
                             회원 정보 :
                             <th:block th:if="*{memberEmail == null}">
                                 <span>비회원</span>
@@ -51,7 +56,6 @@
                                 <span th:text="*{memberEmail}"></span>
                             </th:block>
                         </div>
-
                         <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5">
                             주문자 : <span th:text="*{saleOrdererName}"></span>
                         </div>
@@ -83,17 +87,17 @@
 
                     <div>
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                            <h3 class="h3 m-t-15 m-b-5">배송 정보</h3> <br/>
+                            <h3 class="h3 m-t-15 m-b-5 w-100">배송 정보</h3>
 
-                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
                                 배송 예약일 : <span th:text="*{#temporals.format(saleDeliveryDate, 'yyyy.MM.dd')}"></span>
                             </div>
 
-                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
                                 배송 상태 : <span th:text="*{saleDeliveryStatus}"></span>
                             </div>
 
-                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-">
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
                                 배송비 : <span th:text="*{saleDeliveryFee}"></span>
                             </div>
                         </div>
@@ -103,29 +107,29 @@
                         <h3 class="h3 m-t-15" style="color: dodgerblue"
                             th:text="'결제 정보 : ' + *{salePaymentStatus}"> 결제 정보 </h3>
                     </div>
+
+                    <th:block th:if="${saleDetail.paymentResponseDto != null}"
+                              th:object="${saleDetail.paymentResponseDto}">
+                        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
+                            결제 상태 : <span th:text="*{paymentStatus}"></span>
+                        </div>
+
+                        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
+                            결제 요청일 : <span th:text="*{#temporals.format(requestedAt, 'yyyy.MM.dd')}"></span>
+                        </div>
+
+                        <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
+                            결제 승인일 : <span th:text="*{#temporals.format(approvedAt, 'yyyy.MM.dd')}"></span>
+                        </div>
+
+                        <button class="m-t-20 btn-outline-primary btn" style="margin-top: 30px;"
+                                th:onclick="|location.href='@{*{receiptUrl}}'|">
+                            결제 영수증
+                        </button>
+                    </th:block>
                 </div>
-
-                <th:block th:if="${saleDetail.paymentResponseDto != null}" th:object="${saleDetail.paymentResponseDto}">
-                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
-                        결제 상태 : <span th:text="*{paymentStatus}"></span>
-                    </div>
-
-                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
-                        결제 요청일 : <span th:text="*{#temporals.format(requestedAt, 'yyyy.MM.dd')}"></span>
-                    </div>
-
-                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5">
-                        결제 승인일 : <span th:text="*{#temporals.format(approvedAt, 'yyyy.MM.dd')}"></span>
-                    </div>
-
-                    <button class="m-t-20 btn-outline-primary btn" style="margin-top: 30px;"
-                            th:onclick="|location.href='@{*{receiptUrl}}'|">
-                        결제 영수증
-                    </button>
-                </th:block>
             </div>
         </div>
     </div>
-</div>
 </div>
 </html>
