@@ -53,6 +53,7 @@ public class ReviewAdapterImpl implements ReviewAdapter {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("createRequestDto", createReviewRequestDto);
+
         try {
             for (MultipartFile file : imageList) {
                 body.add("imageList", file.getResource());
