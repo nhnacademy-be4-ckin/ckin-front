@@ -13040,7 +13040,6 @@ a.btn_info_text.type_purple, button.btn_info_text.type_purple {
 }
 
 
-
 /* 포인트 텍스트 */
 .point_text {
     display: inline-block;
@@ -30292,7 +30291,7 @@ html, body {
 body {
     font-size: 14px;
     line-height: 1.4;
-    font-family: "Roboto", "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
+    font-family: "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
     min-width: 1440px;
     color: #000;
 }
@@ -30940,6 +30939,7 @@ button {
     background-image: url("../images/main-category.png");
     transition: background 0.23s;
 }
+
 /*.wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .active .animated .btn_anb .active{*/
 /*    display: block;*/
 /*    width: 44px;*/
@@ -32018,7 +32018,7 @@ button {
     font-size: 13px;
     line-height: 19px;
     font-weight: 700;
-    font-family: "Roboto", "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
+    font-family: "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
     background: #fff url("../images/common/ink/img_service_mall_tab.svg") no-repeat center/contain;
     color: #fff;
 }
@@ -32211,7 +32211,7 @@ button {
     fill: #fff;
     font-size: 13px;
     pointer-events: none;
-    font-family: "Roboto", "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
+    font-family: "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
     font-weight: 700;
 }
 
@@ -37884,8 +37884,16 @@ nav {
     min-width: 100%;
     overflow: hidden;
 }
+
 .gnb_wrap {
     width: 100%;
+}
+
+.set-wrap-80 {
+    width: 80%;
+    margin: 0 auto;
+    align-items: center;
+!important
 }
 
 .wrapper .header_wrapper .header_inner .gnb_wrap {

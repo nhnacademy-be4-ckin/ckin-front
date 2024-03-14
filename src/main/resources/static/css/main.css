@@ -3780,6 +3780,94 @@ input.num-product::-webkit-inner-spin-button {
     }
 
 }
+/*////////////////////////////////////////////////////////////////////// */
+/* [ Search Page ] */
+.main {
+    margin-top: 120px;
+    display: block;
+    !important;
+}
+
+.search-page-wrap {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+}
+
+.search-content-wrap {
+    width: 83.33333%;
+    min-height: 1200px;
+}
+
+.search-page-title {
+    height: 150px;
+    font-size: 25px;
+    font-style: initial;
+}
+
+.search-result-wrap {
+    display: table;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 1200px;
+    table-layout: fixed;
+}
+
+.search-result-filter-wrap {
+    position: relative;
+    display: table-cell;
+    width: 20%;
+    text-align: left;
+    vertical-align: top;
+}
+
+.search-result-contents-wrap {
+    display: table-cell;
+    width: 80%;
+    text-align: left;
+    vertical-align: top;
+}
+
+.search-result-filter-grip {
+    position: static;
+    width: 98%;
+    min-height: 1200px;
+    margin: 0 auto;
+    border: solid 1px #d8d8d8;
+    background-color: #ffffff;
+}
+
+.search-filter {
+    border-bottom: solid 1px #ebebeb;
+}
+
+.search-result-contents-grip {
+    position: relative;
+    margin-left: 40px;
+    width: auto;
+    min-height: 1200px;
+}
+
+.search-result-contents {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.search-result {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background-color: deeppink;
+    border: solid 1px #d8d8d8;
+    margin: 1px;
+}
+
+
+/*////////////////////////////////////////////////////////////////////// */
 
 /*//////////////////////////////////////////////////////////////////
 [ SEUNGJO ]*/
