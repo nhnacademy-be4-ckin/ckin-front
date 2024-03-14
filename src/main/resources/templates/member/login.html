@@ -5,26 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CKIN | 로그인</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 <body>
-<div class="container" style="width: 30%">
-    <h2 class="mt-4" style="text-align: center">로그인</h2>
-    <form action="/login" method="post" class="mt-3">
-        <div class="mb-3">
-            <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+    <div class="container login_container">
+        <div class="login_title" style="text-align: center">CKIN 로그인</div>
+        <div class="login_body">
+            <form action="/login" method="post" class="mt-3 login_form">
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required>
+                <input type="password" class="form-control" id="password" name="password" minlength="8" maxlength="20" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+                <div class="login_btn" id="login_payco">
+                    <a th:href="@{/oauth2/authorization/payco}">PAYCO 로그인</a>
+                </div>
+                <a href="/signup" id="login_signup">계정이 없으신가요?</a>
+            </form>
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password" name="password" minlength="8" maxlength="20" required>
-        </div>
-
-        <a th:href="@{/oauth2/authorization/payco}"><img src="../images/icons/payco_login_logo.png"></a>
-        <button type="submit" class="btn btn-primary">로그인</button>
-        <a href="/signup" class="btn btn-primary">회원가입</a>
-    </form>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
