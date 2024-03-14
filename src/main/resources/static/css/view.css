@@ -271,3 +271,12 @@ button[class^=btn_] [class^=ico_], a[class^=btn_] [class^=ico_] {
     display: inline-flex;
     justify-content: space-between;
 }
+
+/* 도서 상세 페이지 가운데 정렬 */
+.row {
+    display: block;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
