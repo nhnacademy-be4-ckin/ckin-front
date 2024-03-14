@@ -40,10 +40,6 @@ public class ReviewController {
                              @RequestParam("reviewComment") String reviewComment,
                              @RequestPart(value = "imageList", required = false) List<MultipartFile> imageList) {
 
-        for (MultipartFile img : imageList) {
-            log.info("img : {}", img.getResource());
-        }
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String memberId = authentication.getName();
 

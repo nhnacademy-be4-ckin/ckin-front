@@ -90,12 +90,11 @@
                                                                   th:text="${book.bookDiscountRate} + '%'"></span>
                                                             <span class="price">
                                                                 <span class="val"
-                                                                      th:text="${book.bookSalePrice}"></span>
-                                                                <span class="unit">원</span>
+                                                                      th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'"></span>
                                                                 <span class="price_normal"><span
                                                                         class="text">정가</span>
                                                                     <s class="val"
-                                                                       th:text="${book.bookRegularPrice} + '원'"></s></span>
+                                                                       th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s></span>
                                                             </span>
                                                         </div>
                                                         <p class="prod_introduction"

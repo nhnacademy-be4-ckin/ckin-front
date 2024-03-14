@@ -27,7 +27,6 @@ import store.ckin.front.coupontemplate.service.CouponTemplateService;
 @RequestMapping("/coupon")
 public class CouponController {
 
-    private final CouponService couponService;
     private final CouponTemplateService couponTemplateService;
 
     @GetMapping("/{typeId}")
@@ -38,7 +37,6 @@ public class CouponController {
         PageDto<GetCouponTemplateResponseDto> couponResponseDtoPage =
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
 
-        model.addAttribute("memberId", 1); //TODO:
         model.addAttribute("pagination", couponResponseDtoPage);
         model.addAttribute("couponList", couponResponseDtoPage.getContent());
         switch (typeId.intValue()) {

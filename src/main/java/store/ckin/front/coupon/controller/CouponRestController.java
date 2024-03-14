@@ -22,7 +22,7 @@ public class CouponRestController {
      *
      * @param couponTemplateId
      * @return true : 정상 발급
-     * false : 이미 발급된 쿠판
+     * false : 이미 발급된 쿠폰
      */
     @PostMapping("/coupon/{couponTemplateId}")
     public Boolean giveCoupon(@PathVariable("couponTemplateId") Long couponTemplateId) {
