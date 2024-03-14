@@ -1958,7 +1958,7 @@ input.num-product::-webkit-inner-spin-button {
 [ Table Shopping Cart ]*/
 
 .wrap-table-shopping-cart {
-    overflow: auto;
+    overflow: hidden;
     border-left: 1px solid #e6e6e6;
     border-right: 1px solid #e6e6e6;
 }
@@ -1967,6 +1967,7 @@ input.num-product::-webkit-inner-spin-button {
     border-collapse: collapse;
     width: 100%;
     min-width: 680px;
+    text-overflow: ellipsis;
 }
 
 .table-shopping-cart tr {
@@ -1974,9 +1975,26 @@ input.num-product::-webkit-inner-spin-button {
     border-bottom: 1px solid #e6e6e6;
 }
 
+.table_head {
+    width: 50px;
+    !important;
+}
+
+.table-shopping-cart .column-0 {
+    width: 30px;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-shopping-cart .column-0 .form-check-input {
+    margin: 0 auto;
+    !important;
+}
+
 .table-shopping-cart .column-1 {
-    width: 133px;
-    padding-left: 30px;
+    width: 110px;
 }
 
 .table-shopping-cart .column-2 {
@@ -1986,27 +2004,30 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .column-3 {
     width: 120px;
-    font-size: 16px;
+    font-size: 13px;
     text-align: center;
 }
 
 .table-shopping-cart .column-4 {
     width: 145px;
+    font-size: 16px;
     text-align: center;
 }
 
 .table-shopping-cart .column-5 {
-    width: 160px;
-    padding-right: 30px;
+    width: 145px;
     text-align: center;
-    font-size: 16px;
+}
+
+.row-col-5 {
+    width: 145px;
 }
 
 .table-shopping-cart .column-6 {
     width: 172px;
-    padding-right: 50px;
     text-align: center;
     font-size: 16px;
+    font-style: initial;
 }
 
 .table-shopping-cart .table_row {
@@ -3945,4 +3966,14 @@ input.num-product::-webkit-inner-spin-button {
     font-family: Poppins-Regular;
     color: #555;
     line-height: 1.6;
+}
+
+.shop-btn {
+    width: 90px;
+    height: 40px;
+    background-color: #1a1e21;
+    color: #ffffff;
+    border-radius: 30px;
+    font-size: 15px;
+    !important;
 }
