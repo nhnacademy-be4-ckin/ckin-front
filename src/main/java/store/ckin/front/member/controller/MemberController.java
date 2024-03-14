@@ -61,22 +61,4 @@ public class MemberController {
     public String getLogin() {
         return "member/login";
     }
-
-    /**
-     * [GET] 마이 페이지.
-     *
-     * @param model Model
-     * @return 마이 페이지 View
-     */
-    @GetMapping("/member/mypage")
-    public String getMyPage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String memberId = authentication.getName();
-
-        MemberMyPageResponseDto responseDto = memberService.getMyPageInfo(memberId);
-
-        model.addAttribute("member", responseDto);
-
-        return "member/mypage";
-    }
 }
