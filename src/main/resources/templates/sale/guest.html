@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row m-t-150">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-lr-0-xl m-t-50">
+                    <h3 class="h3 m-b-10 text-center">비회원 주문 조회</h3>
+                    <p class="p-b-6 text-center">
+                        주문 상태를 조회하기 위해 발급한 주문 번호를 입력해주세요.
+                    </p>
+                    <br/>
+                </div>
+
+                <div class="m-tb-15">
+                    <form th:action="@{/sale/guest/lookup}" method="get">
+                        <input type="text" class="form-control"
+                               name="saleNumber"
+                               style="height: 70px"
+                               placeholder="주문 번호를 입력해주세요" required>
+
+                        <button type="submit"
+                                class="w-100 btn btn-primary m-t-20">
+                            조회하기
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

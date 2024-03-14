@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
 /**
@@ -92,5 +94,36 @@ public class SaleController {
 
         model.addAttribute("sale", saleFacade.getSaleWithBooks(saleNumber));
         return "sale/success";
+    }
+
+    /**
+     * 비회원 주문 조회 페이지 폼 요청 메서드입니다.
+     *
+     * @return 비회원 주문 조회 페이지
+     */
+    @GetMapping("/guest")
+    public String getGuestSaleLookup() {
+        return "sale/guest";
+    }
+
+
+    /**
+     * 비회원 주문 조회 페이지 폼 요청 메서드입니다.
+     *
+     * @param saleNumber 주문 번호
+     * @param model      Model 객체
+     * @return 비회원 주문 조회 페이지
+     */
+    @GetMapping("/guest/lookup")
+    public String getGuestSaleDetail(@RequestParam("saleNumber") String saleNumber,
+                                     Model model) {
+
+        log.info("saleNumber = {}", saleNumber);
+
+        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetailBySaleNumber(saleNumber);
+        log.debug("saleDetail = {}", saleDetail);
+
+        model.addAttribute("saleDetail", saleDetail);
+        return "sale/guest-lookup";
     }
 }

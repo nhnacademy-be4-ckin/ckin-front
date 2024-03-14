@@ -37,7 +37,7 @@ public class AdminSaleController {
      * @return 주문 목록 페이지
      */
     @GetMapping
-    public String getSales(@PageableDefault(page = 0, size = 10) Pageable pageable,
+    public String getSales(@PageableDefault Pageable pageable,
                            Model model) {
 
         PagedResponse<List<SaleResponseDto>> sales

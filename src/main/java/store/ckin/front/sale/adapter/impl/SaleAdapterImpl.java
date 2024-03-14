@@ -191,4 +191,19 @@ public class SaleAdapterImpl implements SaleAdapter {
 
         return exchange.getBody();
     }
+
+    @Override
+    public SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber) {
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleDetailResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/guest/{saleNumber}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, saleNumber);
+
+        return exchange.getBody();
+    }
 }
