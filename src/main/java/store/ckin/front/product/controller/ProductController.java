@@ -1,7 +1,10 @@
 package store.ckin.front.product.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -18,9 +21,6 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
 import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * description:
@@ -74,8 +74,16 @@ public class ProductController {
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
         model.addAttribute("totalRate",
-                "0".equals(bookResponseDto.getBookReviewRate()) ? 0 : String.format("%.2f", Double.parseDouble(bookResponseDto.getBookReviewRate()) / reviewListDtoPageDto.getTotalElements()));
+                "0".equals(bookResponseDto.getBookReviewRate()) ? 0 : String.format("%.2f",
+                        Double.parseDouble(bookResponseDto.getBookReviewRate()) /
+                                reviewListDtoPageDto.getTotalElements()));
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
+    }
+
+    @GetMapping("/search")
+    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword) {
+        log.debug(keyword);
+        return "product/search";
     }
 }
