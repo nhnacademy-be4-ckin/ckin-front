@@ -31,11 +31,6 @@
                             </select>
 
                             <script>
-                                // var selectElement = document.getElementById('couponSelect');
-                                // selectElement.addEventListener('change', function() {
-                                //     var selectedValue = selectElement.value;
-                                //     handleOptionSelection(selectedValue);
-                                // });
 
                                 function handleOptionSelection(selectedValue) {
                                     console.log("selectedValue" + selectedValue);
@@ -122,19 +117,19 @@
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${!(pagenation.number > 0)} ? 'disabled'">
+                <li class="page-item" th:classappend="${!(pagination.number > 0)} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/coupon(page=${pagenation.getNumber() - 1})}">Previous</a>
+                       th:href="@{/admin/coupon(page=${pagination.getNumber() - 1})}">Previous</a>
                 </li>
-                <th:block th:with="start=1, end=${(pagenation.totalPages == 0) ? 1 : pagenation.totalPages}">
+                <th:block th:with="start=1, end=${(pagination.totalPages == 0) ? 1 : pagination.totalPages}">
                     <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
                         <a class="page-link" th:href="@{/admin/coupon(page=${page - 1})}"
                            th:text="${page}"></a></li>
                 </th:block>
                 <li class="page-item"
-                    th:classappend="${!(pagenation.number < pagenation.totalElements - 1)} ? 'disabled'">
+                    th:classappend="${!(pagination.number < pagination.totalElements - 1)} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/admin/coupon(page=${pagenation.getNumber() + 1})}">Next</a>
+                       th:href="@{/admin/coupon(page=${pagination.getNumber() + 1})}">Next</a>
                 </li>
             </ul>
         </nav>
