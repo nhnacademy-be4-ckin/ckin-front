@@ -1,0 +1,187 @@
+.new-book-banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+
+.new-book-banner .title {
+    display: inline-block;
+    text-transform: uppercase;
+    margin: 0px;
+    font-size: 30px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    padding: 5px 14px;
+    vertical-align: bottom;
+}
+
+.new-book-banner .title-enter {
+    display: inline-block;
+    text-transform: uppercase;
+    margin: 0px;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    padding: 5px 14px;
+    vertical-align: bottom;
+}
+
+.col-12 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+img {
+    width: 100%;
+}
+
+.product {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.product:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.product-image img:hover {
+    transform: scale(1.1);
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.category {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.title {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.title-enter {
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.title a {
+    color: #343a40;
+    transition: color 0.3s ease;
+}
+.title-enter a {
+    color: #343a40;
+    transition: color 0.3s ease;
+}
+
+.title a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+.title-enter a:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.review {
+    list-style: none;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.review i {
+    color: #ffc107;
+    font-size: 16px;
+}
+
+.price {
+    font-size: 20px;
+    color: #28a745;
+    margin-top: 10px;
+}
+
+.button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.button button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button button:hover {
+    background-color: #0056b3;
+}
+
+.badge_list_box {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.badge_md {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #007bff; /* 배경색상 지정 */
+    color: #ffffff; /* 글자색상 지정 */
+    font-size: 14px; /* 원하는 크기로 조절 */
+    font-weight: normal;
+    margin-right: 5px; /* 원하는 여백으로 조절 */
+}
+
+.prod_price {
+    margin-top: 20px;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.carousel-container {
+    overflow: hidden;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    margin-right: 15px;
+}
