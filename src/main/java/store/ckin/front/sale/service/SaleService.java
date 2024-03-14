@@ -54,7 +54,7 @@ public interface SaleService {
     SaleDetailResponseDto getSaleDetail(Long saleId);
 
     /**
-     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     * 주문 번호를 통해 주문과 관련된 도서 정보를 조회합니다.
      *
      * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
@@ -76,4 +76,12 @@ public interface SaleService {
      * @return 페이징 처리된 주문 응답 DTO 리스트
      */
     PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId);
+
+    /**
+     * 주문 번호를 통해 주문 상세 정보를 조회합니다.
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber);
 }

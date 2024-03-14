@@ -2,19 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
-</head>
-<div class="header-v4" th:fragment="index-fragment-navigation">
-
-    <script src="/js/nav-script.js">
-
-    </script>
     <style>
         /* ::before와 ::after에 스타일 추가 */
         .tabs::before, .tabs::after {
             /* 스타일을 여기에 추가 */
         }
     </style>
+</head>
+<div class="header-v4" th:fragment="index-fragment-navigation">
+
+    <script src="/js/nav-script.js">
+
+    </script>
     <div class="wrapper welcome" id="mainDiv" style="min-height: 0vh">
 
 
@@ -215,6 +214,12 @@
                                 <li><a class="dropdown-item" th:href="@{/coupon/2}">도서 쿠폰</a></li>
                                 <li><a class="dropdown-item" th:href="@{/coupon/3}">카테고리 쿠폰</a></li>
                             </ul>
+                        </li>
+                        <!-- 비회원 주문 조회 링크 -->
+                        <li class="gnb_item">
+                            <a class="gnb_link" th:href="@{/sale/guest}">
+                                <em>비회원 주문 조회 🧾</em>
+                            </a>
                         </li>
                     </ul>
                 </div>

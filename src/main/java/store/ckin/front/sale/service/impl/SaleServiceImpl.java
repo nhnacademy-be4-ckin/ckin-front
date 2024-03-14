@@ -101,4 +101,15 @@ public class SaleServiceImpl implements SaleService {
     public PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId) {
         return saleAdapter.requestGetSalesByMemberId(memberId);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    @Override
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
+        return saleAdapter.requestGetSaleDetailBySaleNumber(saleNumber);
+    }
 }

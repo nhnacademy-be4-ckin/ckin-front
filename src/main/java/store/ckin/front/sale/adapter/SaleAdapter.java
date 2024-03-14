@@ -75,4 +75,13 @@ public interface SaleAdapter {
      * @return 해당 회원이 주문한 페이징 처리된 주문 내역
      */
     PagedResponse<List<SaleResponseDto>> requestGetSalesByMemberId(String memberId);
+
+
+    /**
+     * 주문 번호를 통해 주문 상세 정보를 요청합니다..
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    SaleDetailResponseDto requestGetSaleDetailBySaleNumber(String saleNumber);
 }

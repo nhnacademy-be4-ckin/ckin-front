@@ -147,7 +147,7 @@ public class SaleFacade {
     }
 
     /**
-     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     * 주문 번호를 통해 주문과 관련된 도서 정보를 조회합니다.
      *
      * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
@@ -164,5 +164,15 @@ public class SaleFacade {
      */
     public List<CartItem> readCartItems(String cartId) {
         return cartService.readCartItems(cartId);
+    }
+
+    /**
+     * 주문 번호를 통해 주문의 상세 정보를 조회하는 메서드입니다.
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
+        return saleService.getSaleDetailBySaleNumber(saleNumber);
     }
 }
