@@ -3,7 +3,6 @@ package store.ckin.front.oauth;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,15 +33,29 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         UriComponentsBuilder targetUrl = UriComponentsBuilder
                 .fromUriString("/signup")
                 .encode(StandardCharsets.UTF_8);
-        attributes.forEach((key, value) -> {
-            if (Objects.nonNull(value)) {
-                targetUrl.queryParam(key, value);
-            }
-        });
+
+        setQueryParams(attributes, targetUrl);
+
         String finalUrl = targetUrl.build().toUriString();
 
         log.debug("finalUrl : {}", finalUrl);
 
         getRedirectStrategy().sendRedirect(request, response, finalUrl);
+    }
+
+    private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
+        setQueryParam("email", String.valueOf(attributes.get("email")), targetUrl);
+        setQueryParam("name", String.valueOf(attributes.get("name")), targetUrl);
+        String contact = String.valueOf(attributes.get("mobile"));
+
+        if (contact.startsWith("82")) {
+            contact = contact.replace("82", "0");
+        }
+
+        setQueryParam("contact", contact, targetUrl);
+    }
+
+    private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {
+        targetUrl.queryParam(key, value);
     }
 }
