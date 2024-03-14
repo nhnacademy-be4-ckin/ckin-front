@@ -41,7 +41,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         });
         String finalUrl = targetUrl.build().toUriString();
 
-        log.info("finalUrl : {}", finalUrl);
+        log.debug("finalUrl : {}", finalUrl);
 
         getRedirectStrategy().sendRedirect(request, response, finalUrl);
     }

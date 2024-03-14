@@ -1,7 +1,9 @@
 package store.ckin.front.oauth;
 
-import java.util.*;
-
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -38,12 +40,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("OAuth start");
+        log.debug("OAuth start");
 
         String platform = userRequest.getClientRegistration().getClientName();
 
         if (platform.equals("payco")) {
-            log.info("Payco OAuth");
+            log.debug("Payco OAuth");
             RequestEntity<?> request = Objects.requireNonNull(requestEntityConverter.convert(userRequest));
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
                     request,
