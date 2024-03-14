@@ -46,7 +46,15 @@ public interface CouponAdapter {
      */
     PageDto<GetCouponResponseDto> getCouponByMemberId(Pageable pageable, Long memberId);
 
-    boolean createCouponByIds(Long memberId, Long couponTemplateId);
+    /**
+     * 쿠폰을 발급받는 메서드 입니다.
+     *
+     * @param memberId
+     * @param couponTemplateId
+     * @return true : 정상 발급
+     * false : 이미 발급된 쿠판
+     */
+    Boolean createCouponByIds(Long memberId, Long couponTemplateId);
 
     /**
      * 사용한 쿠폰의 상태를 변경하는 메서드입니다.

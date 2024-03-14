@@ -35,26 +35,20 @@
                 <aside class="aside_wrap sub_category">
                     <div class="aside_header">
                         <div class="title_wrap title_size_xxl">
-                            <a href="https://product.kyobobook.co.kr/KOR" class="title_heading" th:text="${categoryName}"></a>
+                            <a href="#" class="title_heading" th:text="${categoryName}"></a>
                         </div>
                     </div>
                     <div class="aside_body">
                         <div class="snb_wrap">
                             <ul class="snb_list">
                                 <li class="snb_item" th:each="category : ${categoryList}">
-                                    <a th:href="@{'/product/' + ${category.categoryId}}" class="snb_link" th:text="${category.categoryName}">
+                                    <a th:href="@{'/product/' + ${category.categoryId}}" class="snb_link"
+                                       th:text="${category.categoryName}">
                                     </a>
                                 </li>
                             </ul>
                         </div>
 
-                        <div class="showcase_side_wrap">
-                            <div class="blurb_thumb_box" id="lnb_adv">
-                                <a href=""
-                                   class="img_box"><span class="img_box"><img
-                                        src=""
-                                        alt="메리골드 마음 사진관"></span></a></div>
-                        </div>
                     </div>
                 </aside>
                 <section id="contents2" class="section_wrap">

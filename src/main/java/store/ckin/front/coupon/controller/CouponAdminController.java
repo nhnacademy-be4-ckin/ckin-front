@@ -69,7 +69,7 @@ public class CouponAdminController {
                                 @PathVariable("typeId") Long typeId) {
         PageDto<GetCouponResponseDto> couponList = couponService.getCouponList(pageable, typeId);
 
-        model.addAttribute("pagenation", couponList);
+        model.addAttribute("pagination", couponList);
         model.addAttribute("couponAllList", couponList.getContent());
         return "admin/coupon/main";
     }
@@ -92,7 +92,7 @@ public class CouponAdminController {
         } else {
             couponList = couponService.getCouponByMemberId(pageable, memberId);
         }
-        model.addAttribute("pagenation", couponList);
+        model.addAttribute("pagination", couponList);
         model.addAttribute("couponAllList", couponList.getContent());
         return "admin/coupon/main";
     }
