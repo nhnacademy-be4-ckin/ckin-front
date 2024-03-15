@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -25,16 +26,18 @@ import store.ckin.front.sale.service.SaleService;
 /**
  * 회원 - 마이페이지 컨트롤러 클래스입니다.
  *
- * @author 정승조
+ * @author 정승조, 이가은
  * @version 2024. 03. 14.
  */
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member/mypage")
 public class MemberMyPageController {
 
     private final SaleService saleService;
+
     private final CouponService couponService;
 
 
@@ -84,6 +87,14 @@ public class MemberMyPageController {
         return "member/mypage/order-detail";
     }
 
+
+    /**
+     * 회원의 사용 가능한 쿠폰 목록 조회 메서드입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param model    Model 객체
+     * @return 회원 쿠폰 목록 화면
+     */
     @Member
     @GetMapping("/coupon")
     public String getMemberCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,
@@ -103,6 +114,13 @@ public class MemberMyPageController {
         return "member/coupon/main";
     }
 
+    /**
+     * 회원의 사용된 쿠폰 목록 조회 메서드입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param model    Model 객체
+     * @return 회원 쿠폰 목록 화면
+     */
     @Member
     @GetMapping("/coupon/used")
     public String getMemberUsedCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,

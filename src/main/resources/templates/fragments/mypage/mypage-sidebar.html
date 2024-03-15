@@ -38,6 +38,7 @@
                     </nav>
                 </div>
 
+
                 <!-- 쿠폰 -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupon"
                    aria-expanded="false" aria-controls="collapseLayouts">
@@ -48,8 +49,8 @@
                 <div class="collapse" id="collapseCoupon" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a href="/member/mypage/coupon" class="nav-link">나의 쿠폰</a>
-                        <a href="/member/mypage/coupon/used" class="nav-link">쿠폰 사용 내역</a>
+                        <a th:href="@{/member/mypage/coupon}" class="nav-link">나의 쿠폰</a>
+                        <a th:href="@{/member/mypage/coupon/used}" class="nav-link">쿠폰 사용 내역</a>
                     </nav>
                 </div>
 

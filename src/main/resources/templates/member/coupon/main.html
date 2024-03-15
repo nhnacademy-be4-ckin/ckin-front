@@ -71,7 +71,7 @@
         </div>
 
         <!-- no_data -->
-        <div class="no_data has_bottom_line" id="couponNoData" style="">
+        <div class="no_data has_bottom_line hidden" id="couponNoData" style="">
             <div class="no_data_desc">사용가능한 쿠폰이 없습니다.</div>
         </div>
 
@@ -84,7 +84,7 @@
 
 
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center m-t-15">
                 <li class="page-item" th:classappend="${!(couponPage.number > 0)} ? 'disabled'">
                     <a class="page-link"
                        th:href="@{/member/mypage/coupon(page=${couponPage.number - 1})}">Previous</a>
@@ -102,31 +102,31 @@
             </ul>
         </nav>
 
-        <div class="info_text_box size_lg " style="margin: 60px 0 0;">
-            <div class="info_text_inner">
-                <ul class="bul_list">
-                    <li class="bul_item_dot font_size_xxs">출판문화산업 진흥법에 의거 도서정가제가 적용됩니다. (2014년 11월 21일)</li>
-                    <li class="bul_item_dot font_size_xxs">도서정가제 적용대상인 국내도서, eBook은 상품정가의 최대 10%까지만 할인이 가능합니다.
-                        <br>그 외 외국도서, 음반, DVD 구매 시에는 기존과 같이 쿠폰을 사용할 수 있습니다.
-                    </li>
-                    <li class="bul_item_dot font_size_xxs">도서정가제 적용대상 상품의 판매가가 10% 할인이 이미 되어 있다면, 상품쿠폰 및 주문쿠폰을 사용하실 수
-                        없습니다.
-                    </li>
-                </ul>
-                <ul class="bul_list">
-                    <li class="bul_item_dot font_size_xxs">국내도서 (정가 10,000원, 10%할인, 판매가 9,000원) : 쿠폰사용 불가</li>
-                    <li class="bul_item_dot font_size_xxs">외국도서 (정가 10,000원, 10%할인, 판매가 9,000원) : 쿠폰사용 가능 (보유한 쿠폰 중
-                        사용가능한 쿠폰이 자동으로 적용됩니다. 사용 가능한 쿠폰이나 적용되지 않을 경우 보유하고 계신 쿠폰의 적용조건을 확인 주시기 바랍니다.)
-                    </li>
-                    <li class="bul_item_dot font_size_xxs">상품쿠폰은 상품 종 별로 적용되며, 쿠폰에 따라 1개 또는 주문수량에 맞게 적용됩니다.</li>
-                    <li class="bul_item_dot font_size_xxs">유효기간이 지난 쿠폰은 재발행 되지 않습니다.</li>
-                    <li class="bul_item_dot font_size_xxs">무료배송쿠폰은 배송비가 발생하는 주문에 한해 배송비 무료 적용을 하실 수 있습니다. (단, 해외배송 제외)
-                    </li>
-                    <li class="bul_item_dot font_size_xxs">주문한 도서 중 일부 품절, 일부 반품 시 쿠폰적용으로 인해 환불예상금액이 달라질 수 있습니다.</li>
-                    <li class="bul_item_dot font_size_xxs">일본잡지 정기구독, 강연상품, 책 그리고 꽃 등 특정상품에는 쿠폰 사용이 불가합니다.</li>
-                </ul>
-            </div>
-        </div>
+<!--        <div class="info_text_box size_lg " style="margin: 60px 0 0;">-->
+<!--            <div class="info_text_inner">-->
+<!--                <ul class="bul_list">-->
+<!--                    <li class="bul_item_dot font_size_xxs">출판문화산업 진흥법에 의거 도서정가제가 적용됩니다. (2014년 11월 21일)</li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">도서정가제 적용대상인 국내도서, eBook은 상품정가의 최대 10%까지만 할인이 가능합니다.-->
+<!--                        <br>그 외 외국도서, 음반, DVD 구매 시에는 기존과 같이 쿠폰을 사용할 수 있습니다.-->
+<!--                    </li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">도서정가제 적용대상 상품의 판매가가 10% 할인이 이미 되어 있다면, 상품쿠폰 및 주문쿠폰을 사용하실 수-->
+<!--                        없습니다.-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                <ul class="bul_list">-->
+<!--                    <li class="bul_item_dot font_size_xxs">국내도서 (정가 10,000원, 10%할인, 판매가 9,000원) : 쿠폰사용 불가</li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">외국도서 (정가 10,000원, 10%할인, 판매가 9,000원) : 쿠폰사용 가능 (보유한 쿠폰 중-->
+<!--                        사용가능한 쿠폰이 자동으로 적용됩니다. 사용 가능한 쿠폰이나 적용되지 않을 경우 보유하고 계신 쿠폰의 적용조건을 확인 주시기 바랍니다.)-->
+<!--                    </li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">상품쿠폰은 상품 종 별로 적용되며, 쿠폰에 따라 1개 또는 주문수량에 맞게 적용됩니다.</li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">유효기간이 지난 쿠폰은 재발행 되지 않습니다.</li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">무료배송쿠폰은 배송비가 발생하는 주문에 한해 배송비 무료 적용을 하실 수 있습니다. (단, 해외배송 제외)-->
+<!--                    </li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">주문한 도서 중 일부 품절, 일부 반품 시 쿠폰적용으로 인해 환불예상금액이 달라질 수 있습니다.</li>-->
+<!--                    <li class="bul_item_dot font_size_xxs">일본잡지 정기구독, 강연상품, 책 그리고 꽃 등 특정상품에는 쿠폰 사용이 불가합니다.</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <!--//info_text_box-->
         <script src="/js/mypage-coupon.js" crossorigin="anonymous"></script>
     </div>
