@@ -13,7 +13,6 @@ import store.ckin.front.cart.service.CartService;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
@@ -42,8 +41,6 @@ public class SaleFacade {
     private final BookService bookService;
 
     private final SaleService saleService;
-
-    private final MemberService memberService;
 
     private final CartService cartService;
 
