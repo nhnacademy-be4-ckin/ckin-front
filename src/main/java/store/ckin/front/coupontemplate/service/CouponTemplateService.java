@@ -44,6 +44,7 @@ public interface CouponTemplateService {
      * @param duration       사용기한
      * @param expirationDate 만료일
      */
-    void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount, Integer duration, Date expirationDate);
+    void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount, Integer duration,
+                              Date expirationDate);
 }
 

@@ -1,9 +1,9 @@
 package store.ckin.front.coupon.dto.response;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Date;
+import lombok.ToString;
 
 /**
  * 쿠폰 응답 DTO
@@ -12,6 +12,7 @@ import java.util.Date;
  * @version 2024. 02. 20.
  */
 @Getter
+@ToString
 @AllArgsConstructor
 public class GetCouponResponseDto {
     private Long id;

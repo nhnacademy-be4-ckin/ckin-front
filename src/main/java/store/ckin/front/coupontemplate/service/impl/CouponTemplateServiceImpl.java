@@ -69,8 +69,11 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
     }
 
     @Override
-    public void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount, Integer duration, Date expirationDate) {
-        CreateCouponTemplateRequestDto couponTemplateRequestDto = new CreateCouponTemplateRequestDto(policyId, bookId, categoryId, typeId, "", amount, duration, expirationDate);
+    public void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount,
+                                     Integer duration, Date expirationDate) {
+        CreateCouponTemplateRequestDto couponTemplateRequestDto =
+                new CreateCouponTemplateRequestDto(policyId, bookId, categoryId, typeId, "", amount, duration,
+                        expirationDate);
 
         log.debug("duration: {}", duration);
         log.debug("expiration: {}", expirationDate);

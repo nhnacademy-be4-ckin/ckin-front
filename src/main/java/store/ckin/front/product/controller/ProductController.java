@@ -1,5 +1,7 @@
 package store.ckin.front.product.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +20,6 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
 import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * description:
@@ -71,7 +70,8 @@ public class ProductController {
         String authorNames = bookResponseDto.getAuthorNames()
                 .stream().collect(Collectors.joining(", "));
         String reviewRate = bookResponseDto.getBookReviewRate();
-        String formattedRate = "0".equals(reviewRate) ? "0" : String.format("%.1f", Double.parseDouble(reviewRate) / reviewListDtoPageDto.getTotalElements());
+        String formattedRate = "0".equals(reviewRate) ? "0" :
+                String.format("%.1f", Double.parseDouble(reviewRate) / reviewListDtoPageDto.getTotalElements());
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);

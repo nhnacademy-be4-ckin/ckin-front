@@ -1,12 +1,11 @@
 package store.ckin.front.util;
 
-import store.ckin.front.exception.CookieNotFoundException;
-
+import java.util.Arrays;
+import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Objects;
+import store.ckin.front.exception.CookieNotFoundException;
 
 /**
  * 쿠키에 관련된 로직을 처리하는 클래스 입니다.

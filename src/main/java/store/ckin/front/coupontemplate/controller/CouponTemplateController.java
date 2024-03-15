@@ -49,7 +49,8 @@ public class CouponTemplateController {
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
-        couponTemplateList.getContent().stream().forEach(getCouponTemplateResponseDto -> System.out.println(getCouponTemplateResponseDto));
+        couponTemplateList.getContent().stream()
+                .forEach(getCouponTemplateResponseDto -> System.out.println(getCouponTemplateResponseDto));
 
         model.addAttribute("pagination", couponTemplateList);
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
@@ -84,13 +85,16 @@ public class CouponTemplateController {
 
         switch (typeId.intValue()) {
             case 1:
-                couponTemplateService.createCouponTemplate(policyId, null, null, typeId, 0L, duration, Date.valueOf(expirationDate));
+                couponTemplateService.createCouponTemplate(policyId, null, null, typeId, 0L, duration,
+                        Date.valueOf(expirationDate));
                 return "redirect:/admin/coupon/template/1";
             case 2:
-                couponTemplateService.createCouponTemplate(policyId, value, null, typeId, 0L, duration, Date.valueOf(expirationDate));
+                couponTemplateService.createCouponTemplate(policyId, value, null, typeId, 0L, duration,
+                        Date.valueOf(expirationDate));
                 return "redirect:/admin/coupon/template/2";
             default:
-                couponTemplateService.createCouponTemplate(policyId, null, value, typeId, 0L, duration, Date.valueOf(expirationDate));
+                couponTemplateService.createCouponTemplate(policyId, null, value, typeId, 0L, duration,
+                        Date.valueOf(expirationDate));
                 return "redirect:/admin/coupon/template/3";
         }
     }

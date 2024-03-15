@@ -1,9 +1,16 @@
 package store.ckin.front.book.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -18,10 +25,6 @@ import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * BookAdapter 구현 클래스.
