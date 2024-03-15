@@ -1,5 +1,6 @@
 package store.ckin.front.coupon.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -9,8 +10,6 @@ import store.ckin.front.coupon.adapter.CouponAdapter;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
 
 /**
  * CouponPolicyServiceImpl
@@ -77,6 +76,11 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public void updateCouponUsed(List<Long> couponIds) {
         couponAdapter.updateCouponUsed(couponIds);
+    }
+
+    @Override
+    public PageDto<GetCouponResponseDto> getUnUsedCouponByMember(Pageable pageable, Long memberId) {
+        return couponAdapter.getUnUsedCouponByMember(pageable, memberId);
     }
 
 }

@@ -5,8 +5,6 @@ import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.aop.Member;
 import store.ckin.front.cart.dto.domain.CartItem;
-import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
@@ -43,21 +41,20 @@ public class SaleController {
      * @param model Model 객체 (주문 등록에 사용될 정책, 책 목록 정보)
      * @return 주문 등록 페이지
      */
+    @Member
     @GetMapping
     public String getSaleForm(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
-            MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
-            model.addAttribute("memberPoint", memberPoint.getPoint());
-        }
-
         List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
 
         if (cartItems.isEmpty()) {
             return "redirect:/cart";
         }
 
+        String saleTitle =
+                cartItems.size() == 1 ? cartItems.get(0).getName() :
+                        cartItems.get(0).getName() + " 외 " + (cartItems.size() - 1) + " 권";
+
+        model.addAttribute("saleTitle", saleTitle);
         model.addAttribute("policyList", saleFacade.getPolicyList());
         model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
         return "sale/main";
@@ -103,7 +100,7 @@ public class SaleController {
      */
     @GetMapping("/guest")
     public String getGuestSaleLookup() {
-        return "sale/guest";
+        return "sale/guest-order";
     }
 
 
@@ -116,14 +113,11 @@ public class SaleController {
      */
     @GetMapping("/guest/lookup")
     public String getGuestSaleDetail(@RequestParam("saleNumber") String saleNumber,
+                                     @RequestParam("ordererContact") String ordererContact,
                                      Model model) {
 
-        log.info("saleNumber = {}", saleNumber);
-
-        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetailBySaleNumber(saleNumber);
-        log.debug("saleDetail = {}", saleDetail);
-
+        SaleDetailResponseDto saleDetail = saleFacade.getGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
         model.addAttribute("saleDetail", saleDetail);
-        return "sale/guest-lookup";
+        return "sale/guest-order-detail";
     }
 }

@@ -1,8 +1,10 @@
 package store.ckin.front.product.service;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
 
 /**
@@ -27,4 +29,8 @@ public interface ProductService {
      * @return 상품 상세 정보 DTO
      */
     BookResponseDto findProductById(Long bookId);
+
+    List<BookMainPageResponseDto> findRecentBooks(Integer limit);
+
+    List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
 }

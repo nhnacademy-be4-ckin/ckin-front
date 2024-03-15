@@ -1,9 +1,8 @@
 package store.ckin.front.tag.dto.request;
 
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 태그 삭제 요청 Dto

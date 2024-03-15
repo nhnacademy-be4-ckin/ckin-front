@@ -91,25 +91,41 @@ public class SaleServiceImpl implements SaleService {
         return saleAdapter.requestGetPaymentInfo(saleNumber);
     }
 
+
     /**
      * {@inheritDoc}
      *
      * @param memberId 회원 ID
+     * @param page     페이지 번호
+     * @param size     페이지 사이즈
      * @return 페이징 처리된 주문 응답 DTO 리스트
      */
     @Override
-    public PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId) {
-        return saleAdapter.requestGetSalesByMemberId(memberId);
+    public PagedResponse<List<SaleInfoResponseDto>> getSalesByMemberId(String memberId, Integer page, Integer size) {
+        return saleAdapter.requestGetSalesByMemberId(memberId, page, size);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber     주문 번호
+     * @param ordererContact 주문자 전화번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    @Override
+    public SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+        return saleAdapter.requestGetGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
     }
 
     /**
      * {@inheritDoc}
      *
      * @param saleNumber 주문 번호
+     * @param memberId   회원 ID
      * @return 주문 상세 정보 응답 DTO
      */
     @Override
-    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
-        return saleAdapter.requestGetSaleDetailBySaleNumber(saleNumber);
+    public SaleDetailResponseDto getMemberSaleDetailBySaleNumber(String saleNumber, String memberId) {
+        return saleAdapter.requestGetMemberSaleDetailBySaleNumber(saleNumber, memberId);
     }
 }

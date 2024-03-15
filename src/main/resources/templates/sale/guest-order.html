@@ -10,9 +10,9 @@
         <div class="row m-t-150">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
                 <div class="m-lr-0-xl m-t-50">
-                    <h3 class="h3 m-b-10 text-center">비회원 주문 조회</h3>
-                    <p class="p-b-6 text-center">
-                        주문 상태를 조회하기 위해 발급한 주문 번호를 입력해주세요.
+                    <h2 class="h2 m-b-10 text-center">비회원 주문 조회</h2>
+                    <p class="p-b-6 text-center h5" style="color: darkolivegreen">
+                        주문 상태를 조회하기 위해 발급한 주문 번호와 주문자 연락처를 입력해주세요.
                     </p>
                     <br/>
                 </div>
@@ -23,6 +23,11 @@
                                name="saleNumber"
                                style="height: 70px"
                                placeholder="주문 번호를 입력해주세요" required>
+
+                        <input type="text" class="form-control"
+                               name="ordererContact"
+                               style="height: 70px"
+                               placeholder="주문자 연락처('-' 제외 11자)를 입력해주세요" required>
 
                         <button type="submit"
                                 class="w-100 btn btn-primary m-t-20">

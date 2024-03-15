@@ -1,5 +1,8 @@
 package store.ckin.front.deliverypolicy.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,10 +15,6 @@ import store.ckin.front.deliverypolicy.adapter.DeliveryPolicyAdapter;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyCreateRequestDto;
 import store.ckin.front.deliverypolicy.dto.request.DeliveryPolicyUpdateRequestDto;
 import store.ckin.front.deliverypolicy.dto.response.DeliveryPolicyResponseDto;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 배송비 정책 어댑터 구현 클래스입니다.

@@ -10,7 +10,6 @@ import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
-import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
@@ -42,11 +41,6 @@ public class MemberServiceImpl implements MemberService {
         } catch (HttpServerErrorException ex) {
             throw new ServerErrorException();
         }
-    }
-
-    @Override
-    public MemberPointResponseDto getMemberPoint(String memberId) {
-        return memberAdapter.getMemberPoint(memberId);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package store.ckin.front.category.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.category.adapter.CategoryAdapter;
@@ -7,8 +8,6 @@ import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
-
-import java.util.List;
 
 /**
  * CategoryService 구현 클래스.

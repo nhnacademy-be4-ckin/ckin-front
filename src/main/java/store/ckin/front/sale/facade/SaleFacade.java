@@ -13,8 +13,6 @@ import store.ckin.front.cart.service.CartService;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
-import store.ckin.front.member.domain.response.MemberPointResponseDto;
-import store.ckin.front.member.service.MemberService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
@@ -43,8 +41,6 @@ public class SaleFacade {
     private final BookService bookService;
 
     private final SaleService saleService;
-
-    private final MemberService memberService;
 
     private final CartService cartService;
 
@@ -118,16 +114,6 @@ public class SaleFacade {
     }
 
     /**
-     * 회원의 포인트 정보를 조회하는 메서드입니다.
-     *
-     * @param memberId 회원 ID
-     * @return 회원 포인트 응답 DTO
-     */
-    public MemberPointResponseDto getMemberPoint(String memberId) {
-        return memberService.getMemberPoint(memberId);
-    }
-
-    /**
      * 주문 완료시 장바구니에 담긴 모든 상품을 삭제하는 메서드입니다.
      *
      * @param value 장바구니 쿠키 값
@@ -169,10 +155,11 @@ public class SaleFacade {
     /**
      * 주문 번호를 통해 주문의 상세 정보를 조회하는 메서드입니다.
      *
-     * @param saleNumber 주문 번호
+     * @param saleNumber     주문 번호
+     * @param ordererContact 주문자 연락처
      * @return 주문 상세 정보 응답 DTO
      */
-    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
-        return saleService.getSaleDetailBySaleNumber(saleNumber);
+    public SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
+        return saleService.getGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
     }
 }
