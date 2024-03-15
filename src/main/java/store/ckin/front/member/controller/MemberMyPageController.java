@@ -17,6 +17,8 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
+import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -37,6 +39,8 @@ public class MemberMyPageController {
     private final SaleService saleService;
 
     private final CouponService couponService;
+
+    private final PointHistoryService pointHistoryService;
 
 
     /**
@@ -102,5 +106,31 @@ public class MemberMyPageController {
         return "member/coupon/main";
     }
 
+    /**
+     * 회원 포인트 내역 조회 메서드입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param model    Model 객체
+     * @return 회원 포인트 내역 화면
+     */
+    @Member
+    @GetMapping("/point-history")
+    public String getMemberPointHistory(@PageableDefault Pageable pageable,
+                                        Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PagedResponse<List<PointHistoryResponseDto>> pointHistoryList =
+                pointHistoryService.getPointHistoryList(
+                        authentication.getName(),
+                        pageable.getPageNumber(),
+                        pageable.getPageSize());
+
+        log.info("pointHistoryList = {}", pointHistoryList);
+
+
+        model.addAttribute("pointHistoryList", pointHistoryList.getData());
+        model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
+        return "member/mypage/point-history";
+    }
 
 }
