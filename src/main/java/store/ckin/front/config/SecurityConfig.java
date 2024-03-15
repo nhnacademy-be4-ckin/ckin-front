@@ -24,6 +24,7 @@ import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.oauth.CustomOAuth2UserService;
+import store.ckin.front.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
 import store.ckin.front.oauth.OAuth2SuccessHandler;
 import store.ckin.front.token.service.TokenService;
 
@@ -34,7 +35,7 @@ import store.ckin.front.token.service.TokenService;
  * @version : 2024. 02. 21.
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
     private final RedisTemplate<String, Object> redisTemplate;
@@ -96,10 +97,15 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter(), CustomLoginFilter.class)
                 .addFilterBefore(customLoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth -> oauth
-                        .successHandler(oAuth2SuccessHandler)
                         .loginPage("/login")
+                        .authorizationEndpoint()
+                        .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository())
+                        .and()
                         .userInfoEndpoint()
-                        .userService(customOAuth2UserService));
+                        .userService(customOAuth2UserService)
+                        .and()
+                        .successHandler(oAuth2SuccessHandler));
+
         return http.build();
     }
 
@@ -154,5 +160,10 @@ public class SecurityConfig {
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
+    }
+
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 }
