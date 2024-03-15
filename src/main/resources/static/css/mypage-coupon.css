@@ -1,0 +1,390 @@
+#coupon-list {
+    padding: 3%;
+}
+
+body {
+    font-size: 14px;
+    line-height: 1.4;
+    font-family: "Roboto", "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
+    min-width: 1440px;
+    color: #000;
+}
+
+.info_text_box.my_benefit_summary {
+    border-radius: 16px;
+    padding: 38px 0;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.info_text_box.type_purple {
+    background-color: rgba(80, 85, 177, 0.06);
+}
+
+.info_text_box {
+    display: block;
+    padding: 18px;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item {
+    position: relative;
+    width: 50%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    margin-right: 20px;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item + .my_benefit_summary_item:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    font-size: 0;
+    top: 50%;
+    left: 0;
+    width: 1px;
+    height: 20px;
+    background-color: #d5d5d5;
+    vertical-align: top;
+    box-sizing: border-box;
+    transform: translateY(-50%);
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .title .ico_my_benefit_coupon {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-image: url(../images/icons/free-icon-coupon-6665577.png);
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .title .text {
+    font-size: 30px;
+    display: inline-block;
+    padding-top: 2px;
+    vertical-align: top;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .count {
+    font-size: 30px;
+    display: inline-block;
+    line-height: 0;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .count .val {
+    font-size: 30px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+}
+
+.info_text_box.my_benefit_summary .my_benefit_summary_item .count .unit {
+    font-size: 30px;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+}
+
+/* 사용 가능한 쿠폰이 없는 경우 */
+.no_data .no_data_desc {
+    display: block;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.no_data .no_data_desc:before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 12px;
+    background: url(../images/icons/free-icon-warning-6897039.png) 0% 0% no-repeat;
+    background-size: 36px 36px;
+}
+
+.no_data {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -moz-box-orient: vertical;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    padding: 180px 0;
+}
+
+.list_result_wrap {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -ms-flex-align: end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.list_result_wrap .right_area {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -ms-flex-align: end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    margin-bottom: 11px;
+}
+
+.tbl_col_wrap {
+    display: block;
+    width: 100%;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #eaeaea;
+    box-sizing: border-box;
+}
+
+.list_result_wrap .bul_item_asterisk {
+    margin-bottom: 9px;
+}
+
+[class^=bul_item_].font_size_xxs {
+    font-size: 13px;
+    line-height: 19px;
+    letter-spacing: -0.01em;
+}
+
+.bul_item_asterisk {
+    color: #767676;
+    padding-left: 8px;
+}
+
+.list_result_wrap .bul_item_asterisk + .prod_filter_wrap {
+    margin-left: 20px;
+}
+
+button.btn_sm {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    height: 38px;
+    padding: 0 13px 1px;
+    border-radius: 6px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 13px;
+    line-height: 19px;
+    letter-spacing: -0.01em;
+}
+
+a.btn_line_gray, button.btn_line_gray {
+    color: #000;
+    background: #fff;
+    border: 1px solid #ccc;
+    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+button.btn_sm .ico_calendar {
+    width: 14px;
+    background: url(../images/common/ink/ico_calendar@2x.png) center no-repeat;
+    background-size: 14px 14px;
+}
+
+button[class^=btn_] .text, a[class^=btn_] .text {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}
+
+.tbl_col_wrap {
+    display: block;
+    width: 100%;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #eaeaea;
+    box-sizing: border-box;
+}
+
+.tbl_col_line {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 0;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.tbl_col_wrap .tbl_col_line thead th {
+    border-bottom: 1px solid #eaeaea;
+}
+
+.tbl_col_wrap .tbl_col_line tr th {
+    padding: 16px 24px 14px;
+}
+
+.tbl_col_wrap .tbl_col_line tr th {
+    padding: 16px 10px 14px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: -0.01em;
+    color: #767676;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+th, td {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.tbl_col_wrap .tbl_col_line tr td.align_left {
+    text-align: center;
+}
+
+.tbl_col_wrap .tbl_col_line tr td {
+    padding: 28px 24px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

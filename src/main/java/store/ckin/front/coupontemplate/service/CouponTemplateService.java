@@ -1,10 +1,9 @@
 package store.ckin.front.coupontemplate.service;
 
+import java.sql.Date;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.sql.Date;
 
 /**
  * description:

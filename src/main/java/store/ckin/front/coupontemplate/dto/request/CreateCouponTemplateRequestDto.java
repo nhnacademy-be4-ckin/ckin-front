@@ -1,13 +1,12 @@
 package store.ckin.front.coupontemplate.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
-
+import java.sql.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.sql.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 쿠폰 템플릿 생성 및 수정 요청 DTO

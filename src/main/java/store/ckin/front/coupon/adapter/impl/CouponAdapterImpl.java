@@ -1,5 +1,8 @@
 package store.ckin.front.coupon.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,10 +17,6 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.adapter.CouponAdapter;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 
 /**
@@ -150,6 +149,27 @@ public class CouponAdapterImpl implements CouponAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
+    }
+
+    @Override
+    public PageDto<GetCouponResponseDto> getUnUsedCouponByMember(Pageable pageable, Long memberId) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(
+                        gatewayProperties.getGatewayUri() + "/coupon/members/unUsed/" + memberId)
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
     }
 
 }
