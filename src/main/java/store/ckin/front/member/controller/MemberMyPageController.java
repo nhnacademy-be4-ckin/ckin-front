@@ -53,7 +53,7 @@ public class MemberMyPageController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PagedResponse<List<SaleInfoResponseDto>> saleList
-                = saleService.getSalesByMemberId(authentication.getName(), pageable.getPageNumber() - 1,
+                = saleService.getSalesByMemberId(authentication.getName(), pageable.getPageNumber(),
                 pageable.getPageSize());
 
         model.addAttribute("saleList", saleList.getData());
@@ -78,10 +78,7 @@ public class MemberMyPageController {
         SaleDetailResponseDto saleDetail =
                 saleService.getMemberSaleDetailBySaleNumber(saleNumber, memberId);
 
-        model.getAttribute("member");
-
         model.addAttribute("saleDetail", saleDetail);
-
         return "member/mypage/order-detail";
     }
 

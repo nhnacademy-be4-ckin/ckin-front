@@ -40,11 +40,11 @@ public class AdminSaleController {
     public String getSales(@PageableDefault Pageable pageable,
                            Model model) {
 
-        PagedResponse<List<SaleResponseDto>> sales
-                = saleFacade.getSales(pageable.getPageNumber() - 1, pageable.getPageSize());
+        PagedResponse<List<SaleResponseDto>> saleList
+                = saleFacade.getSales(pageable.getPageNumber(), pageable.getPageSize());
 
-        model.addAttribute("sales", sales.getData());
-        model.addAttribute("pageInfo", sales.getPageInfo());
+        model.addAttribute("saleList", saleList.getData());
+        model.addAttribute("pageInfo", saleList.getPageInfo());
         return "admin/sale/main";
     }
 
