@@ -1,10 +1,9 @@
 package store.ckin.front.coupon.service;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
 
 /**
  * CouponPolicyService
@@ -57,4 +56,12 @@ public interface CouponService {
      */
     void updateCouponUsed(List<Long> couponIds);
 
+    /**
+     * 회원의 사용하지 않은 쿠폰 목록 조회
+     *
+     * @param pageable
+     * @param memberId
+     * @return
+     */
+    PageDto<GetCouponResponseDto> getUnUsedCouponByMember(Pageable pageable, Long memberId);
 }

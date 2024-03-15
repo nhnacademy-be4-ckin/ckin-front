@@ -1,10 +1,9 @@
 package store.ckin.front.category.adapter;
 
+import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
-
-import java.util.List;
 
 /**
  * CategoryAdapter.
@@ -54,5 +53,11 @@ public interface CategoryAdapter {
      */
     void requestDeleteCategory(Long categoryId);
 
-
+    /**
+     * 해당 카테고리의 이름을 가져옵니다.
+     *
+     * @param bookId
+     * @return
+     */
+    String getCategoryName(Long bookId);
 }

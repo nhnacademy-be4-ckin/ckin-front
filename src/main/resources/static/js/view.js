@@ -104,3 +104,40 @@ function openImage(element) {
     var imageUrl = backgroundImage.replace('url("', '').replace('")', ''); // 배경 이미지 URL 추출
     window.open(imageUrl, '_blank');
 }
+
+//도서 상세 페이지 적립 혜택 세부정보
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("pointInfo");
+    const tooltipContent = document.querySelector(".tooltip_contents");
+
+    button.addEventListener("click", function() {
+
+        // 버튼의 텍스트도 변경
+        const buttonText = button.querySelector("span.hidden");
+        if (buttonText.textContent === "툴팁열기") {
+            buttonText.textContent = "툴팁닫기";
+            // 버튼 클릭 시 툴팁의 활성/비활성 상태를 변경
+            $("#pointInfoDiv").addClass('active');
+        } else {
+            buttonText.textContent = "툴팁열기";
+            $("#pointInfoDiv").removeClass('active');
+        }
+    });
+});
+//도서 상세 페이지 배송비 세부 정보
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.getElementById("shipInfo");
+    const tooltipContent = document.querySelector(".tooltip_contents");
+
+    button.addEventListener("click", function() {
+        const buttonText = button.querySelector("span.hidden");
+        if (buttonText.textContent === "툴팁열기") {
+            buttonText.textContent = "툴팁닫기";
+            // 버튼 클릭 시 툴팁의 활성/비활성 상태를 변경
+            $("#shipInfoDiv").addClass('active');
+        } else {
+            buttonText.textContent = "툴팁열기";
+            $("#shipInfoDiv").removeClass('active');
+        }
+    });
+});

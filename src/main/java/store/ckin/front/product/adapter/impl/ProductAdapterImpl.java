@@ -1,5 +1,7 @@
 package store.ckin.front.product.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,8 +18,6 @@ import store.ckin.front.product.adapter.ProductAdapter;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 
 /**
@@ -92,8 +92,9 @@ public class ProductAdapterImpl implements ProductAdapter {
     @Override
     public List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/main-page/category/" + categoryId)
-                .queryParam("limit" ,limit)
+        String url = UriComponentsBuilder.fromHttpUrl(
+                        portProperties.getGatewayUri() + "/api/books/main-page/category/" + categoryId)
+                .queryParam("limit", limit)
                 .encode()
                 .toUriString();
 

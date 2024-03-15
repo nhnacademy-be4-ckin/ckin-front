@@ -1,12 +1,11 @@
 package store.ckin.front.booksale.dto.request;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 /**
  * 도서 주문 생성 요청 DTO 클래스입니다.

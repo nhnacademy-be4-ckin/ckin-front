@@ -1,8 +1,7 @@
 package store.ckin.front.cicd.actuator;
 
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.springframework.stereotype.Component;
 
 /**
  * Application 상태를 관리하는 클래스입니다.

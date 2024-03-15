@@ -1,10 +1,9 @@
 package store.ckin.front.payment.dto.response;
 
+import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.OffsetDateTime;
 
 /**
  * 결제 확인 응답 DTO.

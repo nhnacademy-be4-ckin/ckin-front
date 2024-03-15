@@ -1,4 +1,4 @@
-package store.ckin.front.auth;
+package store.ckin.front.oauth;
 
 import java.net.URI;
 import java.util.Collections;
