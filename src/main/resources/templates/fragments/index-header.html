@@ -58,7 +58,7 @@
 
                         <div th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}"
                              class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                            <a href="/member/mypage" class="material-symbols-sharp">account_circle</a>
+                            <a th:href="@{/member/mypage/order-list}" class="material-symbols-sharp">account_circle</a>
                         </div>
 
                     </th:block>
