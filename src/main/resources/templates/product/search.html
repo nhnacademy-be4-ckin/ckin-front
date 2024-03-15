@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <main class="main row">
+        <div class="search-page-wrap p-t-15">
+            <div class="search-content-wrap">
+                <div class="search-page-title">
+                    <em th:text="|${KEY_WORD} 에 대한 검색 결과가 0건 있습니다|"></em>
+                </div>
+                <div class="search-result-wrap">
+                    <div class="search-result-filter-wrap">
+                        <div class="search-result-filter-grip">
+                            <dl class="on pos-relative search-filter">
+                                <dt>
+                                    <a>분야</a>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        <li>국내도서 ( )</li>
+                                        <li>외국도서 ( )</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+
+                        </div>
+                    </div>
+                    <div class="search-result-contents-wrap">
+                        <div class="search-result-contents-grip">
+                            <div class="search-result-contents">
+                                <div class="search-result" th:each="number : ${#numbers.sequence(1, 10)}">
+                                    <div class="search-result-col">
+                                        <div class="search-result-left">
+                                            <img src="/images/logo.png" class="search-result-img" alt="result-img">
+                                            <div class="search-result-info">
+                                                <a>책이르</a>
+                                                <em>책책</em>
+                                            </div>
+                                        </div>
+                                        <div class="search-result-right">
+                                            <div class="search-result-quantity">
+                                                <button class="search-result-quantity-btn btn btn-outline-secondary"
+                                                        type="button">-
+                                                </button>
+                                                <input type="number" class="search-result-quantity-number"
+                                                       placeholder="0">
+                                                <button class="search-result-quantity-btn btn btn-outline-secondary"
+                                                        type="button">+
+                                                </button>
+                                            </div>
+                                            <button class="btn-hover color-8">장바구니 추가</button>
+                                            <button class="btn-hover color-8">바로 결제하기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+</html>
