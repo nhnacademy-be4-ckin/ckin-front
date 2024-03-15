@@ -1,5 +1,6 @@
 package store.ckin.front.review.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,6 @@ import store.ckin.front.review.adapter.ReviewAdapter;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
 import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
-
-import java.util.List;
 
 /**
  * 리뷰 서비스 구현 클래스입니다.

@@ -1,5 +1,8 @@
 package store.ckin.front.auth;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,10 +12,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.util.CookieUtil;
 import store.ckin.front.util.JwtUtil;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 로그아웃 프로세스를 처리하는 클래스 입니다.

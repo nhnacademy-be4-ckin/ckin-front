@@ -1,12 +1,11 @@
 package store.ckin.front.review.service;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
 import store.ckin.front.review.dto.response.ReviewDto;
-
-import java.util.List;
 
 /**
  * ReviewService

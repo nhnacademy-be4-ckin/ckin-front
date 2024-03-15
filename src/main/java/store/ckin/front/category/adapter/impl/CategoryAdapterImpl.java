@@ -1,5 +1,8 @@
 package store.ckin.front.category.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,10 +16,6 @@ import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * CategoryAdapter 구현 클래스.
@@ -96,6 +95,19 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                 HttpMethod.DELETE,
                 new HttpEntity<>(getHttpHeaders()),
                 Void.class);
+    }
+
+    @Override
+    public String getCategoryName(Long categoryId) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<String> exchange =
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + CATEGORY_URL + "/get/" + categoryId,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+        return exchange.getBody();
     }
 
 }

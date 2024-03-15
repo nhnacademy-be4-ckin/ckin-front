@@ -1,5 +1,6 @@
 package store.ckin.front.packaging.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.packaging.adapter.PackagingAdapter;
@@ -7,8 +8,6 @@ import store.ckin.front.packaging.dto.request.PackagingCreateRequestDto;
 import store.ckin.front.packaging.dto.request.PackagingUpdateRequestDto;
 import store.ckin.front.packaging.dto.response.PackagingResponseDto;
 import store.ckin.front.packaging.service.PackagingService;
-
-import java.util.List;
 
 /**
  * 포장 정책 서비스 구현 클래스입니다.

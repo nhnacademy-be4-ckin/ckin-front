@@ -1,5 +1,6 @@
 package store.ckin.front.book.adapter;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.book.dto.request.BookCreateRequestDto;
@@ -8,8 +9,6 @@ import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.dto.response.BookListResponseDto;
 import store.ckin.front.book.dto.response.BookResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
-
-import java.util.List;
 
 /**
  * 도서 어댑터 인터페이스입니다.
@@ -74,4 +73,5 @@ public interface BookAdapter {
      * @param file   새 표지 이미지 파일
      */
     void requestUpdateBookThumbnail(Long bookId, MultipartFile file);
+
 }

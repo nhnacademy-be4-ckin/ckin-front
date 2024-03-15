@@ -1,11 +1,10 @@
 package store.ckin.front.coupon.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 쿠폰 생성 및 수정 요청 DTO

@@ -1,5 +1,8 @@
 package store.ckin.front.couponpolicy.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -11,10 +14,6 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.couponpolicy.adapter.CouponPolicyAdapter;
 import store.ckin.front.couponpolicy.dto.request.CreateCouponPolicyRequestDto;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
-
-import java.util.List;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 쿠폰 정책 어댑터 구현 클래스입니다.
