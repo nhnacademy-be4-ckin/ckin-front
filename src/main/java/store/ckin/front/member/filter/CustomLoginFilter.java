@@ -68,7 +68,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
                                               AuthenticationException failed)
             throws IOException, ServletException {
         log.debug("Login Failed : {}", failed.getMessage());
-        response.sendRedirect("/login");
+        response.sendRedirect("/login?error=invalid");
     }
 
     private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {

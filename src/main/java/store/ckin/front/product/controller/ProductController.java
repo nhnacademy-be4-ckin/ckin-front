@@ -70,13 +70,13 @@ public class ProductController {
         PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
         String authorNames = bookResponseDto.getAuthorNames()
                 .stream().collect(Collectors.joining(", "));
+        String reviewRate = bookResponseDto.getBookReviewRate();
+        String formattedRate = "0".equals(reviewRate) ? "0" :
+                String.format("%.1f", Double.parseDouble(reviewRate) / reviewListDtoPageDto.getTotalElements());
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-        model.addAttribute("totalRate",
-                "0".equals(bookResponseDto.getBookReviewRate()) ? 0 : String.format("%.2f",
-                        Double.parseDouble(bookResponseDto.getBookReviewRate()) /
-                                reviewListDtoPageDto.getTotalElements()));
+        model.addAttribute("totalRate", formattedRate);=
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }

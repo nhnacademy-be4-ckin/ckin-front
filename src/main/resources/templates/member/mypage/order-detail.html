@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypage-default}">
+
+<head>
+    <style>
+        td {
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+<div layout:fragment="mypage-content">
+
+    <div class="container">
+        <div class="row m-t-150">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+
+                <h3 class="m-t-30 m-b-30"
+                    th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice} + '원'"></h3>
+
+                <div class="wrap-table-shopping-cart">
+
+                    <table class="table"
+                           style="text-align: center; vertical-align: middle; margin-bottom: 0 !important;">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="column-sj-1">상품 이미지</th>
+                            <th scope="col" class="column-sj-2">상품명</th>
+                            <th scope="col" class="column-sj-3">수량</th>
+                            <th scope="col" class="column-sj-4">포장 타입</th>
+                            <th scope="col" class="column-sj-5">포장 가격</th>
+                            <th scope="col" class="column-sj-6">결제 금액</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="book : ${saleDetail.bookSaleList}">
+                            <td class="column-sj-1">
+                                <img height="125px" th:src="${book.fileUrl}" alt="썸네일 사진">
+                            </td>
+                            <td class="column-sj-2" th:text="${book.bookTitle}"></td>
+                            <td class="column-sj-3" th:text="${book.quantity}"></td>
+                            <td class="column-sj-4" th:text="${book.packagingType}"></td>
+                            <td class="column-sj-5" th:text="${book.packagingPrice}"></td>
+                            <td class="column-sj-6" th:text="${book.paymentAmount}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div th:object="${saleDetail.saleResponseDto}">
+
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                        <h3 class="h3 m-t-15 m-b-5">주문자 정보</h3>
+                        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 p-t-15">
+                            주문자 : <span th:text="*{saleOrdererName}"></span>
+                        </div>
+
+                        <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 p-t-15">
+                            주문자 전화번호: <span th:text="*{saleOrdererContact}"></span>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+
+                            <h3 class="h3 m-t-15 m-b-5">수령자 정보</h3>
+
+                            <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 p-t-15">
+                                수령자 : <span th:text="*{saleReceiverName}"></span>
+                            </div>
+
+                            <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 p-t-15">
+                                수령자 전화번호 : <span th:text="*{saleReceiverContact}"></span>
+                            </div>
+
+                            <div class="stext-104 cl2 plh4 size-116 bor13 p-lr-20 m-r-10 m-tb-5 p-t-15">
+                                배송 주소 : <span th:text="*{saleReceiverAddress}"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                            <h3 class="h3 m-t-15 m-b-5 w-100">배송 정보</h3>
+
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5 p-t-10">
+                                배송 예약일 : <span th:text="*{#temporals.format(saleDeliveryDate, 'yyyy.MM.dd')}"></span>
+                            </div>
+
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5 p-t-10">
+                                배송 상태 : <span th:text="*{saleDeliveryStatus}"></span>
+                            </div>
+
+                            <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5 p-t-10">
+                                배송비 : <span th:text="*{saleDeliveryFee}"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+
+                <h3 class="m-t-30 m-b-30" style="color: #00235e"
+                    th:text="'결제 정보 : ' + ${saleDetail.saleResponseDto.salePaymentStatus}"> 결제 정보 </h3>
+
+                <th:block th:if="${saleDetail.paymentResponseDto != null}"
+                          th:object="${saleDetail.paymentResponseDto}">
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-10 p-t-10">
+                        결제 상태 : <span th:text="*{paymentStatus}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-10 p-t-10">
+                        결제 요청일 : <span th:text="*{#temporals.format(requestedAt, 'yyyy.MM.dd')}"></span>
+                    </div>
+
+                    <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-10 p-t-10">
+                        결제 승인일 : <span th:text="*{#temporals.format(approvedAt, 'yyyy.MM.dd')}"></span>
+                    </div>
+
+                    <button class="m-t-20 btn-outline-primary btn float-r" style="margin-top: 30px;"
+                            th:onclick="|location.href='@{*{receiptUrl}}'|">
+                        결제 영수증
+                    </button>
+                </th:block>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</html>

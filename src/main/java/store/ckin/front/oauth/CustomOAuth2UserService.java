@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import store.ckin.front.auth.CustomOAuth2UserRequestConverter;
 
 /**
  * OAuth 서버에서 계정 정보를 가져오는 클래스 입니다.

@@ -1,11 +1,10 @@
 package store.ckin.front.sale.dto.response;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * 주문 조회 응답 DTO.
@@ -37,6 +36,8 @@ public class SaleResponseDto {
     }
 
     private Long saleId;
+
+    private String title;
 
     private String memberEmail;
 
