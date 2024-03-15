@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -75,8 +76,15 @@ public class ProductController {
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-        model.addAttribute("totalRate", formattedRate);
+        model.addAttribute("totalRate", formattedRate);=
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
+    }
+
+    @GetMapping("/search")
+    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword, Model model) {
+        log.debug(keyword);
+        model.addAttribute("KEY_WORD", keyword);
+        return "product/search";
     }
 }
