@@ -4,6 +4,7 @@ import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -33,7 +34,7 @@ public interface SaleService {
      * @param requestDto 주문 생성 요청 DTO
      * @return 생성된 주문 ID
      */
-    Long createSale(SaleCreateRequestDto requestDto);
+    String createSale(SaleCreateRequestDto requestDto);
 
     /**
      * 모든 주문을 조회합니다.
@@ -48,17 +49,17 @@ public interface SaleService {
      * 주문 정보를 조회합니다.
      *
      * @param saleId 주문 ID
-     * @return 주문 응답 DTO
+     * @return 주문 상세 정보 응답 DTO
      */
-    SaleResponseDto getSaleDetail(Long saleId);
+    SaleDetailResponseDto getSaleDetail(Long saleId);
 
     /**
-     * 주문 ID를 통해 주문과 관련된 도서 정보를 조회합니다.
+     * 주문 번호를 통해 주문과 관련된 도서 정보를 조회합니다.
      *
-     * @param saleId 주문 ID
+     * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
-    SaleWithBookResponseDto getSaleWithBooks(Long saleId);
+    SaleWithBookResponseDto getSaleWithBooks(String saleNumber);
 
     /**
      * 주문 번호를 통해 결제 정보를 조회합니다.
@@ -67,4 +68,20 @@ public interface SaleService {
      * @return 결제 정보 응답 DTO
      */
     SaleInfoResponseDto getPaymentInfo(String saleNumber);
+
+    /**
+     * 회원 ID를 통해 해당 회원의 모든 주문 내역을 조회합니다.
+     *
+     * @param memberId 회원 ID
+     * @return 페이징 처리된 주문 응답 DTO 리스트
+     */
+    PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId);
+
+    /**
+     * 주문 번호를 통해 주문 상세 정보를 조회합니다.
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber);
 }

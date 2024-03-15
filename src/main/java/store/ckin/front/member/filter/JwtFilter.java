@@ -48,7 +48,6 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         try {
-
             // 정적 파일인지 확인
             if (isResourceFile(request.getRequestURI())) {
                 filterChain.doFilter(request, response);
@@ -117,6 +116,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setSecurityContextHolder(String accessToken) {
         String uuid = JwtUtil.getUuid(accessToken);
+
+        log.debug("UUID : {}", uuid);
+
         String memberId = getMemberId(uuid);
 
         MemberInfoDetailResponseDto memberInfo = memberDetailsService.loadUserById(memberId);

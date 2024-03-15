@@ -1,16 +1,17 @@
 package store.ckin.front.sale.controller;
 
 import java.util.List;
-import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.common.dto.PagedResponse;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
 
@@ -36,15 +37,14 @@ public class AdminSaleController {
      * @return 주문 목록 페이지
      */
     @GetMapping
-    public String getSales(@Positive @RequestParam(defaultValue = "1") Integer page,
-                           @Positive @RequestParam(required = false, defaultValue = "10") Integer size,
+    public String getSales(@PageableDefault Pageable pageable,
                            Model model) {
 
-        PagedResponse<List<SaleResponseDto>> sales = saleFacade.getSales(page - 1, size);
+        PagedResponse<List<SaleResponseDto>> sales
+                = saleFacade.getSales(pageable.getPageNumber() - 1, pageable.getPageSize());
 
-        log.debug("sales = {}", sales.getData());
-
-        model.addAttribute("sales", sales);
+        model.addAttribute("sales", sales.getData());
+        model.addAttribute("pageInfo", sales.getPageInfo());
         return "admin/sale/main";
     }
 
@@ -58,9 +58,11 @@ public class AdminSaleController {
      */
     @GetMapping("/{saleId}")
     public String getSaleDetail(@PathVariable("saleId") Long saleId, Model model) {
-        SaleResponseDto sale = saleFacade.getSaleDetail(saleId);
+        SaleDetailResponseDto saleDetail = saleFacade.getSaleDetail(saleId);
 
-        model.addAttribute("sale", sale);
+        log.debug("saleDetail = {}", saleDetail);
+
+        model.addAttribute("saleDetail", saleDetail);
         return "admin/sale/detail";
     }
 }

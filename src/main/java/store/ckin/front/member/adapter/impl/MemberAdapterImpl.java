@@ -26,7 +26,6 @@ import store.ckin.front.member.domain.response.MemberPointResponseDto;
  * @author : jinwoolee
  * @version : 2024. 02. 16.
  */
-
 @Component
 @RequiredArgsConstructor
 public class MemberAdapterImpl implements MemberAdapter {

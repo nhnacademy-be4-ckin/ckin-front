@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -36,6 +37,10 @@ public class JwtUtil {
             return verifier.verify(token)
                     .getExpiresAt()
                     .before(new Date());
+        } catch (TokenExpiredException ex) {
+            log.debug("{} : Token [{}] Expired", ex.getClass().getName(), token);
+
+            return false;
         } catch (JWTVerificationException ex) {
             log.error("{} :  Token Validation failed", ex.getClass().getName());
 

@@ -10,6 +10,155 @@
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 
     <style>
+        .custom-checkbox {
+            display: none;
+        }
+
+        .custom-checkbox-label {
+            position: relative;
+            padding-left: 35px;
+            margin-right: 15px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .custom-checkbox-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            background-color: transparent;
+        }
+
+        .custom-checkbox:checked + .custom-checkbox-label:before {
+            background-color: #007bff;
+        }
+
+        .custom-checkbox-label:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            width: 9px;
+            height: 15px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        .custom-checkbox:checked + .custom-checkbox-label:after {
+            display: block;
+        }
+
+        .selected-author .custom-checkbox {
+            display: none;
+        }
+
+        .selected-author .custom-checkbox-label {
+            position: relative;
+            padding-left: 35px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .selected-author .custom-checkbox-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            background-color: transparent;
+        }
+
+        .selected-author .custom-checkbox:checked + .custom-checkbox-label:before {
+            background-color: #007bff;
+        }
+
+        .selected-author .custom-checkbox-label:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            width: 9px;
+            height: 15px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        .selected-author .custom-checkbox:checked + .custom-checkbox-label:after {
+            display: block;
+        }
+
+        .selected-author {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 15px;
+        }
+        .remove-author-button {
+            margin-left: 8px;
+            color: #007bff; /* 기본 색상을 파란색으로 변경 */
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .remove-author-button:hover {
+            color: #0056b3; /* 호버 시 색상을 더 어두운 파란색으로 변경 */
+        }
+
+        .tag-item {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            border: 1px solid #007bff;
+            background-color: #ffffff;
+            color: #007bff;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tag-item:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .selected-tag {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #007bff; /* 파란색 */
+            color: #ffffff;
+            border-radius: 15px;
+        }
+
+        .remove-tag-button {
+            margin-left: 8px;
+            color: #007bff; /* 기본 색상을 파란색으로 변경 */
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .remove-tag-button:hover {
+            color: #0056b3; /* 호버 시 색상을 더 어두운 파란색으로 변경 */
+        }
+
         div:has(> #book-form) {
             padding: 60px;
         }
@@ -177,7 +326,7 @@
             </div>
             <div class="form-group">
                 <label for="bookPublicationDate">출판일:</label>
-                <input type="date" id="bookPublicationDate"/>
+                <input type="date" class="form-control" id="bookPublicationDate" required/>
             </div>
             <div class="form-group">
                 <label for="bookDescription">책 설명:</label>
@@ -257,7 +406,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn-submit">등록하기</button>
+            <button type="submit" class="btn btn-primary">등록하기</button>
         </form>
     </div>
 
@@ -338,8 +487,7 @@
                         throw new Error("Network response was not ok.");
                     })
                     .then(data => {
-
-                        window.location.href = '';
+                        window.location.href = data.redirectUrl;
                     })
                     .catch(error => {
                         console.error("Error:", error);
@@ -347,7 +495,6 @@
                     });
             });
 
-        // 이미지 미리보기 기능
         document
             .getElementById("bookThumbnail")
             .addEventListener("change", function (event) {
@@ -453,10 +600,12 @@
                             checkbox.type = "checkbox";
                             checkbox.id = `author_${author.authorId}`;
                             checkbox.value = author.authorId;
+                            checkbox.classList.add("custom-checkbox");
 
                             const label = document.createElement("label");
                             label.htmlFor = `author_${author.authorId}`;
                             label.appendChild(document.createTextNode(author.authorName));
+                            label.classList.add("custom-checkbox-label");
 
                             const br = document.createElement("br");
 
@@ -511,9 +660,11 @@
             for (const [authorId, authorName] of Object.entries(selectedAuthors)) {
                 const authorDiv = document.createElement("div");
                 authorDiv.textContent = authorName + " ";
+                authorDiv.classList.add("selected-author");
 
                 const removeButton = document.createElement("button");
                 removeButton.textContent = "취소";
+                removeButton.classList.add("remove-author-button");
                 removeButton.onclick = function () {
                     delete selectedAuthors[authorId];
                     updateSelectedAuthorsDisplay();
@@ -561,9 +712,11 @@
 
             for (const [tagId, tagName] of Object.entries(selectedTags)) {
                 const tagDiv = document.createElement("div");
+                tagDiv.classList.add("selected-tag");
                 tagDiv.textContent = tagName + " ";
 
                 const removeButton = document.createElement("button");
+                removeButton.classList.add("remove-tag-button");
                 removeButton.textContent = "취소";
                 removeButton.onclick = function () {
                     delete selectedTags[tagId];
@@ -576,7 +729,29 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadTags);
+
+        function checkSelections() {
+            const selectedAuthorsCount = Object.keys(selectedAuthors).length;
+            const categorySelected = $("#category1").val() !== "" || $("#category2").val() !== "" || $("#category3").val() !== "";
+
+            return selectedAuthorsCount > 0 && categorySelected;
+        }
+        function updateSubmitButtonState() {
+            const isEligibleForSubmission = checkSelections();
+            $(".btn.btn-primary").prop('disabled', !isEligibleForSubmission);
+        }
+
+        // 작가나 카테고리 선택 상태가 바뀔 때마다 버튼 상태 업데이트
+        $("#category1, #category2, #category3").change(updateSubmitButtonState);
+        $("#authorList").change(updateSubmitButtonState);
+
+        // 초기 상태 설정
+        $(document).ready(function () {
+            updateSubmitButtonState();
+        });
+
     </script>
+
 </div>
 </body>
 </html>

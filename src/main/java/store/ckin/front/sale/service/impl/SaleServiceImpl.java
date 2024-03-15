@@ -7,6 +7,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.dto.response.SaleWithBookResponseDto;
@@ -43,7 +44,7 @@ public class SaleServiceImpl implements SaleService {
      * @return 생성된 주문 ID
      */
     @Override
-    public Long createSale(SaleCreateRequestDto requestDto) {
+    public String createSale(SaleCreateRequestDto requestDto) {
         return saleAdapter.requestCreateSale(requestDto);
     }
 
@@ -64,19 +65,19 @@ public class SaleServiceImpl implements SaleService {
      * @return 주문 응답 DTO
      */
     @Override
-    public SaleResponseDto getSaleDetail(Long saleId) {
+    public SaleDetailResponseDto getSaleDetail(Long saleId) {
         return saleAdapter.requestGetSaleDetail(saleId);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param saleId 주문 ID
+     * @param saleNumber 주문 번호 (UUID)
      * @return 주문과 관련된 도서 정보 응답 DTO
      */
     @Override
-    public SaleWithBookResponseDto getSaleWithBooks(Long saleId) {
-        return saleAdapter.requestGetSaleWithBooks(saleId);
+    public SaleWithBookResponseDto getSaleWithBooks(String saleNumber) {
+        return saleAdapter.requestGetSaleWithBooks(saleNumber);
     }
 
     /**
@@ -88,5 +89,27 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public SaleInfoResponseDto getPaymentInfo(String saleNumber) {
         return saleAdapter.requestGetPaymentInfo(saleNumber);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param memberId 회원 ID
+     * @return 페이징 처리된 주문 응답 DTO 리스트
+     */
+    @Override
+    public PagedResponse<List<SaleResponseDto>> getSalesByMemberId(String memberId) {
+        return saleAdapter.requestGetSalesByMemberId(memberId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 주문 번호
+     * @return 주문 상세 정보 응답 DTO
+     */
+    @Override
+    public SaleDetailResponseDto getSaleDetailBySaleNumber(String saleNumber) {
+        return saleAdapter.requestGetSaleDetailBySaleNumber(saleNumber);
     }
 }
