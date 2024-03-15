@@ -14,7 +14,7 @@
         <div class="info_text_box size_lg type_purple my_benefit_summary">
             <div class="my_benefit_summary_item">
                 <span class="title"><span class="ico_my_benefit_coupon"></span><span
-                        class="text">사용 가능한 쿠폰</span></span>
+                        class="text">사용 완료된 쿠폰</span></span>
                 <span class="count">
             <span class="val" data-available-coupons="" th:value="${couponPage.totalElements}"
                   th:text="${couponPage.totalElements}" id="totalElement"></span>
@@ -22,11 +22,7 @@
         </span>
             </div>
             <div class="my_benefit_summary_item">
-                <span class="title"><span class="text">이번 달 소멸예정 쿠폰</span></span>
-                <span class="count fc_spot">
-             <span class="val" data-expire-coupons="" th:text="${soonExpiredCount}"></span>
-             <span class="unit">장</span>
-         </span>
+
             </div>
         </div>
 
@@ -43,7 +39,7 @@
                 <thead>
                 <tr>
                     <th scope="col">상세내용</th>
-                    <th scope="col">적립일</th>
+                    <th scope="col">사용일</th>
                     <th scope="col">유효기간</th>
                     <th scope="col">구분</th>
                     <th scope="col">금액</th>
@@ -55,10 +51,10 @@
                     <td class="align_left">
                         <span class="my_benefit_history" th:text="${coupon.name}"></span>
                     </td>
-                    <td><span class="fc_light_gray" th:text="${#dates.format(coupon.issueDate, 'yyyy-MM-dd')}">2024.03.15</span></td>
+                    <td><span class="fc_light_gray" th:text="${#dates.format(coupon.usedDate, 'yyyy-MM-dd')}">2024.03.15</span></td>
                     <td><span class="fc_light_gray" th:text="${#dates.format(coupon.expirationDate, 'yyyy-MM-dd')}">2024.03.15</span>
                     </td>
-                    <td><span class="fc_light_gray" >사용가능</span></td>
+                    <td><span class="fc_light_gray" >사용완료</span></td>
                     <td>
                         <span class="my_benefit_point fc_green" th:text="${coupon.discountPrice}"></span>
                     </td>
@@ -72,7 +68,7 @@
 
         <!-- no_data -->
         <div class="no_data has_bottom_line" id="couponNoData" style="">
-            <div class="no_data_desc">사용가능한 쿠폰이 없습니다.</div>
+            <div class="no_data_desc">사용완료된 쿠폰이 없습니다.</div>
         </div>
 
         <!-- pagination -->
@@ -87,17 +83,17 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${!(couponPage.number > 0)} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/member/mypage/coupon(page=${couponPage.number - 1})}">Previous</a>
+                       th:href="@{/member/mypage/coupon/used(page=${couponPage.number - 1})}">Previous</a>
                 </li>
                 <th:block th:with="start=1, end=${(couponPage.totalPages == 0) ? 1 : couponPage.totalPages}">
                     <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                        <a class="page-link" th:href="@{/member/mypage/coupon(page=${page - 1})}"
+                        <a class="page-link" th:href="@{/member/mypage/coupon/used(page=${page - 1})}"
                            th:text="${page}"></a></li>
                 </th:block>
                 <li class="page-item"
                     th:classappend="${!(couponPage.number < couponPage.totalPages - 1)} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/member/mypage/coupon(page=${couponPage.getNumber()+1})}">Next</a>
+                       th:href="@{/member/mypage/coupon/used(page=${couponPage.getNumber()+1})}">Next</a>
                 </li>
             </ul>
         </nav>

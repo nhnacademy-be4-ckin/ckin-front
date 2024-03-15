@@ -103,4 +103,16 @@ public class MemberMyPageController {
         return "member/coupon/main";
     }
 
+    @Member
+    @GetMapping("/coupon/used")
+    public String getMemberUsedCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,
+                                      Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PageDto<GetCouponResponseDto> couponResponseDtoPageDto
+                = couponService.getUsedCouponByMember(pageable, Long.valueOf(authentication.getName()));
+
+        model.addAttribute("couponPage", couponResponseDtoPageDto);
+        return "member/coupon/used-coupon";
+    }
+
 }
