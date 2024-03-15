@@ -263,7 +263,7 @@
                             <th:block sec:authorize="isAuthenticated()">
                             <span style="margin-bottom: 20px;"> 보유중인 포인트 :
                                 <span style="color: #13653f" th:id="holdingMemberPoint"
-                                      th:text="${#numbers.formatInteger(member.point, 1, 'COMMA')}">0</span> 원
+                                      th:text="${member.point}">0</span> 원
                             </span>
 
                                 <div class="input-group" style="vertical-align: middle">
