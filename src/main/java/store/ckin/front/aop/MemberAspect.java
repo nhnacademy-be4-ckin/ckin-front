@@ -46,7 +46,6 @@ public class MemberAspect {
 
         String memberId = authentication.getName();
 
-        log.info("MemberAspect addMemberInfo memberId : {}", memberId);
         MemberMyPageResponseDto member = memberService.getMyPageInfo(memberId);
         Model model =
                 (Model) Arrays.stream(pjp.getArgs())
