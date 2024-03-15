@@ -32,10 +32,30 @@
                     <div class="search-result-contents-wrap">
                         <div class="search-result-contents-grip">
                             <div class="search-result-contents">
-                                <div
-                                <div class="search-result col-6" th:each="number : ${#numbers.sequence(1, 10)}">
-                                    <a>책이르</a>
-                                    <em>책책</em>
+                                <div class="search-result" th:each="number : ${#numbers.sequence(1, 10)}">
+                                    <div class="search-result-col">
+                                        <div class="search-result-left">
+                                            <img src="/images/logo.png" class="search-result-img" alt="result-img">
+                                            <div class="search-result-info">
+                                                <a>책이르</a>
+                                                <em>책책</em>
+                                            </div>
+                                        </div>
+                                        <div class="search-result-right">
+                                            <div class="search-result-quantity">
+                                                <button class="search-result-quantity-btn btn btn-outline-secondary"
+                                                        type="button">-
+                                                </button>
+                                                <input type="number" class="search-result-quantity-number"
+                                                       placeholder="0">
+                                                <button class="search-result-quantity-btn btn btn-outline-secondary"
+                                                        type="button">+
+                                                </button>
+                                            </div>
+                                            <button class="btn-hover color-8">장바구니 추가</button>
+                                            <button class="btn-hover color-8">바로 결제하기</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
