@@ -7,7 +7,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <!-- 주문 -->
-                <a class="nav-link collapsed" th:href="@{/member/mypage/order-list}" data-bs-toggle="collapse"
+                <a class="nav-link collapsed" data-bs-toggle="collapse"
                    data-bs-target="#collapseOrder"
                    aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><span class="material-symbols-sharp">shopping_basket</span></div>
@@ -17,7 +17,7 @@
                 <div class="collapse" id="collapseOrder" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link">주문내역/배송조회</a>
+                        <a class="nav-link" th:href="@{/member/mypage/order-list}">주문내역/배송조회</a>
                         <a class="nav-link">반품/교환 신청 및 조회</a>
                         <a class="nav-link">취소 주문내역</a>
                     </nav>
