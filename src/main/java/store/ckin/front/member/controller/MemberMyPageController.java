@@ -1,5 +1,7 @@
 package store.ckin.front.member.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.aop.Member;
 import store.ckin.front.common.dto.PagedResponse;
+import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
+import store.ckin.front.coupon.service.CouponService;
+import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -30,6 +35,7 @@ import store.ckin.front.sale.service.SaleService;
 public class MemberMyPageController {
 
     private final SaleService saleService;
+    private final CouponService couponService;
 
 
     /**
@@ -76,6 +82,25 @@ public class MemberMyPageController {
         model.addAttribute("saleDetail", saleDetail);
 
         return "member/mypage/order-detail";
+    }
+
+    @Member
+    @GetMapping("/coupon")
+    public String getMemberCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,
+                                  Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PageDto<GetCouponResponseDto> couponResponseDtoPageDto
+                = couponService.getUnUsedCouponByMember(pageable, Long.valueOf(authentication.getName()));
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        long soonExpiredCount = couponResponseDtoPageDto.getContent().stream()
+                .filter(couponResponseDto -> dateFormat.format(couponResponseDto.getExpirationDate())
+                        .equals(dateFormat.format(Calendar.getInstance().getTime())))
+                .count();
+
+        model.addAttribute("couponPage", couponResponseDtoPageDto);
+        model.addAttribute("soonExpiredCount", soonExpiredCount);
+        return "member/coupon/main";
     }
 
 }
