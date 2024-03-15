@@ -139,8 +139,9 @@
                                     <div class="prod_guide_cont">
                                         <div class="point_text">
                                             940P
-                                            <div class="tooltip_wrap type_info right">
-                                                <button type="button" class="btn_tooltip" data-btn-toggle="">
+                                            <div class="tooltip_wrap type_info right" id="pointInfoDiv">
+                                                <button type="button" class="btn_tooltip" data-btn-toggle=""
+                                                        id="pointInfo">
                                                     <span class="ico_arw"></span>
                                                     <span class="hidden">툴팁열기</span>
                                                 </button>
@@ -165,12 +166,6 @@
                                                                 <div class="title_wrap title_size_xxs">
                                                                     <p class="title_heading">
                                                                         <span>추가적립</span>
-                                                                        <button type="button" class="btn_info_popup"
-                                                                                data-role="btn-dialog"
-                                                                                data-target="#popAccrualPointGuide">
-                                                                            <span class="ico_question"></span>
-                                                                            <span class="hidden">팝업 열기</span>
-                                                                        </button>
                                                                     </p>
                                                                 </div>
                                                                 <div class="info_cont">
@@ -195,26 +190,6 @@
                                                                     </ul>
                                                                 </div>
                                                             </div>
-
-                                                            <div class="tooltip_info_item">
-                                                                <div class="title_wrap title_size_xxs">
-                                                                    <p class="title_heading">부가혜택 안내</p>
-
-                                                                    <div class="right_area">
-                                                                        <div class="benefit_link_box">
-                                                                            <a href="#" class="btn_link"
-                                                                               data-role="btn-dialog"
-                                                                               data-target="#popAffiliatePoints">제휴포인트</a>
-                                                                            <a href="#" class="btn_link"
-                                                                               data-role="btn-dialog"
-                                                                               data-target="#popBookIncomeDeduction">도서소득공제</a>
-                                                                            <a href="https://www.kyobobook.co.kr/benefit"
-                                                                               class="btn_link">쿠폰/혜택</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -235,8 +210,8 @@
                                     <div class="prod_guide_cont">
                                         <div class="delivery_guide_text">
                                             <span id="OrderDeliveryType" class="delivery_type">무료배송</span>
-                                            <div class="tooltip_wrap type_sm right">
-                                                <button type="button" class="btn_tooltip" data-btn-toggle="">
+                                            <div class="tooltip_wrap type_sm right" id="shipInfoDiv">
+                                                <button type="button" class="btn_tooltip" data-btn-toggle="" id="shipInfo">
                                                     <span class="ico_info"></span>
                                                     <span class="hidden">툴팁열기</span>
                                                 </button>
@@ -253,36 +228,7 @@
                                                         <p class="bul_item_asterisk font_size_xxs">15,000원 미만 시 2,500원
                                                             배송비 부과</p>
 
-                                                        <div class="tooltip_sub_title">교보Only(교보배송)</div>
-                                                        <div class="tooltip_desc">
-                                                            각각 구매하거나 함께 20,000원 이상 구매 시 무료배송
-                                                        </div>
-                                                        <p class="bul_item_asterisk font_size_xxs">20,000원 미만 시 2,500원
-                                                            배송비 부과</p>
 
-                                                        <div class="tooltip_sub_title">해외주문 서양도서/해외주문 일본도서(교보배송)</div>
-                                                        <div class="tooltip_desc">
-                                                            각각 구매하거나 함께 15,000원 이상 구매 시 무료배송
-                                                        </div>
-                                                        <p class="bul_item_asterisk font_size_xxs">15,000원 미만 시 2,500원
-                                                            배송비 부과</p>
-
-                                                        <div class="tooltip_sub_title">업체배송 상품(전집, GIFT, 음반/DVD 등)</div>
-                                                        <div class="tooltip_desc">
-                                                            해당 상품 상세페이지 "배송비" 참고 (업체 별/판매자 별 무료배송 기준 다름)
-                                                        </div>
-
-                                                        <div class="tooltip_sub_title">바로드림 오늘배송</div>
-                                                        <div class="tooltip_desc">
-                                                            업체에서 별도 배송하여 1Box당 배송비 2,500원 부과
-                                                        </div>
-                                                        <p class="bul_item_asterisk font_size_xxs">1Box 기준 : 도서 10권</p>
-
-                                                        <div class="tooltip_sub_title">그 외 무료배송 기준</div>
-                                                        <div class="tooltip_desc">
-                                                            바로드림, eBook 상품을 주문한 경우, 플래티넘/골드/실버회원 무료배송쿠폰 이용하여 주문한 경우,
-                                                            무료배송 등록 상품을 주문한 경우
-                                                        </div>
 
                                                     </div>
                                                     <button type="button" class="btn_tooltip_close"><span

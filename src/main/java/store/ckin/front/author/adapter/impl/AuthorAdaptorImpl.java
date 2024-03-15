@@ -1,5 +1,7 @@
 package store.ckin.front.author.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +16,6 @@ import store.ckin.front.author.dto.request.AuthorModifyRequestDto;
 import store.ckin.front.author.dto.response.AuthorResponseDto;
 import store.ckin.front.author.dto.response.PageResponse;
 import store.ckin.front.config.properties.GatewayProperties;
-
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 /**
  * 작가 어댑터 구현 클래스입니다.

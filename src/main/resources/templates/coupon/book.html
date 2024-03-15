@@ -7,10 +7,13 @@
     <meta charset="UTF-8">
     <title>Coupon</title>
     <!-- Add your CSS and other head elements here -->
+
 </head>
 
 <h1><strong>Coupon</strong></h1>
 <div layout:fragment="content" id="layoutSidenav_content">
+    <link rel="stylesheet" href="/css/coupon.css">
+
     <div id="image">
         <img src="/images/book-coupon.jpg" id="book"/>
     </div>
@@ -31,7 +34,10 @@
                                             <p><b th:text="${coupon.name}"></b></p>
                                         </div>
                                         <div class="user-text2">
-                                            <p><b th:text="${coupon.id}"></b></p>
+                                            <p>
+                                                <b class="saleFont" th:if="${coupon.discountRate != null}" th:text="${coupon.discountRate + '%'}"></b>
+                                                <b class="saleFont" th:unless="${coupon.discountRate != null}" th:text="${#numbers.formatInteger(coupon.discountPrice, 3, 'COMMA')} + '원'"></b>
+                                            </p>
                                         </div>
                                     </div>
 
@@ -73,7 +79,7 @@
                                     <form id="downloadForm">
                                         <button type="button" class="btn btn-sm btn-outline-secondary" id="request"
                                                 th:onclick="'checkCoupon(\'' + ${coupon.id} + '\')'">
-                                            Download
+                                            쿠폰 발급 📩
                                         </button>
                                     </form>
                                 </div>

@@ -1,8 +1,10 @@
 package store.ckin.front.product.adapter;
 
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
+import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
 
 /**
@@ -14,9 +16,9 @@ import store.ckin.front.product.dto.response.BookResponseDto;
 public interface ProductAdapter {
 
     /**
-     * 부모 아이디를 가지고 자식 카테고리를 찾는 메서드 입니다.
+     * 카테고리 ID를 가지고 상품리스트를 페이지로 가져오는 메서드 입니다.
      *
-     * @param parentId the parent id
+     * @param categoryId the categoryId id
      * @return the subcategories
      */
     PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable);
@@ -28,4 +30,7 @@ public interface ProductAdapter {
      * @return 상품 상세 정보 DTO
      */
     BookResponseDto findProductById(Long bookId);
+    List<BookMainPageResponseDto> findRecentBooks(Integer limit);
+
+    List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
 }
