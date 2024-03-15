@@ -1,10 +1,12 @@
 package store.ckin.front.util;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.util.SerializationUtils;
 import store.ckin.front.exception.CookieNotFoundException;
 
 /**
@@ -30,6 +32,20 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
+
+        response.addCookie(cookie);
+    }
+
+    /**
+     * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
+     */
+    public static void makeCookie(HttpServletResponse response, String name, String token, int maxAage) {
+        Cookie cookie = new Cookie(name, token);
+        cookie.setMaxAge(maxAage);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+//        cookie.setDomain("test.com");
 
         response.addCookie(cookie);
     }
@@ -93,5 +109,46 @@ public class CookieUtil {
                         response.addCookie(cookie);
                     });
         }
+    }
+
+    /**
+     * 특정 토큰 쿠키를 삭제하는 메서드 입니다.
+     *
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     */
+    public static void resetCookie(HttpServletRequest request,
+                                   HttpServletResponse response,
+                                   String name) {
+        Cookie[] cookies = request.getCookies();
+
+        if (Objects.nonNull(cookies)) {
+            Arrays.stream(cookies)
+                    .filter(cookie ->
+                            cookie.getName().equals(name))
+                    .forEach(cookie -> {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    });
+        }
+    }
+
+    public static String serialize(Object object) {
+        return Base64.getUrlEncoder().encodeToString(SerializationUtils.serialize(object));
+    }
+
+
+    /**
+     * 쿠키를 역직렬화해서 객체로 변환하는 메서드 입니다.
+     *
+     * @param cookie Cookie
+     * @param cls    Class
+     */
+    public static <T> T deserialize(Cookie cookie, Class<T> cls) {
+        return cls.cast(
+                SerializationUtils.deserialize(
+                        Base64.getUrlDecoder().decode(cookie.getValue())
+                )
+        );
     }
 }
