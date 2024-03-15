@@ -76,7 +76,7 @@ public class ProductController {
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
-        model.addAttribute("totalRate", formattedRate);=
+        model.addAttribute("totalRate", formattedRate);
         model.addAttribute("pagination", reviewListDtoPageDto);
         return "product/view";
     }
