@@ -13,7 +13,6 @@ import store.ckin.front.cart.service.CartService;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
-import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
@@ -115,16 +114,6 @@ public class SaleFacade {
      */
     public PagedResponse<List<SaleResponseDto>> getSales(Integer page, Integer size) {
         return saleService.getSales(page, size);
-    }
-
-    /**
-     * 회원의 포인트 정보를 조회하는 메서드입니다.
-     *
-     * @param memberId 회원 ID
-     * @return 회원 포인트 응답 DTO
-     */
-    public MemberPointResponseDto getMemberPoint(String memberId) {
-        return memberService.getMemberPoint(memberId);
     }
 
     /**

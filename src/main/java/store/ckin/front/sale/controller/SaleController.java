@@ -5,8 +5,6 @@ import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.aop.Member;
 import store.ckin.front.cart.dto.domain.CartItem;
-import store.ckin.front.member.domain.response.MemberPointResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
@@ -43,15 +41,9 @@ public class SaleController {
      * @param model Model 객체 (주문 등록에 사용될 정책, 책 목록 정보)
      * @return 주문 등록 페이지
      */
+    @Member
     @GetMapping
     public String getSaleForm(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
-            MemberPointResponseDto memberPoint = saleFacade.getMemberPoint(authentication.getName());
-            model.addAttribute("memberPoint", memberPoint.getPoint());
-        }
-
         List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
 
         if (cartItems.isEmpty()) {

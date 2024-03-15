@@ -3,8 +3,8 @@ package store.ckin.front.aop;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.security.core.Authentication;
@@ -35,25 +35,28 @@ public class MemberAspect {
     }
 
     /**
-     * 회원 정보를 Model에 추가하는 메서드입니다.
+     * 회원 정보를 Model 객체에 추가하는 메서드입니다.
      *
-     * @param pjp ProceedingJoinPoint
-     * @throws Throwable pjp 실행 중 발생하는 예외
+     * @param jp JoinPoint 객체
      */
-    @Around("memberPointcut()")
-    public Object addMemberInfo(ProceedingJoinPoint pjp) throws Throwable {
+    @AfterReturning(pointcut = "memberPointcut()")
+    public void addMemberInfo(JoinPoint jp) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         String memberId = authentication.getName();
 
+        log.debug("MemberAspect addMemberInfo memberId = {}", memberId);
+
+        if ("anonymousUser".equals(memberId)) {
+            return;
+        }
+
         MemberMyPageResponseDto member = memberService.getMyPageInfo(memberId);
-        Model model =
-                (Model) Arrays.stream(pjp.getArgs())
-                        .filter(Model.class::isInstance)
-                        .findFirst()
-                        .orElseThrow(() -> new IllegalArgumentException("Model Not Found !"));
+
+        Model model = (Model) Arrays.stream(jp.getArgs())
+                .filter(Model.class::isInstance)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Model 객체가 없습니다."));
 
         model.addAttribute("member", member);
-        return pjp.proceed();
     }
 }
