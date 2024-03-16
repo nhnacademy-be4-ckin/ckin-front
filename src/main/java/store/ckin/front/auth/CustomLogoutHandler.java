@@ -29,7 +29,7 @@ public class CustomLogoutHandler implements LogoutHandler {
                        HttpServletResponse response,
                        Authentication authentication) {
         try {
-            Cookie cookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
+            Cookie cookie = CookieUtil.findCookie(request, JwtUtil.HEADER_ACCESS_TOKEN);
             String token = cookie.getValue();
             String uuid = JwtUtil.getUuid(token);
 
@@ -38,7 +38,8 @@ public class CustomLogoutHandler implements LogoutHandler {
 
             SecurityContextHolder.clearContext();
 
-            CookieUtil.resetCookie(request, response);
+            CookieUtil.resetCookie(request, response, JwtUtil.HEADER_ACCESS_TOKEN);
+            CookieUtil.resetCookie(request, response, JwtUtil.HEADER_REFRESH_TOKEN);
         } catch (CookieNotFoundException ex) {
             log.debug("Cookie not found");
         }

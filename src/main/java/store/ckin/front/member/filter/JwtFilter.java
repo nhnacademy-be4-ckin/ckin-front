@@ -57,7 +57,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             log.debug("Request URI : {}", request.getRequestURI());
 
-            Cookie accessTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
+            Cookie accessTokenCookie = CookieUtil.findCookie(request, JwtUtil.HEADER_ACCESS_TOKEN);
             String accessToken = accessTokenCookie.getValue();
 
             // Access 토큰이 만료되었는지 확인
@@ -74,7 +74,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             // 만료되었다면 Refresh Token 도 만료되었는지 확인
-            Cookie refreshTokenCookie = CookieUtil.findCookie(request, CookieUtil.HEADER_REFRESH_TOKEN);
+            Cookie refreshTokenCookie = CookieUtil.findCookie(request, JwtUtil.HEADER_REFRESH_TOKEN);
             String refreshToken = refreshTokenCookie.getValue();
 
             // Refresh Token 도 만료되었다면, 재로그인 요청
@@ -85,7 +85,7 @@ public class JwtFilter extends OncePerRequestFilter {
             TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
             TokenResponseDto tokenResponseDto = tokenService.reissueToken(tokenAuthRequestDto);
 
-            updateJwtTokenCookie(request, response, tokenResponseDto);
+            JwtUtil.updateJwtTokenCookie(request, response, tokenResponseDto);
 
             // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
             setSecurityContextHolder(accessToken);
@@ -137,16 +137,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 redisTemplate
                         .opsForHash()
                         .get(uuid, "id"));
-    }
-
-    private void updateJwtTokenCookie(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      TokenResponseDto tokenResponseDto) {
-        String reissuedAccessToken = tokenResponseDto.getAccessToken();
-        String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
-
-        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_ACCESS_TOKEN, reissuedAccessToken);
-        CookieUtil.updateCookie(request, response, CookieUtil.HEADER_REFRESH_TOKEN, reissuedRefreshToken);
     }
 
     private static boolean isResourceFile(String requestUri) {

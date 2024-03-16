@@ -5,9 +5,15 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+
+import java.time.Duration;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
+import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -23,6 +29,42 @@ public class JwtUtil {
     public static final String HEADER_AUTHORIZATION = "Authorization";
 
     public static final String REFRESH_TOKEN_SUBJECT = "ckin_refresh_token";
+
+    public static final String HEADER_ACCESS_TOKEN = "accessToken";
+
+    public static final String HEADER_REFRESH_TOKEN = "refreshToken";
+
+    public static final long REFRESH_EXPIRATION_TIME = Duration.ofHours(2).toSeconds();
+
+    /**
+     * JWT 를 쿠키에 저장하는 메서드 입니다.
+     *
+     * @param tokenResponseDto Access Token, Refresh Token 이 담긴 DTO
+     */
+    public static void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
+        String accessToken = tokenResponseDto.getAccessToken();
+        String refreshToken = tokenResponseDto.getRefreshToken();
+        int maxAge = Long.valueOf(REFRESH_EXPIRATION_TIME).intValue();
+
+        CookieUtil.makeCookie(response, HEADER_ACCESS_TOKEN, accessToken, maxAge);
+        CookieUtil.makeCookie(response, HEADER_REFRESH_TOKEN, refreshToken, maxAge);
+    }
+
+    /**
+     * 만료된 JWT 쿠키를 갱신하는 메서드 입니다.
+     *
+     * @param tokenResponseDto Access Token, Refresh Token 이 담긴 DTO
+     */
+    public static void updateJwtTokenCookie(HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      TokenResponseDto tokenResponseDto) {
+        String reissuedAccessToken = tokenResponseDto.getAccessToken();
+        String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
+        int maxAge = Long.valueOf(REFRESH_EXPIRATION_TIME).intValue();
+
+        CookieUtil.updateCookie(request, response, HEADER_ACCESS_TOKEN, reissuedAccessToken, maxAge);
+        CookieUtil.updateCookie(request, response, HEADER_REFRESH_TOKEN, reissuedRefreshToken, maxAge);
+    }
 
     /**
      * 토큰의 만료기간을 확인하는 메서드입니다.

@@ -19,7 +19,7 @@ import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
+import store.ckin.front.util.JwtUtil;
 
 /**
  * OAuth 에 성공한 이후 로직을 처리하는 클래스 입니다.
@@ -51,7 +51,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String memberId = user.getUsername();
 
             TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId));
-            addTokenCookie(response, tokenResponseDto);
+            JwtUtil.addTokenCookie(response, tokenResponseDto);
 
             response.sendRedirect("/");
         } catch (UsernameNotFoundException ex) {
@@ -85,13 +85,5 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {
         targetUrl.queryParam(key, value);
-    }
-
-    private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
-        String accessToken = tokenResponseDto.getAccessToken();
-        String refreshToken = tokenResponseDto.getRefreshToken();
-
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_ACCESS_TOKEN, accessToken);
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_REFRESH_TOKEN, refreshToken);
     }
 }
