@@ -43,12 +43,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
+    /**
+     * 1. 정적 파일인지 확인
+     * 2. Access 토큰이 만료되었는지 확인
+     * 3. 만료되었다면 Refresh Token 도 만료되었는지 확인
+     * 4. Refresh Token 도 만료되었다면, 재로그인 요청
+    * */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
         try {
-            // 정적 파일인지 확인
             if (isResourceFile(request.getRequestURI())) {
                 filterChain.doFilter(request, response);
 
@@ -60,7 +65,6 @@ public class JwtFilter extends OncePerRequestFilter {
             Cookie accessTokenCookie = CookieUtil.findCookie(request, JwtUtil.HEADER_ACCESS_TOKEN);
             String accessToken = accessTokenCookie.getValue();
 
-            // Access 토큰이 만료되었는지 확인
             if (!JwtUtil.isExpired(accessToken)) {
                 log.debug("Access Token is still available to use");
                 if (request.getRequestURI().equals("/login")
@@ -73,11 +77,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
 
-            // 만료되었다면 Refresh Token 도 만료되었는지 확인
             Cookie refreshTokenCookie = CookieUtil.findCookie(request, JwtUtil.HEADER_REFRESH_TOKEN);
             String refreshToken = refreshTokenCookie.getValue();
 
-            // Refresh Token 도 만료되었다면, 재로그인 요청
             if (JwtUtil.isExpired(refreshToken)) {
                 throw new TokenExpiredException("Refresh Token is expired");
             }
@@ -87,7 +89,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
             JwtUtil.updateJwtTokenCookie(request, response, tokenResponseDto);
 
-            // Auth 서버에서 토큰이 인증이 되었다면, 인증된 정보를 SecurityContextHolder 에 넣어서 사용
             setSecurityContextHolder(accessToken);
             log.debug("JwtFilter : Finish setSecurityContextHolder");
 
