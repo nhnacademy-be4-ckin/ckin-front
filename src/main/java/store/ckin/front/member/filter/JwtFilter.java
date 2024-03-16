@@ -19,8 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.exception.ServerErrorException;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
-import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -39,8 +37,6 @@ import store.ckin.front.util.JwtUtil;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final RedisTemplate<String, Object> redisTemplate;
-
-    private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
 

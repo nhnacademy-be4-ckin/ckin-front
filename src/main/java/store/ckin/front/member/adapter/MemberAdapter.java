@@ -2,9 +2,7 @@ package store.ckin.front.member.adapter;
 
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 
 /**
@@ -17,8 +15,6 @@ public interface MemberAdapter {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);
-
-    MemberInfoDetailResponseDto getMemberInfoDetail(MemberInfoDetailRequestDto memberInfoDetailRequestDto);
 
     MemberMyPageResponseDto getMyPageInfo(String memberId);
 }

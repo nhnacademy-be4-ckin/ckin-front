@@ -14,9 +14,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 
 /**
@@ -54,21 +52,6 @@ public class MemberAdapterImpl implements MemberAdapter {
         HttpEntity<MemberAuthRequestDto> requestEntity = new HttpEntity<>(memberAuthRequestDto, headers);
         ResponseEntity<MemberAuthResponseDto> responseEntity = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/api/login",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        return responseEntity.getBody();
-    }
-
-    @Override
-    public MemberInfoDetailResponseDto getMemberInfoDetail(MemberInfoDetailRequestDto memberInfoDetailRequestDto) {
-        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
-
-        HttpEntity<MemberInfoDetailRequestDto> requestEntity = new HttpEntity<>(headers);
-        ResponseEntity<MemberInfoDetailResponseDto> responseEntity = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/api/login/" + memberInfoDetailRequestDto.getId(),
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

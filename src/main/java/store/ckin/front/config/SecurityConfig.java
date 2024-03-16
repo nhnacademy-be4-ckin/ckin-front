@@ -112,7 +112,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(redisTemplate, memberDetailsService, tokenService);
+        return new JwtFilter(redisTemplate, tokenService);
     }
 
     /**
