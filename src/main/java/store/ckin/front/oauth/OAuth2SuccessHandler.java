@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -49,8 +50,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String email = String.valueOf(attributes.get("email"));
             UserDetails user = memberDetailsService.loadUserByUsername(email);
             String memberId = user.getUsername();
+            String authority = user.getAuthorities()
+                    .stream()
+                    .findFirst()
+                    .map(GrantedAuthority::getAuthority)
+                    .orElse(null);
 
-            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId));
+            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId, authority));
             JwtUtil.addTokenCookie(response, tokenResponseDto);
 
             response.sendRedirect("/");

@@ -35,7 +35,7 @@ import store.ckin.front.token.service.TokenService;
  * @version : 2024. 02. 21.
  */
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final RedisTemplate<String, Object> redisTemplate;

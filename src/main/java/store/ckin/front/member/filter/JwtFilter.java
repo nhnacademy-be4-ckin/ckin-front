@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNotFoundException;
@@ -47,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
      * 1. 정적 파일인지 확인
      * 2. Access 토큰이 만료되었는지 확인
      * 3. 만료되었다면 Refresh Token 도 만료되었는지 확인
-     * 4. Refresh Token 도 만료되었다면, 재로그인 요청
+     * 4. Refresh Token 도 만료되었다면 Refresh Token Rotation 으로 재발급
     * */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -84,8 +85,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 throw new TokenExpiredException("Refresh Token is expired");
             }
 
-            TokenAuthRequestDto tokenAuthRequestDto = new TokenAuthRequestDto(refreshToken);
-            TokenResponseDto tokenResponseDto = tokenService.reissueToken(tokenAuthRequestDto);
+            TokenResponseDto tokenResponseDto =
+                    tokenService.reissueToken(new TokenAuthRequestDto(refreshToken));
 
             JwtUtil.updateJwtTokenCookie(request, response, tokenResponseDto);
 
@@ -120,15 +121,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         log.debug("UUID : {}", uuid);
 
-        String memberId = getMemberId(uuid);
-
-        MemberInfoDetailResponseDto memberInfo = memberDetailsService.loadUserById(memberId);
-
+        String authority = getAuthority(uuid);
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(memberInfo::getRole);
+        authorities.add(new SimpleGrantedAuthority(authority));
 
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(memberId, null, authorities);
+                new UsernamePasswordAuthenticationToken(getMemberId(uuid), null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(token);
     }
@@ -140,7 +138,14 @@ public class JwtFilter extends OncePerRequestFilter {
                         .get(uuid, "id"));
     }
 
-    private static boolean isResourceFile(String requestUri) {
+    private String getAuthority(String uuid) {
+        return (String) Objects.requireNonNull(
+                redisTemplate
+                        .opsForHash()
+                        .get(uuid, "authority"));
+    }
+
+    private boolean isResourceFile(String requestUri) {
         return requestUri.startsWith("/static")
                 || requestUri.startsWith("/css")
                 || requestUri.startsWith("/js")
