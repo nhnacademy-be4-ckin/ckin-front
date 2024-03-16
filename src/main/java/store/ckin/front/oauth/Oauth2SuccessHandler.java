@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
-import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
+import store.ckin.front.member.exception.MemberNotFoundException;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
@@ -31,8 +31,8 @@ import store.ckin.front.util.JwtUtil;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private final MemberDetailsService memberDetailsService;
+public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private final MemberService memberService;
 
     private final TokenService tokenService;
 
@@ -41,26 +41,24 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         HttpServletResponse response,
                                         Authentication authentication)
             throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = (Map) oAuth2User.getAttributes().get("member");
+        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        Map<String, Object> attributes = (Map) oauth2User.getAttributes().get("member");
+        String oauthId = String.valueOf(attributes.get("oauthId"));
 
         try {
             log.debug("OAuth Login");
 
-            String email = String.valueOf(attributes.get("email"));
-            UserDetails user = memberDetailsService.loadUserByUsername(email);
-            String memberId = user.getUsername();
-            String authority = user.getAuthorities()
-                    .stream()
-                    .findFirst()
-                    .map(GrantedAuthority::getAuthority)
-                    .orElse(null);
+            MemberOauthLoginResponseDto responseDto =
+                    memberService.getOauthMemberInfo(new MemberOauthIdOnlyRequestDto(oauthId));
+
+            String memberId = responseDto.getId().toString();
+            String authority = responseDto.getRole();
 
             TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId, authority));
             JwtUtil.addTokenCookie(response, tokenResponseDto);
 
             response.sendRedirect("/");
-        } catch (UsernameNotFoundException ex) {
+        } catch (MemberNotFoundException ex) {
             log.debug("OAuth Signup");
 
             UriComponentsBuilder targetUrl = UriComponentsBuilder
@@ -78,15 +76,22 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
-        setQueryParam("email", String.valueOf(attributes.get("email")), targetUrl);
-        setQueryParam("name", String.valueOf(attributes.get("name")), targetUrl);
-        String contact = String.valueOf(attributes.get("mobile"));
-
-        if (contact.startsWith("82")) {
-            contact = contact.replace("82", "0");
+        if (attributes.containsKey("email")) {
+            setQueryParam("email", String.valueOf(attributes.get("email")), targetUrl);
         }
 
-        setQueryParam("contact", contact, targetUrl);
+        if (attributes.containsKey("name")) {
+            setQueryParam("name", String.valueOf(attributes.get("name")), targetUrl);
+        }
+
+        if (attributes.containsKey("contact")) {
+            String contact = String.valueOf(attributes.get("contact"));
+            if (contact.startsWith("82")) {
+                contact = contact.replace("82", "0");
+            }
+
+            setQueryParam("contact", contact, targetUrl);
+        }
     }
 
     private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {

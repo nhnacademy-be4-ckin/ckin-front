@@ -25,7 +25,7 @@ import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.oauth.CustomOAuth2UserService;
 import store.ckin.front.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
-import store.ckin.front.oauth.OAuth2SuccessHandler;
+import store.ckin.front.oauth.Oauth2SuccessHandler;
 import store.ckin.front.token.service.TokenService;
 
 /**
@@ -46,7 +46,7 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final Oauth2SuccessHandler oAuth2SuccessHandler;
 
 
     /**
@@ -60,7 +60,7 @@ public class SecurityConfig {
                           MemberDetailsService memberDetailsService,
                           TokenService tokenService,
                           CustomOAuth2UserService customOAuth2UserService,
-                          OAuth2SuccessHandler oAuth2SuccessHandler) {
+                          Oauth2SuccessHandler oAuth2SuccessHandler) {
         this.redisTemplate = redisTemplate;
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
