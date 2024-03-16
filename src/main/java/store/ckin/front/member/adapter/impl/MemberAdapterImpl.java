@@ -14,8 +14,10 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.
@@ -71,6 +73,21 @@ public class MemberAdapterImpl implements MemberAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, memberId);
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public MemberOauthLoginResponseDto getOauthMemberInfO(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto) {
+        HttpEntity<MemberOauthIdOnlyRequestDto> requestEntity =
+                new HttpEntity<>(memberOauthIdOnlyRequestDto, getHttpHeaders());
+
+        ResponseEntity<MemberOauthLoginResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/login/oauth",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
 
         return exchange.getBody();
     }
