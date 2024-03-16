@@ -1,9 +1,7 @@
 package store.ckin.front.member.service;
 
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
-import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 
 /**
  * Member 관련 서비스에 대한 Interface 입니다.
@@ -15,6 +13,4 @@ public interface MemberService {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     MemberMyPageResponseDto getMyPageInfo(String memberId);
-
-    MemberOauthLoginResponseDto getOauthMemberInfo(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto);
 }

@@ -50,19 +50,4 @@ public class MemberServiceImpl implements MemberService {
     public MemberMyPageResponseDto getMyPageInfo(String memberId) {
         return memberAdapter.getMyPageInfo(memberId);
     }
-
-    @Override
-    public MemberOauthLoginResponseDto getOauthMemberInfo(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto) {
-        try {
-            return memberAdapter.getOauthMemberInfO(memberOauthIdOnlyRequestDto);
-        } catch (HttpClientErrorException ex) {
-            if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-                throw new MemberNotFoundException();
-            }
-
-            throw new ServerErrorException();
-        } catch (HttpServerErrorException ex) {
-            throw new ServerErrorException();
-        }
-    }
 }

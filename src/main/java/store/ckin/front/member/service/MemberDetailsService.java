@@ -16,7 +16,10 @@ import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
+import store.ckin.front.member.exception.MemberNotFoundException;
 
 /**
  * UserDetailsService 를 구현한 클래스 입니다.
@@ -44,6 +47,26 @@ public class MemberDetailsService implements UserDetailsService {
             if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new UsernameNotFoundException(
                         String.format("Not found information for this email [%s]", email));
+            }
+
+            throw new ServerErrorException();
+        } catch (HttpServerErrorException ex) {
+            throw new ServerErrorException();
+        }
+    }
+
+    /**
+     * OAuth 로그인 시 필요한 정보를 조회하는 메서드 입니다.
+     *
+     * @param memberOauthIdOnlyRequestDto OAuth ID
+     * @return Member ID, Authority
+     */
+    public MemberOauthLoginResponseDto getOauthMemberInfo(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto) {
+        try {
+            return memberAdapter.getOauthMemberInfO(memberOauthIdOnlyRequestDto);
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                throw new MemberNotFoundException();
             }
 
             throw new ServerErrorException();

@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 import store.ckin.front.member.exception.MemberNotFoundException;
-import store.ckin.front.member.service.MemberService;
+import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
@@ -32,7 +32,7 @@ import store.ckin.front.util.JwtUtil;
 @Component
 @RequiredArgsConstructor
 public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    private final MemberService memberService;
+    private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
 
@@ -49,7 +49,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             log.debug("OAuth Login");
 
             MemberOauthLoginResponseDto responseDto =
-                    memberService.getOauthMemberInfo(new MemberOauthIdOnlyRequestDto(oauthId));
+                    memberDetailsService.getOauthMemberInfo(new MemberOauthIdOnlyRequestDto(oauthId));
 
             String memberId = responseDto.getId().toString();
             String authority = responseDto.getRole();
