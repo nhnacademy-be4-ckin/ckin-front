@@ -23,8 +23,8 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
-import store.ckin.front.oauth.CustomOAuth2UserService;
-import store.ckin.front.oauth.HttpCookieOAuth2AuthorizationRequestRepository;
+import store.ckin.front.oauth.CustomOauth2UserService;
+import store.ckin.front.oauth.HttpCookieOauth2AuthorizationRequestRepository;
 import store.ckin.front.oauth.Oauth2SuccessHandler;
 import store.ckin.front.token.service.TokenService;
 
@@ -44,9 +44,9 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOauth2UserService customOauth2UserService;
 
-    private final Oauth2SuccessHandler oAuth2SuccessHandler;
+    private final Oauth2SuccessHandler oauth2SuccessHandler;
 
 
     /**
@@ -59,13 +59,13 @@ public class SecurityConfig {
     public SecurityConfig(@Qualifier("authRedisTemplate") RedisTemplate<String, Object> redisTemplate,
                           MemberDetailsService memberDetailsService,
                           TokenService tokenService,
-                          CustomOAuth2UserService customOAuth2UserService,
-                          Oauth2SuccessHandler oAuth2SuccessHandler) {
+                          CustomOauth2UserService customOauth2UserService,
+                          Oauth2SuccessHandler oauth2SuccessHandler) {
         this.redisTemplate = redisTemplate;
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
-        this.customOAuth2UserService = customOAuth2UserService;
-        this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+        this.customOauth2UserService = customOauth2UserService;
+        this.oauth2SuccessHandler = oauth2SuccessHandler;
     }
 
 
@@ -99,12 +99,12 @@ public class SecurityConfig {
                 .oauth2Login(oauth -> oauth
                         .loginPage("/login")
                         .authorizationEndpoint()
-                        .authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository())
+                        .authorizationRequestRepository(httpCookieOauth2AuthorizationRequestRepository())
                         .and()
                         .userInfoEndpoint()
-                        .userService(customOAuth2UserService)
+                        .userService(customOauth2UserService)
                         .and()
-                        .successHandler(oAuth2SuccessHandler));
+                        .successHandler(oauth2SuccessHandler));
 
         return http.build();
     }
@@ -163,7 +163,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository() {
-        return new HttpCookieOAuth2AuthorizationRequestRepository();
+    public HttpCookieOauth2AuthorizationRequestRepository httpCookieOauth2AuthorizationRequestRepository() {
+        return new HttpCookieOauth2AuthorizationRequestRepository();
     }
 }

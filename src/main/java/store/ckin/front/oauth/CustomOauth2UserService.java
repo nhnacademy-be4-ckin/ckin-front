@@ -31,11 +31,11 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+public class CustomOauth2UserService extends DefaultOAuth2UserService {
     private final RestTemplate restTemplate;
 
     private final Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter
-            = new CustomOAuth2UserRequestConverter();
+            = new CustomOauth2UserRequestConverter();
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
