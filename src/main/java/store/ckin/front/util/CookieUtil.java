@@ -20,6 +20,23 @@ public class CookieUtil {
     }
 
     /**
+     * 쿠키가 존재하는지 확인하는 메서드 입니다.
+     *
+     * @param name    Cookie name
+     * @return 존재여부
+     */
+    public static boolean isExists(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
+
+        if (Objects.nonNull(cookies)) {
+            return Arrays.stream(cookies)
+                    .anyMatch(cookie -> cookie.getName().equals(name));
+        }
+
+        return false;
+    }
+
+    /**
      * 쿠키를 만드는 메서드 입니다.
      */
     public static void makeCookie(HttpServletResponse response, String name, String token, int maxAage) {
