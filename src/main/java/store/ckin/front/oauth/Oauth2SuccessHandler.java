@@ -42,7 +42,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         Authentication authentication)
             throws IOException, ServletException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = (Map) oauth2User.getAttributes().get("member");
+        Map<String, Object> attributes = oauth2User.getAttributes();
         String oauthId = String.valueOf(attributes.get("oauthId"));
 
         try {
@@ -77,11 +77,11 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
         if (attributes.containsKey("email")) {
-            setQueryParam("email", String.valueOf(attributes.get("email")), targetUrl);
+            targetUrl.queryParam("email", String.valueOf(attributes.get("email")));
         }
 
         if (attributes.containsKey("name")) {
-            setQueryParam("name", String.valueOf(attributes.get("name")), targetUrl);
+            targetUrl.queryParam("name", String.valueOf(attributes.get("name")));
         }
 
         if (attributes.containsKey("contact")) {
@@ -90,11 +90,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 contact = contact.replace("82", "0");
             }
 
-            setQueryParam("contact", contact, targetUrl);
+            targetUrl.queryParam("contact", contact);
         }
-    }
-
-    private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {
-        targetUrl.queryParam(key, value);
     }
 }
