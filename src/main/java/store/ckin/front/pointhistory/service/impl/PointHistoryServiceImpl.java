@@ -1,4 +1,4 @@
-package store.ckin.front.pointhistory.service.Impl;
+package store.ckin.front.pointhistory.service.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,6 @@ public class PointHistoryServiceImpl implements PointHistoryService {
     public PagedResponse<List<PointHistoryResponseDto>> getPointHistoryList(String memberId, Integer pageNumber,
                                                                             Integer pageSize) {
 
-        log.info("getPointHistoryList - memberId: {}, pageNumber: {}, pageSize: {}", memberId, pageNumber, pageSize);
         return pointHistoryAdapter.requestGetPointHistoryListByMemberId(memberId, pageNumber, pageSize);
     }
 }

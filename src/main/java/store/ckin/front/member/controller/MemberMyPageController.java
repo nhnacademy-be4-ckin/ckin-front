@@ -125,9 +125,6 @@ public class MemberMyPageController {
                         pageable.getPageNumber(),
                         pageable.getPageSize());
 
-        log.info("pointHistoryList = {}", pointHistoryList);
-
-
         model.addAttribute("pointHistoryList", pointHistoryList.getData());
         model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
         return "member/mypage/point-history";
