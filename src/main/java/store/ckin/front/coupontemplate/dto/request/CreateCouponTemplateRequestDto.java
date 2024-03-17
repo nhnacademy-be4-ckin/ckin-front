@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -36,12 +37,28 @@ public class CreateCouponTemplateRequestDto {
     @PositiveOrZero(message = "0보다 큰 값을 입력해주세요")
     private Integer duration;
     private Date expirationDate;
+    private Boolean isBirthPolicy;
+
+    @Builder
+    public CreateCouponTemplateRequestDto(Long policyId, Long typeId, String name, Long amount, Integer duration,
+                                          Date expirationDate, Boolean isBirthPolicy) {
+        this.policyId = policyId;
+        this.typeId = typeId;
+        this.name = name;
+        this.amount = amount;
+        this.duration = duration;
+        this.expirationDate = expirationDate;
+        this.isBirthPolicy = isBirthPolicy;
+    }
 
     public void updateExpiration(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    public void updateName(String name) {
-        this.name = name;
+    public void updateBookId(Long value) {
+        this.bookId = value;
+    }
+    public void updateCategoryId(Long value) {
+        this.categoryId = value;
     }
 }

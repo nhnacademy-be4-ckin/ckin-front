@@ -1,21 +1,23 @@
 package store.ckin.front.coupontemplate.controller;
 
-import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.couponpolicy.dto.response.GetCouponPolicyResponseDto;
 import store.ckin.front.couponpolicy.service.CouponPolicyService;
+import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateInfoDto;
+import store.ckin.front.coupontemplate.dto.request.UpdateCouponTemplateStatusDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.coupontemplate.service.CouponTemplateService;
@@ -58,6 +60,7 @@ public class CouponTemplateController {
         model.addAttribute("pagination", couponTemplateList);
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
         model.addAttribute("couponPolicyList", couponPolicyList);
+
         switch (typeId.intValue()) {
             case 1:
                 return "admin/coupon/template/birth";
@@ -71,35 +74,16 @@ public class CouponTemplateController {
     /**
      * 쿠폰 템플릿을 생성하는 메서드 입니다.
      *
-     * @param policyId 쿠폰 정책 ID
-     * @param typeId   쿠폰 템플릿 타입 ID
-     * @param value    템플릿 별 입력될 값
+     * @param couponTemplateInfoDto 쿠폰 템플릿을 생성할 정보
      * @return 쿠폰 템플릿 목록 페이지로 리다이렉트
      */
     @PostMapping("/{typeId}")
-    public String createCouponTemplate(@RequestParam("policyId") Long policyId,
-                                       @PathVariable("typeId") Long typeId,
-                                       @RequestParam("value") Long value,
-                                       @RequestParam(name = "duration", required = false) Integer duration,
-                                       @RequestParam(name = "expirationDate", required = false)
-                                       @DateTimeFormat(pattern = "yyyy-MM-dd") String expirationDate) {
-        log.debug("duration: {}", duration);
-        log.debug("expiration: {}", expirationDate);
+    public String createCouponTemplate(CreateCouponTemplateInfoDto couponTemplateInfoDto) {
 
-        switch (typeId.intValue()) {
-            case 1:
-                couponTemplateService.createCouponTemplate(policyId, null, null, typeId, 0L, duration,
-                        Date.valueOf(expirationDate));
-                return "redirect:/admin/coupon/template/1";
-            case 2:
-                couponTemplateService.createCouponTemplate(policyId, value, null, typeId, 0L, duration,
-                        Date.valueOf(expirationDate));
-                return "redirect:/admin/coupon/template/2";
-            default:
-                couponTemplateService.createCouponTemplate(policyId, null, value, typeId, 0L, duration,
-                        Date.valueOf(expirationDate));
-                return "redirect:/admin/coupon/template/3";
-        }
+        log.debug(couponTemplateInfoDto.toString());
+        couponTemplateService.createCouponTemplate(couponTemplateInfoDto);
+
+        return "redirect:/admin/coupon/template/" + couponTemplateInfoDto.getTypeId();
     }
 
     /**
@@ -117,5 +101,24 @@ public class CouponTemplateController {
         return "redirect:/admin/coupon/template/" + typeId;
     }
 
+    /**
+     * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
+     *
+     * @param templateId    템플릿 아이디
+     * @param isBirthPolicy 쿠폰 템플릿 사용 여부
+     * @param typeId        타입 아이디
+     * @return 쿠폰 템플릿 목록 페이지로 이동
+     */
+    @PutMapping("/type/{typeId}/templateId/{templateId}")
+    public String updateCouponTemplate(@PathVariable("templateId") Long templateId,
+                                       @ModelAttribute UpdateCouponTemplateStatusDto isBirthPolicy,
+                                       @PathVariable("typeId") Long typeId) {
+
+        couponTemplateService.updateCouponTemplateStatus(
+                templateId,
+                Objects.nonNull(isBirthPolicy.getIsBirthPolicy()) ? isBirthPolicy.getIsBirthPolicy() : false);
+
+        return "redirect:/admin/coupon/template/" + typeId;
+    }
 }
 

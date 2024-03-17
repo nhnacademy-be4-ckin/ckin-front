@@ -27,4 +27,5 @@ public class GetCouponTemplateResponseDto {
     private Long typeId;
     private Integer duration;
     private Date expirationDate;
+    private Boolean isBirthPolicy;
 }

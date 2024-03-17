@@ -113,20 +113,6 @@
                             <label for="date">날짜를 선택하세요:
                                 <input type="date" id="date" name="expirationDate">
                             </label>
-
-                            <script>
-                                // 현재 날짜를 가져오는 함수
-                                function getCurrentDate() {
-                                    var now = new Date();
-                                    var year = now.getFullYear();
-                                    var month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 해줌
-                                    var day = String(now.getDate()).padStart(2, '0');
-                                    return year + '-' + month + '-' + day;
-                                }
-
-                                // 현재 날짜를 구해서 min 속성에 할당
-                                document.getElementById('date').setAttribute('min', getCurrentDate());
-                            </script>
                         </div>
 
                         <button type="submit" class="btn btn-primary">등록</button>
@@ -138,5 +124,6 @@
             </div>
         </div>
     </div>
+    <script src="/js/admin-coupon.js" ></script>
 </div>
 </html>

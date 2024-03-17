@@ -14,6 +14,17 @@
                 쿠폰 템플릿 추가
             </button>
         </div>
+        <style>
+            .text-danger {
+                color: red;
+            }
+
+            .text-primary {
+                color: blue;
+            }
+
+
+        </style>
 
 
         <table class="table table-hover" style="text-align: center; vertical-align: middle;">
@@ -21,10 +32,15 @@
             <tr>
                 <th scope="col">쿠폰 템플릿 ID</th>
                 <th scope="col">쿠폰 정책 ID</th>
-                <th scope="col">도서 ID</th>
-                <th scope="col">카테고리 ID</th>
+                <th scope="col">할인 금액</th>
+                <th scope="col">할인률</th>
+                <th scope="col">최대 할인 금액</th>
+                <th scope="col">최소 주문 금액</th>
                 <th scope="col">쿠폰 템플릿 이름</th>
+                <th scope="col">만료일</th>
                 <th scope="col">현재 수량</th>
+                <th scope="col">사용 여부</th>
+                <th scope="col"></th>
                 <th scope="col">삭제</th>
             </tr>
             </thead>
@@ -32,10 +48,31 @@
             <tr th:each="couponTemplate : ${couponTemplateList}">
                 <td id="pointPolicyId" th:text="${couponTemplate.id}"></td>
                 <td th:text="${couponTemplate.policyId}"></td>
-                <td th:text="${couponTemplate.bookId}"></td>
-                <td th:text="${couponTemplate.categoryId}"></td>
+                <td th:text="${couponTemplate.discountPrice}"></td>
+                <td th:text="${couponTemplate.discountRate}"></td>
+                <td th:text="${couponTemplate.maxDiscountPrice}"></td>
+                <td th:text="${couponTemplate.minOrderPrice}"></td>
                 <td th:text="${couponTemplate.name}"></td>
+                <td th:text="${couponTemplate.expirationDate}"></td>
                 <td th:text="${couponTemplate.amount}"></td>
+                <td th:text="${couponTemplate.isBirthPolicy == true ? '사용중' : '미사용'}"
+                    th:class="${couponTemplate.isBirthPolicy == true ? 'text-danger' : 'text-primary'}"></td>
+
+                <td>
+                    <form th:action="@{'/admin/coupon/template/type/1/templateId/' + ${couponTemplate.id}}"
+                          method="post">
+                        <input type="hidden" name="_method" value="PUT"/>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="isBirthPolicy" type="checkbox"
+                                   th:checked="${couponTemplate.isBirthPolicy}"
+                                   th:value="true">
+                            <button type="submit" class="btn btn-success">사용여부 변경</button>
+                        </div>
+                    </form>
+                </td>
+
+
+
                 <td>
                     <form th:action="@{'/admin/coupon/template/1/' + ${couponTemplate.id}}" method="post">
                         <button type="submit" class="btn btn-danger">삭제</button>
@@ -88,14 +125,34 @@
                                         th:text="'최소 주문 금액:' + ${policy.minOrderPrice} + ' 할인 금액: ' + ${policy.discountPrice} + ' 할인률: ' + ${policy.discountRate} + ' 최대 할인 금액: ' + ${policy.maxDiscountPrice}"></option>
                             </select>
                         </div>
-
                         <br>
+                        <input name="value" value="0" style="display: none">
+                        <input name="name" value="생일쿠폰" style="display: none">
+
                         <div class="form-group">
-                            <label for="birth">생일쿠폰 적용 달</label>
-                            <input type="number" class="form-control" id="birth" placeholder="1~12월 중 선택 (숫자만 입력)"
-                                   name="value" pattern="^(0|[1-9]+[0-9]*)$">
-                            <div class="valid-feedback">완료</div>
                             <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                            <label for="duration">사용 기한</label>
+                            <input type="number" class="form-control" id="duration" placeholder="사용 가능 기한을 정수로 입력해주세요"
+                                   name="duration">
+                            <div class="valid-feedback">완료</div>
+                        </div>
+                        <br>
+
+                        <div>
+                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                            <label for="date">날짜를 선택하세요:
+                                <input type="date" id="date" name="expirationDate">
+                            </label>
+                        </div>
+                        <br>
+
+                        <div>
+                            <label for="duration">사용 여부</label>
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">이 정책으로 사용하실건가요?</label>
+                                <input class="form-check-input" name="isBirthPolicy" type="checkbox"
+                                       id="flexSwitchCheckChecked" checked>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">등록</button>
@@ -107,5 +164,6 @@
             </div>
         </div>
     </div>
+    <script src="/js/admin-coupon.js"></script>
 </div>
 </html>
