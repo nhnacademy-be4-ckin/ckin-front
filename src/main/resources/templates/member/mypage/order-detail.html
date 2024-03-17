@@ -17,8 +17,9 @@
         <div class="row m-t-150">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 
-                <h3 class="m-t-30 m-b-30"
-                    th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice} + '원'"></h3>
+                <h4 class="m-t-30 m-b-30"
+                    th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice} + '원'">
+                </h4>
 
                 <div class="wrap-table-shopping-cart">
 
@@ -51,6 +52,12 @@
                 </div>
 
                 <div th:object="${saleDetail.saleResponseDto}">
+                    <div>
+                        <div class="flex-w bor15 p-t-10 p-b-10 p-lr-40 p-lr-15-sm">
+                            <span class="float-r w-100" style="color: darkgreen"
+                                th:text="'포인트 사용 금액 : ' + *{salePointUsage} "></span>
+                        </div>
+                    </div>
 
                     <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 
@@ -101,7 +108,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
@@ -128,8 +134,9 @@
                         결제 영수증
                     </button>
                 </th:block>
-
             </div>
+
+            <!-- 상품 금액 + 포장 금액 + 배송비 -->
 
         </div>
     </div>
