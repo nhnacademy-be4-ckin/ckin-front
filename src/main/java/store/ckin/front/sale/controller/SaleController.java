@@ -64,7 +64,7 @@ public class SaleController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (Objects.nonNull(authentication)) {
+        if (!"anonymousUser".equals(authentication.getName())) {
             Long memberId = Long.parseLong(authentication.getName());
             model.addAttribute("addressList", addressService.getMemberAddressList(memberId));
 

@@ -333,62 +333,70 @@
                                                placeholder="상세 주소">
                                     </div>
 
-                                    <!-- Button trigger modal -->
-                                    <div>
-                                        <button type="button"
-                                                class="flex-c-m stext-101 cl2 size-111 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer"
-                                                data-toggle="modal"
-                                                data-target="#addressChoice">
-                                            주소 선택
-                                        </button>
-                                    </div>
+                                    <th:block sec:authorize="isAnonymous()">
+                                        <div class="flex-w">
+                                            <input type="button"
+                                                   class="flex-c-m stext-101 cl2 size-111 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer"
+                                                   value="주소 찾기" onclick="execDaumPostcode()">
+                                        </div>
+                                    </th:block>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade"
-                                         id="addressChoice"
-                                         tabindex="-1"
-                                         role="dialog"
-                                         aria-labelledby="addressChoiceTitle"
-                                         aria-hidden="true"
-                                         style="z-index: 1200">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="addressChoiceTitle">나의 주소</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-
-                                                    <div th:if="${#lists.isEmpty(addressList)}">
-                                                        <span>등록된 주소가 없습니다.</span>
+                                    <th:block sec:authorize="isAuthenticated()">
+                                        <!-- Button trigger modal -->
+                                        <div>
+                                            <button type="button"
+                                                    class="flex-c-m stext-101 cl2 size-111 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer"
+                                                    data-toggle="modal"
+                                                    data-target="#addressChoice">
+                                                주소 선택
+                                            </button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade"
+                                             id="addressChoice"
+                                             tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="addressChoiceTitle"
+                                             aria-hidden="true"
+                                             style="z-index: 1200">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="addressChoiceTitle">나의 주소</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
+                                                    <div class="modal-body">
 
-                                                    <div th:each="address : ${addressList}" class="card border-primary mb-3">
-                                                        <div class="card-body">
-                                                            <span th:if="${address.isDefault}">기본 배송지</span>
-                                                            <h5 class="card-title" th:text="${address.alias}"></h5>
-                                                            <p class="card-text" th:text="${address.postCode}"></p>
-                                                            <p class="card-text" th:text="${address.detail}"></p>
-                                                            <p class="card-text" th:text="${address.alias}"></p>
+                                                        <div th:if="${#lists.isEmpty(addressList)}">
+                                                            <span>등록된 주소가 없습니다.</span>
+                                                        </div>
+
+                                                        <div th:each="address : ${addressList}" class="card border-primary mb-3">
+                                                            <div class="card-body">
+                                                                <span th:if="${address.isDefault}">기본 배송지</span>
+                                                                <h5 class="card-title" th:text="${address.alias}"></h5>
+                                                                <p class="card-text" th:text="${address.postCode}"></p>
+                                                                <p class="card-text" th:text="${address.detail}"></p>
+                                                                <p class="card-text" th:text="${address.alias}"></p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="flex-w">
+                                                            <input type="button"
+                                                                   class="flex-c-m stext-101 cl2 size-111 bg8 hov-btn3 p-lr-15 trans-04 pointer"
+                                                                   value="주소 찾기" onclick="execDaumPostcode()">
                                                         </div>
                                                     </div>
-
-                                                    <div class="flex-w">
-                                                        <input type="button"
-                                                               class="flex-c-m stext-101 cl2 size-111 bg8 hov-btn3 p-lr-15 trans-04 pointer"
-                                                               value="주소 찾기" onclick="execDaumPostcode()">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                                        <button type="button" class="btn btn-primary">주소 선택</button>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                                    <button type="button" class="btn btn-primary">주소 선택</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
