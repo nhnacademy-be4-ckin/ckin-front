@@ -1,8 +1,10 @@
 package store.ckin.front.product.service;
 
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
@@ -33,4 +35,6 @@ public interface ProductService {
     List<BookMainPageResponseDto> findRecentBooks(Integer limit);
 
     List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
+
+    List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest);
 }
