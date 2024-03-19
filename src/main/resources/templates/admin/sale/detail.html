@@ -100,6 +100,15 @@
                 </div>
             </div>
 
+            <form style="margin-top: 15px" method="post" th:action="@{/admin/sale/{saleId}/delivery(saleId=${saleId}) }">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="deliveryStatus" value="IN_PROGRESS">
+                <button class="m-t-50 btn btn-outline-secondary"
+                        type="submit">
+                    배송 중 상태로 변경
+                </button>
+            </form>
+
             <div style="margin-top: 30px">
                 <h4 class="m-t-15" style="color: dodgerblue" th:text="'결제 정보 : ' + *{salePaymentStatus}"> 결제 정보 </h4>
             </div>
