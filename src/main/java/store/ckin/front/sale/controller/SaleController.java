@@ -2,6 +2,7 @@ package store.ckin.front.sale.controller;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.address.domain.response.MemberAddressResponseDto;
 import store.ckin.front.address.service.AddressService;
 import store.ckin.front.aop.Member;
 import store.ckin.front.cart.dto.domain.CartItem;
@@ -66,9 +68,12 @@ public class SaleController {
 
         if (!"anonymousUser".equals(authentication.getName())) {
             Long memberId = Long.parseLong(authentication.getName());
-            model.addAttribute("addressList", addressService.getMemberAddressList(memberId));
+            List<MemberAddressResponseDto> addressList = addressService.getMemberAddressList(memberId);
 
-            log.info("AddressList : {}", addressService.getMemberAddressList(memberId));
+            addressList.stream()
+                    .filter(MemberAddressResponseDto::getIsDefault)
+                    .findFirst()
+                    .ifPresent(address -> model.addAttribute("address", address));
         }
 
         return "sale/main";
