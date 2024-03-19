@@ -53,10 +53,8 @@ public class CouponTemplateController {
                                     Model model) {
         PageDto<GetCouponTemplateResponseDto> couponTemplateList =
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
-        List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
-        couponTemplateList.getContent()
-                .forEach(System.out::println);
+        List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
         model.addAttribute("pagination", couponTemplateList);
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
@@ -67,8 +65,10 @@ public class CouponTemplateController {
                 return "admin/coupon/template/birth";
             case 2:
                 return "admin/coupon/template/book";
-            default:
+            case 3:
                 return "admin/coupon/template/category";
+            default:
+                return "admin/coupon/template/welcome";
         }
     }
 
