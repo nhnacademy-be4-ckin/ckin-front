@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 | 주소 수정</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #F1F1F1;
+      }
+    </style>
+</head>
+<body>
+  <h4>주소 수정</h4>
+    <form th:method="put" th:action="@{/sale/address/update/{addressId}(addressId=${address.addressId})}" class="flex justify-content-end">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="alias" name="alias" placeholder="별칭" maxlength="10" th:value="${address.alias}" required>
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="우편번호" id="postcode" name="postCode" th:value="${address.postCode}" required>
+        <button class="btn btn-outline-secondary" type="button" onclick="execDaumPostcode()">우편 번호 찾기</button>
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="address" name="base" placeholder="기본 주소" th:value="${address.base}" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="detailAddress" name="detail" placeholder="상세 주소" th:value="${address.detail}" required>
+      </div>
+      <button type="submit" class="btn btn-outline-info">수정</button>
+    </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/address.js"></script>
+</body>
+</html>

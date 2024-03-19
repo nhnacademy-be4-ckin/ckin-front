@@ -14,19 +14,25 @@
         <span>등록된 주소가 없습니다.</span>
     </div>
 
-    <div th:each="address, addressIndex : ${addressList}" class="card mb-3" th:classappend="${address.getIsDefault()} ? 'border-success' : 'border-dark'" th:id="'card-' + ${addressIndex}">
+    <div th:each="address : ${addressList}" class="card mb-3" th:classappend="${address.getIsDefault()} ? 'border-success' : 'border-dark'" th:id="'card-' + ${address.addressId}">
         <div class="card-header">
             <h5 class="mb-1" th:text="${address.postCode}"></h5>
             <span class="badge text-bg-success" th:if="${address.isDefault}">기본 배송지</span>
         </div>
         <div class="card-body">
-            <h5 class="card-title" th:text="${address.alias}"></h5>
-            <p class="card-text" th:text="${address.base}"></p>
-            <p class="card-text" th:text="${address.detail}"></p>
+            <h5 class="card-title" th:id="'card-alias' + ${address.addressId}" th:text="${address.alias}"></h5>
+            <p class="card-text" th:id="'card-base' + ${address.addressId}" th:text="${address.base}"></p>
+            <p class="card-text" th:id="'card-detail' + ${address.addressId}" th:text="${address.detail}"></p>
         </div>
         <div class="footer">
-            <button type="button" class="btn btn-outline-primary">수정</button>
-            <button type="button" class="btn btn-outline-primary" th:attr="data-addressId=${addressIndex}" onclick="sendDataToUrl(this)">선택</button>
+            <div style="display: flex">
+                <a type="button" class="btn btn-outline-primary" th:href="@{/sale/address/update/{addressId}(addressId=${address.addressId})}">수정</a>
+                <form th:action="@{/sale/address/delete/{addressId}(addressId=${address.addressId})}" th:method="delete">
+                    <button class="btn btn-outline-primary">삭제</button>
+                </form>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary" th:attr="data-addressId=${address.addressId}" onclick="sendDataToUrl(this)">선택</button>
         </div>
     </div>
 
