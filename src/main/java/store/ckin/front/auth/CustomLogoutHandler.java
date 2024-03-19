@@ -1,5 +1,6 @@
 package store.ckin.front.auth;
 
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
-import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.util.CookieUtil;
 import store.ckin.front.util.JwtUtil;
 
@@ -28,19 +27,34 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request,
                        HttpServletResponse response,
                        Authentication authentication) {
+        deleteDataIfCookieExists(request, response, JwtUtil.HEADER_ACCESS_TOKEN);
+        deleteDataIfCookieExists(request, response, JwtUtil.HEADER_REFRESH_TOKEN);
+    }
+
+    private void deleteDataIfCookieExists(HttpServletRequest request,
+                                          HttpServletResponse response,
+                                          String name) {
+        if (CookieUtil.isExists(request, name)) {
+            Cookie cookie = CookieUtil.findCookie(request, name);
+            deleteRedisTemplateData(request, response, cookie);
+            CookieUtil.resetCookie(request, response, name);
+        }
+    }
+
+    private void deleteRedisTemplateData(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         Cookie cookie) {
+        String token = cookie.getValue();
         try {
-            Cookie cookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
-            String token = cookie.getValue();
             String uuid = JwtUtil.getUuid(token);
+            log.debug("UUID : {}", uuid);
 
-            redisTemplate.opsForHash().delete(uuid, "id");
-            redisTemplate.opsForHash().delete(uuid, JwtUtil.REFRESH_TOKEN_SUBJECT);
-
-            SecurityContextHolder.clearContext();
-
-            CookieUtil.resetCookie(request, response);
-        } catch (CookieNotFoundException ex) {
-            log.debug("Cookie not found");
+            if (Boolean.TRUE.equals(redisTemplate.hasKey(uuid))) {
+                redisTemplate.delete(uuid);
+            }
+        } catch (JWTDecodeException ex) {
+            log.error("JWT [{}] is invalid", token);
+            CookieUtil.resetCookie(request, response, cookie.getName());
         }
     }
 }
