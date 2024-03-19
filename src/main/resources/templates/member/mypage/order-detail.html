@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mypage-default}">
@@ -55,7 +55,7 @@
                     <div>
                         <div class="flex-w bor15 p-t-10 p-b-10 p-lr-40 p-lr-15-sm">
                             <span class="float-r w-100" style="color: darkgreen"
-                                th:text="'포인트 사용 금액 : ' + *{salePointUsage} "></span>
+                                  th:text="'포인트 사용 금액 : ' + *{salePointUsage} "></span>
                         </div>
                     </div>
 
@@ -100,11 +100,11 @@
                             </div>
 
                             <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5 p-t-10">
-                                배송 상태 : <span th:text="*{saleDeliveryStatus}"></span>
+                                배송비 : <span th:text="*{saleDeliveryFee}"></span>
                             </div>
 
                             <div class="stext-104 cl2 plh4 size-115 bor13 p-lr-20 m-r-10 m-tb-5 p-t-10">
-                                배송비 : <span th:text="*{saleDeliveryFee}"></span>
+                                배송 상태 : <span th:text="*{saleDeliveryStatus}"></span>
                             </div>
                         </div>
                     </div>
@@ -129,16 +129,95 @@
                         결제 승인일 : <span th:text="*{#temporals.format(approvedAt, 'yyyy.MM.dd')}"></span>
                     </div>
 
-                    <button class="m-t-20 btn-outline-primary btn float-r" style="margin-top: 30px;"
+                    <button class="m-t-50 btn-outline-primary btn float-l"
                             th:onclick="|location.href='@{*{receiptUrl}}'|">
                         결제 영수증
                     </button>
                 </th:block>
+
+                <th:block
+                        th:if="${saleDetail.paymentResponseDto == null or saleDetail.paymentResponseDto.paymentStatus.name() != 'CANCEL'}">
+                    <button class="m-t-50 btn-outline-danger btn float-r"
+                            th:onclick="cancelOrder()">
+                        주문 취소
+                    </button>
+                </th:block>
+
+
             </div>
 
-            <!-- 상품 금액 + 포장 금액 + 배송비 -->
-
+            <h5 class="h5 m-tb-15 mx-auto" style="color: #bb2d3b">
+                ⚠ 주문 취소는 배송 상태가 준비 중(READY)인 경우에만 가능합니다.
+            </h5>
         </div>
+
+        <script th:inline="javascript">
+
+            /*<![CDATA[*/
+            const secretKey = [[${secretKey}]];
+            let payment = [[${saleDetail.paymentResponseDto}]];
+            const saleId = [[${saleDetail.saleResponseDto.saleId}]];
+            /*]]>*/
+            console.log(secretKey);
+            console.log(payment);
+
+            function cancelOrder() {
+                // 결제가 진행된 경우 결제 취소 요청
+                const cancelReason = prompt('주문 취소 사유를 입력해주세요.');
+
+                if (cancelReason == null) {
+                    return;
+                }
+
+                if (payment != null) {
+                    requestPaymentCancel(payment.paymentKey, cancelReason);
+                }
+
+                requestSaleCancel();
+            }
+
+            async function requestPaymentCancel(paymentKey, cancelReason) {
+
+                console.log("결제 취소 부름");
+
+                const requestData = {
+                    paymentKey: paymentKey,
+                    cancelReason: cancelReason
+                };
+
+                console.log(requestData);
+
+                const response = await fetch('/toss/cancel', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestData),
+                });
+
+                if (!response.ok) {
+                    alert('주문 취소에 실패하였습니다.');
+                }
+            }
+
+            async function requestSaleCancel() {
+                try {
+                    const response = await fetch('/sale/' + saleId + '/cancel', {
+                        method: "PUT"
+                    });
+
+                    if (!response.ok) {
+                        alert('주문 취소에 실패하였습니다.');
+                    }
+
+                    // reload
+                    window.location.reload();
+                } catch (error) {
+                    alert(error.message);
+                }
+            }
+        </script>
+
     </div>
 </div>
 </html>

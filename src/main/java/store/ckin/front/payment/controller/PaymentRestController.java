@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import store.ckin.front.payment.dto.request.PaymentCancelRequestDto;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
@@ -57,5 +58,18 @@ public class PaymentRestController {
     @PostMapping("/success")
     public ResponseEntity<PaymentSuccessResponseDto> successPayment(@RequestBody PaymentRequestDto requestDto) {
         return ResponseEntity.ok(paymentFacade.createPayment(requestDto));
+    }
+
+    /**
+     * 결제 취소 요청 메서드입니다.
+     *
+     * @param requestDto 결제 키와 사유가 담긴 DTO
+     * @return 결제 취소 성공 응답
+     */
+    @PostMapping("/cancel")
+    public ResponseEntity<Void> cancelPayment(@RequestBody PaymentCancelRequestDto requestDto) {
+
+        paymentFacade.cancelPayment(requestDto.getPaymentKey(), requestDto.getCancelReason());
+        return ResponseEntity.ok().build();
     }
 }

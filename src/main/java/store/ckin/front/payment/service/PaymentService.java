@@ -1,6 +1,7 @@
 package store.ckin.front.payment.service;
 
 import java.io.UnsupportedEncodingException;
+import store.ckin.front.payment.dto.request.PaymentCancelReasonDto;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
 import store.ckin.front.payment.dto.response.PaymentConfirmResponseDto;
@@ -31,4 +32,11 @@ public interface PaymentService {
      */
     PaymentSuccessResponseDto createPayment(PaymentRequestDto requestDto);
 
+    /**
+     * 결제 취소 메서드입니다.
+     *
+     * @param paymentKey 결제 키
+     * @param reasonDto  결제 취소 요청 사유가 담긴 DTO
+     */
+    void cancelPayment(String paymentKey, PaymentCancelReasonDto reasonDto);
 }
