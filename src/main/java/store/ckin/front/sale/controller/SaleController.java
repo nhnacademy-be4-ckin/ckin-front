@@ -1,10 +1,13 @@
 package store.ckin.front.sale.controller;
 
 import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.address.service.AddressService;
 import store.ckin.front.aop.Member;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
@@ -31,7 +35,7 @@ import store.ckin.front.sale.facade.SaleFacade;
 @RequestMapping("/sale")
 @RequiredArgsConstructor
 public class SaleController {
-
+    private final AddressService addressService;
 
     private final SaleFacade saleFacade;
 
@@ -57,6 +61,16 @@ public class SaleController {
         model.addAttribute("saleTitle", saleTitle);
         model.addAttribute("policyList", saleFacade.getPolicyList());
         model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (Objects.nonNull(authentication)) {
+            Long memberId = Long.parseLong(authentication.getName());
+            model.addAttribute("addressList", addressService.getMemberAddressList(memberId));
+
+            log.info("AddressList : {}", addressService.getMemberAddressList(memberId));
+        }
+
         return "sale/main";
     }
 

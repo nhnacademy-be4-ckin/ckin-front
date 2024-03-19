@@ -5,6 +5,7 @@ import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,7 @@ import store.ckin.front.config.properties.GatewayProperties;
  * @author : jinwoolee
  * @version : 2024. 03. 19.
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AddressAdapterImpl implements AddressAdapter {
@@ -32,7 +34,7 @@ public class AddressAdapterImpl implements AddressAdapter {
 
     private final GatewayProperties gatewayProperties;
 
-    private final String ADDRESS_URL = "/api/members";
+    private static final String ADDRESS_URL = "/api/members/{memberId}";
 
     @Override
     public void addAddress(Long memberId, AddressAddRequestDto addressAddRequestDto) {
@@ -42,10 +44,9 @@ public class AddressAdapterImpl implements AddressAdapter {
         URI uri = UriComponentsBuilder
                 .fromUriString(gatewayProperties.getGatewayUri())
                 .path(ADDRESS_URL)
-                .queryParam("memberId", memberId)
                 .path("/address")
                 .encode()
-                .build()
+                .buildAndExpand(memberId)
                 .toUri();
 
         restTemplate.exchange(
@@ -64,11 +65,12 @@ public class AddressAdapterImpl implements AddressAdapter {
         URI uri = UriComponentsBuilder
                 .fromUriString(gatewayProperties.getGatewayUri())
                 .path(ADDRESS_URL)
-                .queryParam("memberId", memberId)
                 .path("/address")
                 .encode()
-                .build()
+                .buildAndExpand(memberId)
                 .toUri();
+
+        log.info("URI : {}", uri);
 
         ResponseEntity<List<MemberAddressResponseDto>> responseEntity =
                 restTemplate.exchange(
@@ -89,11 +91,9 @@ public class AddressAdapterImpl implements AddressAdapter {
         URI uri = UriComponentsBuilder
                 .fromUriString(gatewayProperties.getGatewayUri())
                 .path(ADDRESS_URL)
-                .queryParam("memberId", memberId)
-                .path("/addresses")
-                .queryParam("addressId", addressId)
+                .path("/addresses/{addressId}")
                 .encode()
-                .build()
+                .buildAndExpand(memberId, addressId)
                 .toUri();
 
         restTemplate.exchange(
@@ -112,12 +112,9 @@ public class AddressAdapterImpl implements AddressAdapter {
         URI uri = UriComponentsBuilder
                 .fromUriString(gatewayProperties.getGatewayUri())
                 .path(ADDRESS_URL)
-                .queryParam("memberId", memberId)
-                .path("/addresses")
-                .queryParam("addressId", addressId)
-                .path("/default")
+                .path("/addresses/{addressId}/default")
                 .encode()
-                .build()
+                .buildAndExpand(memberId, addressId)
                 .toUri();
 
         restTemplate.exchange(
@@ -136,11 +133,9 @@ public class AddressAdapterImpl implements AddressAdapter {
         URI uri = UriComponentsBuilder
                 .fromUriString(gatewayProperties.getGatewayUri())
                 .path(ADDRESS_URL)
-                .queryParam("memberId", memberId)
-                .path("/addresses")
-                .queryParam("addressId", addressId)
+                .path("/addresses/{addressId}")
                 .encode()
-                .build()
+                .buildAndExpand(memberId, addressId)
                 .toUri();
 
         restTemplate.exchange(

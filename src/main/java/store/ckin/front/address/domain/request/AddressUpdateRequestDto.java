@@ -14,6 +14,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AddressUpdateRequestDto {
     @NotBlank
+    private String postCode;
+
+    @NotBlank
     private String base;
 
     @NotBlank
