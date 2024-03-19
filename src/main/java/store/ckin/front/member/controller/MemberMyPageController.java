@@ -162,7 +162,7 @@ public class MemberMyPageController {
      * 주문 페이지에서 주소를 추가할 때 호출되는 메서드 입니다.
      */
     @PostMapping("/address/add")
-    public String addAddressInSale(@Valid @ModelAttribute AddressAddRequestDto addressAddRequestDto) {
+    public String addAddress(@Valid @ModelAttribute AddressAddRequestDto addressAddRequestDto) {
         addressService.addAddress(getMemberId(), addressAddRequestDto);
 
         return "redirect:/member/mypage/address/list";
@@ -173,7 +173,7 @@ public class MemberMyPageController {
      */
     @Member
     @GetMapping("/address/update/{addressId}")
-    public String getUpdateAddressInSale(@PathVariable("addressId") Long addressId,
+    public String getUpdateAddress(@PathVariable("addressId") Long addressId,
                                          Model model) {
         List<MemberAddressResponseDto> addressList = addressService.getMemberAddressList(getMemberId());
         addressList.stream()
@@ -188,7 +188,7 @@ public class MemberMyPageController {
      * 주문 페이지에서 주소를 수정할 때 호출되는 메서드 입니다.
      */
     @PutMapping("/address/update/{addressId}")
-    public String updateAddressInSale(@PathVariable("addressId") Long addressId,
+    public String updateAddress(@PathVariable("addressId") Long addressId,
                                       @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
         addressService.updateAddress(getMemberId(), addressId, addressUpdateRequestDto);
 
@@ -199,8 +199,18 @@ public class MemberMyPageController {
      * 주문 페이지에서 주소를 제거할 때 호출되는 메서드 입니다.
      */
     @DeleteMapping("/address/delete/{addressId}")
-    public String removeAddressInSale(@PathVariable("addressId") Long addressId) {
+    public String removeAddress(@PathVariable("addressId") Long addressId) {
         addressService.deleteAddress(getMemberId(), addressId);
+
+        return "redirect:/member/mypage/address/list";
+    }
+
+    /**
+     * 기본 배송지로 변경할 때 호출되는 메서드 입니다.
+     */
+    @PutMapping("address/{addressId}/default")
+    public String setDefaultAddress(@PathVariable("addressId") Long addressId) {
+        addressService.setDefaultAddress(getMemberId(), addressId);
 
         return "redirect:/member/mypage/address/list";
     }
