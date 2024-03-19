@@ -19,6 +19,8 @@ import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.service.ReviewService;
+import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
+import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -42,6 +44,8 @@ public class MemberMyPageController {
 
     private final ReviewService reviewService;
 
+    private final PointHistoryService pointHistoryService;
+
 
     /**
      * 회원 마이페이지 메인 화면을 요청하는 메서드입니다.
@@ -57,7 +61,7 @@ public class MemberMyPageController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PagedResponse<List<SaleInfoResponseDto>> saleList
-                = saleService.getSalesByMemberId(authentication.getName(), pageable.getPageNumber() - 1,
+                = saleService.getSalesByMemberId(authentication.getName(), pageable.getPageNumber(),
                 pageable.getPageSize());
 
         model.addAttribute("saleList", saleList.getData());
@@ -82,10 +86,7 @@ public class MemberMyPageController {
         SaleDetailResponseDto saleDetail =
                 saleService.getMemberSaleDetailBySaleNumber(saleNumber, memberId);
 
-        model.getAttribute("member");
-
         model.addAttribute("saleDetail", saleDetail);
-
         return "member/mypage/order-detail";
     }
 
@@ -109,6 +110,29 @@ public class MemberMyPageController {
         return "member/coupon/main";
     }
 
+    /**
+     * 회원 포인트 내역 조회 메서드입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param model    Model 객체
+     * @return 회원 포인트 내역 화면
+     */
+    @Member
+    @GetMapping("/point-history")
+    public String getMemberPointHistory(@PageableDefault Pageable pageable,
+                                        Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PagedResponse<List<PointHistoryResponseDto>> pointHistoryList =
+                pointHistoryService.getPointHistoryList(
+                        authentication.getName(),
+                        pageable.getPageNumber(),
+                        pageable.getPageSize());
+
+        model.addAttribute("pointHistoryList", pointHistoryList.getData());
+        model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
+        return "member/mypage/point-history";
+    }
     @Member
     @GetMapping("/review")
     public String getMyReviews(@PageableDefault(page = 0, size = 5) Pageable pageable,
