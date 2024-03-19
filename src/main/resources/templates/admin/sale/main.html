@@ -38,16 +38,16 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center" th:if="${not #lists.isEmpty(saleList)}">
                 <li class="page-item" th:classappend="${pageInfo.page == 0 ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/admin/sale/main(page=0)}" tabindex="-1" aria-disabled="true">&lt;&lt;</a>
+                    <a class="page-link" th:href="@{/admin/sale/(page=0)}" tabindex="-1" aria-disabled="true">&lt;&lt;</a>
                 </li>
 
                 <li class="page-item" th:each="num : ${#numbers.sequence(0, pageInfo.totalPages - 1)}">
-                    <a class="page-link" th:href="@{/admin/sale/main(page=${num})}" th:text="${num + 1}"
+                    <a class="page-link" th:href="@{/admin/sale/(page=${num})}" th:text="${num + 1}"
                        th:classappend="${num == pageInfo.page ? 'active' : ''}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${pageInfo.page == pageInfo.totalPages - 1 ? 'disabled' : ''}">
-                    <a class="page-link" th:href="@{/admin/sale/main(page=${pageInfo.totalPages - 1})}">&gt;&gt;</a>
+                    <a class="page-link" th:href="@{/admin/sale/(page=${pageInfo.totalPages - 1})}">&gt;&gt;</a>
                 </li>
             </ul>
         </nav>
