@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypage-default}">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/view.js"></script>
+    <script>
+        function redirectToBook(bookId) {
+            window.location.href = '/product/view/' + bookId;
+        }
+
+        function toggleButton(button) {
+            // 버튼 클래스에 active 추가 및 제거
+            button.classList.toggle("active");
+
+            // span의 텍스트 값 변경
+            var commentContentsInner = document.getElementById(button.value);
+            var smallImageBox = document.getElementById('thumb' + button.value);
+            var spanText = button.querySelector('.text');
+            if (spanText.innerText === "펼치기") {
+                spanText.innerText = "접기";
+                commentContentsInner.style.maxHeight = 'none';
+                smallImageBox.style.display = 'none';
+            } else {
+                spanText.innerText = "펼치기";
+                commentContentsInner.style.maxHeight = 'none';
+                smallImageBox.style.display = 'block';
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://contents.kyobobook.co.kr/resources/fo/css/components_ink.css">
+    <link rel="stylesheet" type="text/css" href="https://contents.kyobobook.co.kr/resources/fo/css/product_ink.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/view.css">
+    <style>
+        td {
+            vertical-align: middle !important;
+        }
+
+        .review_thumbnail img {
+            max-width: 100%;
+            max-height: 150px;
+            height: auto;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .comment_item {
+            height: auto;
+        }
+        .comment_wrap .comment_list .comment_item .comment_contents .comment_contents_inner {
+            max-height: 150px;
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<div layout:fragment="mypage-content">
+
+    <div class="product_detail_area klover_review_wrap" data-event-detail="review" id="ReviewList1"
+         data-kbbfn="ui-module" data-kbbfn-name="review-list" data-kbbfn-type="klover"
+         data-kbbfn-prod-pid="S000201621022" data-kbbfn-prod-bid="9791167740984" data-kbbfn-prod-title="도둑맞은 집중력"
+         data-kbbfn-prod-code="KOR" data-kbbfn-prod-age="0">
+        <div class="header_contents_innerm-3 p-2">
+            <div class="title_wrap title_size_md has_btn" data-kbbfn-role="title">
+                <!-- 타이틀 영역 -->
+                <p class="title_heading" data-review-label="title"
+                   th:text="'총 리뷰 ' + ${reviewPage.totalElements} + '건'"></p>
+                <div data-kbbfn-role="title">
+                    <div class="right_area" id="reviewButton">
+                        <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab_wrap type_sm" data-kbbfn-role="tab-view" data-type-btn="">
+                <div class="tab_list_wrap">
+                    <ul class="tabs">
+                        <li class="tab_item ui-state-active" data-value="000">
+                            <button class="tab_link" type="button">
+                                <span class="tab_text">전체 리뷰</span></button>
+                        </li>
+                    </ul>
+                    <div class="right_area">
+                        <div class="form_sel type_sm"><select id="ui-id-40" style="display: none;">
+                            <option value="001" selected="selected">좋아요 순</option>
+                            <option value="002">최신순</option>
+                        </select><span tabindex="0" id="ui-id-40-button" role="combobox" aria-expanded="false"
+                                       aria-autocomplete="list" aria-owns="ui-id-40-menu" aria-haspopup="true"
+                                       class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"><span
+                                class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span><span
+                                class="ui-selectmenu-text">좋아요 순</span></span></div>
+                    </div>
+                </div>
+                <div class="tab_content">
+                    <div class="comment_wrap">
+                        <div class="comment_list" style="">
+
+                            <div class="comment_item" th:each="review : ${reviewPage.content}">
+                                <div class="comment_header">
+                                    <div class="left_area">
+                                        <div class="user_info_box"><span class="badge_box"><span
+                                                class="badge_sm badge_pill badge_kyobo"><span
+                                                class="text">종이책</span></span></span><span
+                                                class="info_item" th:text="${review.author}"></span><span
+                                                class="gap"> | </span><span
+                                                class="info_item"
+                                                th:text="${review.reviewDate}"></span><span
+                                                class="gap"> | </span>
+                                        </div>
+                                    </div>
+                                    <div class="right_area">
+                                        <div class="review_summary_wrap">
+                                            <div class="rating-container theme-krajee-gly rating-sm rating-animate rating-disabled">
+                                                <div class="clear-rating " title="초기화">
+                                                    <i class="glyphicon glyphicon-minus-sign"></i>
+                                                </div>
+                                                <div class="rating-stars" tabindex="0">
+                                                        <span class="empty-stars" th:if="${review.reviewRate != 5}">
+                                                            <span class="star"
+                                                                  th:each="i : ${#numbers.sequence(1, 5 - review.getReviewRate())}">
+                                                                <i class="glyphicon glyphicon-star-empty"></i>
+                                                            </span>
+                                                        </span>
+                                                    <span class="filled-stars" th:if="${review.reviewRate > 0}">
+                                                            <span class="star"
+                                                                  th:each="i : ${#numbers.sequence(1, review.getReviewRate())}">
+                                                                <i class="glyphicon glyphicon-star"></i>
+                                                            </span>
+                                                        </span>
+                                                </div>
+
+                                                <div class="caption"><span
+                                                        class="caption-badge caption-success"
+                                                        th:text="${totalRate}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment_contents">
+                                    <div class="comment_contents_inner" th:id="${review.reviewId}">
+                                        <div class="comment_view_wrap">
+                                            <div class="review_thumbnail" th:if="${review.thumbnailPath}">
+                                                <button class="btn_view_img" type="button" th:onclick="'redirectToBook(' + ${review.bookId} + ')'">
+                                                    <img th:src="${review.thumbnailPath}" alt="리뷰 썸네일"/>
+                                                </button>
+                                            </div>
+                                            <div class="comment_text_box">
+                                                <div class="comment_text" th:text="${review.message}"></div>
+                                                <div class="thumb_box_div">
+                                                    <div class="comment_thumb_box"
+                                                         th:id="'thumb' + ${review.reviewId}">
+                                                        <span class="comment_thumb_view"
+                                                              th:each="img : ${review.filePath}"
+                                                              th:style="'background-image: url(' + ${img} + ');'">
+                                                            <img th:src="${img}" alt="리뷰 썸네일"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="comment_swiper_wrap">
+                                            <div class="swiper-container">
+                                                <ul class="swiper-wrapper">
+                                                    <li class="swiper-slide" th:each="img : ${review.filePath}">
+                                                        <div class="comment_img_box"
+                                                             th:style="'background-image: url(' + ${img} + ');'"
+                                                             onclick="openImage(this)">
+                                                            <button class="btn_view_img" type="button">
+                                                                <img th:src="${img}">
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="swiper-button-next" style="display: none;"><span
+                                                    class="hidden">다음</span></div>
+                                            <div class="swiper-button-prev" style="display: none;"><span
+                                                    class="hidden">이전</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment_footer">
+                                    <button class="btn_more_body" type="button" data-btn-toggle=""
+                                            th:value="${review.reviewId}"
+                                            onclick="toggleButton(this)"><span
+                                            class="text" th:text="펼치기"></span><span class="ico_arw"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination" style="justify-content: center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center m-t-15">
+                                    <li class="page-item" th:classappend="${!(reviewPage.number > 0)} ? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/member/mypage/review(page=${reviewPage.number - 1})}">Previous</a>
+                                    </li>
+                                    <th:block
+                                            th:with="start=1, end=${(reviewPage.totalPages == 0) ? 1 : reviewPage.totalPages}">
+                                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                                            <a class="page-link" th:href="@{/member/mypage/review(page=${page - 1})}"
+                                               th:text="${page}"></a></li>
+                                    </th:block>
+                                    <li class="page-item"
+                                        th:classappend="${!(reviewPage.number < reviewPage.totalPages - 1)} ? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{/member/mypage/review(page=${reviewPage.getNumber()+1})}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</html>
