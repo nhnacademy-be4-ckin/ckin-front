@@ -17,6 +17,8 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
+import store.ckin.front.review.service.ReviewService;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -37,6 +39,8 @@ public class MemberMyPageController {
     private final SaleService saleService;
 
     private final CouponService couponService;
+
+    private final ReviewService reviewService;
 
 
     /**
@@ -103,6 +107,20 @@ public class MemberMyPageController {
 
         model.addAttribute("couponPage", couponResponseDtoPageDto);
         return "member/coupon/main";
+    }
+
+    @Member
+    @GetMapping("/review")
+    public String getMyReviews(@PageableDefault(page = 0, size = 5) Pageable pageable,
+                               Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PageDto<MyPageReviewResponseDto> myPageReviewResponseDtoPageDto
+                = reviewService.getMyPageReviewResponseDto(pageable, Long.valueOf(authentication.getName()));
+
+        model.addAttribute("reviewPage", myPageReviewResponseDtoPageDto);
+
+        return "member/mypage/review/main";
+
     }
 
 
