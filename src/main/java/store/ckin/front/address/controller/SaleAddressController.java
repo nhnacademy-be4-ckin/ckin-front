@@ -7,14 +7,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.address.domain.request.AddressAddRequestDto;
 import store.ckin.front.address.domain.request.AddressUpdateRequestDto;
 import store.ckin.front.address.domain.response.MemberAddressResponseDto;
 import store.ckin.front.address.service.AddressService;
 
 /**
- * Address 에 관련된 페이지를 호출하는 Controller 입니다.
+ * 주문 결제 페이지에서 Address 에 관련된 페이지를 호출하는 Controller 입니다.
  *
  * @author : jinwoolee
  * @version : 2024. 03. 19.
