@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import store.ckin.front.address.domain.AddressAttributeDto;
 import store.ckin.front.address.domain.response.MemberAddressResponseDto;
 import store.ckin.front.address.service.AddressService;
 import store.ckin.front.aop.Member;
@@ -49,7 +50,11 @@ public class SaleController {
      */
     @Member
     @GetMapping
-    public String getSaleForm(@CookieValue(name = "CART_ID") Cookie cookie, Model model) {
+    public String getSaleForm(@CookieValue(name = "CART_ID") Cookie cookie,
+                              Model model,
+                              @RequestParam(name = "postCode", required = false) String postCode,
+                              @RequestParam(name = "address", required = false) String address,
+                              @RequestParam(name = "detailAddress", required = false) String detailAddress) {
         List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
 
         if (cartItems.isEmpty()) {
@@ -64,6 +69,14 @@ public class SaleController {
         model.addAttribute("policyList", saleFacade.getPolicyList());
         model.addAttribute("bookSaleList", saleFacade.getBookSaleList(cartItems));
 
+        if (postCode != null && address != null && detailAddress != null) {
+            AddressAttributeDto addressObj =
+                    new AddressAttributeDto(postCode, address, detailAddress);
+
+            model.addAttribute("address", addressObj);
+
+            return "sale/main";
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!"anonymousUser".equals(authentication.getName())) {
@@ -73,7 +86,13 @@ public class SaleController {
             addressList.stream()
                     .filter(MemberAddressResponseDto::getIsDefault)
                     .findFirst()
-                    .ifPresent(address -> model.addAttribute("address", address));
+                    .ifPresent(responseDto ->
+                        model.addAttribute("address",
+                                new AddressAttributeDto(
+                                        responseDto.getPostCode(),
+                                        responseDto.getBase(),
+                                        responseDto.getDetail()))
+                    );
         }
 
         return "sale/main";

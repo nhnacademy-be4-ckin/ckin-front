@@ -14,7 +14,7 @@
         <span>등록된 주소가 없습니다.</span>
     </div>
 
-    <div th:each="address : ${addressList}" class="card mb-3" th:classappend="${address.getIsDefault()} ? 'border-success' : 'border-dark'">
+    <div th:each="address, addressIndex : ${addressList}" class="card mb-3" th:classappend="${address.getIsDefault()} ? 'border-success' : 'border-dark'" th:id="'card-' + ${addressIndex}">
         <div class="card-header">
             <h5 class="mb-1" th:text="${address.postCode}"></h5>
             <span class="badge text-bg-success" th:if="${address.isDefault}">기본 배송지</span>
@@ -26,7 +26,7 @@
         </div>
         <div class="footer">
             <button type="button" class="btn btn-outline-primary">수정</button>
-            <button type="button" class="btn btn-outline-primary">선택</button>
+            <button type="button" class="btn btn-outline-primary" th:attr="data-addressId=${addressIndex}" onclick="sendDataToUrl(this)">선택</button>
         </div>
     </div>
 
