@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.common.dto.PagedResponse;
+import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
@@ -64,5 +66,21 @@ public class AdminSaleController {
 
         model.addAttribute("saleDetail", saleDetail);
         return "admin/sale/detail";
+    }
+
+    /**
+     * 주문 배송 상태를 업데이트하는 메서드입니다.
+     *
+     * @param saleId         주문 ID
+     * @param deliveryStatus 배송 상태
+     * @return 주문 상세 페이지
+     */
+    @PutMapping("/{saleId}/delivery")
+    public String updateDeliveryStatus(@PathVariable("saleId") Long saleId,
+                                       SaleDeliveryUpdateRequestDto deliveryStatus) {
+
+        log.info("saleId = {}, deliveryStatus = {}", saleId, deliveryStatus);
+        saleFacade.updateDeliveryStatus(saleId, deliveryStatus);
+        return "redirect:/admin/sale/" + saleId;
     }
 }

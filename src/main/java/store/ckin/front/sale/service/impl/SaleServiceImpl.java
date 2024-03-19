@@ -7,6 +7,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -128,4 +129,26 @@ public class SaleServiceImpl implements SaleService {
     public SaleDetailResponseDto getMemberSaleDetailBySaleNumber(String saleNumber, String memberId) {
         return saleAdapter.requestGetMemberSaleDetailBySaleNumber(saleNumber, memberId);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId         주문 ID
+     * @param deliveryStatus 배송 상태
+     */
+    @Override
+    public void updateDeliveryStatus(Long saleId, SaleDeliveryUpdateRequestDto deliveryStatus) {
+        saleAdapter.requestUpdateDeliveryStatus(saleId, deliveryStatus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 주문 ID
+     */
+    @Override
+    public void cancelSale(String saleId) {
+        saleAdapter.requestCancelSale(saleId);
+    }
+
 }
