@@ -12,5 +12,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UpdateCouponTemplateStatusDto {
-    private Boolean isBirthPolicy;
+    private Boolean state;
 }

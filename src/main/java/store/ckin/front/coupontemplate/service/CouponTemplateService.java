@@ -45,9 +45,9 @@ public interface CouponTemplateService {
     /**
      * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
      * @param templateId 템플릿 아이디
-     * @param isBirthPolicy 쿠폰 템플릿 사용 여부
+     * @param state 쿠폰 템플릿 사용 여부
      * @return 쿠폰 템플릿 목록 페이지로 이동
      */
-    void updateCouponTemplateStatus(Long templateId, Boolean isBirthPolicy);
+    void updateCouponTemplateStatus(Long templateId, Boolean state);
 }
 

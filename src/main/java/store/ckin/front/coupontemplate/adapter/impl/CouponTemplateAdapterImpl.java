@@ -94,11 +94,11 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
      * {@inheritDoc}
      */
     @Override
-    public void updateCouponTemplateStatus(Long templateId, Boolean isBirthPolicy) {
+    public void updateCouponTemplateStatus(Long templateId, Boolean state) {
         HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
 
         String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId)
-                .queryParam("isBirthPolicy", isBirthPolicy)
+                .queryParam("state", state)
                 .encode()
                 .toUriString();
 

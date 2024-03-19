@@ -74,7 +74,6 @@ function tabAndCategorySub01() {
                 let html = "";
 
                 data.forEach(function (category) {
-                    console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
                         category.categoryId + `?categoryName=` + category.categoryName + `">`

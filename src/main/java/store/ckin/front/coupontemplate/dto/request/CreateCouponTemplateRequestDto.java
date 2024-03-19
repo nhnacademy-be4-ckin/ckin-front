@@ -37,18 +37,18 @@ public class CreateCouponTemplateRequestDto {
     @PositiveOrZero(message = "0보다 큰 값을 입력해주세요")
     private Integer duration;
     private Date expirationDate;
-    private Boolean isBirthPolicy;
+    private Boolean state;
 
     @Builder
     public CreateCouponTemplateRequestDto(Long policyId, Long typeId, String name, Long amount, Integer duration,
-                                          Date expirationDate, Boolean isBirthPolicy) {
+                                          Date expirationDate, Boolean state) {
         this.policyId = policyId;
         this.typeId = typeId;
         this.name = name;
         this.amount = amount;
         this.duration = duration;
         this.expirationDate = expirationDate;
-        this.isBirthPolicy = isBirthPolicy;
+        this.state = state;
     }
 
     public void updateExpiration(Date expirationDate) {

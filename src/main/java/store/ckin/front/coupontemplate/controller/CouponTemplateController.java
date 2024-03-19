@@ -2,6 +2,7 @@ package store.ckin.front.coupontemplate.controller;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -54,8 +55,8 @@ public class CouponTemplateController {
                 couponTemplateService.getCouponTemplateList(pageable, typeId);
         List<GetCouponPolicyResponseDto> couponPolicyList = couponPolicyService.getCouponPolicies();
 
-        couponTemplateList.getContent().stream()
-                .forEach(getCouponTemplateResponseDto -> System.out.println(getCouponTemplateResponseDto));
+        couponTemplateList.getContent()
+                .forEach(System.out::println);
 
         model.addAttribute("pagination", couponTemplateList);
         model.addAttribute("couponTemplateList", couponTemplateList.getContent());
@@ -78,7 +79,7 @@ public class CouponTemplateController {
      * @return 쿠폰 템플릿 목록 페이지로 리다이렉트
      */
     @PostMapping("/{typeId}")
-    public String createCouponTemplate(CreateCouponTemplateInfoDto couponTemplateInfoDto) {
+    public String createCouponTemplate(@Valid CreateCouponTemplateInfoDto couponTemplateInfoDto) {
 
         log.debug(couponTemplateInfoDto.toString());
         couponTemplateService.createCouponTemplate(couponTemplateInfoDto);
@@ -105,18 +106,18 @@ public class CouponTemplateController {
      * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
      *
      * @param templateId    템플릿 아이디
-     * @param isBirthPolicy 쿠폰 템플릿 사용 여부
+     * @param state 쿠폰 템플릿 사용 여부
      * @param typeId        타입 아이디
      * @return 쿠폰 템플릿 목록 페이지로 이동
      */
     @PutMapping("/type/{typeId}/templateId/{templateId}")
     public String updateCouponTemplate(@PathVariable("templateId") Long templateId,
-                                       @ModelAttribute UpdateCouponTemplateStatusDto isBirthPolicy,
+                                       @ModelAttribute UpdateCouponTemplateStatusDto state,
                                        @PathVariable("typeId") Long typeId) {
 
         couponTemplateService.updateCouponTemplateStatus(
                 templateId,
-                Objects.nonNull(isBirthPolicy.getIsBirthPolicy()) ? isBirthPolicy.getIsBirthPolicy() : false);
+                Objects.nonNull(state.getState()) ? state.getState() : false);
 
         return "redirect:/admin/coupon/template/" + typeId;
     }

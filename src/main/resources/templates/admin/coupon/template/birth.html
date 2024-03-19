@@ -37,6 +37,7 @@
                 <th scope="col">최대 할인 금액</th>
                 <th scope="col">최소 주문 금액</th>
                 <th scope="col">쿠폰 템플릿 이름</th>
+                <th scope="col">사용기한</th>
                 <th scope="col">만료일</th>
                 <th scope="col">현재 수량</th>
                 <th scope="col">사용 여부</th>
@@ -53,18 +54,19 @@
                 <td th:text="${couponTemplate.maxDiscountPrice}"></td>
                 <td th:text="${couponTemplate.minOrderPrice}"></td>
                 <td th:text="${couponTemplate.name}"></td>
+                <td th:text="${couponTemplate.duration}"></td>
                 <td th:text="${couponTemplate.expirationDate}"></td>
                 <td th:text="${couponTemplate.amount}"></td>
-                <td th:text="${couponTemplate.isBirthPolicy == true ? '사용중' : '미사용'}"
-                    th:class="${couponTemplate.isBirthPolicy == true ? 'text-danger' : 'text-primary'}"></td>
+                <td th:text="${couponTemplate.state == true ? '사용중' : '미사용'}"
+                    th:class="${couponTemplate.state == true ? 'text-danger' : 'text-primary'}"></td>
 
                 <td>
                     <form th:action="@{'/admin/coupon/template/type/1/templateId/' + ${couponTemplate.id}}"
                           method="post">
                         <input type="hidden" name="_method" value="PUT"/>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" name="isBirthPolicy" type="checkbox"
-                                   th:checked="${couponTemplate.isBirthPolicy}"
+                            <input class="form-check-input" name="state" type="checkbox"
+                                   th:checked="${couponTemplate.state}"
                                    th:value="true">
                             <button type="submit" class="btn btn-success">사용여부 변경</button>
                         </div>
@@ -130,18 +132,14 @@
                         <input name="name" value="생일쿠폰" style="display: none">
 
                         <div class="form-group">
-                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
                             <label for="duration">사용 기한</label>
                             <input type="number" class="form-control" id="duration" placeholder="사용 가능 기한을 정수로 입력해주세요"
                                    name="duration">
-                            <div class="valid-feedback">완료</div>
-                        </div>
-                        <br>
-
-                        <div>
-                            <div class="invalid-feedback">0이상의 값을 입력해주세요.</div>
+                            <div class="valid-feedback" id="durationCheck">가능</div>
+                            <div class="invalid-feedback" id="durationMinusCheck">0이상의 값을 입력해주세요.</div>
                             <label for="date">날짜를 선택하세요:
                                 <input type="date" id="date" name="expirationDate">
+                                <input class="hidden" name="name" value="생일 쿠폰" style="display: none">
                             </label>
                         </div>
                         <br>
@@ -150,12 +148,12 @@
                             <label for="duration">사용 여부</label>
                             <div class="form-check form-switch">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">이 정책으로 사용하실건가요?</label>
-                                <input class="form-check-input" name="isBirthPolicy" type="checkbox"
+                                <input class="form-check-input" name="state" type="checkbox"
                                        id="flexSwitchCheckChecked" checked>
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">등록</button>
+                        <button type="submit" id="formSubmitBook" class="btn btn-primary">등록</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -164,6 +162,7 @@
             </div>
         </div>
     </div>
-    <script src="/js/admin-coupon.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="/js/coupon/admin-birth-coupon.js"></script>
 </div>
 </html>

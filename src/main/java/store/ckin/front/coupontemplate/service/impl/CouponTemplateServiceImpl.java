@@ -1,15 +1,12 @@
 package store.ckin.front.coupontemplate.service.impl;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import store.ckin.front.book.adapter.BookAdapter;
-import store.ckin.front.book.dto.response.BookResponseDto;
-import store.ckin.front.category.adapter.CategoryAdapter;
+import org.springframework.transaction.annotation.Transactional;
 import store.ckin.front.coupontemplate.adapter.CouponTemplateAdapter;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateInfoDto;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
@@ -25,6 +22,7 @@ import store.ckin.front.coupontemplate.service.CouponTemplateService;
  */
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CouponTemplateServiceImpl implements CouponTemplateService {
 
@@ -38,6 +36,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return 쿠폰 템플릿 목록
      */
     @Override
+    @Transactional(readOnly = true)
     public PageDto<GetCouponTemplateResponseDto> getCouponTemplateList(Pageable pageable, Long typeId) {
         return couponTemplateAdapter.getCouponTemplateList(pageable, typeId);
     }
@@ -63,15 +62,16 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
                 .name(couponTemplateInfoDto.getName())
                 .amount(0L)
                 .duration(couponTemplateInfoDto.getDuration())
-                .expirationDate(couponTemplateInfoDto.getExpirationDate())
-                .isBirthPolicy(couponTemplateInfoDto.getIsBirthPolicy())
+                .expirationDate(("").equals(couponTemplateInfoDto.getExpirationDate()) ?
+                       null :  Date.valueOf(couponTemplateInfoDto.getExpirationDate()) )
+                .state(couponTemplateInfoDto.getState())
                 .build();
 
-        if(couponTemplateInfoDto.getTypeId() == 2) {
+        if (couponTemplateInfoDto.getTypeId() == 2) {
             couponTemplateRequestDto.updateBookId(couponTemplateInfoDto.getValue());
         }
 
-        if(couponTemplateInfoDto.getTypeId() == 3) {
+        if (couponTemplateInfoDto.getTypeId() == 3) {
             couponTemplateRequestDto.updateCategoryId(couponTemplateInfoDto.getValue());
         }
 
@@ -82,8 +82,8 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * {@inheritDoc}
      */
     @Override
-    public void updateCouponTemplateStatus(Long templateId, Boolean isBirthPolicy) {
-        couponTemplateAdapter.updateCouponTemplateStatus(templateId, isBirthPolicy);
+    public void updateCouponTemplateStatus(Long templateId, Boolean state) {
+        couponTemplateAdapter.updateCouponTemplateStatus(templateId, state);
     }
 
 
