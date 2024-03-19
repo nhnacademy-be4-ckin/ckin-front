@@ -2,7 +2,6 @@ package store.ckin.front.payment.adpter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
@@ -57,11 +56,9 @@ public class PaymentAdapterImpl implements PaymentAdapter {
      *
      * @param requestDto 결제 확인 요청 객체
      * @return 결제 확인 응답 객체
-     * @throws UnsupportedEncodingException 인코딩 예외
      */
     @Override
-    public PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto)
-            throws UnsupportedEncodingException {
+    public PaymentConfirmResponseDto requestConfirmPayment(PaymentConfirmRequestDto requestDto) {
 
         String widgetSecretKey = keyManager.keyStore(tossProperties.getSecretKey());
 
@@ -117,7 +114,6 @@ public class PaymentAdapterImpl implements PaymentAdapter {
     public void requestCancelPayment(String paymentKey, PaymentCancelReasonDto requestDto) {
 
         String secretKey = keyManager.keyStore(tossProperties.getSecretKey());
-        log.info("secretKey = {}", secretKey);
 
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] encodedBytes = encoder.encode((secretKey + ":").getBytes(StandardCharsets.UTF_8));
@@ -128,14 +124,13 @@ public class PaymentAdapterImpl implements PaymentAdapter {
 
         HttpEntity<PaymentCancelReasonDto> requestEntity = new HttpEntity<>(requestDto, httpHeaders);
 
-        ResponseEntity<Void> exchange = restTemplate.exchange(
+        restTemplate.exchange(
                 TOSS_API_URL + "/" + paymentKey + "/cancel",
                 HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
 
-        log.info("response status = {}", exchange.getStatusCode());
     }
 
     private HttpHeaders getTossHttpHeaders() {

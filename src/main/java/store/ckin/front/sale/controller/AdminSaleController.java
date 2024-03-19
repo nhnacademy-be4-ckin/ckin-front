@@ -79,7 +79,6 @@ public class AdminSaleController {
     public String updateDeliveryStatus(@PathVariable("saleId") Long saleId,
                                        SaleDeliveryUpdateRequestDto deliveryStatus) {
 
-        log.info("saleId = {}, deliveryStatus = {}", saleId, deliveryStatus);
         saleFacade.updateDeliveryStatus(saleId, deliveryStatus);
         return "redirect:/admin/sale/" + saleId;
     }
