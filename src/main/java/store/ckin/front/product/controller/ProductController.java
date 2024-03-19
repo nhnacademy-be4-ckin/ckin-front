@@ -2,9 +2,11 @@ package store.ckin.front.product.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
 import store.ckin.front.product.service.ProductService;
@@ -82,9 +85,18 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword, Model model) {
-        log.debug(keyword);
+    public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword,
+                                @Positive @RequestParam(defaultValue = "0") int page,
+                                @Positive @RequestParam(required = false, defaultValue = "10") int size, Model model) {
+
+        List<SearchProduct> searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page, size));
+
         model.addAttribute("KEY_WORD", keyword);
+        for (SearchProduct book : searchResults) {
+            log.debug("book info: {}", book);
+        }
+        model.addAttribute("SEARCH_RESULT", searchResults);
+
         return "product/search";
     }
 }
