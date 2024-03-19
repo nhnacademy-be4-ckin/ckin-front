@@ -70,9 +70,9 @@ document.getElementById("bookId").addEventListener("input", function () {
     $("#checkValidBook").empty();
 });
 document.getElementById("duration").addEventListener("input", function () {
-    var durationValue = parseInt(this.value);
-    var durationCheck = document.getElementById("durationCheck");
-    var durationMinusCheck = document.getElementById("durationMinusCheck");
+    let durationValue = parseInt(this.value);
+    let durationCheck = document.getElementById("durationCheck");
+    let durationMinusCheck = document.getElementById("durationMinusCheck");
 
     if (durationValue < 0 || isNaN(durationValue)) {
         durationCheck.style.display = "none";
