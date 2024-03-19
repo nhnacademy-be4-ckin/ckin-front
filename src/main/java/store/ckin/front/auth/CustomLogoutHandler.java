@@ -47,7 +47,7 @@ public class CustomLogoutHandler implements LogoutHandler {
         String token = cookie.getValue();
         try {
             String uuid = JwtUtil.getUuid(token);
-            log.info("UUID : {}", uuid);
+            log.debug("UUID : {}", uuid);
 
             if (Boolean.TRUE.equals(redisTemplate.hasKey(uuid))) {
                 redisTemplate.delete(uuid);
