@@ -12,6 +12,5 @@ import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 public interface MemberService {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
-
     MemberMyPageResponseDto getMyPageInfo(String memberId);
 }

@@ -1,5 +1,6 @@
 package store.ckin.front.oauth;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -31,11 +32,11 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+public class CustomOauth2UserService extends DefaultOAuth2UserService {
     private final RestTemplate restTemplate;
 
     private final Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter
-            = new CustomOAuth2UserRequestConverter();
+            = new CustomOauth2UserRequestConverter();
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -45,25 +46,50 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if (platform.equals("payco")) {
             log.debug("Payco OAuth");
-            RequestEntity<?> request = Objects.requireNonNull(requestEntityConverter.convert(userRequest));
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    request,
-                    new ParameterizedTypeReference<>() {
-                    });
 
-            Map<String, Object> userAttributes = (Map) response.getBody().get("data");
-
-            Set<GrantedAuthority> authorities = new LinkedHashSet<>();
-            authorities.add(new OAuth2UserAuthority(userAttributes));
-            OAuth2AccessToken token = userRequest.getAccessToken();
-
-            for (String authority : token.getScopes()) {
-                authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority));
-            }
-
-            return new DefaultOAuth2User(authorities, userAttributes, "member");
+            return getPaycoOauth2User(userRequest);
         }
 
         return super.loadUser(userRequest);
+    }
+
+    private DefaultOAuth2User getPaycoOauth2User(OAuth2UserRequest userRequest) {
+        RequestEntity<?> request = Objects.requireNonNull(requestEntityConverter.convert(userRequest));
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                request,
+                new ParameterizedTypeReference<>() {
+                });
+
+        Map<String, Object> userAttributes = (Map) response.getBody().get("data");
+
+        Set<GrantedAuthority> authorities = new LinkedHashSet<>();
+        authorities.add(new OAuth2UserAuthority(userAttributes));
+        OAuth2AccessToken token = userRequest.getAccessToken();
+
+        for (String authority : token.getScopes()) {
+            authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority));
+        }
+
+        return new DefaultOAuth2User(authorities, getPaycoAttributes(userAttributes), "member");
+    }
+
+    private Map<String, Object> getPaycoAttributes(Map<String, Object> userAttributes) {
+        Map<String, Object> memberAttributes = (Map) userAttributes.get("member");
+
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("oauthId", memberAttributes.get("idNo"));
+        if (memberAttributes.containsKey("email")) {
+            attributes.put("email", memberAttributes.get("email"));
+        }
+
+        if (memberAttributes.containsKey("name")) {
+            attributes.put("name", memberAttributes.get("name"));
+        }
+
+        if (memberAttributes.containsKey("contact")) {
+            attributes.put("contact", memberAttributes.get("mobile"));
+        }
+
+        return attributes;
     }
 }

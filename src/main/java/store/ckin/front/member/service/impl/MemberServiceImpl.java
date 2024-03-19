@@ -9,8 +9,11 @@ import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 import store.ckin.front.member.exception.MemberAlreadyExistsException;
+import store.ckin.front.member.exception.MemberNotFoundException;
 import store.ckin.front.member.service.MemberService;
 
 /**

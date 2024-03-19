@@ -25,7 +25,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                              Object handler)
             throws Exception {
         try {
-            Cookie cookie = CookieUtil.findCookie(request, CookieUtil.HEADER_ACCESS_TOKEN);
+            Cookie cookie = CookieUtil.findCookie(request, JwtUtil.HEADER_ACCESS_TOKEN);
             String token = cookie.getValue();
 
             log.debug("JwtInterceptor AccessToken: {}", token);

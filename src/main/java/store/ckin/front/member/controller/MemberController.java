@@ -3,16 +3,11 @@ package store.ckin.front.member.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
-import store.ckin.front.sale.service.SaleService;
 
 /**
  * Member 에 관련된 페이지를 호출하는 Controller 입니다.
@@ -27,8 +22,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final SaleService saleService;
-
     /**
      * [GET] 회원가입 페이지.
      *
@@ -36,7 +29,7 @@ public class MemberController {
      */
     @GetMapping("/signup")
     public String getCreateMember() {
-        return "member/create";
+        return "member/signup";
     }
 
     /**
