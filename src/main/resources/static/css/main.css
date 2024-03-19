@@ -3898,7 +3898,7 @@ input.num-product::-webkit-inner-spin-button {
     border: solid 1px #d8d8d8;
     width: 98%;
     height: 200px;
-    margin: 10px 1%;
+    margin-bottom: 10px;
     !important;
 }
 
@@ -3909,7 +3909,6 @@ input.num-product::-webkit-inner-spin-button {
     flex-direction: row;
     width: 100%;
     height: 100%;
-    border: solid 1px #6c757d;
 }
 
 .search-result-left {
@@ -3927,8 +3926,9 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .search-result-img {
-    width: 130px;
-    height: 150px;
+    width: 140px;
+    height: 160px;
+    margin-left: 10px;
 }
 
 .search-result-info {
@@ -3939,7 +3939,36 @@ input.num-product::-webkit-inner-spin-button {
     justify-content: center;
     height: 180px;
     width: auto;
-    margin-left: 10px;
+    margin-left: 20px;
+}
+
+.search-result-info a {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.search-result-author-info {
+    margin-bottom: 2px;
+}
+
+.author-title {
+    color: #5c636a;
+    margin-right: 3px;
+}
+
+.search-result-publisher-info {
+    margin-bottom: 7px;
+}
+
+.result-discount-rate {
+    color: #0a53be;
+    font-weight: bold;
+}
+
+.result-discount-price {
+    font-size: medium;
+    font-weight: bold;
 }
 
 .search-result-quantity {
@@ -3948,6 +3977,7 @@ input.num-product::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     width: 130px;
+    margin-bottom: 5px;
 }
 
 .search-result-quantity-btn {
@@ -4017,7 +4047,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 .btn-hover.color-8 {
     background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
-    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
 }
 /*////////////////////////////////////////////////////////////////////// */
 
