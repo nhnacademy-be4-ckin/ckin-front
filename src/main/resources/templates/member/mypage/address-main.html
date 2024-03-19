@@ -32,9 +32,11 @@
             </div>
             <div class="footer">
                 <div style="display: flex">
-                    <form th:action="@{/member/mypage/address/{addressId}/default(addressId=${address.addressId})}" th:method="put">
-                        <button class="btn btn-outline-success">기본배송지로 변경</button>
-                    </form>
+                    <th:block th:if="${!address.isDefault}">
+                        <form th:action="@{/member/mypage/address/{addressId}/default(addressId=${address.addressId})}" th:method="put">
+                            <button class="btn btn-outline-success">기본배송지로 변경</button>
+                        </form>
+                    </th:block>
                     <a type="button" class="btn btn-outline-primary" th:href="@{/member/mypage/address/update/{addressId}(addressId=${address.addressId})}">수정</a>
                     <form th:action="@{/member/mypage/address/delete/{addressId}(addressId=${address.addressId})}" th:method="delete">
                         <button class="btn btn-outline-primary">삭제</button>
