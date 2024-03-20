@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import store.ckin.front.sale.dto.DeliveryStatus;
+import store.ckin.front.sale.dto.SalePaymentStatus;
 
 /**
  * 주문 조회 응답 DTO.
@@ -17,23 +19,6 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 public class SaleResponseDto {
-
-    /**
-     * 주문의 배송 상태를 나타내는 Enum.
-     */
-    public enum DeliveryStatus {
-        READY,
-        IN_PROGRESS,
-        DONE
-    }
-
-    /**
-     * 주문의 결제 상태를 나타내는 Enum.
-     */
-    public enum PaymentStatus {
-        WAITING,
-        PAID
-    }
 
     private Long saleId;
 
@@ -67,6 +52,6 @@ public class SaleResponseDto {
 
     private Integer saleTotalPrice;
 
-    private PaymentStatus salePaymentStatus;
+    private SalePaymentStatus salePaymentStatus;
 
 }

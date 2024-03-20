@@ -1,6 +1,7 @@
 package store.ckin.front.sale.facade;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.deliverypolicy.service.DeliveryPolicyService;
 import store.ckin.front.packaging.service.PackagingService;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SalePolicyResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -90,7 +92,7 @@ public class SaleFacade {
 
         List<Long> couponIds = requestDto.getBookSaleList().stream()
                 .map(BookSaleCreateRequestDto::getAppliedCouponId)
-                .filter(appliedCouponId -> appliedCouponId != 0)
+                .filter(appliedCouponId -> Objects.nonNull(appliedCouponId) && appliedCouponId != 0)
                 .collect(Collectors.toList());
 
         log.debug("couponIds = {}", couponIds);
@@ -161,5 +163,15 @@ public class SaleFacade {
      */
     public SaleDetailResponseDto getGuestSaleDetailBySaleNumber(String saleNumber, String ordererContact) {
         return saleService.getGuestSaleDetailBySaleNumber(saleNumber, ordererContact);
+    }
+
+    /**
+     * 주문 배송 상태를 업데이트하는 메서드입니다.
+     *
+     * @param saleId         주문 ID
+     * @param deliveryStatus 배송 상태
+     */
+    public void updateDeliveryStatus(Long saleId, SaleDeliveryUpdateRequestDto deliveryStatus) {
+        saleService.updateDeliveryStatus(saleId, deliveryStatus);
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -26,7 +25,6 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
-@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -70,8 +68,6 @@ public class SaleController {
     @PostMapping
     public String createSale(@CookieValue("CART_ID") Cookie cookie,
                              @Valid SaleCreateRequestDto requestDto) {
-
-        log.debug("requestDto = {}", requestDto);
 
         String saleNumber = saleFacade.createSale(requestDto);
         saleFacade.deleteCartItemAll(cookie.getValue());
@@ -120,4 +116,6 @@ public class SaleController {
         model.addAttribute("saleDetail", saleDetail);
         return "sale/guest-order-detail";
     }
+
+
 }
