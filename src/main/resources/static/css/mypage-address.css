@@ -1,0 +1,36 @@
+
+.card {
+    width: 100%;
+}
+
+.card-header, .footer {
+    display: flex;
+}
+
+.card-header {
+    justify-content: space-between;
+}
+
+.card-text {
+    word-wrap: break-word;
+}
+
+.block-btn{
+    width: 400px;
+}
+
+.footer {
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer a{
+    margin-right: 5px;
+    margin-left: 5px;
+}
