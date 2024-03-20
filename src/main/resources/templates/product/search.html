@@ -7,6 +7,7 @@
 <!-- 본문 내용 -->
 <div layout:fragment="content">
     <script src="/js/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <main class="main row">
         <div class="search-page-wrap p-t-15">
             <div class="search-content-wrap">
@@ -105,10 +106,10 @@
                                                 <input name="regularPrice" th:value="${book.regularPrice}" hidden>
                                                 <input name="salePrice" th:value="${book.salePrice}" hidden>
                                                 <input name="thumbnail" th:value="${book.thumbnail}" hidden>
-                                                <button class="btn-hover color-8" onclick="clickAddCartBtn(this)">장바구니
+                                                <button type="button" class="btn-hover color-8" onclick="clickAddCartBtn(this)">장바구니
                                                     추가
                                                 </button>
-                                                <button class="btn-hover color-8" onclick="clickCheckoutBtn(this)">바로
+                                                <button type="button" class="btn-hover color-8" onclick="clickCheckoutBtn(this)">바로
                                                     결제하기
                                                 </button>
                                             </form>
