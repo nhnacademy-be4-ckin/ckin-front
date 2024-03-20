@@ -30,8 +30,8 @@ public class ProductSearchRepository {
     public List<SearchProduct> findProductByKeyword(String keyword, PageRequest pageRequest) {
         MultiMatchQueryBuilder query =
                 QueryBuilders.multiMatchQuery(keyword).fields(Map.of(
-                                "title.ngram", 3.0f,
-                                "title.nori", 3.0f,
+                                "title.ngram", 5.0f,
+                                "title.nori", 5.0f,
                                 "description.ngram", 1.5f,
                                 "description.nori", 1.5f,
                                 "publisher", 2.0f,
