@@ -20,7 +20,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Document(indexName = "books")
+@Document(indexName = "books", createIndex = false)
 public class SearchProduct {
     @Id
     @Field("book_id")
