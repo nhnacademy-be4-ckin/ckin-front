@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.service.MemberService;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -36,16 +37,17 @@ public class MemberRestController {
      */
     @PostMapping("/codeRequest")
     public String doorayMessage() {
-        Random random = new Random();
-        String randomCode = Integer.toString(100000 + random.nextInt(900000));
+        SecureRandom random = new SecureRandom();
+        int randomNumber = random.nextInt(1000000);
+        String randomString = String.format("%06d", randomNumber);
 
         doorayHookSender.send(
                 DoorayHook.builder()
                         .botName("CKIN 관리자")
-                        .text(randomCode)
+                        .text(randomString)
                         .build()
         );
 
-        return randomCode;
+        return randomString;
     }
 }
