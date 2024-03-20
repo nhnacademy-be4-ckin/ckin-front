@@ -47,7 +47,7 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
             userUuidCookie.setMaxAge((int) Duration.ofDays(2).toSeconds());
             response.addCookie(userUuidCookie);
             log.debug("preHandle(): saved user uuid is -> {}", userUuidCookie.getValue());
-            response.sendRedirect("/cart");
+            response.sendRedirect(request.getRequestURI());
             return false;
         }
         return true;
