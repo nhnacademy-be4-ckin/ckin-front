@@ -139,13 +139,14 @@ public class MemberMyPageController {
                                Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PageDto<MyPageReviewResponseDto> myPageReviewResponseDtoPageDto
-                = reviewService.getMyPageReviewResponseDto(pageable, Long.valueOf(authentication.getName()));
+                = reviewService.getMyPageReviewResponseDto(pageable, authentication.getName());
 
         model.addAttribute("reviewPage", myPageReviewResponseDtoPageDto);
 
         return "member/mypage/review/main";
 
     }
+
 
 
 }
