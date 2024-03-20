@@ -7,6 +7,16 @@ const btn_send = document.getElementById('btn-send');
 const btn_check = document.getElementById('btn-check');
 const msgSpan = document.getElementById('validMsg');
 
+let emailCheck = false;
+let passwordCheck = false;
+let codeCheck = false;
+let active = false;
+
+const isActive = () => {
+    active = (emailCheck && passwordCheck && codeCheck);
+    btn.disabled = !active;
+}
+
 const isEqualPassword = () => {
     let password = passwordInput.value;
     let rePassword = rePasswordInput.value;
@@ -24,11 +34,15 @@ const validatePassword = () => {
     if(isEqualPassword()) {
         msgSpan.innerText = "비밀 번호가 일치합니다."
         msgSpan.style.color = "green";
-        btn.disabled = false;
+
+        passwordCheck = true;
+        isActive();
     } else {
         msgSpan.innerText = "비밀 번호가 일치하지 않습니다."
         msgSpan.style.color = "red";
-        btn.disabled = true;
+
+        passwordCheck = false;
+        isActive();
     }
 }
 
@@ -50,13 +64,18 @@ const validateEmail = async () => {
 
         if(isDuplicate) {
             alert("이미 존재하는 이메일 입니다.");
-            btn.disabled = true;
+            emailCheck = false;
+            isActive();
         } else {
             alert("사용가능한 이메일 입니다.");
-            btn.disabled = false;
+            emailCheck = true;
+            emailInput.setAttribute('readonly', true);
+            isActive();
         }
     } catch (error) {
         console.log(error);
+        emailCheck = false;
+        isActive();
     }
 }
 
@@ -81,17 +100,19 @@ const sendRequestCode = async () => {
 
 const checkCode = () => {
     const code = codeInput.value;
-    console.log(responseCode);
-    console.log(code);
     if(code == responseCode) {
         alert("인증에 성공했습니다.")
-        btn.disabled = false;
+        codeCheck = true;
+        isActive();
     } else {
         alert("인증에 실패했습니다. 다시 시도해주세요");
+        codeCheck = false;
 
-        btn.disabled = true;
         btn_check.classList.add("hidden");
         btn_send.classList.remove("hidden");
+        isActive();
     }
 }
+
+
 
