@@ -89,7 +89,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             attributes.put("name", memberAttributes.get("name"));
         }
 
-        if (memberAttributes.containsKey("contact")) {
+        if (memberAttributes.containsKey("mobile")) {
             attributes.put("contact", memberAttributes.get("mobile"));
         }
 
