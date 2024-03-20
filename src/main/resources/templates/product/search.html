@@ -6,6 +6,7 @@
 
 <!-- 본문 내용 -->
 <div layout:fragment="content">
+    <script src="/js/search.js"></script>
     <main class="main row">
         <div class="search-page-wrap p-t-15">
             <div class="search-content-wrap">
@@ -89,17 +90,27 @@
                                         <div class="search-result-right">
                                             <div class="search-result-quantity">
                                                 <button class="search-result-quantity-btn btn btn-outline-secondary"
-                                                        type="button">-
+                                                        type="button" onclick="minusQuantity(this)">-
                                                 </button>
-                                                <input type="number" class="search-result-quantity-number"
+                                                <input type="number" class="search-result-quantity-number" value="1"
                                                        placeholder="0">
                                                 <button class="search-result-quantity-btn btn btn-outline-secondary"
-                                                        type="button">+
+                                                        type="button" onclick="plusQuantity(this)">+
                                                 </button>
                                             </div>
-                                            <form>
-                                                <button class="btn-hover color-8">장바구니 추가</button>
-                                                <button class="btn-hover color-8">바로 결제하기</button>
+                                            <form action="" method="post">
+                                                <input name="id" th:value="${book.id}" hidden>
+                                                <input name="name" th:value="${book.title}" hidden>
+                                                <input name="quantity" class="send-quantity" value="" hidden="">
+                                                <input name="regularPrice" th:value="${book.regularPrice}" hidden>
+                                                <input name="salePrice" th:value="${book.salePrice}" hidden>
+                                                <input name="thumbnail" th:value="${book.thumbnail}" hidden>
+                                                <button class="btn-hover color-8" onclick="clickAddCartBtn(this)">장바구니
+                                                    추가
+                                                </button>
+                                                <button class="btn-hover color-8" onclick="clickCheckoutBtn(this)">바로
+                                                    결제하기
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
