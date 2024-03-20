@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.adapter.ReviewAdapter;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
@@ -45,9 +46,15 @@ public class ReviewServiceImpl implements ReviewService {
     public PageDto<ReviewDto> getReviewListByBookId(Pageable pageable, Long bookId) {
         return reviewAdapter.getReviewListByBookId(pageable, bookId);
     }
+
     @Override
-    public PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, Long memberId) {
+    public PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, String memberId) {
         return reviewAdapter.getMyPageReviewResponseDto(pageable, memberId);
+    }
+
+    @Override
+    public void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId, String memberId) {
+        reviewAdapter.updateReview(updateReviewRequestDto, reviewId, memberId);
     }
 
 

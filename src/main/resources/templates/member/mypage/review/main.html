@@ -6,7 +6,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/js/view.js"></script>
+<!--    <script src="/js/view.js"></script>-->
     <script>
         function redirectToBook(bookId) {
             window.location.href = '/product/view/' + bookId;
@@ -26,7 +26,7 @@
                 smallImageBox.style.display = 'none';
             } else {
                 spanText.innerText = "펼치기";
-                commentContentsInner.style.maxHeight = 'none';
+                commentContentsInner.style.maxHeight = '150px';
                 smallImageBox.style.display = 'block';
             }
         }
@@ -53,6 +53,7 @@
         .comment_item {
             height: auto;
         }
+
         .comment_wrap .comment_list .comment_item .comment_contents .comment_contents_inner {
             max-height: 150px;
             overflow: hidden;
@@ -113,6 +114,12 @@
                                                 class="info_item"
                                                 th:text="${review.reviewDate}"></span><span
                                                 class="gap"> | </span>
+                                            <span class="info_item">
+    <a href="#" class="text-primary" th:onclick="'editReview(\'' + ${review.reviewId} + '\')'"
+       style="text-decoration: none;">리뷰 수정하기</a>
+</span>
+                                            <span
+                                                    class="gap"> | </span>
                                         </div>
                                     </div>
                                     <div class="right_area">
@@ -148,24 +155,27 @@
                                     <div class="comment_contents_inner" th:id="${review.reviewId}">
                                         <div class="comment_view_wrap">
                                             <div class="review_thumbnail" th:if="${review.thumbnailPath}">
-                                                <button class="btn_view_img" type="button" th:onclick="'redirectToBook(' + ${review.bookId} + ')'">
+                                                <button class="btn_view_img" type="button"
+                                                        th:onclick="'redirectToBook(' + ${review.bookId} + ')'">
                                                     <img th:src="${review.thumbnailPath}" alt="리뷰 썸네일"/>
                                                 </button>
                                             </div>
-                                            <div class="comment_text_box">
-                                                <div class="comment_text" th:text="${review.message}"></div>
+                                            <div class="comment_text_box mb-3 p-3">
+                                                <div class="comment_text mb-2" th:text="${review.message}"></div>
                                                 <div class="thumb_box_div">
-                                                    <div class="comment_thumb_box"
+                                                    <div class="comment_thumb_box d-flex flex-wrap mb-2"
                                                          th:id="'thumb' + ${review.reviewId}">
-                                                        <span class="comment_thumb_view"
+                                                        <span class="comment_thumb_view m-1"
                                                               th:each="img : ${review.filePath}"
                                                               th:style="'background-image: url(' + ${img} + ');'">
-                                                            <img th:src="${img}" alt="리뷰 썸네일"/>
+                                                                        <img class="img-fluid" th:src="${img}"
+                                                                             alt="리뷰 썸네일"/>
                                                         </span>
                                                     </div>
                                                 </div>
-
                                             </div>
+
+
                                         </div>
                                         <div class="comment_swiper_wrap">
                                             <div class="swiper-container">
@@ -217,13 +227,10 @@
                                 </ul>
                             </nav>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 </html>
