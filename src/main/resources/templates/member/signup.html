@@ -21,7 +21,7 @@
     <form action="/signup" method="post" class="mt-3">
         <div class="input-group mb-3">
             <input type="email" class="form-control" id="email" name="email" th:value="${param.email}" placeholder="이메일" required>
-            <button class="btn btn-outline-secondary" type="button" onclick="">중복 확인</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="validateEmail()">중복 확인</button>
         </div>
 
         <div class="mb-3">
