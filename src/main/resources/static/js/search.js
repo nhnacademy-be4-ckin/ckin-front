@@ -7,7 +7,7 @@ function clickAddCartBtn(btn) {
         quantity.value = quantityInput;
         form.submit();
     } else {
-        alert("올바른 수량을 입력해 주세요(1개 이상, 100개 이하)")
+        showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
     }
 }
 
@@ -20,7 +20,7 @@ function minusQuantity(btn) {
     if (quantityInput.value > 1) {
         quantityInput.value--;
     } else {
-        alert("상품은 1개 이상 선택할 수 있습니다");
+        showErrorAlert('0개 이하의 수량은 담을 수 없습니다');
     }
 }
 
@@ -29,6 +29,14 @@ function plusQuantity(btn) {
     if (quantityInput.value < 100) {
         quantityInput.value++;
     } else {
-        alert("더이상 담을수 없다욧");
+        showErrorAlert('한 상품을 100개 이상 담을 수 없습니다');
     }
+}
+
+function showErrorAlert(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '알림',
+        text: message
+    });
 }
