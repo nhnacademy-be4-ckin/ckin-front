@@ -1,10 +1,12 @@
 function clickSearchBtn() {
     let keyword = document.getElementById("keyword");
-    if (keyword.value !== '') {
+    if (keyword.value === '') {
+        alert("검색어를 입력하세요")
+        event.preventDefault();
+    } else {
         let searchForm = document.getElementById("searchForm");
         searchForm.submit();
     }
-    keyword.value = '';
 }
 
 function activateAnbWrap(btn) {
