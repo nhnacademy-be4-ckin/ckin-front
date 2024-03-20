@@ -15,12 +15,11 @@
 
     <div class="container">
         <div class="row m-t-150">
+            <h4 th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() eq 'CANCEL'}"
+                class="h4 p-t-15" style="color: #bb2d3b">
+                취소된 주문입니다.
+            </h4>
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-
-                <h4 th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() eq 'CANCEL'}"
-                    class="h4" style="color: #bb2d3b">
-                    취소된 주문입니다.
-                </h4>
 
                 <h4 class="m-t-30 m-b-30"
                     th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice} + '원'">
@@ -151,9 +150,10 @@
 
             </div>
 
-            <h5 class="h5 m-tb-15 mx-auto" style="color: #bb2d3b">
-                ⚠ 주문 취소는 배송 상태가 준비 중(READY)인 경우에만 가능합니다.
-            </h5>
+            <p class="m-tb-15 mx-auto" style="color: #bb2d3b">
+                ⚠ 주문 취소는 배송 상태가 준비 중(READY)인 경우에만 가능합니다. <br/>
+                결제 후 주문이 취소되면, 환불 금액은 포인트로 적립됩니다.
+            </p>
         </div>
 
         <script th:inline="javascript">
