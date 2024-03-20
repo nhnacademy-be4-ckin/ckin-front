@@ -1,5 +1,8 @@
 package store.ckin.front.cart.controller;
 
+import static store.ckin.front.util.AlertUtil.showErrorAlert;
+import static store.ckin.front.util.AlertUtil.showSuccessAlert;
+
 import java.util.List;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
+import store.ckin.front.cart.exception.ItemAlreadyExistException;
 import store.ckin.front.cart.service.CartService;
 
 /**
@@ -58,10 +62,14 @@ public class CartController {
      */
     @PostMapping("/create")
     public String addCartItem(@CookieValue(name = "CART_ID") Cookie cookie,
-                              @ModelAttribute CartItemCreateRequestDto cartItemCreateRequestDto) {
+                              @ModelAttribute CartItemCreateRequestDto cartItemCreateRequestDto, Model model) {
         log.debug("add Item -> {}", cartItemCreateRequestDto.getId());
-        cartService.createCartItem(cookie.getValue(), cartItemCreateRequestDto);
-        return REDIRECT_CART_URL;
+        try {
+            cartService.createCartItem(cookie.getValue(), cartItemCreateRequestDto);
+        } catch (ItemAlreadyExistException e) {
+            return showErrorAlert(model, "이미 상품이 장바구니에 존재합니다", "/cart");
+        }
+        return showSuccessAlert(model, "상품이 장바구니에 추가되었습니다", "/cart");
     }
 
     /**
