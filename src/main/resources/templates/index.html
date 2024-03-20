@@ -4,114 +4,69 @@
       layout:decorate="~{layouts/default}">
 
 <head>
-    <!--    <link rel="stylesheet" href="/css/setting.css">-->
-    <!--    <link rel="stylesheet" href="/css/plugin.css">-->
-    <!--    <link rel="stylesheet" href="/css/template.css">-->
-    <!--    <link rel="stylesheet" href="/css/common.css">-->
-    <!--    <link rel="stylesheet" href="/css/style.css">-->
     <link rel="stylesheet" href="/css/main-index.css">
-    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
-    <!--    <link href="https://themewagon.github.io/fruitables/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">-->
-    <style>
-        .main-image {
-            display: flex;
-            justify-content: center;
-        }
-    </style>
 </head>
 
 <!-- 본문 내용 -->
 <div layout:fragment="content">
 
 
-    <div class="container-fluid py-5 mb-5 hero-header" style="padding-top: 10% !important;">
-        <div class="container py-5">
-            <div class="row g-5 align-items-center">
-                <div class="col-md-12 col-lg-7" style="max-width: 50% !important;">
-                    <h1 class="display-3 text-primary">GRAND</h1>
-                    <h1 class="display-3 text-primary">OPENNING</h1>
+    <!--    <div class="container-fluid py-5 mb-5 hero-header" style="padding-top: 10% !important;">-->
+    <!--        <div class="container py-5">-->
+    <!--            <div class="row g-5 align-items-center">-->
+    <!--                <div class="col-md-12 col-lg-7" style="max-width: 50% !important;">-->
+    <!--                    <h1 class="display-3 text-primary">GRAND</h1>-->
+    <!--                    <h1 class="display-3 text-primary">OPENNING</h1>-->
 
-                </div>
-                <div class="carousel_main">
-                    <!-- 캐러셀 이미지 삽입 -->
-                    <div class="carousel_wrapper">
-                        <div class="carousel_slide">
-                            <img src="/images/main/main-banner.jpg" alt="#"/>
-                        </div>
-                        <div class="carousel_slide">
-                            <img src="/images/main/main-slide-img.jpg" alt="#"/>
-                        </div>
-                        <div class="carousel_slide">
-                            <img src="#" alt="#"/>
-                        </div>
-                        <div class="carousel_slide">
-                            <img src="#" alt="#"/>
-                        </div>
-                    </div>
-
-                    <!-- 캐러셀 사이드 버튼 -->
-                    <div class="carousel_button_container">
-                        <button type="button" class="carousel_prev">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                 class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                      d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                                <path fill-rule="evenodd"
-                                      d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                            </svg>
-                        </button>
-                        <button type="button" class="carousel_next">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                 class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                      d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                <path fill-rule="evenodd"
-                                      d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- 캐러셀 중앙 버튼 -->
-                    <div class="carousel_pagination">
-                        <div class="carousel_circle"></div>
-                        <div class="carousel_circle"></div>
-                        <div class="carousel_circle"></div>
-                        <div class="carousel_circle"></div>
-                    </div>
-                </div>
-
+    <!--                </div>-->
+    <div class="carousel_main">
+        <!-- 캐러셀 이미지 삽입 -->
+        <div class="carousel_wrapper">
+            <div class="carousel_slide">
+                <img src="/images/main/main-banner.jpg" alt="#"/>
             </div>
+            <div class="carousel_slide">
+                <img src="/images/main/background-img-v2.jpg" alt="#"/>
+            </div>
+            <div class="carousel_slide">
+                <img src="#" alt="#"/>
+            </div>
+            <div class="carousel_slide">
+                <img src="#" alt="#"/>
+            </div>
+        </div>
+
+        <!-- 캐러셀 사이드 버튼 -->
+        <div class="carousel_button_container">
+            <button type="button" class="carousel_prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    <path fill-rule="evenodd"
+                          d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+            </button>
+            <button type="button" class="carousel_next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                     class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                          d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    <path fill-rule="evenodd"
+                          d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 캐러셀 중앙 버튼 -->
+        <div class="carousel_pagination">
+            <div class="carousel_circle"></div>
+            <div class="carousel_circle"></div>
+            <div class="carousel_circle"></div>
+            <div class="carousel_circle"></div>
         </div>
     </div>
 
-
-    <!--    <div class="main-image m-t-100">-->
-    <!--        <div>-->
-    <!--            <img src="/images/main-banner.jpg" class="d-block mx-auto" alt="..." style="width: 85%; height: 85%">-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!-- Banner -->
-
-    <!--    <div class="sec-banner bg0 p-t-0 p-b-50">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">-->
-    <!--                    &lt;!&ndash; Block1 &ndash;&gt;-->
-    <!--                    <div class="block1 wrap-pic-w">-->
-    <!--                        <a th:href="@{/product/1}">-->
-    <!--                            <img class="img-banner" height="25%" src="/images/001.jpg" alt="IMG-BANNER">-->
-    <!--                        </a>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-
-    <!--                <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">-->
-    <!--                    &lt;!&ndash; Block1 &ndash;&gt;-->
-    <!--                    <div class="block1 wrap-pic-w">-->
-    <!--                        <a th:href="@{/product/2}">-->
-    <!--                            <img class="img-banner" height="25%" src="/images/002.jpg" alt="IMG-BANNER">-->
-    <!--                        </a>-->
-    <!--                    </div>-->
-    <!--                </div>-->
     <!--            </div>-->
     <!--        </div>-->
     <!--    </div>-->
@@ -128,104 +83,43 @@
                     자세히 보기 >
                 </p>
             </div>
-            <div class="row mt-3 d-flex">
-                <div class="col-lg-3 col-md-6 col-12">
+            <div class="row d-flex">
+                <div class="col-lg-3 col-md-6 col-12 mb-5" th:each="newBook : ${newBookList}">
                     <div class="product">
                         <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/1400000650271.jpg"
+                            <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
                                  alt="#">
                             <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
-                                        <span class="text">10%</span>
+                                        <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
                                     </span>
-                                <span class="badge_md ">
-                                        <span class="text">무료배송</span></span>
+                                <span class="badge_md " th:each="tag : ${newBook.productTags}">
+                                        <span class="text" th:text="${tag}"></span>
+                                    </span>
                             </div>
                         </div>
                         <div class="product-info">
                             <h4 class="title">
-                                <a href="#">나는 개발자로 살기로 했다</a>
+                                <a th:href="@{'/product/view/' + ${newBook.bookId}}" th:text="${newBook.bookTitle}"></a>
                             </h4>
                             <div class="prod_price_box">
                                 <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">18,000원</span>
-                                            </span>
+                                    <span class="price">
+                                        <span class="val"
+                                              th:text="${#numbers.formatInteger(newBook.bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                    </span>
                                     <span class="sale_price">
-                                                <s class="val">20,000원</s>
-                                            </span>
+                                        <s class="val"
+                                           th:text="${#numbers.formatInteger(newBook.bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791171174508.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">고층 입원실의 갱스터 할머니</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">16,920원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">18,800원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193506332.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">무례한 친구가 생겼어요</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">15,030원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">16,700원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791198530356.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">무엇이 나를 행복하게 만드는가</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">17,820원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">19,800원</s>
-                                            </span>
+                                <div class="tool_div">
+                                    <span>
+                                        <a href="#" class="wish_icon"></a>
+                                    </span>
+                                    <span>
+                                        <a href="#" class="mini_cart"></a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -242,110 +136,43 @@
                     자세히 보기 >
                 </p>
             </div>
-            <div class="row mt-3 d-flex">
-                <div class="col-lg-3 col-md-6 col-12">
+            <div class="row d-flex">
+                <div class="col-lg-3 col-md-6 col-12 mb-5" th:each="newBook : ${foreignBookList}">
                     <div class="product">
                         <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/1400000650271.jpg"
+                            <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
                                  alt="#">
                             <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
-                                        <span class="text">10%</span>
+                                        <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
                                     </span>
-                                <span class="badge_md ">
-                                        <span class="text">무료배송</span></span>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">나는 개발자로 살기로 했다</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">18,000원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">20,000원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791171174508.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">고층 입원실의 갱스터 할머니</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">16,920원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">18,800원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193506332.jpg"
-                                 alt="#">
-                            <div class="badge_list_box">
-                                    <span class="badge_md sale-tag">
-                                        <span class="text">10%</span>
+                                <span class="badge_md " th:each="tag : ${newBook.productTags}">
+                                        <span class="text" th:text="${tag}"></span>
                                     </span>
-                                <span class="badge_md ">
-                                        <span class="text">무료배송</span></span>
                             </div>
                         </div>
                         <div class="product-info">
                             <h4 class="title">
-                                <a href="#">무례한 친구가 생겼어요</a>
+                                <a th:href="@{'/product/view/' + ${newBook.bookId}}" th:text="${newBook.bookTitle}"></a>
                             </h4>
                             <div class="prod_price_box">
                                 <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">15,030원</span>
-                                            </span>
+                                    <span class="price">
+                                        <span class="val"
+                                              th:text="${#numbers.formatInteger(newBook.bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                    </span>
                                     <span class="sale_price">
-                                                <s class="val">16,700원</s>
-                                            </span>
+                                        <s class="val"
+                                           th:text="${#numbers.formatInteger(newBook.bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791198530356.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">무엇이 나를 행복하게 만드는가</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">17,820원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">19,800원</s>
-                                            </span>
+                                <div class="tool_div">
+                                    <span>
+                                        <a href="#" class="wish_icon"></a>
+                                    </span>
+                                    <span>
+                                        <a href="#" class="mini_cart"></a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -362,104 +189,43 @@
                     자세히 보기 >
                 </p>
             </div>
-            <div class="row mt-3 d-flex">
-                <div class="col-lg-3 col-md-6 col-12">
+            <div class="row d-flex">
+                <div class="col-lg-3 col-md-6 col-12 mb-5" th:each="newBook : ${koreanBookList}">
                     <div class="product">
                         <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/1400000650271.jpg"
+                            <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
                                  alt="#">
                             <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
-                                        <span class="text">10%</span>
+                                        <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
                                     </span>
-                                <span class="badge_md ">
-                                        <span class="text">무료배송</span></span>
+                                <span class="badge_md " th:each="tag : ${newBook.productTags}">
+                                        <span class="text" th:text="${tag}"></span>
+                                    </span>
                             </div>
                         </div>
                         <div class="product-info">
                             <h4 class="title">
-                                <a href="#">나는 개발자로 살기로 했다</a>
+                                <a th:href="@{'/product/view/' + ${newBook.bookId}}" th:text="${newBook.bookTitle}"></a>
                             </h4>
                             <div class="prod_price_box">
                                 <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">18,000원</span>
-                                            </span>
+                                    <span class="price">
+                                        <span class="val"
+                                              th:text="${#numbers.formatInteger(newBook.bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                    </span>
                                     <span class="sale_price">
-                                                <s class="val">20,000원</s>
-                                            </span>
+                                        <s class="val"
+                                           th:text="${#numbers.formatInteger(newBook.bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791171174508.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">고층 입원실의 갱스터 할머니</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">16,920원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">18,800원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193506332.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">무례한 친구가 생겼어요</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">15,030원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">16,700원</s>
-                                            </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <div class="product">
-                        <div class="product-image">
-                            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791198530356.jpg"
-                                 alt="#">
-
-                        </div>
-                        <div class="product-info">
-                            <h4 class="title">
-                                <a href="#">무엇이 나를 행복하게 만드는가</a>
-                            </h4>
-                            <div class="prod_price_box">
-                                <div class="prod_price">
-                                            <span class="price">
-                                                <span class="val">17,820원</span>
-                                            </span>
-                                    <span class="sale_price">
-                                                <s class="val">19,800원</s>
-                                            </span>
+                                <div class="tool_div">
+                                    <span>
+                                        <a href="#" class="wish_icon"></a>
+                                    </span>
+                                    <span>
+                                        <a href="#" class="mini_cart"></a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -705,6 +471,145 @@
 
         <!--        </div>-->
         <!--        &lt;!&ndash;    박스 추가 (신간 도서)    &ndash;&gt;-->
+
+        <div class="owl-carousel owl-theme owl-loaded owl-drag">
+
+
+            <div class="owl-stage-outer">
+                <div class="owl-stage"
+                     style="transform: translate3d(-1470px, 0px, 0px); transition: all 0.25s ease 0s; width: 5880px;">
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>hello coupon</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>8</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>9</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>10</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>11</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>12</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item active" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>1</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item active" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>2</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item active" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>3</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item active" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>4</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>5</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>6</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>7</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>8</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>9</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>10</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>11</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>12</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>1</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>2</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>3</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>4</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>5</h4>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 235px; margin-right: 10px;">
+                        <div class="item">
+                            <h4>6</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-nav disabled">
+                <button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button>
+                <button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button>
+            </div>
+            <div class="owl-dots">
+                <button role="button" class="owl-dot active"><span></span></button>
+                <button role="button" class="owl-dot"><span></span></button>
+                <button role="button" class="owl-dot"><span></span></button>
+            </div>
+        </div>
 
     </div>
     <script src="/js/setting.js"></script>
