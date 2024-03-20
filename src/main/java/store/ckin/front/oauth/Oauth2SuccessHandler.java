@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
+import store.ckin.front.member.exception.MemberNotFoundException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
+import store.ckin.front.util.JwtUtil;
 
 /**
  * OAuth 에 성공한 이후 로직을 처리하는 클래스 입니다.
@@ -30,7 +31,7 @@ import store.ckin.front.util.CookieUtil;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
@@ -40,21 +41,24 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         HttpServletResponse response,
                                         Authentication authentication)
             throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = (Map) oAuth2User.getAttributes().get("member");
+        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        Map<String, Object> attributes = oauth2User.getAttributes();
+        String oauthId = String.valueOf(attributes.get("oauthId"));
 
         try {
             log.debug("OAuth Login");
 
-            String email = String.valueOf(attributes.get("email"));
-            UserDetails user = memberDetailsService.loadUserByUsername(email);
-            String memberId = user.getUsername();
+            MemberOauthLoginResponseDto responseDto =
+                    memberDetailsService.getOauthMemberInfo(new MemberOauthIdOnlyRequestDto(oauthId));
 
-            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId));
-            addTokenCookie(response, tokenResponseDto);
+            String memberId = responseDto.getId().toString();
+            String authority = responseDto.getRole();
+
+            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(memberId, authority));
+            JwtUtil.addTokenCookie(response, tokenResponseDto);
 
             response.sendRedirect("/");
-        } catch (UsernameNotFoundException ex) {
+        } catch (MemberNotFoundException ex) {
             log.debug("OAuth Signup");
 
             UriComponentsBuilder targetUrl = UriComponentsBuilder
@@ -72,26 +76,21 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
-        setQueryParam("email", String.valueOf(attributes.get("email")), targetUrl);
-        setQueryParam("name", String.valueOf(attributes.get("name")), targetUrl);
-        String contact = String.valueOf(attributes.get("mobile"));
-
-        if (contact.startsWith("82")) {
-            contact = contact.replace("82", "0");
+        if (attributes.containsKey("email")) {
+            targetUrl.queryParam("email", String.valueOf(attributes.get("email")));
         }
 
-        setQueryParam("contact", contact, targetUrl);
-    }
+        if (attributes.containsKey("name")) {
+            targetUrl.queryParam("name", String.valueOf(attributes.get("name")));
+        }
 
-    private void setQueryParam(String key, String value, UriComponentsBuilder targetUrl) {
-        targetUrl.queryParam(key, value);
-    }
+        if (attributes.containsKey("contact")) {
+            String contact = String.valueOf(attributes.get("contact"));
+            if (contact.startsWith("82")) {
+                contact = contact.replace("82", "0");
+            }
 
-    private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
-        String accessToken = tokenResponseDto.getAccessToken();
-        String refreshToken = tokenResponseDto.getRefreshToken();
-
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_ACCESS_TOKEN, accessToken);
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_REFRESH_TOKEN, refreshToken);
+            targetUrl.queryParam("contact", contact);
+        }
     }
 }

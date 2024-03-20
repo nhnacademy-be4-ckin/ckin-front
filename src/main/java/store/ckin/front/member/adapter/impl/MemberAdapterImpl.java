@@ -14,10 +14,10 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.
@@ -62,21 +62,6 @@ public class MemberAdapterImpl implements MemberAdapter {
         return responseEntity.getBody();
     }
 
-    @Override
-    public MemberInfoDetailResponseDto getMemberInfoDetail(MemberInfoDetailRequestDto memberInfoDetailRequestDto) {
-        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
-
-        HttpEntity<MemberInfoDetailRequestDto> requestEntity = new HttpEntity<>(headers);
-        ResponseEntity<MemberInfoDetailResponseDto> responseEntity = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + "/api/login/" + memberInfoDetailRequestDto.getId(),
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<>() {
-                });
-
-        return responseEntity.getBody();
-    }
-
 
     @Override
     public MemberMyPageResponseDto getMyPageInfo(String memberId) {
@@ -88,6 +73,21 @@ public class MemberAdapterImpl implements MemberAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 }, memberId);
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public MemberOauthLoginResponseDto getOauthMemberInfO(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto) {
+        HttpEntity<MemberOauthIdOnlyRequestDto> requestEntity =
+                new HttpEntity<>(memberOauthIdOnlyRequestDto, getHttpHeaders());
+
+        ResponseEntity<MemberOauthLoginResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/login/oauth",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
 
         return exchange.getBody();
     }

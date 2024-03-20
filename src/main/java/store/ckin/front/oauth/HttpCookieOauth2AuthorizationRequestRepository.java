@@ -15,7 +15,7 @@ import store.ckin.front.util.CookieUtil;
  * @author : jinwoolee
  * @version : 2024. 03. 15.
  */
-public class HttpCookieOAuth2AuthorizationRequestRepository
+public class HttpCookieOauth2AuthorizationRequestRepository
         implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";

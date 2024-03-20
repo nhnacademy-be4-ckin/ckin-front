@@ -1,5 +1,6 @@
 #layoutSidenav {
-    height: 110vh;
+    height: min-content;
+    /*height: 100%;*/
 }
 
 .circle {

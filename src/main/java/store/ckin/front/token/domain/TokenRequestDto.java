@@ -17,4 +17,7 @@ import lombok.NoArgsConstructor;
 public class TokenRequestDto {
     @NotBlank
     private String id;
+
+    @NotBlank
+    private String authority;
 }

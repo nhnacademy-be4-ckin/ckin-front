@@ -19,14 +19,13 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @version : 2024. 03. 14.
  */
 @Slf4j
-public class CustomOAuth2UserRequestConverter
+public class CustomOauth2UserRequestConverter
         implements Converter<OAuth2UserRequest, RequestEntity<?>> {
     private static final MediaType DEFAULT_CONTENT_TYPE
             = MediaType.valueOf("application/x-www-form-urlencoded;charset=UTF-8");
 
     @Override
     public RequestEntity<?> convert(OAuth2UserRequest userRequest) {
-        log.info("Convert Start");
 
         ClientRegistration clientRegistration = userRequest.getClientRegistration();
 

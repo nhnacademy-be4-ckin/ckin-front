@@ -10,12 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
-import store.ckin.front.util.CookieUtil;
+import store.ckin.front.util.JwtUtil;
 
 /**
  * 로그인 처리를 하는 Filter 클래스 입니다.
@@ -49,10 +50,15 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authResult;
         String id = authenticationToken.getName();
+        String authority = authResult.getAuthorities()
+                .stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse(null);
 
         try {
-            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(id));
-            addTokenCookie(response, tokenResponseDto);
+            TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(id, authority));
+            JwtUtil.addTokenCookie(response, tokenResponseDto);
 
             response.sendRedirect("/");
         } catch (ServerErrorException ex) {
@@ -69,13 +75,5 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
         log.debug("Login Failed : {}", failed.getMessage());
         response.sendRedirect("/login?error=invalid");
-    }
-
-    private void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
-        String accessToken = tokenResponseDto.getAccessToken();
-        String refreshToken = tokenResponseDto.getRefreshToken();
-
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_ACCESS_TOKEN, accessToken);
-        CookieUtil.makeCookie(response, CookieUtil.HEADER_REFRESH_TOKEN, refreshToken);
     }
 }

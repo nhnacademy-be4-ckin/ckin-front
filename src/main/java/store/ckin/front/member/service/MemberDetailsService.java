@@ -16,9 +16,9 @@ import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
-import store.ckin.front.member.domain.request.MemberInfoDetailRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
-import store.ckin.front.member.domain.response.MemberInfoDetailResponseDto;
+import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 import store.ckin.front.member.exception.MemberNotFoundException;
 
 /**
@@ -56,14 +56,14 @@ public class MemberDetailsService implements UserDetailsService {
     }
 
     /**
-     * Member ID 로 DB에 멤버 정보를 조회하여 UserDetails 를 가져오는 메서드 입니다.
+     * OAuth 로그인 시 필요한 정보를 조회하는 메서드 입니다.
      *
-     * @param memberId Member ID
-     * @return UserDetails
+     * @param memberOauthIdOnlyRequestDto OAuth ID
+     * @return Member ID, Authority
      */
-    public MemberInfoDetailResponseDto loadUserById(String memberId) {
+    public MemberOauthLoginResponseDto getOauthMemberInfo(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto) {
         try {
-            return memberAdapter.getMemberInfoDetail(new MemberInfoDetailRequestDto(memberId));
+            return memberAdapter.getOauthMemberInfO(memberOauthIdOnlyRequestDto);
         } catch (HttpClientErrorException ex) {
             if (ex.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new MemberNotFoundException();

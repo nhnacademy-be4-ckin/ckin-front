@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypage-default}">
+
+<div layout:fragment="mypage-content">
+
+    <div class="m-t-20 m-l-20 m-r-20">
+        <h2 class="m-4">😎 포인트 적립 내역 조회</h2>
+
+        <table class="w-100 table table-hover" style="text-align: center; vertical-align: middle;">
+            <thead>
+            <tr>
+                <th scope="col">사유</th>
+                <th scope="col">포인트</th>
+                <th scope="col">기록 시간</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="pointHistory : ${pointHistoryList}">
+                <td th:text="${pointHistory.pointHistoryReason}"></td>
+                <td th:with="point = ${pointHistory.pointHistoryPoint}">
+                    <span th:if="${point < 0}" style="color: red;"
+                          th:text="${#numbers.formatInteger(point, 3, 'COMMA')} + '원'"></span>
+                    <span th:unless="${point < 0}" style="color: green;"
+                          th:text="${#numbers.formatInteger(point, 3, 'COMMA')} + '원'"></span>
+                </td>
+                <td th:text="${#temporals.format(pointHistory.pointHistoryTime, 'yyyy-MM-dd')}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(pointHistoryList)}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${pageInfo.page == 0 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/member/mypage/point-history(page=0)}" tabindex="-1"
+                       aria-disabled="true">&lt;&lt;</a>
+                </li>
+
+                <li class="page-item" th:each="num : ${#numbers.sequence(0, pageInfo.totalPages - 1)}">
+                    <a class="page-link" th:href="@{/member/mypage/point-history(page=${num})}" th:text="${num + 1}"
+                       th:classappend="${num == pageInfo.page ? 'active' : ''}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${pageInfo.page == pageInfo.totalPages - 1 ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{/member/mypage/point-history(page=${pageInfo.totalPages - 1})}">&gt;&gt;</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+</html>
