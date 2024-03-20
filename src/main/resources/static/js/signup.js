@@ -8,6 +8,10 @@ const isEqualPassword = () => {
     let password = passwordInput.value;
     let rePassword = rePasswordInput.value;
 
+    if(password ==='' || rePassword === '') {
+        return false;
+    }
+
     return password === rePassword;
 }
 
