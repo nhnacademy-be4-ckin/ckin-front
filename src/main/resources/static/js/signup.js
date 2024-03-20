@@ -1,7 +1,10 @@
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const rePasswordInput = document.getElementById('re-password');
+const codeInput = document.getElementById('auth-code');
 const btn = document.getElementById('btn-signup');
+const btn_send = document.getElementById('btn-send');
+const btn_check = document.getElementById('btn-check');
 const msgSpan = document.getElementById('validMsg');
 
 const isEqualPassword = () => {
@@ -54,6 +57,41 @@ const validateEmail = async () => {
         }
     } catch (error) {
         console.log(error);
+    }
+}
+
+let responseCode;
+
+const sendRequestCode = async () => {
+    try {
+        const response = await fetch('/codeRequest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        btn_send.classList.add("hidden");
+        btn_check.classList.remove("hidden");
+
+        responseCode = await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const checkCode = () => {
+    const code = codeInput.value;
+    console.log(responseCode);
+    console.log(code);
+    if(code == responseCode) {
+        alert("인증에 성공했습니다.")
+        btn.disabled = false;
+    } else {
+        alert("인증에 실패했습니다. 다시 시도해주세요");
+
+        btn.disabled = true;
+        btn_check.classList.add("hidden");
+        btn_send.classList.remove("hidden");
     }
 }
 

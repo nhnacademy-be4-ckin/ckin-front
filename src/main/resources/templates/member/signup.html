@@ -35,7 +35,8 @@
 
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="auth-code" name="auth-code" minlength="8" maxlength="20" placeholder="인증 번호" onkeyup="validatePassword()" required>
-            <button class="btn btn-outline-secondary" type="button" onclick="">인증번호 받기</button>
+            <button id="btn-send" class="btn btn-outline-secondary" type="button" onclick="sendRequestCode()">인증번호 받기</button>
+            <button id="btn-check" class="btn btn-outline-secondary hidden" type="button" onclick="checkCode()">인증하기</button>
         </div>
 
         <div class="mb-3">
