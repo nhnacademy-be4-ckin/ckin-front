@@ -54,6 +54,13 @@ public class ProductServiceImpl implements ProductService {
         return productAdapter.findRecentBooksByCategoryId(categoryId, limit);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param keyword     검색할 키워드
+     * @param pageRequest 페이지 요청
+     * @return
+     */
     public List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest) {
         return productSearchRepository.findProductByKeyword(keyword, pageRequest);
     }

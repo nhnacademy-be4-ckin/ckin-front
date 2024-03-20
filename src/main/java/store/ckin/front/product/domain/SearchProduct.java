@@ -11,9 +11,9 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
 /**
- * description:
+ * Elasticsearch 내부에 저장되어 있는 도큐먼트 형식
  *
- * @author : dduneon
+ * @author : 김준현
  * @version : 2024. 03. 19
  */
 @ToString

@@ -16,9 +16,9 @@ import org.springframework.stereotype.Repository;
 import store.ckin.front.product.domain.SearchProduct;
 
 /**
- * description:
+ * Elasticsearch 검색을 위한 레포지토리 클래스
  *
- * @author : dduneon
+ * @author : 김준현
  * @version : 2024. 03. 19
  */
 @Slf4j
