@@ -3,9 +3,11 @@
     width: 100%;
     margin: 0 auto;
 }
+
 .header_inner {
     padding: 0 20%;
 }
+
 body {
     font-size: 14px;
     line-height: 1.4;
@@ -13,6 +15,7 @@ body {
     min-width: 1440px;
     color: #000;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap {
     position: relative;
     display: -webkit-box;
@@ -37,12 +40,14 @@ body {
     padding: 22px 0 20px;
     align-items: center;
 }
+
 .set-wrap-80 {
     width: 80%;
     margin: 0 auto;
     align-items: center;
     min-width: 1200px;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .btn_anb {
     display: block;
     width: 44px;
@@ -53,6 +58,7 @@ body {
     background-image: url(../../images/main-category.png);
     transition: background 0.23s;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap.active .btn_anb {
     background-size: 44px 44px;
     background-image: url(../../images/main-category.png);
@@ -63,28 +69,35 @@ button[class^=btn_], a[class^=btn_] {
     box-sizing: border-box;
     vertical-align: top;
 }
+
 button {
     background-color: transparent;
 }
+
 input, button {
     border: 0;
     border-radius: 0;
     background: none;
 }
+
 dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, select, button, textarea, p, blockquote, table, th, td {
     margin: 2px;
     padding: 2px;
 }
+
 table, th, td, input, select, button, textarea, pre {
     font: inherit;
     color: inherit;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .gnb_list {
     font-size: 0;
 }
+
 ol, ul {
     list-style: none;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .gnb_list .gnb_item .gnb_link {
     display: inline-block;
     font-size: 16px;
@@ -94,20 +107,25 @@ ol, ul {
     padding: 5px 14px;
     vertical-align: top;
 }
+
 a {
     color: #000;
     text-decoration: none;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .gnb_list .gnb_item {
     display: inline-block;
     vertical-align: top;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .gnb_list .gnb_item .gnb_link em {
     color: #4dac27;
 }
+
 address, caption, cite, code, dfn, em, var {
     font-style: normal;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .gnb_list .gnb_item .gnb_link .ico_new {
     margin-left: 2px;
     width: 4px;
@@ -115,6 +133,7 @@ address, caption, cite, code, dfn, em, var {
     background: #4dac27;
     border-radius: 2px;
 }
+
 .ico_new {
     position: relative;
     display: inline-block;
@@ -123,37 +142,47 @@ address, caption, cite, code, dfn, em, var {
     background-size: 12px 12px;
     vertical-align: top;
 }
+
 .wrap-menu-desktop.how-shadow1 {
-    padding: 0 20%;
+    padding: 0 10%;
+!important;
 }
+
 img {
     vertical-align: middle;
 }
+
 img, fieldset {
     border: 0;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category {
     padding: 40px 50px 50px 40px;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content {
     height: calc(100% - 54px);
     min-height: 200px;
 }
+
 .tab_wrap .tab_content {
     padding: 0;
     background: #fff;
     box-sizing: border-box;
     outline: none;
 }
+
 .tab_wrap {
     position: relative;
     width: 100%;
     padding: 0;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content .tab_wrap.category .tab_list_wrap .tabs .tab_item.ui-state-active .tab_link .tab_text {
     font-weight: 700;
     color: #4248b5;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content .tab_wrap.category .tab_list_wrap .tabs .tab_item .tab_link .tab_text {
     color: #595959;
     font-size: 15px;
@@ -161,6 +190,7 @@ img, fieldset {
     letter-spacing: -0.01em;
     font-weight: 500;
 }
+
 .tab_wrap > .tab_list_wrap .tabs .tab_item .tab_link .tab_text {
     position: relative;
     z-index: 1;
@@ -175,15 +205,18 @@ img, fieldset {
     box-sizing: border-box;
     transition: all 0.3s ease-out;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content .tab_wrap.category .tab_list_wrap .tabs .tab_item .tab_link {
     display: inline-block;
     width: auto;
     text-align: left;
 }
+
 .tab_wrap > .tab_list_wrap .tabs .tab_item.ui-state-active .tab_link, .tab_wrap > .tab_list_wrap .tabs .tab_item.active .tab_link {
     cursor: pointer;
     overflow: visible;
 }
+
 .simplebar-content-wrapper {
     direction: inherit;
     box-sizing: border-box !important;
@@ -196,9 +229,11 @@ img, fieldset {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .btn_arw_link + .fold_box_wrap.category {
     margin-top: 17px;
 }
+
 button[class^=btn_] .text, a[class^=btn_] .text {
     display: inline-block;
     position: relative;
@@ -213,6 +248,7 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     font-weight: 700;
     vertical-align: top;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .fold_box_wrap.category .fold_box_list .fold_box .fold_box_header {
     font-size: 13px;
     line-height: 19px;
@@ -221,6 +257,7 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     padding: 0 10px 0 0;
     cursor: auto;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .fold_box_wrap.category .fold_box_list .fold_box {
     display: block;
     width: 100%;
@@ -228,32 +265,39 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     border: none;
     vertical-align: top;
 }
+
 .fold_box_wrap .fold_box {
     border: 1px solid #d5d5d5;
     border-radius: 10px;
     overflow: hidden;
     box-sizing: border-box;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .fold_box_wrap.category .col_area {
     display: inline-block;
     width: calc((100% - 100px) / 3);
     vertical-align: top;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .fold_box_wrap.category .col_area ~ .col_area {
     margin-left: 50px;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area .btn_arw_link + .fold_box_wrap.category {
     margin-top: 17px;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content .category_view_area {
     display: inline-block;
     width: calc(100% - 220px);
     vertical-align: top;
 }
+
 .simplebar-content:after, .simplebar-content:before {
     content: ' ';
     display: table;
 }
+
 .simplebar-offset {
     direction: inherit !important;
     box-sizing: inherit !important;
@@ -267,6 +311,7 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     margin: 0;
     -webkit-overflow-scrolling: touch;
 }
+
 .simplebar-mask {
     direction: inherit;
     position: absolute;
@@ -281,12 +326,14 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     height: auto !important;
     z-index: 0;
 }
+
 .simplebar-placeholder {
     max-height: 100%;
     max-width: 100%;
     width: 100%;
     pointer-events: none;
 }
+
 .simplebar-wrapper {
     overflow: hidden;
     width: inherit;
@@ -294,10 +341,12 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     max-width: inherit;
     max-height: inherit;
 }
+
 .simplebar-track.simplebar-horizontal {
     left: 0;
     height: 11px;
 }
+
 .simplebar-track {
     z-index: 1;
     position: absolute;
@@ -306,14 +355,17 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     pointer-events: none;
     overflow: hidden;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content .tab_wrap.category .tab_content {
     width: 100%;
     height: 100%;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area > .tab_wrap .tab_content.anb_category .anb_category_inner .tab_wrap.category .tab_content.has_banner .custom_scroll_wrap {
     display: inline-block;
     width: calc(100% - 220px);
 }
+
 [data-simplebar] {
     position: relative;
     flex-direction: column;
@@ -322,9 +374,11 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     align-content: flex-start;
     align-items: flex-start;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap.active.animated .anb_area {
     opacity: 1;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap.active .anb_area {
     position: absolute;
     display: block;
@@ -336,6 +390,7 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     z-index: 103;
     transition: opacity 0.23s;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap .anb_area {
     display: none;
     overflow: hidden;
@@ -346,6 +401,7 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     max-height: calc(100vh - 100px);
     box-sizing: border-box;
 }
+
 .wrapper .header_wrapper .header_inner .gnb_wrap .anb_wrap {
     position: relative;
     margin-right: 10px;
@@ -367,20 +423,24 @@ button[class^=btn_] .text, a[class^=btn_] .text {
     width: 100%;
     margin: 0 auto;
 }
+
 .wrapper .header_wrapper {
     position: relative;
     background-color: #fff;
     border-bottom: 1px solid #eaeaea;
     z-index: 1000;
 }
+
 .wrapper {
     position: absolute;
     min-width: 100%;
     overflow: hidden;
 }
+
 article, aside, details, figcaption, figure, header, hgroup, menu, nav, section, main {
     display: table-cell;
 }
+
 .fold_box_wrap .fold_box .fold_box_header:after {
     content: "";
     position: absolute;
@@ -393,39 +453,49 @@ article, aside, details, figcaption, figure, header, hgroup, menu, nav, section,
     background-size: 11px 7px;
     transform: translateY(-50%);
 }
+
 h1, h2, h3, h4, h5, h6 {
     font-size: 100%;
     font-weight: inherit;
 }
+
 .contents_inner {
     padding: 0 10%;
     margin-left: 5%;
 }
+
 .aside_wrap.sub_category {
     width: 100%;
     padding-right: 30px;
 }
+
 .snb_wrap {
     height: 300px;
 }
+
 .title_wrap.title_size_md {
     padding-top: 50px;
 }
+
 .prod_row_list.has_line.col2 {
     min-height: 700px;
     min-width: 800px;
 }
+
 .prod_row_list.col2 .prod_item:nth-child(2n+1) {
     position: relative;
 }
+
 .prod_row_list.col2 .prod_item {
     display: inline-block;
     width: calc((100% - 56px) / 2);
     vertical-align: top;
 }
+
 .prod_row_list.has_line .prod_area {
     align-items: flex-start;
 }
+
 .prod_area.horizontal {
     width: 100%;
     display: -webkit-box;
@@ -448,21 +518,26 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-flex-direction: row;
     flex-direction: row;
 }
+
 .prod_area.horizontal .prod_thumb_box.size_lg {
     width: 142px;
 }
+
 .prod_area.horizontal .prod_thumb_box {
     overflow: hidden;
     flex-shrink: 0;
 }
+
 .prod_area .prod_thumb_box {
     position: relative;
     overflow: hidden;
 }
+
 .prod_area .prod_thumb_box .prod_link {
     display: block;
     height: 100%;
 }
+
 .prod_area .prod_thumb_box .img_box {
     overflow: hidden;
     position: relative;
@@ -470,21 +545,26 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box;
     border: 1px solid #eaeaea;
 }
+
 .prod_area.horizontal .prod_thumb_box.size_lg .img_box img {
-    max-height: calc((142px - 2px)* 1.618 - 10px);
+    max-height: calc((142px - 2px) * 1.618 - 10px);
 }
+
 .prod_row_list.has_line .prod_area .prod_info_box {
     padding-top: 10px;
 }
+
 .prod_area.horizontal .prod_info_box {
     overflow: hidden;
     margin-left: 16px;
 }
+
 .prod_area .prod_info_box .prod_info {
     display: block;
     height: 100%;
     font-size: 0;
 }
+
 .prod_area .prod_info_box .prod_name {
     display: block;
     display: -webkit-box;
@@ -500,9 +580,11 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.01em;
     font-weight: 500;
 }
+
 .prod_area .prod_info_box .prod_author, .prod_area .prod_info_box .prod_author a, .prod_area .prod_info_box .prod_last_update, .prod_area .prod_info_box .prod_last_update a, .prod_area .prod_info_box .popular_prod_name, .prod_area .prod_info_box .popular_prod_name a {
     color: #595959;
 }
+
 .prod_area .prod_info_box .prod_author, .prod_area .prod_info_box .prod_last_update, .prod_area .prod_info_box .popular_prod_name {
     display: block;
     margin-top: 5px;
@@ -519,11 +601,13 @@ h1, h2, h3, h4, h5, h6 {
     white-space: normal;
     word-break: break-all;
 }
+
 .prod_area .prod_info_box .prod_price {
     display: block;
     margin-top: 12px;
     font-size: 0;
 }
+
 .prod_area .prod_info_box .prod_price .percent {
     display: inline-block;
     margin-right: 3px;
@@ -534,28 +618,34 @@ h1, h2, h3, h4, h5, h6 {
     color: #4dac27;
     vertical-align: top;
 }
+
 .prod_area .prod_info_box .prod_price .price {
     display: inline-block;
     font-size: 0;
     vertical-align: top;
 }
+
 .prod_area .prod_info_box .prod_price .price .val {
     font-weight: 700;
 }
+
 .prod_area .prod_info_box .prod_price .price .val, .prod_area .prod_info_box .prod_price .price .unit {
     font-size: 14px;
     line-height: 22px;
     letter-spacing: -0.01em;
 }
+
 .prod_area .prod_info_box .prod_price .price_normal {
     display: inline-block;
     margin: 3px 0 0 2px;
     font-size: 0;
     vertical-align: top;
 }
+
 .prod_area .prod_info_box .prod_price .price_normal .text {
     font-size: 0;
 }
+
 .prod_area .prod_info_box .prod_price .price .text {
     margin-right: 3px;
     font-size: 12px;
@@ -563,15 +653,18 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.01em;
     font-weight: 500;
 }
+
 .prod_area .prod_info_box .prod_price .price_normal .val {
     font-size: 12px;
     line-height: 18px;
     letter-spacing: -0.01em;
     color: #767676;
 }
+
 .prod_area .prod_info_box .prod_price .price .val {
     font-weight: 700;
 }
+
 nav {
     display: block;
 }
@@ -579,10 +672,12 @@ nav {
 html, body {
     height: 100%;
 }
+
 .container_wrapper {
     padding: 5% 10%;
     width: 2310px;
 }
+
 .hidden {
     position: absolute;
     visibility: hidden;
@@ -593,9 +688,11 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
 .snb_item .snb_link {
     color: #595959;
 }
+
 .prod_detail_header {
     padding-top: 150px;
 }
