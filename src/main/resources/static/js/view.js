@@ -165,3 +165,4 @@ document.getElementById("review_rate").addEventListener("input", function () {
 
     }
 });
+

@@ -7,22 +7,10 @@
 <!-- 본문 내용 -->
 <div layout:fragment="content">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta http-equiv="imagetoolbar" content="no">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="title" content="웹사이트">
-        <meta name="description" content="웹사이트입니다.">
-        <meta name="keywords" content="키워드,키워드,키워드">
-        <meta property="og:title" content="웹사이트">
-        <meta property="og:description" content="웹사이트입니다">
-        <meta property="og:image" content="https://웹사이트/images/opengraph.png">
-        <meta property="og:url" content="https://웹사이트">
         <title>첫페이지 | ckin</title>
         <link rel="stylesheet" href="/css/setting.css">
         <link rel="stylesheet" href="/css/plugin.css">
-        <link rel="stylesheet" href="/css/template.css">
+<!--                <link rel="stylesheet" href="/css/template.css">-->
         <link rel="stylesheet" href="/css/common.css">
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/main-initial.css">
@@ -31,7 +19,6 @@
     <body>
     <main class="container_wrapper">
         <section id="contents" class="contents_wrap aside">
-            <h1 class="hidden">국내도서</h1>
             <div class="contents_inner">
                 <aside class="aside_wrap sub_category">
                     <div class="aside_header">
@@ -68,7 +55,8 @@
                                             <li class="prod_item" th:each="book : ${pagination.content}">
                                                 <div class="prod_area horizontal">
                                                     <div class="prod_thumb_box size_lg">
-                                                        <a th:href="@{'/product/' + ${book.bookId}}" class="prod_link">
+                                                        <a th:href="@{'/product/view/' + ${book.bookId}}"
+                                                           class="prod_link">
                                         <span class="img_box">
                                             <img data-kbbfn="s3-image" alt="" loading="lazy"
                                                  th:src="${book.thumbnail}"
@@ -91,11 +79,11 @@
                                                                   th:text="${book.bookDiscountRate} + '%'"></span>
                                                             <span class="price">
                                                                 <span class="val"
-                                                                      th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'"></span>
+                                                                      th:text="${#numbers.formatInteger(book.bookSalePrice, 1, 'COMMA')} + '원'"></span>
                                                                 <span class="price_normal"><span
                                                                         class="text">정가</span>
                                                                     <s class="val"
-                                                                       th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s></span>
+                                                                       th:text="${#numbers.formatInteger(book.bookRegularPrice, 1, 'COMMA')} + '원'"></s></span>
                                                             </span>
                                                         </div>
                                                     </div>

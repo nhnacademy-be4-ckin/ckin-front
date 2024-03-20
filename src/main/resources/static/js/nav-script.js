@@ -30,12 +30,8 @@ function activateAnbWrap(btn) {
 
         var $ul = $('.tabs');
 
-        // ::before를 추가
-        $ul.prepend('<span class="before-element"></span>');
         document.getElementById("mainDiv").style.minHeight = "70vh";
 
-        // ::after를 추가
-        $ul.append('<span class="after-element"></span>');
 
         tabAndCategorySub01();
         let category = document.getElementById("category");
@@ -279,11 +275,11 @@ document.getElementById("mainDiv")
 function birthCouponList(btn) {
     let couponBtn = document.getElementById("navbarDropdownMenuLink");
 
-    if (btn.value == "none") {
+    if (btn.value === "none") {
         document.getElementById("mainDiv").style.minHeight = "0vh";
         couponBtn.value = "active";
     } else {
-        document.getElementById("mainDiv").style.minHeight = "20vh";
+        document.getElementById("mainDiv").style.minHeight = "70vh";
         couponBtn.value = "none";
     }
 }
