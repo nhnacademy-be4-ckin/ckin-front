@@ -1,3 +1,6 @@
+
+let review_image_count = 0;
+
 //리뷰 등록시 이미지 미리보기
 function handleFiles(fileInputId, imgViewId) {
     const fileInput = document.getElementById(fileInputId);
@@ -16,8 +19,9 @@ function handleFiles(fileInputId, imgViewId) {
             // 새로운 파일 입력 요소의 id 생성
             var newFileInputId = "image" + (parseInt(fileInputId.replace("image", "")) + 1);
             var newImgViewId = "attach" + (parseInt(imgViewId.replace("attach", "")) + 1);
+            review_image_count ++;
 
-            if (newFileInputId.replace("image", "") != '4') {
+            if (review_image_count < 3) {
                 var newListItem = document.createElement('li');
                 newListItem.setAttribute('class', 'list_item');
 
@@ -57,17 +61,18 @@ handleFiles("image1", "attach1");
 function removeFileListItem(buttonElement) {
     // 버튼의 부모 요소인 li 요소를 찾아서 삭제합니다.
     var listItem = buttonElement.closest('.list_item');
+    review_image_count --;
     listItem.remove();
 }
 
-
+// 로그인 여부 확인 후 리뷰 작성란 활성화
 $.ajax({
-    type:"GET",
+    type: "GET",
     url: '/review/use',
     dataType: 'json',
     success: function (data) {
         console.log(data);
-        if(data) {
+        if (data) {
             let html = `<button type="button" class="btn btn_primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" >
                                 <span class="ico_review"></span>
@@ -106,11 +111,11 @@ function openImage(element) {
 }
 
 //도서 상세 페이지 적립 혜택 세부정보
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const button = document.getElementById("pointInfo");
     const tooltipContent = document.querySelector(".tooltip_contents");
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
 
         // 버튼의 텍스트도 변경
         const buttonText = button.querySelector("span.hidden");
@@ -125,11 +130,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 //도서 상세 페이지 배송비 세부 정보
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const button = document.getElementById("shipInfo");
     const tooltipContent = document.querySelector(".tooltip_contents");
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         const buttonText = button.querySelector("span.hidden");
         if (buttonText.textContent === "툴팁열기") {
             buttonText.textContent = "툴팁닫기";
@@ -141,3 +146,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+//리뷰 점수 Validation
+document.getElementById("review_rate").addEventListener("input", function () {
+    let review_rate =  parseInt(this.value);
+    let invalid_view = document.getElementById("invalid_view");
+    let invalid_view_gt = document.getElementById("invalid_view_gt");
+
+    console.log(review_rate);
+
+    if (review_rate <= 0 || isNaN(review_rate)) {
+        invalid_view_gt.style.display = "none";
+        invalid_view.style.display = "block";
+    } else if (review_rate > 5) {
+        invalid_view_gt.style.display = "block";
+        invalid_view.style.display = "none";
+    } else {
+
+    }
+});
+

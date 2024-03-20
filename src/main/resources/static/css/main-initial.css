@@ -13,3 +13,12 @@
 .snb_link:hover:after { transform: scaleX(1); }
 .snb_link.fromRight:after{ transform-origin:100% 50%; }
 .snb_link.fromLeft:after{  transform-origin:  0% 50%; }
+
+.contents_wrap.aside .aside_wrap {
+    min-width: 170px;
+    padding-right: 46px;
+}
+
+.section_wrap {
+    width: calc(100% - 216px);
+}

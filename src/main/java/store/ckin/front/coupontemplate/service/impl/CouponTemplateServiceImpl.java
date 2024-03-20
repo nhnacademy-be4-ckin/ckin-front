@@ -1,16 +1,14 @@
 package store.ckin.front.coupontemplate.service.impl;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import store.ckin.front.book.adapter.BookAdapter;
-import store.ckin.front.book.dto.response.BookResponseDto;
-import store.ckin.front.category.adapter.CategoryAdapter;
+import org.springframework.transaction.annotation.Transactional;
 import store.ckin.front.coupontemplate.adapter.CouponTemplateAdapter;
+import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateInfoDto;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
@@ -28,8 +26,6 @@ import store.ckin.front.coupontemplate.service.CouponTemplateService;
 public class CouponTemplateServiceImpl implements CouponTemplateService {
 
     private final CouponTemplateAdapter couponTemplateAdapter;
-    private final BookAdapter bookAdapter;
-    private final CategoryAdapter categoryAdapter;
 
     /**
      * {@inheritDoc}
@@ -43,20 +39,6 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         return couponTemplateAdapter.getCouponTemplateList(pageable, typeId);
     }
 
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * @param couponTemplateRequestDto 쿠폰 템플릿 요청 DTO
-//     */
-//    @Override
-//    public void createCouponTemplate(CreateCouponTemplateRequestDto couponTemplateRequestDto) {
-//        if (Objects.nonNull(couponTemplateRequestDto.getDuration())) {
-//            Date expirationDate = Date.valueOf(LocalDate.now().plusDays(couponTemplateRequestDto.getDuration()));
-//            couponTemplateRequestDto.updateExpiration(expirationDate);
-//        }
-//        couponTemplateAdapter.createCouponTemplate(couponTemplateRequestDto);
-//    }
-
     /**
      * {@inheritDoc}
      *
@@ -67,35 +49,39 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
         couponTemplateAdapter.deleteCouponTemplate(templateId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount,
-                                     Integer duration, Date expirationDate) {
-        CreateCouponTemplateRequestDto couponTemplateRequestDto =
-                new CreateCouponTemplateRequestDto(policyId, bookId, categoryId, typeId, "", amount, duration,
-                        expirationDate);
+    public void createCouponTemplate(CreateCouponTemplateInfoDto couponTemplateInfoDto) {
+        CreateCouponTemplateRequestDto couponTemplateRequestDto = CreateCouponTemplateRequestDto.builder()
+                .policyId(couponTemplateInfoDto.getPolicyId())
+                .typeId(couponTemplateInfoDto.getTypeId())
+                .name(couponTemplateInfoDto.getName())
+                .amount(0L)
+                .duration(couponTemplateInfoDto.getDuration())
+                .expirationDate(("").equals(couponTemplateInfoDto.getExpirationDate()) ?
+                       null :  Date.valueOf(couponTemplateInfoDto.getExpirationDate()) )
+                .state(couponTemplateInfoDto.getState())
+                .build();
 
-        log.debug("duration: {}", duration);
-        log.debug("expiration: {}", expirationDate);
-        switch (typeId.intValue()) {
-            case 1:
-                couponTemplateRequestDto.updateName("생일쿠폰");
-                break;
-            case 2:
-                BookResponseDto bookResponseDto = bookAdapter.findProductById(bookId);
-                couponTemplateRequestDto.updateName(bookResponseDto.getBookTitle());
-                break;
-            case 3:
-                String name = categoryAdapter.getCategoryName(categoryId);
-                couponTemplateRequestDto.updateName(name);
-                break;
+        if (couponTemplateInfoDto.getTypeId() == 2) {
+            couponTemplateRequestDto.updateBookId(couponTemplateInfoDto.getValue());
         }
 
-        if (Objects.nonNull(couponTemplateRequestDto.getDuration())) {
-            Date realExpirationDate = Date.valueOf(LocalDate.now().plusDays(couponTemplateRequestDto.getDuration()));
-            couponTemplateRequestDto.updateExpiration(realExpirationDate);
+        if (couponTemplateInfoDto.getTypeId() == 3) {
+            couponTemplateRequestDto.updateCategoryId(couponTemplateInfoDto.getValue());
         }
-        log.info(couponTemplateRequestDto.toString());
+
         couponTemplateAdapter.createCouponTemplate(couponTemplateRequestDto);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateCouponTemplateStatus(Long templateId, Boolean state) {
+        couponTemplateAdapter.updateCouponTemplateStatus(templateId, state);
     }
 
 

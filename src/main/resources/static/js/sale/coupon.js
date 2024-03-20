@@ -75,23 +75,24 @@ function renderCoupon(bookId) {
         let bookSalePriceElement = document.getElementById(bookId + '-saleOrderPrice').innerText;
         let bookSalePrice = parseInt(bookSalePriceElement);
 
+        if (coupon.minOrderPrice > bookSalePrice) {
+            return;
+        }
+
         let priceRow;
         if (coupon.couponCodeId == 1) {
 
             let price = coupon.discountPrice;
-            if (coupon.minOrderPrice > bookSalePrice) {
-                return;
-            }
 
             priceRow = '<td>' + price + '원' + '<br/>' + '<span>' + '상품 가격이 최소 ' + coupon.minOrderPrice + '원 이상' + '</span></td>' +
                 '<td style="color: dodgerblue" id=' + discountPriceId + '>' + price + '원 </td>'
         } else {
 
-            let price = (bookSalePrice * (coupon.discountRate / 100)).toFixed();
-
             if (price > coupon.maxDiscountPrice) {
                 price = coupon.maxDiscountPrice;
             }
+
+            let price = (bookSalePrice * (coupon.discountRate / 100)).toFixed();
 
             priceRow = '<td>' + coupon.discountRate + '%' + '<br/>' + '<span>' + '최대 할인 금액 ' + coupon.maxDiscountPrice + '원' + '</span></td>' +
                 '<td style="color: dodgerblue" id=' + discountPriceId + '>' + price + '원 </td>';

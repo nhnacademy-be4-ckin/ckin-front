@@ -29,39 +29,6 @@
                                 <option value="4">카테고리 쿠폰</option>
                                 <option value="5">회원 아이디</option>
                             </select>
-
-                            <script>
-
-                                function handleOptionSelection(selectedValue) {
-                                    console.log("selectedValue" + selectedValue);
-                                    var searchValue = document.getElementById('searchContent').value;
-                                    if (selectedValue != 5 && searchValue > 0) {
-                                        window.location.href = '/admin/coupon?id=' + searchValue;
-                                    } else {
-                                        switch (selectedValue) {
-                                            case '1':
-                                                window.location.href = '/admin/coupon?id=' + searchValue;
-                                                break;
-                                            case '2':
-                                                window.location.href = '/admin/coupon/1';
-                                                break;
-                                            case '3':
-                                                window.location.href = '/admin/coupon/2';
-                                                break;
-                                            case '4':
-                                                window.location.href = '/admin/coupon/3';
-                                                break;
-                                            case '5':
-                                                window.location.href = '/admin/coupon/member?id=' + searchValue;
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-
-
-                                }
-                            </script>
                         </div>
                     </form>
                 </ul>
@@ -72,14 +39,6 @@
                 <div>
                     <button id="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
                 </div>
-
-                <script>
-                    document.getElementById('searchButton').addEventListener('click', function () {
-                        // 여기에 검색 버튼 클릭 시 실행할 코드를 작성
-                        var selectedValue = document.getElementById('couponSelect').value;
-                        handleOptionSelection(selectedValue);
-                    });
-                </script>
             </div>
         </nav>
 
@@ -133,7 +92,7 @@
                 </li>
             </ul>
         </nav>
-
     </div>
+    <script src="/js/coupon/admin-main-coupon.js"></script>
 </div>
 </html>

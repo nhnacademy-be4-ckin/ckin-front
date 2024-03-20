@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
+import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 
@@ -70,5 +71,16 @@ public class CategoryRestController {
     @GetMapping("/{parentId}")
     public List<CategoryResponseDto> getSubcategories(@PathVariable("parentId") Long parentId) {
         return categoryService.getSubcategories(parentId);
+    }
+
+    /**
+     * 카테고리 아이디로 이름을 가져옵니다.
+     *
+     * @param categoryId 카테고리 아이디
+     * @return 카테고리 이름
+     */
+    @GetMapping("/name/{categoryId}")
+    public CategoryNameResponseDto getCategoryById(@PathVariable("categoryId") Long categoryId) {
+        return categoryService.getCategoryById(categoryId);
     }
 }

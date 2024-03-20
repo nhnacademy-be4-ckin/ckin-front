@@ -1,5 +1,7 @@
 package store.ckin.front.member.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ import store.ckin.front.sale.service.SaleService;
 /**
  * 회원 - 마이페이지 컨트롤러 클래스입니다.
  *
- * @author 정승조
+ * @author 정승조, 이가은
  * @version 2024. 03. 14.
  */
 
@@ -102,7 +104,7 @@ public class MemberMyPageController {
 
 
     /**
-     * 회원 쿠폰 목록 조회 메서드입니다.
+     * 회원의 사용 가능한 쿠폰 목록 조회 메서드입니다.
      *
      * @param pageable 페이지 정보
      * @param model    Model 객체
@@ -110,16 +112,42 @@ public class MemberMyPageController {
      */
     @Member
     @GetMapping("/coupon")
-    public String getMemberCoupon(@PageableDefault(page = 0, size = 6) Pageable pageable,
+    public String getMemberCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,
                                   Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PageDto<GetCouponResponseDto> couponResponseDtoPageDto
                 = couponService.getUnUsedCouponByMember(pageable, Long.valueOf(authentication.getName()));
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        long soonExpiredCount = couponResponseDtoPageDto.getContent().stream()
+                .filter(couponResponseDto -> dateFormat.format(couponResponseDto.getExpirationDate())
+                        .equals(dateFormat.format(Calendar.getInstance().getTime())))
+                .count();
+
         model.addAttribute("couponPage", couponResponseDtoPageDto);
+        model.addAttribute("soonExpiredCount", soonExpiredCount);
         return "member/coupon/main";
     }
 
+    /**
+     * 회원의 사용된 쿠폰 목록 조회 메서드입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param model    Model 객체
+     * @return 회원 쿠폰 목록 화면
+     */
+    @Member
+    @GetMapping("/coupon/used")
+    public String getMemberUsedCoupon(@PageableDefault(page = 0, size = 4) Pageable pageable,
+                                      Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PageDto<GetCouponResponseDto> couponResponseDtoPageDto
+                = couponService.getUsedCouponByMember(pageable, Long.valueOf(authentication.getName()));
+
+        model.addAttribute("couponPage", couponResponseDtoPageDto);
+        return "member/coupon/used-coupon";
+    }
+  
     /**
      * 회원 포인트 내역 조회 메서드입니다.
      *
@@ -143,6 +171,8 @@ public class MemberMyPageController {
         model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
         return "member/mypage/point-history";
     }
+  
+  
     @Member
     @GetMapping("/review")
     public String getMyReviews(@PageableDefault(page = 0, size = 5) Pageable pageable,

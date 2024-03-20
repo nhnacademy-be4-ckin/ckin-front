@@ -172,4 +172,25 @@ public class CouponAdapterImpl implements CouponAdapter {
         return exchange.getBody();
     }
 
+    @Override
+    public PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(
+                        gatewayProperties.getGatewayUri() + "/coupon/members/used/" + memberId)
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<GetCouponResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
 }

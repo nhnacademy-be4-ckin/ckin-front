@@ -100,3 +100,7 @@ h1 {
     -webkit-flex-direction: row;
     flex-direction: row;
 }
+
+.pagination.justify-content-center {
+    padding-top: 10px;
+}
