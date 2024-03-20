@@ -2,8 +2,11 @@ package store.ckin.front.sale.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
@@ -16,6 +19,7 @@ import store.ckin.front.sale.service.SaleService;
  * @version 2024. 02. 27.
  */
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class SaleRestController {
@@ -36,5 +40,17 @@ public class SaleRestController {
 
         List<GetCouponResponseDto> getCouponResponseList = saleService.requestCouponsByMemberId(memberId, bookId);
         return ResponseEntity.ok(getCouponResponseList);
+    }
+
+    /**
+     * 주문 취소 요청 메서드입니다.
+     *
+     * @param saleId 주문 ID
+     * @return 주문 취소 성공 여부
+     */
+    @PutMapping("/sale/{saleId}/cancel")
+    public ResponseEntity<Void> cancelSale(@PathVariable Long saleId) {
+        saleService.cancelSale(saleId);
+        return ResponseEntity.ok().build();
     }
 }

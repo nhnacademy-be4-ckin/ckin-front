@@ -30,7 +30,7 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
 
     private final RestTemplate restTemplate;
 
-    private final GatewayProperties portProperties;
+    private final GatewayProperties gatewayProperties;
 
 
     /**
@@ -42,7 +42,7 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
     public PageDto<GetCouponTemplateResponseDto> getCouponTemplateList(Pageable pageable, Long typeId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
 
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/coupon/couponTemplate")
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate")
                 .queryParam("page", pageable.getPageNumber())
                 .queryParam("size", pageable.getPageSize())
                 .queryParam("type", typeId)
@@ -69,7 +69,7 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
 
 
         ResponseEntity<Void> exchange =
-                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/couponTemplate",
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate",
                         HttpMethod.POST,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -83,9 +83,27 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
     public void deleteCouponTemplate(Long templateId) {
         HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
 
-        ResponseEntity<Void> exchange =
-                restTemplate.exchange(portProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId,
+        restTemplate.exchange(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId,
                         HttpMethod.DELETE,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateCouponTemplateStatus(Long templateId, Boolean state) {
+        HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId)
+                .queryParam("state", state)
+                .encode()
+                .toUriString();
+
+        restTemplate.exchange(url,
+                        HttpMethod.PUT,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
                         });

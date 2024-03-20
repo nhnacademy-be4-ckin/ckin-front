@@ -2,6 +2,7 @@ package store.ckin.front.coupontemplate.service;
 
 import java.sql.Date;
 import org.springframework.data.domain.Pageable;
+import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateInfoDto;
 import store.ckin.front.coupontemplate.dto.response.GetCouponTemplateResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
@@ -34,16 +35,19 @@ public interface CouponTemplateService {
     void deleteCouponTemplate(Long templateId);
 
     /**
-     * 쿠폰 템플릿을 등록하는 메서드 입니다.
+     * 쿠폰 템플릿을 생성하는 메서드 입니다.
      *
-     * @param policyId       정책 아이디
-     * @param bookId         도서 아이디 (널 가능)
-     * @param categoryId     카테고리 아이디 (널 가능)
-     * @param typeId         타입 아이디
-     * @param duration       사용기한
-     * @param expirationDate 만료일
+     * @param couponTemplateInfoDto 쿠폰 템플릿을 생성할 정보
+     * @return 쿠폰 템플릿 목록 페이지로 리다이렉트
      */
-    void createCouponTemplate(Long policyId, Long bookId, Long categoryId, Long typeId, Long amount, Integer duration,
-                              Date expirationDate);
+    void createCouponTemplate(CreateCouponTemplateInfoDto couponTemplateInfoDto);
+
+    /**
+     * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
+     * @param templateId 템플릿 아이디
+     * @param state 쿠폰 템플릿 사용 여부
+     * @return 쿠폰 템플릿 목록 페이지로 이동
+     */
+    void updateCouponTemplateStatus(Long templateId, Boolean state);
 }
 

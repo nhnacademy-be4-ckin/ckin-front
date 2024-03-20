@@ -41,3 +41,12 @@ function execDaumPostcode() {
         }
     }).open();
 }
+
+const sendDataToUrl = button => {
+    const cardId = button.getAttribute('data-addressId');
+    const cardElement = document.getElementById('card-' + cardId);
+    const postCode = cardElement.querySelector('.mb-1').innerText;
+    const base = cardElement.querySelector('.card-text:nth-of-type(1)').innerText;
+    const detail = cardElement.querySelector('.card-text:nth-of-type(2)').innerText;
+    window.location.href = '/sale?postCode=' + encodeURIComponent(postCode) + '&address=' + encodeURIComponent(base) + '&detailAddress=' + encodeURIComponent(detail);
+}

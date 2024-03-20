@@ -17,9 +17,9 @@
                 <div class="collapse" id="collapseOrder" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" th:href="@{/member/mypage/order-list}">주문내역/배송조회</a>
-                        <a class="nav-link">반품/교환 신청 및 조회</a>
-                        <a class="nav-link">취소 주문내역</a>
+                        <a class="nav-link" th:href="@{/member/mypage/order-list}">주문 내역 / 배송 조회</a>
+                        <a class="nav-link">반품 / 교환 신청 및 조회</a>
+                        <a class="nav-link">취소 주문 내역</a>
                     </nav>
                 </div>
 
@@ -33,10 +33,10 @@
                 <div class="collapse" id="collapsePoint" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link">포인트 적립 현황</a>
-                        <a class="nav-link">포인트 사용 내역</a>
+                        <a class="nav-link" th:href="@{/member/mypage/point-history}">포인트 내역</a>
                     </nav>
                 </div>
+
 
                 <!-- 쿠폰 -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupon"
@@ -48,25 +48,23 @@
                 <div class="collapse" id="collapseCoupon" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link">나의 쿠폰</a>
-                        <a class="nav-link">쿠폰 사용 내역</a>
+                        <a th:href="@{/member/mypage/coupon}" class="nav-link">나의 쿠폰</a>
+                        <a th:href="@{/member/mypage/coupon/used}" class="nav-link">쿠폰 사용 내역</a>
                     </nav>
                 </div>
 
-                    <!-- 쿠폰 -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCoupon"
-                       aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><span class="material-symbols-sharp">local_activity</span></div>
-                        쿠폰
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseCoupon" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a href="/myPage/coupon" class="nav-link">나의 쿠폰</a>
-                            <a href="/myPage/coupon/used" class="nav-link">쿠폰 사용 내역</a>
-                        </nav>
-                    </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReview"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">book</span></div>
+                    리뷰
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseReview" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a th:href="@{/member/mypage/review}" class="nav-link">내가 작성한 리뷰</a>
+                    </nav>
+                </div>
 
                 <!-- 계정 -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount"
@@ -78,6 +76,7 @@
                 <div class="collapse" id="collapseAccount" aria-labelledby="headingOne"
                      data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" th:href="@{/member/mypage/address/list}">주소 관리</a>
                         <a class="nav-link">계정 정보 수정</a>
                         <a class="nav-link">회원 탈퇴</a>
                     </nav>

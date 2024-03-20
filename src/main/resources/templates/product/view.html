@@ -315,7 +315,7 @@
             <div class="row">
                 <h2 data-nodeid="5" class="title_heading">목차</h2>
                 <div class="product_detail_area detail_img">
-                    <div class="inner" th:text="${book.bookIndex}">
+                    <div class="inner" id="bookIndex" th:utext="${book.bookIndex}">
                     </div>
                 </div>
             </div>
@@ -512,9 +512,11 @@
                     <form id="reviewForm" th:action="@{'/review/' + ${book.bookId}}" method="post"
                           enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">리뷰 점수</label>
-                            <input type="number" name="reviewRate" class="form-control" id="recipient-name" min="1"
+                            <label for="review_rate" class="col-form-label">리뷰 점수</label>
+                            <input type="number" name="reviewRate" class="form-control" id="review_rate" min="1"
                                    max="5" placeholder="1에서 5사이의 정수를 입력해주세요.">
+                            <div class="invalid-feedback" id="invalid_view">0이상의 값을 입력해주세요.</div>
+                            <div class="invalid-feedback" id="invalid_view_gt">5이하의 값을 입력해주세요.</div>
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">리뷰 작성*</label>
@@ -523,7 +525,7 @@
                         <ul class="file_list" id="fileList">
                             <li class="list_item">
                                 <span class="file_item">
-                                    <span class="btn_box">
+                                    <span class="btn_box" id="remove1">
                                         <input id="image1" name="imageList" type="file" accept="image/*">
                                         <label for="image1">
                                             <span class="hidden">첨부파일 추가</span>
@@ -548,6 +550,7 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/view.js"></script>
     </body>
 </div>

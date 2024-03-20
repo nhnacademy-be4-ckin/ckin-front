@@ -3,9 +3,11 @@ package store.ckin.front.category.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import store.ckin.front.category.adapter.CategoryAdapter;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
+import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
 
@@ -16,6 +18,7 @@ import store.ckin.front.category.service.CategoryService;
  * @version 2024. 02. 22.
  */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
@@ -33,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<CategoryResponseDto> getTopCategories() {
         return categoryAdapter.requestGetTopCategories();
     }
@@ -41,8 +45,15 @@ public class CategoryServiceImpl implements CategoryService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<CategoryResponseDto> getSubcategories(Long parentId) {
         return categoryAdapter.requestGetSubcategories(parentId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CategoryNameResponseDto getCategoryById(Long categoryId) {
+        return new CategoryNameResponseDto(categoryAdapter.getCategoryName(categoryId));
     }
 
     /**

@@ -1,5 +1,6 @@
 #layoutSidenav {
-    height: 100%;
+    height: min-content;
+    /*height: 100%;*/
 }
 
 .circle {
@@ -98,4 +99,8 @@ h1 {
     -ms-flex-direction: row;
     -webkit-flex-direction: row;
     flex-direction: row;
+}
+
+.pagination.justify-content-center {
+    padding-top: 10px;
 }

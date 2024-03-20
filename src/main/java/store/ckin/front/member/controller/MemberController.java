@@ -6,13 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
-import store.ckin.front.sale.service.SaleService;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
+import store.ckin.front.review.service.ReviewService;
 
 /**
  * Member 에 관련된 페이지를 호출하는 Controller 입니다.
@@ -26,8 +26,7 @@ import store.ckin.front.sale.service.SaleService;
 public class MemberController {
 
     private final MemberService memberService;
-
-    private final SaleService saleService;
+    private final ReviewService reviewService;
 
     /**
      * [GET] 회원가입 페이지.
@@ -36,7 +35,7 @@ public class MemberController {
      */
     @GetMapping("/signup")
     public String getCreateMember() {
-        return "member/create";
+        return "member/signup";
     }
 
     /**
@@ -60,5 +59,13 @@ public class MemberController {
     @GetMapping("/login")
     public String getLogin() {
         return "member/login";
+    }
+
+    @PutMapping
+    public String updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        reviewService.updateReview(updateReviewRequestDto, reviewId, authentication.getName());
+
+        return "redirect:/member/mypage/review";
     }
 }

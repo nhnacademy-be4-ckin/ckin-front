@@ -1,8 +1,10 @@
 package store.ckin.front.product.service;
 
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
@@ -33,4 +35,13 @@ public interface ProductService {
     List<BookMainPageResponseDto> findRecentBooks(Integer limit);
 
     List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
+
+    /**
+     * 해당 키워드를 가진 연관 도서들을 가져오는 메서드
+     *
+     * @param keyword     검색할 키워드
+     * @param pageRequest 페이지 요청
+     * @return 연관된 도서 목록
+     */
+    List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest);
 }

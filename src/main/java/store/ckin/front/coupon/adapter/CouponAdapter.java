@@ -62,5 +62,21 @@ public interface CouponAdapter {
      */
     void updateCouponUsed(List<Long> couponIds);
 
+    /**
+     * 회원의 사용하지 않은 쿠폰 목록 조회
+     *
+     * @param pageable 페이지 정보
+     * @param memberId 회원 아이디
+     * @return 쿠폰 목록 페이지 DTO
+     */
     PageDto<GetCouponResponseDto> getUnUsedCouponByMember(Pageable pageable, Long memberId);
+
+    /**
+     * 회원의 사용된 쿠폰 목록 조회
+     *
+     * @param pageable 페이지 정보
+     * @param memberId 회원 아이디
+     * @return 쿠폰 목록 페이지 DTO
+     */
+    PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId);
 }

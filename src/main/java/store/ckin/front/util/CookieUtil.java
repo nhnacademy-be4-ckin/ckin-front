@@ -16,28 +16,28 @@ import store.ckin.front.exception.CookieNotFoundException;
  * @version : 2024. 02. 27.
  */
 public class CookieUtil {
-    public static final String HEADER_ACCESS_TOKEN = "accessToken";
-
-    public static final String HEADER_REFRESH_TOKEN = "refreshToken";
-
     private CookieUtil() {
     }
 
     /**
-     * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
+     * 쿠키가 존재하는지 확인하는 메서드 입니다.
+     *
+     * @param name    Cookie name
+     * @return 존재여부
      */
-    public static void makeCookie(HttpServletResponse response, String name, String token) {
-        Cookie cookie = new Cookie(name, token);
-        cookie.setMaxAge(-1);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+    public static boolean isExists(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
 
-        response.addCookie(cookie);
+        if (Objects.nonNull(cookies)) {
+            return Arrays.stream(cookies)
+                    .anyMatch(cookie -> cookie.getName().equals(name));
+        }
+
+        return false;
     }
 
     /**
-     * JWT Access Token 을 쿠키로 만드는 메서드 입니다.
+     * 쿠키를 만드는 메서드 입니다.
      */
     public static void makeCookie(HttpServletResponse response, String name, String token, int maxAage) {
         Cookie cookie = new Cookie(name, token);
@@ -45,7 +45,6 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
-//        cookie.setDomain("test.com");
 
         response.addCookie(cookie);
     }
@@ -81,34 +80,13 @@ public class CookieUtil {
     public static void updateCookie(HttpServletRequest request,
                                     HttpServletResponse response,
                                     String name,
-                                    String value) {
+                                    String value,
+                                    int maxAge) {
         Cookie oldCookie = findCookie(request, name);
         oldCookie.setMaxAge(0);
         response.addCookie(oldCookie);
 
-        makeCookie(response, name, value);
-    }
-
-    /**
-     * 갖고 있는 토큰 쿠키를 삭제하는 메서드 입니다.
-     *
-     * @param request  HttpServletRequest
-     * @param response HttpServletResponse
-     */
-    public static void resetCookie(HttpServletRequest request,
-                                   HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-
-        if (Objects.nonNull(cookies)) {
-            Arrays.stream(cookies)
-                    .filter(cookie ->
-                            cookie.getName().equals(HEADER_ACCESS_TOKEN)
-                                    || cookie.getName().equals(HEADER_REFRESH_TOKEN))
-                    .forEach(cookie -> {
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                    });
-        }
+        makeCookie(response, name, value, maxAge);
     }
 
     /**

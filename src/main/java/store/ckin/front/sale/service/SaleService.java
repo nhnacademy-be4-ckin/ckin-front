@@ -4,6 +4,7 @@ import java.util.List;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -97,4 +98,21 @@ public interface SaleService {
      * @return 주문 상세 정보 응답 DTO
      */
     SaleDetailResponseDto getMemberSaleDetailBySaleNumber(String saleNumber, String memberId);
+
+    /**
+     * 주문 배송 상태를 업데이트합니다.
+     *
+     * @param saleId         주문 ID
+     * @param deliveryStatus 배송 상태
+     */
+    void updateDeliveryStatus(Long saleId, SaleDeliveryUpdateRequestDto deliveryStatus);
+
+
+    /**
+     * 주문 취소를 요청합니다.
+     *
+     * @param saleId 주문 ID
+     */
+    void cancelSale(Long saleId);
+
 }

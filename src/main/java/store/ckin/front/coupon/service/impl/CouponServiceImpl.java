@@ -78,9 +78,20 @@ public class CouponServiceImpl implements CouponService {
         couponAdapter.updateCouponUsed(couponIds);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PageDto<GetCouponResponseDto> getUnUsedCouponByMember(Pageable pageable, Long memberId) {
         return couponAdapter.getUnUsedCouponByMember(pageable, memberId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId) {
+        return couponAdapter.getUsedCouponByMember(pageable, memberId);
     }
 
 }
