@@ -84,12 +84,22 @@ public class ProductController {
         return "product/view";
     }
 
+    /**
+     * 해당 키워드로 연관된 상품들을 가져오는 메서드
+     *
+     * @param keyword 검색할 키워드
+     * @param page    페이징 처리할 페이지
+     * @param size    페이징 처리할 페이지 사이자
+     * @param model   View 로 넘겨주기 위한 모델
+     * @return 검색 페이지
+     * @author 김준현
+     */
     @GetMapping("/search")
     public String searchProduct(@RequestParam("keyword") @DefaultValue("") String keyword,
-                                @Positive @RequestParam(defaultValue = "0") int page,
+                                @Positive @RequestParam(defaultValue = "1") int page,
                                 @Positive @RequestParam(required = false, defaultValue = "10") int size, Model model) {
 
-        List<SearchProduct> searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page, size));
+        List<SearchProduct> searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size));
 
         model.addAttribute("KEY_WORD", keyword);
         for (SearchProduct book : searchResults) {
