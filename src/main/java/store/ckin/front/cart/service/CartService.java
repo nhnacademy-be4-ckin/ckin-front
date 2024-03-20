@@ -4,6 +4,7 @@ import java.util.List;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
+import store.ckin.front.cart.dto.request.CartItemOrderRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 
 /**
@@ -45,6 +46,8 @@ public interface CartService {
      * @param cartItemDeleteRequestDto 삭제할 상품의 ID가 담긴 Dto
      */
     void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto);
+    void deleteCartItems(String key, List<CartItemDeleteRequestDto> deleteItems);
+    void orderCartItems(String key, List<CartItemOrderRequestDto> orderItems);
 
     /**
      * 장바구니 전체 상품을 삭제하는 메서드
