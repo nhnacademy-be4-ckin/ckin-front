@@ -1,27 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>체크인 | 에러가 발생하였습니다</title>
-    <style>
-        body {
-            margin: 0 auto;
-            justify-content: center;
-            background-color: #F4EADF;
-        }
-        img {
-            width: 50%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-        div {
-            margin-bottom: 100px;
-        }
-    </style>
-</head>
-<body>
-<div></div>
-<img src="https://i.ibb.co/4JS0WjH/error-404.jpg" alt="error-404" border="0">
-</body>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<meta charset="UTF-8"><!-- 본문 내용 -->
+<div layout:fragment="content">
+    <main class="main-error">
+        <div class="error-wrap">
+            <img src="/images/error.png" alt="IMG-LOGO">
+            <label class="label-header">찾을 수 없는 페이지입니다.</label>
+            <label class="label-contents">입력하신 주소를 찾을 수 없거나, 오류가 발생하였습니다.</label>
+            <button onclick="location.href='/'" class="btn-hover color-8">홈으로 이동하기</button>
+        </div>
+    </main>
+</div>
 </html>
