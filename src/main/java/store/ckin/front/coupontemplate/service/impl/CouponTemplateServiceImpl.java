@@ -22,7 +22,6 @@ import store.ckin.front.coupontemplate.service.CouponTemplateService;
  */
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CouponTemplateServiceImpl implements CouponTemplateService {
 
@@ -36,7 +35,6 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      * @return 쿠폰 템플릿 목록
      */
     @Override
-    @Transactional(readOnly = true)
     public PageDto<GetCouponTemplateResponseDto> getCouponTemplateList(Pageable pageable, Long typeId) {
         return couponTemplateAdapter.getCouponTemplateList(pageable, typeId);
     }
