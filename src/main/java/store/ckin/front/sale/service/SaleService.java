@@ -113,6 +113,6 @@ public interface SaleService {
      *
      * @param saleId 주문 ID
      */
-    void cancelSale(String saleId);
+    void cancelSale(Long saleId);
 
 }

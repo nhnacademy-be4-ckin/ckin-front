@@ -34,11 +34,9 @@ public class PaymentRestController {
      *
      * @param requestDto 결제 요청 JSON
      * @return 결제 요청 결과
-     * @throws Exception 예외 처리
      */
     @PostMapping("/confirm")
-    public ResponseEntity<PaymentConfirmResponseDto> confirmPayment(@RequestBody PaymentConfirmRequestDto requestDto)
-            throws Exception {
+    public ResponseEntity<PaymentConfirmResponseDto> confirmPayment(@RequestBody PaymentConfirmRequestDto requestDto) {
 
         PaymentConfirmResponseDto confirmPayment = paymentFacade.isConfirmPayment(requestDto);
 

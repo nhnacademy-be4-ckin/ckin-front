@@ -259,7 +259,7 @@ public class SaleAdapterImpl implements SaleAdapter {
      * @param saleId 주문 ID
      */
     @Override
-    public void requestCancelSale(String saleId) {
+    public void requestCancelSale(Long saleId) {
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 

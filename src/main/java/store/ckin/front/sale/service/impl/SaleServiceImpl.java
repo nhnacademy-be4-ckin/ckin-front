@@ -147,7 +147,7 @@ public class SaleServiceImpl implements SaleService {
      * @param saleId 주문 ID
      */
     @Override
-    public void cancelSale(String saleId) {
+    public void cancelSale(Long saleId) {
         saleAdapter.requestCancelSale(saleId);
     }
 

@@ -49,7 +49,7 @@ public class SaleRestController {
      * @return 주문 취소 성공 여부
      */
     @PutMapping("/sale/{saleId}/cancel")
-    public ResponseEntity<Void> cancelSale(@PathVariable String saleId) {
+    public ResponseEntity<Void> cancelSale(@PathVariable Long saleId) {
         saleService.cancelSale(saleId);
         return ResponseEntity.ok().build();
     }

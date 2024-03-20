@@ -111,5 +111,5 @@ public interface SaleAdapter {
      *
      * @param saleId 주문 ID
      */
-    void requestCancelSale(String saleId);
+    void requestCancelSale(Long saleId);
 }

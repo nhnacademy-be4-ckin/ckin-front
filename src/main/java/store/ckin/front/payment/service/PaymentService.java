@@ -1,6 +1,5 @@
 package store.ckin.front.payment.service;
 
-import java.io.UnsupportedEncodingException;
 import store.ckin.front.payment.dto.request.PaymentCancelReasonDto;
 import store.ckin.front.payment.dto.request.PaymentConfirmRequestDto;
 import store.ckin.front.payment.dto.request.PaymentRequestDto;
@@ -20,9 +19,8 @@ public interface PaymentService {
      *
      * @param requestDto 결제 확인 요청 객체
      * @return 결제 확인 응답 객체
-     * @throws UnsupportedEncodingException 인코딩 예외
      */
-    PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto) throws UnsupportedEncodingException;
+    PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto);
 
     /**
      * 결제 생성 메서드입니다.

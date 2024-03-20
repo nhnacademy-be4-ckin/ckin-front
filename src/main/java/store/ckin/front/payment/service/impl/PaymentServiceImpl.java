@@ -1,6 +1,5 @@
 package store.ckin.front.payment.service.impl;
 
-import java.io.UnsupportedEncodingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.payment.adpter.PaymentAdapter;
@@ -30,11 +29,9 @@ public class PaymentServiceImpl implements PaymentService {
      *
      * @param requestDto 결제 확인 요청 객체
      * @return 결제 확인 응답 객체
-     * @throws UnsupportedEncodingException 인코딩 예외
      */
     @Override
-    public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto)
-            throws UnsupportedEncodingException {
+    public PaymentConfirmResponseDto isConfirmPayment(PaymentConfirmRequestDto requestDto) {
         return paymentAdapter.requestConfirmPayment(requestDto);
     }
 
