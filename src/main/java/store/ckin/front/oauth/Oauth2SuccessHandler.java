@@ -44,7 +44,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = (Map) oauth2User.getAttributes().get("member");
         String oauthId = String.valueOf(attributes.get("oauthId"));
-        log.debug("onAuthenticationSuccess : OAuth ID [{}]", oauthId);
+        log.info("onAuthenticationSuccess : OAuth ID [{}]", oauthId);
 
         try {
             log.debug("OAuth Login");
