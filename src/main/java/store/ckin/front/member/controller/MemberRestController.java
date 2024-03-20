@@ -1,18 +1,15 @@
 package store.ckin.front.member.controller;
 
-import javax.validation.Valid;
-
 import com.nhn.dooray.client.DoorayHook;
 import com.nhn.dooray.client.DoorayHookSender;
+import java.security.SecureRandom;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.service.MemberService;
-
-import java.security.SecureRandom;
-import java.util.Random;
 
 /**
  * API 서버와 View 가 통신하기 위한 REST Controller 입니다.
