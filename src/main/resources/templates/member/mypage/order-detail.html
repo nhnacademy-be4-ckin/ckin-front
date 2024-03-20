@@ -17,6 +17,11 @@
         <div class="row m-t-150">
             <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 
+                <h4 th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() eq 'CANCEL'}"
+                    class="h4" style="color: #bb2d3b">
+                    취소된 주문입니다.
+                </h4>
+
                 <h4 class="m-t-30 m-b-30"
                     th:text="'결제 총 금액 : ' + ${saleDetail.saleResponseDto.saleTotalPrice} + '원'">
                 </h4>
@@ -154,12 +159,10 @@
         <script th:inline="javascript">
 
             /*<![CDATA[*/
-            const secretKey = [[${secretKey}]];
             let payment = [[${saleDetail.paymentResponseDto}]];
             const saleId = [[${saleDetail.saleResponseDto.saleId}]];
+
             /*]]>*/
-            console.log(secretKey);
-            console.log(payment);
 
             function cancelOrder() {
                 // 결제가 진행된 경우 결제 취소 요청
@@ -178,14 +181,11 @@
 
             async function requestPaymentCancel(paymentKey, cancelReason) {
 
-                console.log("결제 취소 부름");
 
                 const requestData = {
                     paymentKey: paymentKey,
                     cancelReason: cancelReason
                 };
-
-                console.log(requestData);
 
                 const response = await fetch('/toss/cancel', {
                     method: "POST",
