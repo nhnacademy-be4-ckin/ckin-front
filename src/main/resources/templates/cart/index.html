@@ -10,10 +10,6 @@
         }
     </script>
     <style>
-        .container {
-            width: 80%;
-        }
-
         p {
             width: 100%;
             text-align: center;
@@ -58,10 +54,13 @@
                                     </div>
                                 </td>
                                 <td class="column-2" th:text="${item.name}"></td>
-                                <td class="column-3" th:text="${#numbers.formatInteger(item.regularPrice, 3, 'COMMA')} + '원'"></td>
-                                <td class="column-6" th:text="${#numbers.formatInteger(item.salePrice, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-3"
+                                    th:text="${#numbers.formatInteger(item.regularPrice, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-6"
+                                    th:text="${#numbers.formatInteger(item.salePrice, 3, 'COMMA')} + '원'"></td>
                                 <td class="column-4" th:text="${item.quantity} + '개'"></td>
-                                <td class="column-6" th:text="${#numbers.formatInteger(item.salePrice * item.quantity, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-6"
+                                    th:text="${#numbers.formatInteger(item.salePrice * item.quantity, 3, 'COMMA')} + '원'"></td>
                                 <td class="row-col-5 ">
                                     <button type="button"
                                             class="shop-btn"

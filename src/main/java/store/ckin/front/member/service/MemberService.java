@@ -1,6 +1,7 @@
 package store.ckin.front.member.service;
 
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 
 /**
@@ -10,6 +11,8 @@ import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
  * @version : 2024. 02. 16.
  */
 public interface MemberService {
+    boolean isDuplicateEmail(MemberEmailOnlyRequestDto memberEmailOnlyRequestDto);
+
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     MemberMyPageResponseDto getMyPageInfo(String memberId);

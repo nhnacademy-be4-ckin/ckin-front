@@ -144,7 +144,8 @@ address, caption, cite, code, dfn, em, var {
 }
 
 .wrap-menu-desktop.how-shadow1 {
-    padding: 0 20%;
+    padding: 0 10%;
+!important;
 }
 
 img {
