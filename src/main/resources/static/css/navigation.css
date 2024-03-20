@@ -37894,7 +37894,7 @@ nav {
     margin: 0 auto;
     align-items: center;
     min-width: 1200px;
-!important
+/important
 }
 
 .wrapper .header_wrapper .header_inner .gnb_wrap {

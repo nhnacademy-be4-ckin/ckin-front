@@ -21,6 +21,8 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.adapter.ReviewAdapter;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
+import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
 
 
@@ -98,4 +100,43 @@ public class ReviewAdapterImpl implements ReviewAdapter {
         );
         return exchange.getBody();
     }
+
+    @Override
+    public PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, String memberId) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/members/review/my-page/{memberId}")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<MyPageReviewResponseDto>> exchange = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId
+        );
+        return exchange.getBody();
+    }
+
+    @Override
+    public void updateReview(UpdateReviewRequestDto updateReviewRequestDto,
+                             Long reviewId, String memberId) {
+        String url = gatewayProperties.getGatewayUri() + "/api/review/{memberId}/" + reviewId;
+
+
+
+        HttpEntity<UpdateReviewRequestDto> requestEntity = new HttpEntity<>(updateReviewRequestDto, getHttpHeaders());
+
+        restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId);
+    }
+
+
 }

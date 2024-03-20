@@ -16,6 +16,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
+import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -210,6 +211,13 @@ public class SaleAdapterImpl implements SaleAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleNumber 주문 번호
+     * @param memberId   회원 ID
+     * @return 주문 상세 정보 응답 DTO
+     */
     @Override
     public SaleDetailResponseDto requestGetMemberSaleDetailBySaleNumber(String saleNumber, String memberId) {
 
@@ -224,5 +232,42 @@ public class SaleAdapterImpl implements SaleAdapter {
                 }, saleNumber, memberId);
 
         return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId         주문 ID
+     * @param deliveryStatus 배송 상태
+     */
+    @Override
+    public void requestUpdateDeliveryStatus(Long saleId, SaleDeliveryUpdateRequestDto deliveryStatus) {
+
+        HttpEntity<SaleDeliveryUpdateRequestDto> requestEntity = new HttpEntity<>(deliveryStatus, getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}/delivery/status",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                }, saleId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param saleId 주문 ID
+     */
+    @Override
+    public void requestCancelSale(Long saleId) {
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL + "/{saleId}/cancel",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<Void>() {
+                }, saleId);
     }
 }
