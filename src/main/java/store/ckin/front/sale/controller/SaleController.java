@@ -33,7 +33,6 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
-@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -109,8 +108,6 @@ public class SaleController {
     public String createSale(@CookieValue("CART_ID") Cookie cookie,
                              @Valid SaleCreateRequestDto requestDto) {
 
-        log.debug("requestDto = {}", requestDto);
-
         String saleNumber = saleFacade.createSale(requestDto);
         saleFacade.deleteCartItemAll(cookie.getValue());
 
@@ -158,4 +155,6 @@ public class SaleController {
         model.addAttribute("saleDetail", saleDetail);
         return "sale/guest-order-detail";
     }
+
+
 }

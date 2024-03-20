@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import store.ckin.front.payment.dto.PaymentStatus;
 
 /**
  * 결제 요청 DTO 클래스입니다.
@@ -21,7 +22,7 @@ public class PaymentRequestDto {
 
     private String saleNumber;
 
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     private LocalDateTime requestedAt;
 

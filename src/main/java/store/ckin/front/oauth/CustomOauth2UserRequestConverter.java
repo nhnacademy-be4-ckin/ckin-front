@@ -26,7 +26,6 @@ public class CustomOauth2UserRequestConverter
 
     @Override
     public RequestEntity<?> convert(OAuth2UserRequest userRequest) {
-        log.info("Convert Start");
 
         ClientRegistration clientRegistration = userRequest.getClientRegistration();
 
