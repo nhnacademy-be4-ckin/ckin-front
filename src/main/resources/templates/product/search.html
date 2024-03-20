@@ -17,16 +17,46 @@
                         <div class="search-result-filter-grip">
                             <dl class="on pos-relative search-filter">
                                 <dt>
-                                    <a>분야</a>
+                                    <a>검색 대상</a>
                                 </dt>
                                 <dd>
                                     <ul>
-                                        <li>국내도서 ( )</li>
-                                        <li>외국도서 ( )</li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByTitle" type="checkbox" value="" checked>
+                                            <label for="searchByTitle">책 제목</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByAuthor" type="checkbox" value="" checked>
+                                            <label for="searchByAuthor">저자</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByPublisher" type="checkbox" value="" checked>
+                                            <label for="searchByPublisher">출판사</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByDescription" type="checkbox" value="" checked>
+                                            <label for="searchByDescription">책 설명</label>
+                                        </li>
                                     </ul>
                                 </dd>
                             </dl>
-
+                            <dl class="on pos-relative search-filter">
+                                <dt>
+                                    <a>분류</a>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchWithInternal" type="checkbox" value="" checked>
+                                            <label for="searchWithInternal">국내 도서</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchWithOverseas" type="checkbox" value="" checked>
+                                            <label for="searchWithOverseas">해외 도서</label>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
                     <div class="search-result-contents-wrap">
