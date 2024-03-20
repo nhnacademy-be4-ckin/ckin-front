@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
+import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
 
 /**
@@ -31,4 +33,9 @@ public interface ReviewAdapter {
      * @return 리뷰 DTO 페이지
      */
     PageDto<ReviewDto> getReviewListByBookId(Pageable pageable, Long bookId);
+
+    PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, String memberId);
+
+    void updateReview(UpdateReviewRequestDto updateReviewRequestDto,
+                      Long reviewId, String memberId);
 }

@@ -1,4 +1,5 @@
 #layoutSidenav {
+    height: min-content;
     /*height: 100%;*/
 }
 

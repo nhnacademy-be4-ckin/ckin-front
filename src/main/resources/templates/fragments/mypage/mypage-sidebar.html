@@ -53,6 +53,19 @@
                     </nav>
                 </div>
 
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReview"
+                   aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><span class="material-symbols-sharp">book</span></div>
+                    리뷰
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseReview" aria-labelledby="headingOne"
+                     data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a th:href="@{/member/mypage/review}" class="nav-link">내가 작성한 리뷰</a>
+                    </nav>
+                </div>
+
                 <!-- 계정 -->
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseAccount"
                    aria-expanded="false" aria-controls="collapseLayouts">
