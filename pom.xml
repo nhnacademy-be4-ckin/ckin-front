@@ -28,6 +28,18 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>release</id>
+            <url>https://github.com/edu-springboot/edu-springboot-maven-repo/raw/master/releases</url>
+        </repository>
+
+        <repository>
+            <id>snapshot</id>
+            <url>https://github.com/edu-springboot/edu-springboot-maven-repo/raw/master/snapshots</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -133,6 +145,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
+        <!-- Dooray Message Sender -->
+        <dependency>
+            <groupId>com.nhn.dooray.messenger</groupId>
+            <artifactId>dooray-hook-sender</artifactId>
+            <version>1.2.0-RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.2.2</version>
 
         <!-- ElasticSearch -->
         <dependency>
