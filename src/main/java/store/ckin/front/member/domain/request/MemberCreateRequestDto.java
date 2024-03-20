@@ -1,6 +1,7 @@
 package store.ckin.front.member.domain.request;
 
 import java.time.LocalDate;
+import javax.annotation.Nullable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -36,6 +37,9 @@ public class MemberCreateRequestDto {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;
+
+    @Nullable
+    private String oauthId;
 
     public void setEncodedPassword(String encoded) {
         this.password = encoded;
