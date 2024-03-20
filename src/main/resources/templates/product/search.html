@@ -10,35 +10,80 @@
         <div class="search-page-wrap p-t-15">
             <div class="search-content-wrap">
                 <div class="search-page-title">
-                    <em th:text="|${KEY_WORD} 에 대한 검색 결과가 0건 있습니다|"></em>
+                    <em th:text="|${KEY_WORD} 에 대한 검색 결과가 ${SEARCH_RESULT.size()}건 있습니다|"></em>
                 </div>
                 <div class="search-result-wrap">
                     <div class="search-result-filter-wrap">
                         <div class="search-result-filter-grip">
                             <dl class="on pos-relative search-filter">
                                 <dt>
-                                    <a>분야</a>
+                                    <a>검색 대상</a>
                                 </dt>
                                 <dd>
                                     <ul>
-                                        <li>국내도서 ( )</li>
-                                        <li>외국도서 ( )</li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByTitle" type="checkbox" value="" checked>
+                                            <label for="searchByTitle">책 제목</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByAuthor" type="checkbox" value="" checked>
+                                            <label for="searchByAuthor">저자</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByPublisher" type="checkbox" value="" checked>
+                                            <label for="searchByPublisher">출판사</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchByDescription" type="checkbox" value="" checked>
+                                            <label for="searchByDescription">책 설명</label>
+                                        </li>
                                     </ul>
                                 </dd>
                             </dl>
-
+                            <dl class="on pos-relative search-filter">
+                                <dt>
+                                    <a>분류</a>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchWithInternal" type="checkbox" value="" checked>
+                                            <label for="searchWithInternal">국내 도서</label>
+                                        </li>
+                                        <li class="search-filter-items-wrap">
+                                            <input id="searchWithOverseas" type="checkbox" value="" checked>
+                                            <label for="searchWithOverseas">해외 도서</label>
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
                     <div class="search-result-contents-wrap">
                         <div class="search-result-contents-grip">
                             <div class="search-result-contents">
-                                <div class="search-result" th:each="number : ${#numbers.sequence(1, 10)}">
+                                <div class="search-result" th:each="book : ${SEARCH_RESULT}">
                                     <div class="search-result-col">
                                         <div class="search-result-left">
-                                            <img src="/images/logo.png" class="search-result-img" alt="result-img">
+                                            <a th:href="@{/product/view/${book.id}}">
+                                                <img th:src="${book.thumbnail}" class="search-result-img"
+                                                     alt="result-img">
+                                            </a>
                                             <div class="search-result-info">
-                                                <a>책이르</a>
-                                                <em>책책</em>
+                                                <a th:href="@{/product/view/${book.id}}" th:text="${book.title}"></a>
+                                                <div class="search-result-author-info">
+                                                    <em class="author-title">저자</em>
+                                                    <em th:text="${book.author}"></em>
+                                                </div>
+                                                <em class="search-result-publisher-info"
+                                                    th:text="${book.publisher}"></em>
+                                                <div class="search-result-price-info">
+                                                    <em class="result-discount-rate"
+                                                        th:text="|${book.discountRate}%|"></em>
+                                                    <em class="result-discount-price"
+                                                        th:text="${#numbers.formatInteger(book.salePrice, 3, 'COMMA') + '원'}"></em>
+                                                    <s th:text="${#numbers.formatInteger(book.regularPrice, 3, 'COMMA') + '원'}"></s>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="search-result-right">
@@ -52,8 +97,10 @@
                                                         type="button">+
                                                 </button>
                                             </div>
-                                            <button class="btn-hover color-8">장바구니 추가</button>
-                                            <button class="btn-hover color-8">바로 결제하기</button>
+                                            <form>
+                                                <button class="btn-hover color-8">장바구니 추가</button>
+                                                <button class="btn-hover color-8">바로 결제하기</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
