@@ -53,8 +53,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId, String memberId) {
-        reviewAdapter.updateReview(updateReviewRequestDto, reviewId, memberId);
+    public void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long memberId) {
+        reviewAdapter.updateReview(updateReviewRequestDto, memberId);
     }
 
 
