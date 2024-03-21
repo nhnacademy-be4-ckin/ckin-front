@@ -1,5 +1,7 @@
 package store.ckin.front.grade.adapter.impl;
 
+import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
+
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,6 @@ import store.ckin.front.grade.domain.request.GradeCreateRequestDto;
 import store.ckin.front.grade.domain.request.GradeUpdateRequestDto;
 import store.ckin.front.grade.domain.response.GradeResponseDto;
 
-import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
-
 /**
  * GradeAdapter 의 구현체 입니다.
  *
@@ -32,7 +32,7 @@ public class GradeAdapterImpl implements GradeAdapter {
 
     private final GatewayProperties gatewayProperties;
 
-    private static final String GRADE_URL = "api/admin/grades";
+    private static final String GRADE_URL = "/api/admin/grades";
 
     @Override
     public void createGrade(GradeCreateRequestDto gradeCreateRequestDto) {

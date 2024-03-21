@@ -1,6 +1,8 @@
 package store.ckin.front.grade.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.grade.adapter.GradeAdapter;
@@ -27,7 +29,10 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public List<GradeResponseDto> getGradeList() {
-        return gradeAdapter.getGradeList();
+        return gradeAdapter.getGradeList()
+                .stream()
+                .sorted(Comparator.comparing(GradeResponseDto::getId))
+                .collect(Collectors.toList());
     }
 
     @Override
