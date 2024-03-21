@@ -1,18 +1,14 @@
-function clickAddCartBtn(btn) {
+function setQuantityAndSubmit(btn, uri) {
     let quantityInput = btn.parentNode.parentNode.querySelector('.search-result-quantity-number').value;
     let quantity = btn.parentNode.querySelector('.send-quantity');
     let form = btn.parentNode;
     if (quantityInput >= 1 && quantityInput <= 100) {
-        form.action = "/cart/create"
+        form.action = uri
         quantity.value = quantityInput;
         form.submit();
     } else {
         showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
     }
-}
-
-function clickCheckoutBtn(btn) {
-
 }
 
 function minusQuantity(btn) {
