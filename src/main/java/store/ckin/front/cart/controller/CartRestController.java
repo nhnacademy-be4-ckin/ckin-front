@@ -32,7 +32,7 @@ public class CartRestController {
      * @return 결제 페이지로 리다이렉트
      */
     @PostMapping
-    public ResponseEntity<Void> placeOrderOne(@CookieValue(name = "CART_ID") Cookie cookie, @RequestBody
+    public ResponseEntity<Void> placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, @RequestBody
     List<CartItemOrderDto> orderList) {
         log.debug("receive size : {}", orderList.size());
         for (CartItemOrderDto orderDto : orderList) {
