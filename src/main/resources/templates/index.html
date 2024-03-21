@@ -63,7 +63,7 @@
             <div class="container py-5">
                 <div class="new-book-banner">
                     <p class="title">
-                        추천 도서
+                        신간 도서
                     </p>
                     <p class="title-enter">
                         자세히 보기 >
@@ -71,8 +71,8 @@
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
-                         th:each="newBook : ${koreanBookList}">
-                        <div class="product" >
+                         th:each="newBook : ${recentPublishBooks}">
+                        <div class="product">
                             <div class="product-image">
                                 <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
                                      alt="#">
@@ -116,33 +116,33 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBookList.get(0).thumbnail}"
-                                     th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
+                                <img th:src="${recentPublishBooks.get(0).thumbnail}"
+                                     th:href="@{'/product/view/' + ${recentPublishBooks.get(0).bookId}}"
                                      alt="#">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
-                                              th:text="${newBookList.get(0).bookDiscountRate} + '%'"></span>
+                                              th:text="${recentPublishBooks.get(0).bookDiscountRate} + '%'"></span>
                                     </span>
-                                    <span class="badge_md " th:each="tag : ${newBookList.get(0).productTags}">
+                                    <span class="badge_md " th:each="tag : ${recentPublishBooks.get(0).productTags}">
                                         <span class="text" th:text="${tag}"></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="product-info">
                                 <h4 class="title">
-                                    <a th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
-                                       th:text="${newBookList.get(0).bookTitle}"></a>
+                                    <a th:href="@{'/product/view/' + ${recentPublishBooks.get(0).bookId}}"
+                                       th:text="${recentPublishBooks.get(0).bookTitle}"></a>
                                 </h4>
                                 <div class="prod_price_box">
                                     <div class="prod_price">
                                     <span class="price">
                                         <span class="val"
-                                              th:text="${#numbers.formatInteger(newBookList.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                              th:text="${#numbers.formatInteger(recentPublishBooks.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
                                     </span>
                                         <span class="sale_price">
                                         <s class="val"
-                                           th:text="${#numbers.formatInteger(newBookList.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                           th:text="${#numbers.formatInteger(recentPublishBooks.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
                                     </span>
                                     </div>
                                     <div class="tool_div">
@@ -164,7 +164,7 @@
             <div class="container py-5">
                 <div class="new-book-banner">
                     <p class="title">
-                        외국 도서
+                        인기 도서
                     </p>
                     <p class="title-enter">
                         자세히 보기 >
@@ -172,7 +172,7 @@
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
-                         th:each="newBook : ${foreignBookList}">
+                         th:each="newBook : ${bestBooks}">
                         <div class="product">
                             <div class="product-image">
                                 <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
@@ -217,33 +217,33 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBookList.get(0).thumbnail}"
-                                     th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
+                                <img th:src="${bestBooks.get(0).thumbnail}"
+                                     th:href="@{'/product/view/' + ${bestBooks.get(0).bookId}}"
                                      alt="#">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
-                                              th:text="${newBookList.get(0).bookDiscountRate} + '%'"></span>
+                                              th:text="${bestBooks.get(0).bookDiscountRate} + '%'"></span>
                                     </span>
-                                    <span class="badge_md " th:each="tag : ${newBookList.get(0).productTags}">
+                                    <span class="badge_md " th:each="tag : ${bestBooks.get(0).productTags}">
                                         <span class="text" th:text="${tag}"></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="product-info">
                                 <h4 class="title">
-                                    <a th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
-                                       th:text="${newBookList.get(0).bookTitle}"></a>
+                                    <a th:href="@{'/product/view/' + ${bestBooks.get(0).bookId}}"
+                                       th:text="${bestBooks.get(0).bookTitle}"></a>
                                 </h4>
                                 <div class="prod_price_box">
                                     <div class="prod_price">
                                     <span class="price">
                                         <span class="val"
-                                              th:text="${#numbers.formatInteger(newBookList.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                              th:text="${#numbers.formatInteger(bestBooks.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
                                     </span>
                                         <span class="sale_price">
                                         <s class="val"
-                                           th:text="${#numbers.formatInteger(newBookList.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                           th:text="${#numbers.formatInteger(bestBooks.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
                                     </span>
                                     </div>
                                     <div class="tool_div">
@@ -275,7 +275,7 @@
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
-                         th:each="newBook : ${koreanBookList}">
+                         th:each="newBook : ${recommendBooks}">
                         <div class="product">
                             <div class="product-image">
                                 <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
@@ -320,33 +320,33 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBookList.get(0).thumbnail}"
-                                     th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
+                                <img th:src="${recommendBooks.get(0).thumbnail}"
+                                     th:href="@{'/product/view/' + ${recommendBooks.get(0).bookId}}"
                                      alt="#">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
-                                              th:text="${newBookList.get(0).bookDiscountRate} + '%'"></span>
+                                              th:text="${recommendBooks.get(0).bookDiscountRate} + '%'"></span>
                                     </span>
-                                    <span class="badge_md " th:each="tag : ${newBookList.get(0).productTags}">
+                                    <span class="badge_md " th:each="tag : ${recommendBooks.get(0).productTags}">
                                         <span class="text" th:text="${tag}"></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="product-info">
                                 <h4 class="title">
-                                    <a th:href="@{'/product/view/' + ${newBookList.get(0).bookId}}"
-                                       th:text="${newBookList.get(0).bookTitle}"></a>
+                                    <a th:href="@{'/product/view/' + ${recommendBooks.get(0).bookId}}"
+                                       th:text="${recommendBooks.get(0).bookTitle}"></a>
                                 </h4>
                                 <div class="prod_price_box">
                                     <div class="prod_price">
                                     <span class="price">
                                         <span class="val"
-                                              th:text="${#numbers.formatInteger(newBookList.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
+                                              th:text="${#numbers.formatInteger(recommendBooks.get(0).bookSalePrice, 1, 'COMMA')} + '원'"></span>
                                     </span>
                                         <span class="sale_price">
                                         <s class="val"
-                                           th:text="${#numbers.formatInteger(newBookList.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
+                                           th:text="${#numbers.formatInteger(recommendBooks.get(0).bookRegularPrice, 1, 'COMMA')} + '원'"></s>
                                     </span>
                                     </div>
                                     <div class="tool_div">
@@ -371,4 +371,5 @@
         <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>-->
         <script src="/js/main-index.js"></script>
     </div>
+</div>
 </html>

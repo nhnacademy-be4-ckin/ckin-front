@@ -22,15 +22,13 @@ public class IndexController {
 
     @GetMapping("/")
     public String indexView(Model model) {
-        List<BookMainPageResponseDto> koreanBookList = productService.findRecentBooksByCategoryId(1L, 4);
-        List<BookMainPageResponseDto> foreignBookList = productService.findRecentBooksByCategoryId(2L, 4);
-        List<BookMainPageResponseDto> newBookList = productService.findRecentBooks(4);
+        List<BookMainPageResponseDto> recentPublishBooks = productService.getRecentPublishBooks();
+        List<BookMainPageResponseDto> bestBooks = productService.getBestBooks();
+        List<BookMainPageResponseDto> recommendBooks = productService.getRecommendBooks();
 
-        productService.findRecentBooks(8);
-
-        model.addAttribute("koreanBookList", koreanBookList);
-        model.addAttribute("foreignBookList", foreignBookList);
-        model.addAttribute("newBookList", newBookList);
+        model.addAttribute("recentPublishBooks", recentPublishBooks);
+        model.addAttribute("bestBooks", bestBooks);
+        model.addAttribute("recommendBooks", recommendBooks);
 
         return "index";
     }

@@ -30,7 +30,24 @@ public interface ProductService {
      */
     BookResponseDto findProductById(Long bookId);
 
-    List<BookMainPageResponseDto> findRecentBooks(Integer limit);
+    /**
+     * 최근 출판된 도서 목록을 가져옵니다.
+     *
+     * @return 최근 출판된 도서 목록
+     */
+    List<BookMainPageResponseDto> getRecentPublishBooks();
 
-    List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
+    /**
+     * 관리자가 지정한 인기 도서를 가져옵니다.
+     *
+     * @return 인기 도서 목록
+     */
+    List<BookMainPageResponseDto> getBestBooks();
+
+    /**
+     * 관리자가 지정한 추천 도서를 가져옵니다.
+     *
+     * @return 추천 도서 목록
+     */
+    List<BookMainPageResponseDto> getRecommendBooks();
 }
