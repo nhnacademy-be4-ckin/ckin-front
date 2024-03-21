@@ -6,23 +6,35 @@
     <title>CKIN | Shopping Cart</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function clickUpdateBtn(id) {
-            Swal.fire({
-                title: "How old are you?",
-                icon: "question",
-                input: "range",
-                inputLabel: "Your age",
-                inputAttributes: {
-                    min: "8",
-                    max: "120",
-                    step: "1"
-                },
-                inputValue: 25
-            }).then(
-                (result) => {
-                    console.log(result.inputValue.value);
-                }
-            );
+        function clickUpdateBtn(btn) {
+            const form = btn.parentNode;
+            const currentQuantity = form.querySelector('input[name=quantity]').value;
+                Swal.fire({
+                    title: "변경하실 수량을 입력해주세요",
+                    icon: "question",
+                    input: "range",
+                    inputAttributes: {
+                        min: "1",
+                        max: "100",
+                        step: "1"
+                    },
+                    inputValue: currentQuantity
+                }).then(
+                    (result) => {
+                        if(result.isConfirmed) {
+                            const inputValue = Swal.getInput().value;
+                            form.querySelector('input[name=quantity]').value = inputValue;
+                            Swal.fire({
+                                icon: "success",
+                                title: "상품 수량이\n정상적으로 변경되었습니다",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                form.submit();
+                            })
+                        }
+                    }
+                );
         }
 
         function showConfirmAlert(message, confirmText, icon) {
@@ -159,12 +171,16 @@
                                 <td class="column-6"
                                     th:text="${#numbers.formatInteger(item.salePrice * item.quantity, 3, 'COMMA')} + '원'"></td>
                                 <td class="row-col-5 ">
-                                    <button type="button"
-                                            class="shop-btn"
-                                            data-toggle="modal" data-target="#updateQuantityModal"
-                                            th:onclick="clickUpdateBtn([[${item.id}]])">
-                                        수량 변경
-                                    </button>
+                                    <form method="post" action="cart/update">
+                                        <input name="id" th:value="${item.id}" hidden>
+                                        <input name="quantity" th:value="${item.quantity}" hidden>
+                                        <button type="button"
+                                                class="shop-btn"
+                                                data-toggle="modal" data-target="#updateQuantityModal"
+                                                onclick="clickUpdateBtn(this)">
+                                            수량 변경
+                                        </button>
+                                    </form>
                                     <form method="post" action="cart/delete">
                                         <input th:value="${item.id}" id="deleteItemId" name="id" hidden>
                                         <button type="button"
