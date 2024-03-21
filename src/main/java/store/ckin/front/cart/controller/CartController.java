@@ -3,8 +3,6 @@ package store.ckin.front.cart.controller;
 import static store.ckin.front.util.AlertUtil.showErrorAlert;
 import static store.ckin.front.util.AlertUtil.showSuccessAlert;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
-import store.ckin.front.cart.dto.request.CartItemOrderRequestDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.ItemAlreadyExistException;
 import store.ckin.front.cart.service.CartService;
@@ -104,19 +101,5 @@ public class CartController {
         log.debug("deleteCartItem(): request(id: {})", cartItemDeleteRequestDto.getId());
         cartService.deleteCartItem(cookie.getValue(), cartItemDeleteRequestDto);
         return REDIRECT_CART_URL;
-    }
-
-    /**
-     * 장바구니 상품을 주문하기 위한 메서드.
-     *
-     * @return 결제 페이지로 리다이렉트
-     */
-    @GetMapping("/order")
-    public String placeOrder(@CookieValue(name = "CART_ID") Cookie cookie, @ModelAttribute
-    ArrayList<CartItemOrderRequestDto> orderItems) {
-        log.debug("size : {}",orderItems.size());
-        cartService.orderCartItems(cookie.getValue(), Collections.emptyList());
-        return REDIRECT_CART_URL;
-//        return "redirect:/sale";
     }
 }
