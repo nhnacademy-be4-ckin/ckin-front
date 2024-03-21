@@ -22,8 +22,8 @@ public class IndexController {
 
     @GetMapping("/")
     public String indexView(Model model) {
-        List<BookMainPageResponseDto> koreanBookList = productService.findRecentBooksByCategoryId(1L, 8);
-        List<BookMainPageResponseDto> foreignBookList = productService.findRecentBooksByCategoryId(2L, 8);
+        List<BookMainPageResponseDto> koreanBookList = productService.findRecentBooksByCategoryId(1L, 4);
+        List<BookMainPageResponseDto> foreignBookList = productService.findRecentBooksByCategoryId(2L, 4);
         List<BookMainPageResponseDto> newBookList = productService.findRecentBooks(4);
 
         productService.findRecentBooks(8);

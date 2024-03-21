@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+<!-- 본문 내용 -->
+<div layout:fragment="content">
+    <head>
+        <title>첫페이지 | ckin</title>
+        <link rel="stylesheet" href="/css/setting.css">
+        <link rel="stylesheet" href="/css/plugin.css">
+        <!--                <link rel="stylesheet" href="/css/template.css">-->
+        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/main-initial.css">
+        <link rel="stylesheet" href="/css/main/section.css">
+
+    </head>
+
+    <body>
+    <main class="container_wrapper">
+        <section id="section-contents" class="contents_wrap aside">
+            <div class="contents_inner" style="width: 955.7px">
+                <h1 class="section-title">인기 도서</h1>
+                <div id="homeTabAll" class="tab_content ui-tabs-panel ui-corner-bottom ui-widget-content"
+                     data-type="all" style="" aria-labelledby="ui-id-42" role="tabpanel" aria-hidden="true">
+                    <div class="list_sort_wrap">
+                        <div class="right_area">
+                            <div class="form_sel type_sm" data-class="type_sm">
+                                <select title="목록 보기 유형 선택" id="allSort" style="display: none;">
+                                    <option value="new">최신순</option>
+                                    <option value="sel">판매량순</option>
+                                    <option value="mxv">높은가격순</option>
+                                    <option value="minv">낮은가격순</option>
+                                </select>
+                                <span tabindex="0" id="allSort-button" role="combobox" aria-expanded="false"
+                                      aria-autocomplete="list" aria-owns="allSort-menu" aria-haspopup="true"
+                                      title="목록 보기 유형 선택"
+                                      class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"
+                                      aria-labelledby="ui-id-54"
+                                      aria-disabled="false"><span
+                                        class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span><span
+                                        class="ui-selectmenu-text">최신순</span></span>
+                            </div>
+                            <!-- DESC : data-target 리스트형/썸네일형 제어되는 해당 상품 리스트 타겟지정 필요(#{tabid} .switch_prod_wrap) -->
+                            <div class="switch_list_btn_wrap" data-target="#homeTabAll .switch_prod_wrap">
+                                <button type="button" class="btn_sm btn_line_gray ico_list active" data-type="list">
+                                    <span class="hidden">리스트형 으로 보기</span></button>
+                                <button type="button" class="btn_sm btn_line_gray ico_img" data-type="img"><span
+                                        class="hidden">이미지형 으로 보기</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_result_wrap">
+                        <div class="pagination" id="allTopPagi">
+                            <button class="btn_page prev" th:onclick="|javascript:location.href='/product/section?page=' + (${pagination.getNumber()-1})|" th:classappend="${!(pagination.number > 0)} ? 'disabled'">
+                                <a th:onclick="@{'/product/section'(page=${pagination.getNumber()+1})}"></a>
+                                <span class="hidden">이전</span>
+                            </button>
+                            <div class="page_num">
+                                <th:block th:with="start=1, end=${(pagination.totalPages == 0) ? 1 : pagination.totalPages}">
+                                    <a th:each="page: ${#numbers.sequence(start, end)}" th:href="@{'/product/section'(page=${page - 1})}" th:data-index="${page}" class="btn_page_num" data-role="middle" th:text="${page}"></a>
+                                </th:block>
+                            </div>
+                            <button class="btn_page next" th:onclick="|javascript:location.href='/product/section?page=' + (${pagination.getNumber()+1})|"
+                                    th:classappend="${!(pagination.number < pagination.totalPages - 1)} ? 'disabled'">
+
+                                <span class="hidden">다음</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="switch_prod_wrap view_type_list">
+                        <ol class="prod_list" style="">
+                            <li class="prod_item" th:each="book : ${pagination.content}">
+                                <div class="prod_area horizontal">
+                                    <div class="prod_thumb_box size_lg">
+                                        <a class="prod_link" th:href="@{'/product/view/' + ${book.bookId}}">
+                                            <span class="img_box">
+                                            <img data-kbbfn="s3-image" loading="lazy" alt="뉴덴"
+                                                 th:src="${book.thumbnail}">
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="prod_info_box">
+                                        <div class="auto_overflow_wrap prod_name_group">
+                                            <div class="auto_overflow_contents">
+                                                <div class="auto_overflow_inner">
+                                                    <a th:href="@{'/product/view/' + ${book.bookId}}" class="prod_info">
+                                                        <span class="prod_name" th:text="${book.bookTitle}"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="prod_author">
+                                            <a th:each="author : ${book.authorNames}" th:text="${author} + ' '"></a>
+                                            <a th:text="' · ' + ${book.bookPublisher}"></a>
+                                            <span class="date" th:text="' · ' + ${book.bookPublicationDate}"></span>
+                                        </span>
+                                        <div class="prod_price">
+                                            <span class="percent" th:text="${book.bookDiscountRate} + '%'"></span>
+                                            <span class="price">
+                                                <span class="val"
+                                                      th:text="${#numbers.formatInteger(book.bookSalePrice, 3, 'COMMA')} + '원'"></span>
+                                                </span>
+                                            </span>
+                                            <span class="price_normal">
+                                                <span class="text">정가</span>
+                                                <s class="val" th:text="${#numbers.formatInteger(book.bookRegularPrice, 3, 'COMMA')} + '원'"></s>
+                                            </span>
+                                            <span class="gap">|</span>
+                                            <span class="point">630p</span>
+                                        </div>
+                                        <p class="prod_introduction"></p>
+                                        <div class="prod_bottom">
+                                            <div class="review_summary_wrap type_sm">
+                                                <span class="review_klover_box">
+                                                    <span class="review_klover_text font_size_xxs"
+                                                          th:text="${totalRate}"></span>
+                                                </span>
+                                            </div>
+                                            <button data-kbbfn="wish-item" data-kbbfn-myrcode="001"
+                                                    data-kbbfn-nbopcode="001" data-kbbfn-id="S000212762923"
+                                                    type="button" class="btn_wish_icon ">
+                                                <span class="ico_wish"></span>
+                                                <span class="hidden">관심 등록</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prod_order_state">
+                                    <span class="badge_sm badge_pill ">
+                                        <span class="text"></span>
+                                    </span>
+                                    <p class="order_state_desc">
+                                    <p class="order_state_desc">
+                                        <span class="fw_bold">3/21(목) </span>
+                                        <br>출고예정</p>
+                                    </p>
+                                </div>
+                                <div class="prod_btn_wrap">
+                                    <button data-kbbfn="wish-item" data-kbbfn-myrcode="001" data-kbbfn-nbopcode="001"
+                                            data-kbbfn-id="S000212762923" data-kbbfn-bid="9791138828697"
+                                            class="btn_wish_icon " type="button">
+                                        <span class="ico_wish"></span>
+                                        <span class="hidden">관심 등록</span>
+                                        <span class="text">button</span>
+                                    </button>
+                                    <div class="btn_wrap full">
+                                        <a data-kbbfn="cart-item" data-kbbfn-grpcode="SGK"
+                                           data-kbbfn-pid="S000212762923"
+                                           data-kbbfn-spbcode="002" data-kbbfn-adult="0"
+                                           data-kbbfn-bid="9791138828697"
+                                           class="btn_sm btn_light_gray">
+                                            <span class="text">장바구니</span>
+                                        </a>
+                                        <a data-kbbfn="cart-item"
+                                           data-kbbfn-grpcode="SGK"
+                                           data-kbbfn-pid="S000212762923"
+                                           data-kbbfn-spbcode="001" data-kbbfn-adult="0"
+                                           class="btn_sm btn_primary">
+                                            <span class="text">바로구매</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ol>
+
+                        <div class="pagination" id="allBottomPagi" style="">
+                            <button class="btn_page prev" disabled="disabled"><span class="hidden">이전</span></button>
+                            <div class="page_num"><a href="#" class="btn_page_num active" data-index="0"
+                                                     data-role="first" title="현재페이지">1</a><span
+                                    class="text_ellipsis hidden">...</span><a href="#" class="btn_page_num"
+                                                                              data-index="2" data-role="middle">2</a><a
+                                    href="#" class="btn_page_num" data-index="3" data-role="middle">3</a><a href="#"
+                                                                                                            class="btn_page_num"
+                                                                                                            data-index="4"
+                                                                                                            data-role="middle">4</a><a
+                                    href="#" class="btn_page_num" data-index="5" data-role="middle">5</a><a href="#"
+                                                                                                            class="btn_page_num"
+                                                                                                            data-index="6"
+                                                                                                            data-role="middle">6</a><a
+                                    href="#" class="btn_page_num" data-index="7" data-role="middle">7</a><span
+                                    class="text_ellipsis">...</span><a href="#" class="btn_page_num" data-index="9"
+                                                                       data-role="last">25</a></div>
+                            <button class="btn_page next"><span class="hidden">다음</span></button>
+                        </div>
+
+
+                        <div class="no_data has_line" style="display: none;">
+                            <div class="no_data_desc">데이터를 불러오는 중입니다.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    </body>
+</div>
+</html>
