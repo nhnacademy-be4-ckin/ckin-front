@@ -67,12 +67,12 @@
                                 <div class="search-result" th:each="book : ${SEARCH_RESULT}">
                                     <div class="search-result-col">
                                         <div class="search-result-left">
-                                            <a th:href="@{/product/view/${book.id}}">
+                                            <a th:href="|/product/view/${book.id}|">
                                                 <img th:src="${book.thumbnail}" class="search-result-img"
                                                      alt="result-img">
                                             </a>
                                             <div class="search-result-info">
-                                                <a th:href="@{/product/view/${book.id}}" th:text="${book.title}"></a>
+                                                <a th:href="|/product/view/${book.id}|" th:text="${book.title}"></a>
                                                 <div class="search-result-author-info">
                                                     <em class="author-title">저자</em>
                                                     <em th:text="${book.author}"></em>
@@ -106,10 +106,12 @@
                                                 <input name="regularPrice" th:value="${book.regularPrice}" hidden>
                                                 <input name="salePrice" th:value="${book.salePrice}" hidden>
                                                 <input name="thumbnail" th:value="${book.thumbnail}" hidden>
-                                                <button type="button" class="btn-hover color-8" onclick="clickAddCartBtn(this)">장바구니
+                                                <button type="button" class="btn-hover color-8"
+                                                        onclick="setQuantityAndSubmit(this, '/cart/create')">장바구니
                                                     추가
                                                 </button>
-                                                <button type="button" class="btn-hover color-8" onclick="clickCheckoutBtn(this)">바로
+                                                <button type="button" class="btn-hover color-8"
+                                                        onclick="setQuantityAndSubmit(this, '/cart/order')">바로
                                                     결제하기
                                                 </button>
                                             </form>
@@ -117,7 +119,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
