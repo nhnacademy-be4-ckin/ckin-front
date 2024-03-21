@@ -5,7 +5,6 @@ import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +25,6 @@ import store.ckin.front.config.properties.GatewayProperties;
  * @author : jinwoolee
  * @version : 2024. 03. 19.
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AddressAdapterImpl implements AddressAdapter {
@@ -69,8 +67,6 @@ public class AddressAdapterImpl implements AddressAdapter {
                 .encode()
                 .buildAndExpand(memberId)
                 .toUri();
-
-        log.info("URI : {}", uri);
 
         ResponseEntity<List<MemberAddressResponseDto>> responseEntity =
                 restTemplate.exchange(

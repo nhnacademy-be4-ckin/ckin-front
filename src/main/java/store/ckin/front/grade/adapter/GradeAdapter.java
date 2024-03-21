@@ -16,7 +16,7 @@ public interface GradeAdapter {
 
     List<GradeResponseDto> getGradeList();
 
-    void updateGrade(GradeUpdateRequestDto gradeUpdateRequestDto);
+    void updateGrade(Long gradeId, GradeUpdateRequestDto gradeUpdateRequestDto);
 
     void deleteGrade(Long gradeId);
 }
