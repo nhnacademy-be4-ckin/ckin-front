@@ -54,6 +54,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     }
 
     private DefaultOAuth2User getPaycoOauth2User(OAuth2UserRequest userRequest) {
+        log.debug("getPaycoOauth2User start");
         RequestEntity<?> request = Objects.requireNonNull(requestEntityConverter.convert(userRequest));
         ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
                 request,
@@ -74,6 +75,8 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
     }
 
     private Map<String, Object> getPaycoAttributes(Map<String, Object> userAttributes) {
+        log.debug("getPaycoAttributes Start");
+        log.debug("userAttributes : {}", userAttributes.toString());
         Map<String, Object> memberAttributes = (Map) userAttributes.get("member");
 
         Map<String, Object> attributes = new HashMap<>();
@@ -86,10 +89,13 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             attributes.put("name", memberAttributes.get("name"));
         }
 
-        if (memberAttributes.containsKey("contact")) {
+        if (memberAttributes.containsKey("mobile")) {
             attributes.put("contact", memberAttributes.get("mobile"));
         }
 
-        return attributes;
+        Map<String, Object> result = new HashMap<>();
+        result.put("member", attributes);
+
+        return result;
     }
 }

@@ -42,8 +42,9 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         Authentication authentication)
             throws IOException, ServletException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = oauth2User.getAttributes();
+        Map<String, Object> attributes = (Map) oauth2User.getAttributes().get("member");
         String oauthId = String.valueOf(attributes.get("oauthId"));
+        log.debug("onAuthenticationSuccess : OAuth ID [{}]", oauthId);
 
         try {
             log.debug("OAuth Login");
@@ -76,6 +77,8 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
+        targetUrl.queryParam("oauthId", String.valueOf(attributes.get("oauthId")));
+
         if (attributes.containsKey("email")) {
             targetUrl.queryParam("email", String.valueOf(attributes.get("email")));
         }

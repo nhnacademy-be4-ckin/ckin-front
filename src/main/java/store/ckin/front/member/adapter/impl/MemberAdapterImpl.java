@@ -99,7 +99,7 @@ public class MemberAdapterImpl implements MemberAdapter {
 
         ResponseEntity<MemberOauthLoginResponseDto> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/api/login/oauth",
-                HttpMethod.GET,
+                HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });

@@ -25,6 +25,10 @@
         </div>
 
         <div class="mb-3">
+            <input type="password" class="form-control hidden" id="oauthId" name="oauthId" th:value="${param.oauthId}" readonly>
+        </div>
+
+        <div class="mb-3">
             <input type="password" class="form-control" id="password" name="password" minlength="8" maxlength="20" placeholder="비밀번호" onkeyup="validatePassword()" required>
         </div>
 
