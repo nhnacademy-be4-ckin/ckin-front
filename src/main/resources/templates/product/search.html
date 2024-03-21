@@ -99,7 +99,7 @@
                                                         type="button" onclick="plusQuantity(this)">+
                                                 </button>
                                             </div>
-                                            <form action="" method="post">
+                                            <form action="/cart/create" method="post">
                                                 <input name="id" th:value="${book.id}" hidden>
                                                 <input name="name" th:value="${book.title}" hidden>
                                                 <input name="quantity" class="send-quantity" value="" hidden="">
@@ -107,11 +107,11 @@
                                                 <input name="salePrice" th:value="${book.salePrice}" hidden>
                                                 <input name="thumbnail" th:value="${book.thumbnail}" hidden>
                                                 <button type="button" class="btn-hover color-8"
-                                                        onclick="setQuantityAndSubmit(this, '/cart/create')">장바구니
+                                                        onclick="saveItemToCart(this)">장바구니
                                                     추가
                                                 </button>
                                                 <button type="button" class="btn-hover color-8"
-                                                        onclick="setQuantityAndSubmit(this, '/cart/order')">바로
+                                                        onclick="placeOrderOne(this)">바로
                                                     결제하기
                                                 </button>
                                             </form>
