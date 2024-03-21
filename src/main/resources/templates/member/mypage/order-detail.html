@@ -117,7 +117,14 @@
             <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
 
                 <h3 class="m-t-30 m-b-30" style="color: #00235e"
-                    th:text="'결제 정보 : ' + ${saleDetail.saleResponseDto.salePaymentStatus}"> 결제 정보 </h3>
+                    th:text="'주문 결제 정보 : ' + ${saleDetail.saleResponseDto.salePaymentStatus}"> 결제 정보 </h3>
+
+                <th:block th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() eq 'WAITING'}">
+                    <button class="m-t-50 btn-outline-primary btn float-l"
+                            th:onclick="|location.href='@{/sale/success/{saleNumber}(saleNumber=${saleNumber})}'|">
+                        결제하기
+                    </button>
+                </th:block>
 
                 <th:block th:if="${saleDetail.paymentResponseDto != null}"
                           th:object="${saleDetail.paymentResponseDto}">
@@ -139,8 +146,7 @@
                     </button>
                 </th:block>
 
-                <th:block
-                        th:if="${saleDetail.paymentResponseDto == null or saleDetail.paymentResponseDto.paymentStatus.name() != 'CANCEL'}">
+                <th:block th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() != 'CANCEL'}">
                     <button class="m-t-50 btn-outline-danger btn float-r"
                             th:onclick="cancelOrder()">
                         주문 취소
@@ -156,6 +162,7 @@
             </p>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script th:inline="javascript">
 
             /*<![CDATA[*/
@@ -166,37 +173,59 @@
 
             function cancelOrder() {
                 // 결제가 진행된 경우 결제 취소 요청
-                const cancelReason = prompt('주문 취소 사유를 입력해주세요.');
+                Swal.fire({
+                    title: '주문 취소 사유를 입력해주세요.',
+                    input: 'text',
+                    inputPlaceholder: '취소 사유를 입력하세요...',
+                    showCancelButton: true,
+                    confirmButtonText: '주문 취소',
+                    cancelButtonText: '취소',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (cancelReason) => {
+                        if (!cancelReason) {
+                            Swal.showValidationMessage('취소 사유를 입력하세요.');
+                        } else {
+                            return {cancelReason: cancelReason};
+                        }
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const cancelReason = result.value.cancelReason;
 
-                if (cancelReason == null) {
-                    return;
-                }
+                        if (payment != null) {
+                            requestPaymentCancel(payment.paymentKey, cancelReason);
+                        }
 
-                if (payment != null) {
-                    requestPaymentCancel(payment.paymentKey, cancelReason);
-                }
-
-                requestSaleCancel();
+                        requestSaleCancel();
+                    }
+                });
             }
 
             async function requestPaymentCancel(paymentKey, cancelReason) {
-
-
                 const requestData = {
                     paymentKey: paymentKey,
                     cancelReason: cancelReason
                 };
 
-                const response = await fetch('/toss/cancel', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(requestData),
-                });
+                try {
+                    const response = await fetch('/toss/cancel', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(requestData),
+                    });
 
-                if (!response.ok) {
-                    alert('주문 취소에 실패하였습니다.');
+                    if (!response.ok) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "주문 취소에 실패하였습니다.",
+                            text: "다시 시도해주세요,",
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire('에러', error.message, 'error');
                 }
             }
 
@@ -207,15 +236,20 @@
                     });
 
                     if (!response.ok) {
-                        alert('주문 취소에 실패하였습니다.');
+                        Swal.fire({
+                            icon: "error",
+                            title: "주문 취소에 실패하였습니다.",
+                            text: "다시 시도해주세요,",
+                        });
                     }
 
                     // reload
                     window.location.reload();
                 } catch (error) {
-                    alert(error.message);
+                    Swal.fire('에러', error.message, 'error');
                 }
             }
+
         </script>
 
     </div>
