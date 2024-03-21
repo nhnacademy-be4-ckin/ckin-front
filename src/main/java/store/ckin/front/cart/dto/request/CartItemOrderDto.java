@@ -1,7 +1,7 @@
 package store.ckin.front.cart.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * description
@@ -9,9 +9,10 @@ import lombok.Getter;
  * @author 김준현
  * @version 2024. 03. 21
  */
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class CartItemOrderRequestDto {
+public class CartItemOrderDto {
     private long id;
     private int quantity;
+    private String name;
 }
