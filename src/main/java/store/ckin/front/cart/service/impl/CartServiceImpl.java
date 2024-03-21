@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
-import store.ckin.front.cart.dto.request.CartItemOrderRequestDto;
+import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
 import store.ckin.front.cart.exception.ItemAlreadyExistException;
+import store.ckin.front.cart.exception.OrderFailedException;
 import store.ckin.front.cart.service.CartService;
 
 /**
@@ -78,6 +79,20 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      *
+     * @param key 현재 유저의 UUID
+     * @return
+     */
+    public List<CartItemOrderDto> readOrderItems(String key) {
+        List<CartItemOrderDto> orderList = (List<CartItemOrderDto>) redisTemplate.opsForHash().get(key, ORDER_HASH_KEY);
+        if (Objects.isNull(orderList) || orderList.isEmpty()) {
+            throw new OrderFailedException("주문의 접근 경로가 잘못되었거나 오류가 발생하였습니다.");
+        }
+        return orderList;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param key                      현재 유저의 UUID
      * @param cartItemUpdateRequestDto 수량 변경을 원하는 상품의 정보가 담긴 Dto
      */
@@ -125,7 +140,13 @@ public class CartServiceImpl implements CartService {
         redisTemplate.opsForHash().delete(key, CART_HASH_KEY);
     }
 
-    public void orderCartItems(String key, List<CartItemOrderRequestDto> orderItems) {
+    /**
+     * {@inheritDoc}
+     *
+     * @param key        현재 유저의 UUID
+     * @param orderItems 유저가 주문한 상품 리스트
+     */
+    public void orderCartItems(String key, List<CartItemOrderDto> orderItems) {
         HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
         hashOperations.delete(key, ORDER_HASH_KEY);
         if (Objects.isNull(hashOperations.get(key, ORDER_HASH_KEY))) {
@@ -133,13 +154,19 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    public void deleteCartItems(String key, List<CartItemDeleteRequestDto> deleteItems) {
+    /**
+     * {@inheritDoc}
+     *
+     * @param key         현재 유저의 UUID
+     * @param deleteItems 유저가 주문한(삭제할) 상품 리스트
+     */
+    public void deleteCartItems(String key, List<CartItemOrderDto> deleteItems) {
         HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
 
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
         Set<Long> deleteItemsId = deleteItems.stream()
-                .map(CartItemDeleteRequestDto::getId).collect(Collectors.toSet());
+                .map(CartItemOrderDto::getId).collect(Collectors.toSet());
         Set<CartItem> deletedCartItem = currentUserCart.stream()
                 .filter(item -> deleteItemsId.contains(item.getId()))
                 .collect(Collectors.toSet());
