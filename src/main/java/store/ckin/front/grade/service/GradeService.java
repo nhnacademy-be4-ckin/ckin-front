@@ -16,7 +16,7 @@ public interface GradeService {
 
     List<GradeResponseDto> getGradeList();
 
-    void updateGrade(Long gradeId, GradeUpdateRequestDto gradeUpdateRequestDto);
+    void updateGrade(GradeCreateRequestDto gradeCreateRequestDto);
 
     void deleteGrade(Long gradeId);
 }

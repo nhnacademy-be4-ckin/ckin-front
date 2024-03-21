@@ -39,7 +39,7 @@ public class GradeController {
     /**
      * 등급 생성을 요청하는 메서드 입니다.
      */
-    @PostMapping
+    @PostMapping("/add")
     public String createGrade(@Valid GradeCreateRequestDto gradeCreateRequestDto) {
         gradeService.createGrade(gradeCreateRequestDto);
 
@@ -49,10 +49,9 @@ public class GradeController {
     /**
      * 등급 수정을 요청하는 메서드 입니다.
      */
-    @PutMapping("/{gradeId}")
-    public String updateGrade(@PathVariable("gradeId") Long gradeId,
-                              @Valid GradeUpdateRequestDto gradeUpdateRequestDto) {
-        gradeService.updateGrade(gradeId, gradeUpdateRequestDto);
+    @PostMapping("/update")
+    public String updateGrade(@Valid GradeCreateRequestDto gradeCreateRequestDto) {
+        gradeService.updateGrade(gradeCreateRequestDto);
 
         return GRADE_REDIRECT_URL;
     }

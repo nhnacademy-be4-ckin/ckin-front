@@ -77,7 +77,7 @@ public class GradeAdapterImpl implements GradeAdapter {
 
         restTemplate.exchange(
                 uri,
-                HttpMethod.PUT,
+                HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });

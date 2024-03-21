@@ -36,8 +36,14 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void updateGrade(Long gradeId, GradeUpdateRequestDto gradeUpdateRequestDto) {
-        gradeAdapter.updateGrade(gradeId, gradeUpdateRequestDto);
+    public void updateGrade(GradeCreateRequestDto gradeCreateRequestDto) {
+        gradeAdapter.updateGrade(
+                gradeCreateRequestDto.getId(),
+                new GradeUpdateRequestDto(
+                        gradeCreateRequestDto.getName(),
+                        gradeCreateRequestDto.getPointRatio(),
+                        gradeCreateRequestDto.getCondition()
+                ));
     }
 
     @Override
