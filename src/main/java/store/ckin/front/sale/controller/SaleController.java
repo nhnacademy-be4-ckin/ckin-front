@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
+@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -52,6 +54,7 @@ public class SaleController {
                               @RequestParam(name = "address", required = false) String address,
                               @RequestParam(name = "detailAddress", required = false) String detailAddress) {
         List<CartItemOrderDto> cartItems = saleFacade.readOrderItems(cookie.getValue());
+        log.debug("size : {}", cartItems.size());
 
         if (cartItems.isEmpty()) {
             return "redirect:/cart";
