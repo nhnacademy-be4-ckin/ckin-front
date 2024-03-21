@@ -179,9 +179,9 @@
             function cancelOrder() {
                 // 결제가 진행된 경우 결제 취소 요청
                 Swal.fire({
-                    title: '주문 취소 사유를 입력해주세요.',
+                    title: '주문 취소',
                     input: 'text',
-                    inputPlaceholder: '취소 사유를 입력하세요...',
+                    inputPlaceholder: '취소 사유를 입력해주세요..',
                     showCancelButton: true,
                     confirmButtonText: '주문 취소',
                     cancelButtonText: '취소',
@@ -249,14 +249,20 @@
                     }
 
                     // reload
-                    window.location.reload();
+                    Swal.fire({
+                        title: "주문이 취소되었습니다.",
+                        icon: "success"
+                    }).then(() => {
+                        location.reload();
+                    });
+
+
                 } catch (error) {
                     Swal.fire('에러', error.message, 'error');
                 }
             }
 
         </script>
-
 
     </div>
 </div>
