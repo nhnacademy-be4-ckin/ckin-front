@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import store.ckin.front.grade.adapter.GradeAdapter;
-import store.ckin.front.grade.domain.request.GradeCreateRequestDto;
+import store.ckin.front.grade.domain.request.GradeRequestDto;
 import store.ckin.front.grade.domain.request.GradeUpdateRequestDto;
 import store.ckin.front.grade.domain.response.GradeResponseDto;
 import store.ckin.front.grade.service.GradeService;
@@ -23,8 +23,8 @@ public class GradeServiceImpl implements GradeService {
     private final GradeAdapter gradeAdapter;
 
     @Override
-    public void createGrade(GradeCreateRequestDto gradeCreateRequestDto) {
-        gradeAdapter.createGrade(gradeCreateRequestDto);
+    public void createGrade(GradeRequestDto gradeRequestDto) {
+        gradeAdapter.createGrade(gradeRequestDto);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void updateGrade(GradeCreateRequestDto gradeCreateRequestDto) {
+    public void updateGrade(GradeRequestDto gradeRequestDto) {
         gradeAdapter.updateGrade(
-                gradeCreateRequestDto.getId(),
+                gradeRequestDto.getId(),
                 new GradeUpdateRequestDto(
-                        gradeCreateRequestDto.getName(),
-                        gradeCreateRequestDto.getPointRatio(),
-                        gradeCreateRequestDto.getCondition()
+                        gradeRequestDto.getName(),
+                        gradeRequestDto.getPointRatio(),
+                        gradeRequestDto.getCondition()
                 ));
     }
 

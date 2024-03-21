@@ -5,9 +5,12 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import store.ckin.front.grade.domain.request.GradeCreateRequestDto;
-import store.ckin.front.grade.domain.request.GradeUpdateRequestDto;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import store.ckin.front.grade.domain.request.GradeRequestDto;
 import store.ckin.front.grade.domain.response.GradeResponseDto;
 import store.ckin.front.grade.service.GradeService;
 
@@ -40,8 +43,8 @@ public class GradeController {
      * 등급 생성을 요청하는 메서드 입니다.
      */
     @PostMapping("/add")
-    public String createGrade(@Valid GradeCreateRequestDto gradeCreateRequestDto) {
-        gradeService.createGrade(gradeCreateRequestDto);
+    public String createGrade(@Valid GradeRequestDto gradeRequestDto) {
+        gradeService.createGrade(gradeRequestDto);
 
         return GRADE_REDIRECT_URL;
     }
@@ -50,8 +53,8 @@ public class GradeController {
      * 등급 수정을 요청하는 메서드 입니다.
      */
     @PostMapping("/update")
-    public String updateGrade(@Valid GradeCreateRequestDto gradeCreateRequestDto) {
-        gradeService.updateGrade(gradeCreateRequestDto);
+    public String updateGrade(@Valid GradeRequestDto gradeRequestDto) {
+        gradeService.updateGrade(gradeRequestDto);
 
         return GRADE_REDIRECT_URL;
     }

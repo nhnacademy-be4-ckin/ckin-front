@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class GradeCreateRequestDto {
+public class GradeRequestDto {
     @NotNull
     private Long id;
 

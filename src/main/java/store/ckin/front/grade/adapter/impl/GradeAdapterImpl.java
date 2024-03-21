@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.grade.adapter.GradeAdapter;
-import store.ckin.front.grade.domain.request.GradeCreateRequestDto;
+import store.ckin.front.grade.domain.request.GradeRequestDto;
 import store.ckin.front.grade.domain.request.GradeUpdateRequestDto;
 import store.ckin.front.grade.domain.response.GradeResponseDto;
 
@@ -35,9 +35,9 @@ public class GradeAdapterImpl implements GradeAdapter {
     private static final String GRADE_URL = "/api/admin/grades";
 
     @Override
-    public void createGrade(GradeCreateRequestDto gradeCreateRequestDto) {
+    public void createGrade(GradeRequestDto gradeRequestDto) {
         HttpHeaders headers = new HttpHeaders(getHttpHeaders());
-        HttpEntity<GradeCreateRequestDto> requestEntity = new HttpEntity<>(gradeCreateRequestDto, headers);
+        HttpEntity<GradeRequestDto> requestEntity = new HttpEntity<>(gradeRequestDto, headers);
 
         restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + GRADE_URL,
