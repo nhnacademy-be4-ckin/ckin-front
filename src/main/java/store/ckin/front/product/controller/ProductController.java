@@ -50,7 +50,6 @@ public class ProductController {
 
         PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(categoryId);
-        //TODO: categoryId로 단일 조회
 
         model.addAttribute("pagination", bookPageDto);
         model.addAttribute("categoryList", categoryList);
@@ -112,5 +111,33 @@ public class ProductController {
         model.addAttribute("keyword", keyword);
 
         return "product/search";
+    }
+
+    /**
+     * //TODO: 미정
+     * section 화면으로 이동하는 메소드 입니다.
+     *
+     * @return section View로 이동
+     */
+    @GetMapping("/section")
+    public String sectionView(@PageableDefault(size = 4) Pageable pageable,
+                              Model model) {
+        PageDto<BookResponseDto> bookPageDto = productService.getRecentPublishBooks(pageable);
+
+        model.addAttribute("pagination", bookPageDto);
+
+        return "product/section";
+    }
+
+    @GetMapping("/best")
+    public String bestSellerView(@PageableDefault(size = 4) Pageable pageable,
+                              Model model) {
+        PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(3L, pageable);
+        List<CategoryResponseDto> categoryList = categoryService.getSubcategories(3L);
+
+        model.addAttribute("pagination", bookPageDto);
+        model.addAttribute("categoryList", categoryList);
+
+        return "product/best-section";
     }
 }

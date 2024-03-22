@@ -33,9 +33,19 @@ public interface ProductService {
      */
     BookResponseDto findProductById(Long bookId);
 
-    List<BookMainPageResponseDto> findRecentBooks(Integer limit);
+    /**
+     * 최근 출판된 도서 목록을 가져옵니다.
+     *
+     * @return 최근 출판된 도서 목록
+     */
+    List<BookMainPageResponseDto> getRecentPublishBooks();
 
-    List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit);
+    /**
+     * 최근 출판된 도서 목록을 가져옵니다.
+     *
+     * @return 최근 출판된 도서 페이지 목록
+     */
+    PageDto<BookResponseDto> getRecentPublishBooks(Pageable pageable);
 
     /**
      * 해당 키워드를 가진 연관 도서들을 가져오는 메서드
@@ -44,5 +54,23 @@ public interface ProductService {
      * @param pageRequest 페이지 요청
      * @return 연관된 도서 목록
      */
+
+    List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest);
+
+    /**
+     * 관리자가 지정한 인기 도서를 가져옵니다.
+     *
+     * @return 인기 도서 목록
+     */
+    List<BookMainPageResponseDto> getBestBooks();
+
+    /**
+     * 관리자가 지정한 추천 도서를 가져옵니다.
+     *
+     * @return 추천 도서 목록
+     */
+    List<BookMainPageResponseDto> getRecommendBooks();
+
     PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest);
+
 }

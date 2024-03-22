@@ -675,7 +675,7 @@ html, body {
 
 .container_wrapper {
     padding: 5% 10%;
-    width: 2310px;
+    width: 100%;
 }
 
 .hidden {
@@ -697,7 +697,10 @@ html, body {
     padding-top: 150px;
 }
 
-
+a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
 
 
 

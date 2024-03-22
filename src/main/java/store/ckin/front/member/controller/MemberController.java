@@ -83,7 +83,7 @@ public class MemberController {
                 new UsernamePasswordAuthenticationToken(memberId, null, memberInfo.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(token);
 
-        return "redirect:/";
+        return "redirect:/?isWelcome=true";
     }
 
     /**
