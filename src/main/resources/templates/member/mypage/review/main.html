@@ -6,8 +6,28 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <script src="/js/view.js"></script>-->
+    <!--    <script src="/js/view.js"></script>-->
     <script>
+        $(document).ready(function () {
+            $('.edit-review-button').click(function () {
+                var reviewId = $(this).data('review-id');
+                var reviewRate = $(this).data('review-rate');
+                var message = $(this).data('message');
+
+                // 리뷰 ID, 점수, 메시지 필드에 값을 채웁니다.
+                $('#reviewId').val(reviewId);
+                console.log(reviewId);
+                $('#review_rate_edit').val(reviewRate);
+                console.log(reviewRate);
+                $('#review_comment_edit').val(message);
+                console.log(message);
+
+                // Bootstrap의 모달을 jQuery로 활성화합니다.
+                var modal = new bootstrap.Modal($('#reviewEditModal'));
+                modal.show();
+            });
+        });
+
         function redirectToBook(bookId) {
             window.location.href = '/product/view/' + bookId;
         }
@@ -115,8 +135,9 @@
                                                 th:text="${review.reviewDate}"></span><span
                                                 class="gap"> | </span>
                                             <span class="info_item">
-    <a href="#" class="text-primary" th:onclick="'editReview(\'' + ${review.reviewId} + '\')'"
-       style="text-decoration: none;">리뷰 수정하기</a>
+<a class="text-primary edit-review-button" th:data-review-id="${review.reviewId}"
+   th:data-review-rate="${review.reviewRate}" th:data-message="${review.message}"
+   style="text-decoration: none;">리뷰 수정하기</a>
 </span>
                                             <span
                                                     class="gap"> | </span>
@@ -232,5 +253,44 @@
             </div>
         </div>
     </div>
+
+    <!-- 리뷰 수정 모달 -->
+    <div class="modal fade" id="reviewEditModal" tabindex="-1" aria-labelledby="reviewEditModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewEditModalLabel">리뷰 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reviewEditForm" th:action="@{/member/mypage/review}" method="post">
+                        <!-- 리뷰 ID 숨겨진 필드 -->
+                        <input type="hidden" name="reviewId" id="reviewId">
+
+                        <!-- 리뷰 점수 입력 필드 -->
+                        <div class="mb-3">
+                            <label for="review_rate_edit" class="col-form-label">리뷰 점수:</label>
+                            <input type="number" class="form-control" id="review_rate_edit" name="reviewRate" min="1"
+                                   max="5" placeholder="1에서 5사이의 정수를 입력해주세요.">
+                            <div class="invalid-feedback" id="invalid_view">0이상의 값을 입력해주세요.</div>
+                            <div class="invalid-feedback" id="invalid_view_gt">5이하의 값을 입력해주세요.</div>
+                        </div>
+
+                        <!-- 리뷰 작성 텍스트 필드 -->
+                        <div class="mb-3">
+                            <label for="review_comment_edit" class="col-form-label">리뷰 작성:</label>
+                            <textarea class="form-control" id="review_comment_edit" name="reviewComment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="submit" form="reviewEditForm" class="btn btn-primary">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </html>

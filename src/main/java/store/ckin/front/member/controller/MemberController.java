@@ -96,11 +96,5 @@ public class MemberController {
         return "member/login";
     }
 
-    @PutMapping
-    public String updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        reviewService.updateReview(updateReviewRequestDto, reviewId, authentication.getName());
 
-        return "redirect:/member/mypage/review";
-    }
 }
