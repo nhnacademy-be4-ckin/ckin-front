@@ -105,7 +105,8 @@ public class ReviewAdapterImpl implements ReviewAdapter {
     public PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, String memberId) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
 
-        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/members/review/my-page/{memberId}")
+        String url = UriComponentsBuilder.fromHttpUrl(
+                        gatewayProperties.getGatewayUri() + "/api/members/review/my-page/{memberId}")
                 .queryParam("page", pageable.getPageNumber())
                 .queryParam("size", pageable.getPageSize())
                 .encode()
@@ -123,19 +124,18 @@ public class ReviewAdapterImpl implements ReviewAdapter {
 
     @Override
     public void updateReview(UpdateReviewRequestDto updateReviewRequestDto,
-                             Long reviewId, String memberId) {
-        String url = gatewayProperties.getGatewayUri() + "/api/review/{memberId}/" + reviewId;
-
+                             Long memberId) {
+        String url = gatewayProperties.getGatewayUri() + "/api/members/review/" + memberId;
 
 
         HttpEntity<UpdateReviewRequestDto> requestEntity = new HttpEntity<>(updateReviewRequestDto, getHttpHeaders());
 
         restTemplate.exchange(
                 url,
-                HttpMethod.POST,
+                HttpMethod.PUT,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
-                }, memberId);
+                });
     }
 
 

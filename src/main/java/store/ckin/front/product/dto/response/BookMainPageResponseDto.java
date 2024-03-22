@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * BookMainPageResponseDto.
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
  * @version 2024. 03. 15.
  */
 @Getter
+@ToString
 @NoArgsConstructor
 public class BookMainPageResponseDto {
     private Long bookId;

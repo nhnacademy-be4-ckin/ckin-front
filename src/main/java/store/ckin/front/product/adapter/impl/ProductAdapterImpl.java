@@ -1,10 +1,13 @@
 package store.ckin.front.product.adapter.impl;
 
+import static store.ckin.front.product.service.impl.ProductServiceImpl.BEST_BOOK;
+import static store.ckin.front.product.service.impl.ProductServiceImpl.RECOMMEND_BOOK;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -70,6 +73,9 @@ public class ProductAdapterImpl implements ProductAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<BookMainPageResponseDto> findRecentBooks(Integer limit) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
@@ -88,17 +94,60 @@ public class ProductAdapterImpl implements ProductAdapter {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(
-                        portProperties.getGatewayUri() + "/api/books/main-page/category/" + categoryId)
+    public List<BookMainPageResponseDto> getBestBooks(Integer limit) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/main-page/tag")
                 .queryParam("limit", limit)
+                .queryParam("tagName", BEST_BOOK)
                 .encode()
                 .toUriString();
 
         ResponseEntity<List<BookMainPageResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<BookMainPageResponseDto> getRecommendBooks(Integer limit) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/main-page/tag")
+                .queryParam("limit", limit)
+                .queryParam("tagName", RECOMMEND_BOOK)
+                .encode()
+                .toUriString();
+
+        ResponseEntity<List<BookMainPageResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public PageDto<BookResponseDto> getRecentPublishedBook(Pageable pageable) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/recent")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<BookResponseDto>> exchange =
                 restTemplate.exchange(url,
                         HttpMethod.GET,
                         requestEntity,

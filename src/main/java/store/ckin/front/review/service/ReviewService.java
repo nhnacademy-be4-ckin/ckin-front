@@ -36,5 +36,5 @@ public interface ReviewService {
 
     PageDto<MyPageReviewResponseDto> getMyPageReviewResponseDto(Pageable pageable, String memberId);
 
-    void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId, String memberId);
+    void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long memberId);
 }

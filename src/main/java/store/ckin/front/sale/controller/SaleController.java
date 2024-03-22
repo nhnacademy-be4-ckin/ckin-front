@@ -1,8 +1,6 @@
 package store.ckin.front.sale.controller;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ import store.ckin.front.address.domain.AddressAttributeDto;
 import store.ckin.front.address.domain.response.MemberAddressResponseDto;
 import store.ckin.front.address.service.AddressService;
 import store.ckin.front.aop.Member;
-import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.facade.SaleFacade;
@@ -33,6 +31,7 @@ import store.ckin.front.sale.facade.SaleFacade;
  * @version 2024. 02. 25.
  */
 
+@Slf4j
 @Controller
 @RequestMapping("/sale")
 @RequiredArgsConstructor
@@ -54,7 +53,8 @@ public class SaleController {
                               @RequestParam(name = "postCode", required = false) String postCode,
                               @RequestParam(name = "address", required = false) String address,
                               @RequestParam(name = "detailAddress", required = false) String detailAddress) {
-        List<CartItem> cartItems = saleFacade.readCartItems(cookie.getValue());
+        List<CartItemOrderDto> cartItems = saleFacade.readOrderItems(cookie.getValue());
+        log.debug("size : {}", cartItems.size());
 
         if (cartItems.isEmpty()) {
             return "redirect:/cart";
@@ -86,11 +86,11 @@ public class SaleController {
                     .filter(MemberAddressResponseDto::getIsDefault)
                     .findFirst()
                     .ifPresent(responseDto ->
-                        model.addAttribute("address",
-                                new AddressAttributeDto(
-                                        responseDto.getPostCode(),
-                                        responseDto.getBase(),
-                                        responseDto.getDetail()))
+                            model.addAttribute("address",
+                                    new AddressAttributeDto(
+                                            responseDto.getPostCode(),
+                                            responseDto.getBase(),
+                                            responseDto.getDetail()))
                     );
         }
 
@@ -109,7 +109,8 @@ public class SaleController {
                              @Valid SaleCreateRequestDto requestDto) {
 
         String saleNumber = saleFacade.createSale(requestDto);
-        saleFacade.deleteCartItemAll(cookie.getValue());
+        List<CartItemOrderDto> cartItems = saleFacade.readOrderItems(cookie.getValue());
+        saleFacade.deleteCartItems(cookie.getValue(), cartItems);
 
         return "redirect:/sale/success/" + saleNumber;
     }

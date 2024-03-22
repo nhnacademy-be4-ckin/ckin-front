@@ -4,6 +4,7 @@ import java.util.List;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
+import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 
 /**
@@ -31,6 +32,14 @@ public interface CartService {
     List<CartItem> readCartItems(String key);
 
     /**
+     * 주문 요청한 상품들을 읽어오는 메서드
+     *
+     * @param key 현재 유저의 UUID
+     * @return 해당 유저가 주문한 상품 리스트
+     */
+    List<CartItemOrderDto> readOrderItems(String key);
+
+    /**
      * 장바구니 상품의 수량을 변경하는 메서드
      *
      * @param key                      현재 유저의 UUID
@@ -45,6 +54,22 @@ public interface CartService {
      * @param cartItemDeleteRequestDto 삭제할 상품의 ID가 담긴 Dto
      */
     void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto);
+
+    /**
+     * 주문한 상품들을 장바구니에서 삭제하는 메서드
+     *
+     * @param key         현재 유저의 UUID
+     * @param deleteItems 유저가 주문한(삭제할) 상품 리스트
+     */
+    void deleteCartItems(String key, List<CartItemOrderDto> deleteItems);
+
+    /**
+     * 선택한 상품을 주문하는 메서드
+     *
+     * @param key        현재 유저의 UUID
+     * @param orderItems 유저가 주문한 상품 리스트
+     */
+    void orderCartItems(String key, List<CartItemOrderDto> orderItems);
 
     /**
      * 장바구니 전체 상품을 삭제하는 메서드

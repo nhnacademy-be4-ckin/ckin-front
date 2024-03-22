@@ -6,6 +6,8 @@
 
 <!-- 본문 내용 -->
 <div layout:fragment="content">
+    <script src="/js/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <main class="main row">
         <div class="search-page-wrap p-t-15">
             <div class="search-content-wrap">
@@ -65,12 +67,12 @@
                                 <div class="search-result" th:each="book : ${SEARCH_RESULT}">
                                     <div class="search-result-col">
                                         <div class="search-result-left">
-                                            <a th:href="@{/product/view/${book.id}}">
+                                            <a th:href="|/product/view/${book.id}|">
                                                 <img th:src="${book.thumbnail}" class="search-result-img"
                                                      alt="result-img">
                                             </a>
                                             <div class="search-result-info">
-                                                <a th:href="@{/product/view/${book.id}}" th:text="${book.title}"></a>
+                                                <a th:href="|/product/view/${book.id}|" th:text="${book.title}"></a>
                                                 <div class="search-result-author-info">
                                                     <em class="author-title">저자</em>
                                                     <em th:text="${book.author}"></em>
@@ -89,23 +91,51 @@
                                         <div class="search-result-right">
                                             <div class="search-result-quantity">
                                                 <button class="search-result-quantity-btn btn btn-outline-secondary"
-                                                        type="button">-
+                                                        type="button" onclick="minusQuantity(this)">-
                                                 </button>
-                                                <input type="number" class="search-result-quantity-number"
+                                                <input type="number" class="search-result-quantity-number" value="1"
                                                        placeholder="0">
                                                 <button class="search-result-quantity-btn btn btn-outline-secondary"
-                                                        type="button">+
+                                                        type="button" onclick="plusQuantity(this)">+
                                                 </button>
                                             </div>
-                                            <form>
-                                                <button class="btn-hover color-8">장바구니 추가</button>
-                                                <button class="btn-hover color-8">바로 결제하기</button>
+                                            <form action="/cart/create" method="post">
+                                                <input name="id" th:value="${book.id}" hidden>
+                                                <input name="name" th:value="${book.title}" hidden>
+                                                <input name="quantity" class="send-quantity" value="" hidden="">
+                                                <input name="regularPrice" th:value="${book.regularPrice}" hidden>
+                                                <input name="salePrice" th:value="${book.salePrice}" hidden>
+                                                <input name="thumbnail" th:value="${book.thumbnail}" hidden>
+                                                <button type="button" class="btn-hover color-8"
+                                                        onclick="saveItemToCart(this)">장바구니
+                                                    추가
+                                                </button>
+                                                <button type="button" class="btn-hover color-8"
+                                                        onclick="placeOrderOne(this)">바로
+                                                    결제하기
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1"
+                                               aria-disabled="true">Previous</a>
+                                        </li>
+                                        <li class="page-item"
+                                            th:each="num : ${#numbers.sequence(1, RESULT_PAGE_INFO.totalPages)}">
+                                            <a class="page-link"
+                                               th:href="@{/product/search(page=${num},keyword=${keyword})}"
+                                               th:text="${num}"></a>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
-
                         </div>
                     </div>
                 </div>

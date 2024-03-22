@@ -1,7 +1,5 @@
 // 폼 전송 이벤트 리스너 등록
 
-console.log("form-check.js");
-
 // 폼 전송 이벤트 리스너 등록
 document.getElementById('submit-btn').addEventListener('click', function (event) {
     // 필드의 레이블과 값을 매핑하는 객체
@@ -41,7 +39,23 @@ document.getElementById('submit-btn').addEventListener('click', function (event)
         event.preventDefault(); // 폼 전송 취소
 
         // 누락된 필드에 대한 알림 메시지 생성
-        const missingFieldsMessage = '입력되지 않은 항목이 존재합니다. 아래의 항목을 입력해주세요 👀\n\n' + missingFields.join('\n');
-        alert(missingFieldsMessage);
+        const missingFieldsMessage = missingFields.join(', ');
+
+        Swal.fire({
+            icon: "error",
+            title: "입력되지 않은 항목이 존재합니다.",
+            text: missingFieldsMessage,
+        });
+    } else {
+        let orderForm = document.getElementById('orderForm');
+        Swal.fire({
+            icon: "success",
+            title: "주문이 성공적으로 완료되었습니다.",
+            showConfirmButton: false,
+            timer: 1500
+        }).then(function () {
+            orderForm.submit();
+        });
     }
 });
+

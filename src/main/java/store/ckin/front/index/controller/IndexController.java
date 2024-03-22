@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.service.ProductService;
 
@@ -21,17 +22,20 @@ public class IndexController {
     private final ProductService productService;
 
     @GetMapping("/")
-    public String indexView(Model model) {
-        List<BookMainPageResponseDto> 국내도서리스트 = productService.findRecentBooksByCategoryId(1L, 10);
-        List<BookMainPageResponseDto> 외국도서리스트 = productService.findRecentBooksByCategoryId(2L, 10);
-        List<BookMainPageResponseDto> 신간도서리스트 = productService.findRecentBooks(10);
+    public String indexView(@RequestParam(required = false) String isWelcome,
+                            Model model) {
+        System.out.println("isWelcome" + isWelcome);
+        List<BookMainPageResponseDto> recentPublishBooks = productService.getRecentPublishBooks();
+        List<BookMainPageResponseDto> bestBooks = productService.getBestBooks();
+        List<BookMainPageResponseDto> recommendBooks = productService.getRecommendBooks();
 
-        productService.findRecentBooks(10);
-
-        model.addAttribute("국내도서리스트", 국내도서리스트);
-        model.addAttribute("외국도서리스트", 외국도서리스트);
-        model.addAttribute("신간도서리스트", 신간도서리스트);
+        model.addAttribute("recentPublishBooks", recentPublishBooks);
+        model.addAttribute("bestBooks", bestBooks);
+        model.addAttribute("recommendBooks", recommendBooks);
+        model.addAttribute("isWelcome", isWelcome);
 
         return "index";
     }
+
+
 }

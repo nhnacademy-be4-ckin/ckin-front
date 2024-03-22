@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.address.domain.request.AddressAddRequestDto;
 import store.ckin.front.address.domain.request.AddressUpdateRequestDto;
@@ -28,6 +29,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.service.ReviewService;
 import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
@@ -262,5 +264,12 @@ public class MemberMyPageController {
         addressService.setDefaultAddress(getMemberId(), addressId);
 
         return "redirect:/member/mypage/address/list";
+    }
+
+    @PostMapping("/review")
+    public String updateReview(@ModelAttribute UpdateReviewRequestDto updateReviewRequestDto) {
+        reviewService.updateReview(updateReviewRequestDto, getMemberId());
+
+        return "redirect:/member/mypage/review";
     }
 }

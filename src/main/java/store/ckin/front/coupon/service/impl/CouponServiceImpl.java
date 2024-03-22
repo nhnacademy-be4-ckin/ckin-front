@@ -94,4 +94,9 @@ public class CouponServiceImpl implements CouponService {
         return couponAdapter.getUsedCouponByMember(pageable, memberId);
     }
 
+    @Override
+    public Boolean postWelcomeCoupon(Long memberId) {
+        return couponAdapter.postWelcomeCoupon(memberId);
+    }
+
 }

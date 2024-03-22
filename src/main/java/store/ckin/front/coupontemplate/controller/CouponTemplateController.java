@@ -105,9 +105,9 @@ public class CouponTemplateController {
     /**
      * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
      *
-     * @param templateId    템플릿 아이디
-     * @param state 쿠폰 템플릿 사용 여부
-     * @param typeId        타입 아이디
+     * @param templateId 템플릿 아이디
+     * @param state      쿠폰 템플릿 사용 여부
+     * @param typeId     타입 아이디
      * @return 쿠폰 템플릿 목록 페이지로 이동
      */
     @PutMapping("/type/{typeId}/templateId/{templateId}")

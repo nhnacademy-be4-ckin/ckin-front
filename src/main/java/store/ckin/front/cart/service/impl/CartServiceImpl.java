@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 import store.ckin.front.cart.dto.domain.CartItem;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
+import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
 import store.ckin.front.cart.exception.ItemAlreadyExistException;
+import store.ckin.front.cart.exception.OrderFailedException;
 import store.ckin.front.cart.service.CartService;
 
 /**
@@ -28,6 +32,7 @@ public class CartServiceImpl implements CartService {
     private final RedisTemplate<String, Object> redisTemplate;
     private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
     private static final String CART_HASH_KEY = "user_cart";
+    private static final String ORDER_HASH_KEY = "user_order";
 
     public CartServiceImpl(@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -74,12 +79,24 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      *
+     * @param key 현재 유저의 UUID
+     * @return
+     */
+    public List<CartItemOrderDto> readOrderItems(String key) {
+        List<CartItemOrderDto> orderList = (List<CartItemOrderDto>) redisTemplate.opsForHash().get(key, ORDER_HASH_KEY);
+        if (Objects.isNull(orderList) || orderList.isEmpty()) {
+            throw new OrderFailedException("주문의 접근 경로가 잘못되었거나 오류가 발생하였습니다.");
+        }
+        return orderList;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param key                      현재 유저의 UUID
      * @param cartItemUpdateRequestDto 수량 변경을 원하는 상품의 정보가 담긴 Dto
      */
     public void updateItemQuantity(String key, CartItemUpdateRequestDto cartItemUpdateRequestDto) {
-        initCartAndUpdateExpire(key);
-
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
         Optional<CartItem>
@@ -104,8 +121,6 @@ public class CartServiceImpl implements CartService {
      * @param cartItemDeleteRequestDto 삭제할 상품의 ID가 담긴 Dto
      */
     public void deleteCartItem(String key, CartItemDeleteRequestDto cartItemDeleteRequestDto) {
-        initCartAndUpdateExpire(key);
-
         List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
         assert currentUserCart != null;
         if (!currentUserCart.removeIf(cartItem -> cartItem.getId() == cartItemDeleteRequestDto.getId())) {
@@ -128,9 +143,44 @@ public class CartServiceImpl implements CartService {
     /**
      * {@inheritDoc}
      *
+     * @param key        현재 유저의 UUID
+     * @param orderItems 유저가 주문한 상품 리스트
+     */
+    public void orderCartItems(String key, List<CartItemOrderDto> orderItems) {
+        HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
+        hashOperations.delete(key, ORDER_HASH_KEY);
+        if (Objects.isNull(hashOperations.get(key, ORDER_HASH_KEY))) {
+            hashOperations.put(key, ORDER_HASH_KEY, orderItems);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param key         현재 유저의 UUID
+     * @param deleteItems 유저가 주문한(삭제할) 상품 리스트
+     */
+    public void deleteCartItems(String key, List<CartItemOrderDto> deleteItems) {
+        HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
+
+        List<CartItem> currentUserCart = (List<CartItem>) redisTemplate.opsForHash().get(key, CART_HASH_KEY);
+        assert currentUserCart != null;
+        Set<Long> deleteItemsId = deleteItems.stream()
+                .map(CartItemOrderDto::getId).collect(Collectors.toSet());
+        Set<CartItem> deletedCartItem = currentUserCart.stream()
+                .filter(item -> deleteItemsId.contains(item.getId()))
+                .collect(Collectors.toSet());
+
+        currentUserCart.removeAll(deletedCartItem);
+        hashOperations.put(key, CART_HASH_KEY, currentUserCart);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param key 현재 유저의 UUID
      */
-    public void initCartAndUpdateExpire(String key) {
+    private void initCartAndUpdateExpire(String key) {
         HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
         if (Objects.isNull(hashOperations.get(key, CART_HASH_KEY))) {
             hashOperations.put(key, CART_HASH_KEY, new ArrayList<>());
