@@ -1,7 +1,6 @@
 package store.ckin.front.member.domain.request;
 
 import java.time.LocalDate;
-import javax.annotation.Nullable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,6 +8,7 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 /**
  * Member 생성 요청을 위한 DTO 입니다.
