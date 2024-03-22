@@ -42,16 +42,27 @@ function clickUpdateBtn(btn) {
     }).then(
         (result) => {
             if (result.isConfirmed) {
-                const inputValue = Swal.getInput().value;
-                form.querySelector('input[name=quantity]').value = inputValue;
-                Swal.fire({
-                    icon: "success",
-                    title: "상품 수량이\n정상적으로 변경되었습니다",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    form.submit();
-                })
+                const inputValue = parseInt(Swal.getInput().value);
+                if (inputValue >= 1 && inputValue <= 100) {
+                    form.querySelector('input[name=quantity]').value = inputValue;
+                    Swal.fire({
+                        icon: "success",
+                        title: "상품 수량이\n정상적으로 변경되었습니다",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        form.submit();
+                    })
+                } else {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "상품 수량이\n올바르지 않습니다.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        window.location.href = "/cart";
+                    })
+                }
             }
         }
     );
