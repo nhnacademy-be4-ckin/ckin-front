@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import store.ckin.front.product.service.ProductService;
  * @version 2024. 03. 07.
  */
 
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -109,8 +111,12 @@ public class ProductServiceImpl implements ProductService {
      * @param key 레디스에 정보를 담고 있는 리스트의 키
      */
     private void initCartAndUpdateExpire(String key) {
+        log.debug("initCartAnndUpdateExpire: {}", key);
         ListOperations<String, Object> opsForList = redisTemplate.opsForList();
-        if (Objects.isNull(opsForList.range(key, 0, 7))) {
+        log.debug("opsForList: {}", opsForList.range(key, 0, 7));
+        if (Objects.isNull(opsForList.range(key, 0, 7))
+                || (opsForList.range(key, 0, 7)).isEmpty()) {
+            log.debug("is null !!");
             switch (key) {
                 case RECENT_BOOK:
                     getRecentBooks(key);
@@ -132,6 +138,7 @@ public class ProductServiceImpl implements ProductService {
      * @param key 신간 도서 키
      */
     private void getRecentBooks(String key) {
+        System.out.println("실행됨");
         List<BookMainPageResponseDto> recentBooks = productAdapter.findRecentBooks(8);
         recentBooks.forEach(bookMainPageResponseDto -> System.out.println(bookMainPageResponseDto.toString()));
         recentBooks.forEach(bookMainPageResponseDto
