@@ -18,4 +18,8 @@ public class PageInfo {
     private int size;
     private int totalElements;
     private int totalPages;
+
+    public static PageInfo of(int page, int size, int totalElements, int totalPages) {
+        return new PageInfo(page, size, totalElements, totalPages);
+    }
 }

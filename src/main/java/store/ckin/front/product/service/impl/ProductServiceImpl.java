@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.adapter.ProductAdapter;
 import store.ckin.front.product.domain.SearchProduct;
@@ -61,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
      * @param pageRequest 페이지 요청
      * @return
      */
-    public List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest) {
+    public PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest) {
         return productSearchRepository.findProductByKeyword(keyword, pageRequest);
     }
 

@@ -3,6 +3,7 @@ package store.ckin.front.product.service;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
@@ -43,5 +44,5 @@ public interface ProductService {
      * @param pageRequest 페이지 요청
      * @return 연관된 도서 목록
      */
-    List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest);
+    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest);
 }
