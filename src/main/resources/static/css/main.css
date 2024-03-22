@@ -3137,7 +3137,7 @@ input.num-product::-webkit-inner-spin-button {
 /*    -webkit-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);*/
 /*    -o-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);*/
 /*    -ms-box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.2);*/
-}
+/*}*/
 
 /*---------------------------------------------*/
 .how-pos1 {
@@ -4042,6 +4042,17 @@ input.num-product::-webkit-inner-spin-button {
     justify-content: center;
     width: 130px;
     margin-bottom: 5px;
+}
+
+.detail-quantity {
+    width: 100% !important;
+}
+
+.detail-quantity-btn {
+    width: 15%;
+    margin: 0;
+    padding: 0;
+    text-align: center !important;
 }
 
 .search-result-quantity-btn {
