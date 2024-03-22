@@ -72,10 +72,11 @@
                             console.log(data);
                             let welcome_alert = document.getElementById("welcome-alert");
                             welcome_alert.style.display = "none";
-                            if(data === null) {
+                            if(data != null) {
+                                console.log("실행됨");
                                 $.ajax ({
                                     type: "POST",
-                                    url: '/coupon/welcome/' + data,
+                                    url: '/coupon/welcome',
                                     dataType: 'json',
                                     success: function (result) {
                                         welcome_alert.style.display = "contents";

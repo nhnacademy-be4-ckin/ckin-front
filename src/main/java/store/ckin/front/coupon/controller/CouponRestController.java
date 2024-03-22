@@ -39,9 +39,9 @@ public class CouponRestController {
      */
     @PostMapping("/coupon/welcome")
     public Boolean postWelcomeCoupon() {
-        Authentication authentication = SecurityContextHolder.createEmptyContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long memberId = Long.valueOf(authentication.getName());
-
+        System.out.println("test: !!!!!!!!!" + memberId);
          Boolean isSuccess = couponService.postWelcomeCoupon(memberId);
         return isSuccess;
     }
