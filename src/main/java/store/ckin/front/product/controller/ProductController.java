@@ -138,8 +138,8 @@ public class ProductController {
      */
     @GetMapping("/tag/{tagName}")
     public String bestSellerView(@PageableDefault(size = 5) Pageable pageable,
-                              @PathVariable("tagName") String tagName,
-                              Model model) {
+                                 @PathVariable("tagName") String tagName,
+                                 Model model) {
         PageDto<BookResponseDto> bookPageDto = productService.getBookPageByTagName(pageable, tagName);
 
         model.addAttribute("pagination", bookPageDto);

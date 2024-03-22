@@ -7,7 +7,6 @@ import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -40,12 +39,13 @@ public class ProductAdapterImpl implements ProductAdapter {
     @Override
     public PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/search/by-category")
-                .queryParam("categoryId", categoryId)
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .encode()
-                .toUriString();
+        String url =
+                UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/search/by-category")
+                        .queryParam("categoryId", categoryId)
+                        .queryParam("page", pageable.getPageNumber())
+                        .queryParam("size", pageable.getPageSize())
+                        .encode()
+                        .toUriString();
 
         ResponseEntity<PageDto<BookListResponseDto>> exchange =
                 restTemplate.exchange(url,

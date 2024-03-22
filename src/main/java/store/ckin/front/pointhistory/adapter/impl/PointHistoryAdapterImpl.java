@@ -48,7 +48,8 @@ public class PointHistoryAdapterImpl implements PointHistoryAdapter {
         HttpEntity<Long> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<PagedResponse<List<PointHistoryResponseDto>>> exchange = restTemplate.exchange(
-                gatewayProperties.getGatewayUri() + POINT_HISTORY_URL + "?memberId={memberId}&page={pageNumber}&size={pageSize}",
+                gatewayProperties.getGatewayUri() + POINT_HISTORY_URL +
+                        "?memberId={memberId}&page={pageNumber}&size={pageSize}",
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

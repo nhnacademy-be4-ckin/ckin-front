@@ -54,8 +54,8 @@ public class JwtUtil {
      * @param tokenResponseDto Access Token, Refresh Token 이 담긴 DTO
      */
     public static void updateJwtTokenCookie(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      TokenResponseDto tokenResponseDto) {
+                                            HttpServletResponse response,
+                                            TokenResponseDto tokenResponseDto) {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
         int maxAge = Long.valueOf(REFRESH_EXPIRATION_TIME).intValue();

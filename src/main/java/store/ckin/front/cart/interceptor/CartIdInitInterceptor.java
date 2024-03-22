@@ -22,6 +22,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class CartIdInitInterceptor implements HandlerInterceptor {
     private static int COOKIE_EXPIRE = (int) Duration.ofDays(2).toSeconds();
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {

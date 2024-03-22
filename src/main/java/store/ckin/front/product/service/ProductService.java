@@ -74,7 +74,7 @@ public interface ProductService {
      * 태그별로 보여줄 도서 목록을 가져오는 메소드 입니다.
      *
      * @param pageable 페이지 정보
-     * @param tagName 태그 이름
+     * @param tagName  태그 이름
      * @return 도서 페이지 DTO 반환
      */
     PageDto<BookResponseDto> getBookPageByTagName(Pageable pageable, String tagName);
