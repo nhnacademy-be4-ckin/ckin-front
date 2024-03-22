@@ -48,14 +48,13 @@ public interface ProductService {
     PageDto<BookResponseDto> getRecentPublishBooks(Pageable pageable);
 
     /**
-     * 해당 키워드를 가진 연관 도서들을 가져오는 메서드
+     * 해당 키워드를 가진 연관 도서들을 가져오는 메서드.
      *
      * @param keyword     검색할 키워드
      * @param pageRequest 페이지 요청
      * @return 연관된 도서 목록
      */
-
-    List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest);
+    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest);
 
     /**
      * 관리자가 지정한 인기 도서를 가져옵니다.
@@ -71,6 +70,5 @@ public interface ProductService {
      */
     List<BookMainPageResponseDto> getRecommendBooks();
 
-    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest);
 
 }
