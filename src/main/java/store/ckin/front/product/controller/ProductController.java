@@ -96,11 +96,9 @@ public class ProductController {
     @GetMapping("/section")
     public String sectionView(@PageableDefault(size = 4) Pageable pageable,
                               Model model) {
-        PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(3L, pageable);
-        List<CategoryResponseDto> categoryList = categoryService.getSubcategories(3L);
+        PageDto<BookResponseDto> bookPageDto = productService.getRecentPublishBooks(pageable);
 
         model.addAttribute("pagination", bookPageDto);
-        model.addAttribute("categoryList", categoryList);
 
         return "product/section";
     }

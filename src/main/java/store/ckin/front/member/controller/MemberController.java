@@ -48,7 +48,7 @@ public class MemberController {
     public String postCreateMember(@Valid MemberCreateRequestDto memberCreateRequestDto) {
         memberService.createMember(memberCreateRequestDto);
 
-        return "redirect:/";
+        return "redirect:/?isWelcome=true";
     }
 
     /**

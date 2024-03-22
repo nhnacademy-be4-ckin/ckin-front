@@ -12980,3 +12980,11 @@ iframe {
 .bg3.p-t-75.p-b-32 {
     width: 100%;
 }
+
+.welcome-img {
+    position: absolute;
+    z-index: 1;
+    width: 800px;
+    padding-top: 190px;
+    padding-right: 28px;
+}

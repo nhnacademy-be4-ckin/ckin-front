@@ -7,6 +7,7 @@ import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -128,6 +129,25 @@ public class ProductAdapterImpl implements ProductAdapter {
                 .toUriString();
 
         ResponseEntity<List<BookMainPageResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    @Override
+    public PageDto<BookResponseDto> getRecentPublishedBook(Pageable pageable) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/recent")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<BookResponseDto>> exchange =
                 restTemplate.exchange(url,
                         HttpMethod.GET,
                         requestEntity,

@@ -235,11 +235,12 @@ img {
 /*}*/
 .carousel_slide img {
     display: flex;
-    min-width: 1500px;
+    min-width: 1700px;
     max-width: 2600px;
-    height: 500px;
+    height: 600px;
     object-fit: cover;
     position: static;
+    padding-top: 5%;
 }
 .pb-5, .py-5 {
     padding-bottom: 0rem !important;

@@ -1,6 +1,7 @@
 package store.ckin.front.product.adapter;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
@@ -54,4 +55,11 @@ public interface ProductAdapter {
      * @return 도서 목록
      */
     List<BookMainPageResponseDto> getRecommendBooks(Integer limit);
+
+    /**
+     * 최근 출판된 도서 목록을 가져옵니다.
+     *
+     * @return 최근 출판된 도서 페이지 목록
+     */
+    PageDto<BookResponseDto> getRecentPublishedBook(Pageable pageable);
 }

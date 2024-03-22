@@ -62,6 +62,30 @@
                              class="icon-header-item">
                             <a href="/admin" class="material-symbols-sharp">shield_person</a>
                         </div>
+                        <div style="display: contents" id="welcome-alert" onclick="welcome()" >
+                            <a href="#" style="display: contents">
+                            <img class="welcome-img" src="/images/icons/welcome-purple.png"/>
+                            </a>
+                        </div>
+                        <script th:inline="javascript">
+                            var data = [[${isWelcome}]];
+                            console.log(data);
+                            let welcome_alert = document.getElementById("welcome-alert");
+                            welcome_alert.style.display = "none";
+                            if(data === null) {
+                                $.ajax ({
+                                    type: "POST",
+                                    url: '/coupon/welcome/' + data,
+                                    dataType: 'json',
+                                    success: function (result) {
+                                        welcome_alert.style.display = "contents";
+                                    },
+                                    error: function (error) {
+                                        console.error("Welcome Coupon Failed");
+                                    }
+                                });
+                            }
+                        </script>
 
                         <div th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')}"
                              class="icon-header-item">

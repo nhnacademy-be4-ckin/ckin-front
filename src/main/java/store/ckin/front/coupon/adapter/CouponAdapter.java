@@ -79,4 +79,11 @@ public interface CouponAdapter {
      * @return 쿠폰 목록 페이지 DTO
      */
     PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId);
+
+    /**
+     * Welcome 쿠폰을 발급받는 메서드 입니다.
+     *
+     * @return 성공여부
+     */
+    Boolean postWelcomeCoupon(Long memberId);
 }

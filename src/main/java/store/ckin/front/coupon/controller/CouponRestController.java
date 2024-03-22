@@ -1,6 +1,8 @@
 package store.ckin.front.coupon.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +30,19 @@ public class CouponRestController {
     public Boolean giveCoupon(@PathVariable("couponTemplateId") Long couponTemplateId) {
 
         return couponService.createCouponByIds(couponTemplateId);
+    }
+
+    /**
+     * Welcome 쿠폰을 발급받는 메서드 입니다.
+     *
+     * @return 성공여부
+     */
+    @PostMapping("/coupon/welcome")
+    public Boolean postWelcomeCoupon() {
+        Authentication authentication = SecurityContextHolder.createEmptyContext().getAuthentication();
+        Long memberId = Long.valueOf(authentication.getName());
+
+         Boolean isSuccess = couponService.postWelcomeCoupon(memberId);
+        return isSuccess;
     }
 }

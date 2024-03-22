@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -66,6 +67,11 @@ public class ProductServiceImpl implements ProductService {
         Objects.requireNonNull(redisTemplate.opsForList().range(RECENT_BOOK, 0, 7))
                 .forEach(o -> responseList.add((BookMainPageResponseDto) o));
         return responseList;
+    }
+
+    @Override
+    public PageDto<BookResponseDto> getRecentPublishBooks(Pageable pageable) {
+        return productAdapter.getRecentPublishedBook(pageable);
     }
 
     /**
