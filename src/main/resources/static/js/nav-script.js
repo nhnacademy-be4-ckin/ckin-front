@@ -1,7 +1,15 @@
+function showErrorAlert(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '알림',
+        text: message
+    });
+}
+
 function clickSearchBtn() {
     let keyword = document.getElementById("keyword");
     if (keyword.value === '') {
-        alert("검색어를 입력하세요")
+        showErrorAlert("검색어를 입력하세요")
         event.preventDefault();
     } else {
         let searchForm = document.getElementById("searchForm");
