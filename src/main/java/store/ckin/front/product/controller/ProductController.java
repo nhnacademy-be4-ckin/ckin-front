@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
@@ -99,13 +100,16 @@ public class ProductController {
                                 @Positive @RequestParam(defaultValue = "1") int page,
                                 @Positive @RequestParam(required = false, defaultValue = "10") int size, Model model) {
 
-        List<SearchProduct> searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size));
+        PagedResponse<List<SearchProduct>>
+                searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size));
 
         model.addAttribute("KEY_WORD", keyword);
-        for (SearchProduct book : searchResults) {
+        for (SearchProduct book : searchResults.getData()) {
             log.debug("book info: {}", book);
         }
-        model.addAttribute("SEARCH_RESULT", searchResults);
+        model.addAttribute("SEARCH_RESULT", searchResults.getData());
+        model.addAttribute("RESULT_PAGE_INFO", searchResults.getPageInfo());
+        model.addAttribute("keyword", keyword);
 
         return "product/search";
     }
