@@ -120,23 +120,31 @@ public class ProductController {
      * @return section View로 이동
      */
     @GetMapping("/section")
-    public String sectionView(@PageableDefault(size = 4) Pageable pageable,
+    public String sectionView(@PageableDefault(page = 0, size = 5) Pageable pageable,
                               Model model) {
         PageDto<BookResponseDto> bookPageDto = productService.getRecentPublishBooks(pageable);
+        log.debug("bookPageInfo: {}", bookPageDto.getContent());
 
         model.addAttribute("pagination", bookPageDto);
-
+        model.addAttribute("totalRate", "4.5");
+        //TODO: 리뷰 점수
         return "product/section";
     }
 
-    @GetMapping("/best")
-    public String bestSellerView(@PageableDefault(size = 4) Pageable pageable,
+    /**
+     * 태그별로 보여줄 도서 목록을 가져오는 메소드 입니다.
+     *
+     * @return 도서 리스트가 있는 화면으로 리턴
+     */
+    @GetMapping("/tag/{tagName}")
+    public String bestSellerView(@PageableDefault(size = 5) Pageable pageable,
+                              @PathVariable("tagName") String tagName,
                               Model model) {
-        PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(3L, pageable);
-        List<CategoryResponseDto> categoryList = categoryService.getSubcategories(3L);
+        PageDto<BookResponseDto> bookPageDto = productService.getBookPageByTagName(pageable, tagName);
 
         model.addAttribute("pagination", bookPageDto);
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("totalRate", "4.5");
+        //TODO: 리뷰 점수
 
         return "product/best-section";
     }
