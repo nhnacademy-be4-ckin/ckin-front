@@ -10,6 +10,7 @@ import store.ckin.front.book.dto.response.BookExtractionResponseDto;
 import store.ckin.front.book.service.BookService;
 import store.ckin.front.booksale.dto.request.BookSaleCreateRequestDto;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.cart.service.CartService;
 import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.service.CouponService;
@@ -66,10 +67,10 @@ public class SaleFacade {
      * @param cartItems 장바구니 도서 리스트
      * @return 책 정보 목록
      */
-    public List<BookExtractionResponseDto> getBookSaleList(List<CartItem> cartItems) {
+    public List<BookExtractionResponseDto> getBookSaleList(List<CartItemOrderDto> cartItems) {
 
         List<Long> bookIds = cartItems.stream()
-                .map(CartItem::getId)
+                .map(CartItemOrderDto::getId)
                 .collect(Collectors.toList());
 
         List<BookExtractionResponseDto> bookSaleList = bookService.getBookSaleList(bookIds);
@@ -155,6 +156,17 @@ public class SaleFacade {
     }
 
     /**
+     * 주문 요청한 상품들을 읽어오는 메서드
+     *
+     * @param cartId 장바구니 ID
+     * @return 주문 요청한 상품 리스트
+     * @author 김준현
+     */
+    public List<CartItemOrderDto> readOrderItems(String cartId) {
+        return cartService.readOrderItems(cartId);
+    }
+
+    /**
      * 주문 번호를 통해 주문의 상세 정보를 조회하는 메서드입니다.
      *
      * @param saleNumber     주문 번호
@@ -173,5 +185,9 @@ public class SaleFacade {
      */
     public void updateDeliveryStatus(Long saleId, SaleDeliveryUpdateRequestDto deliveryStatus) {
         saleService.updateDeliveryStatus(saleId, deliveryStatus);
+    }
+
+    public void deleteCartItems(String cartId, List<CartItemOrderDto> cartItems) {
+        cartService.deleteCartItems(cartId, cartItems);
     }
 }

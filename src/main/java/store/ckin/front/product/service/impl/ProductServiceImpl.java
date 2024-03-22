@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.adapter.ProductAdapter;
+import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
 import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 import store.ckin.front.product.dto.response.BookResponseDto;
+import store.ckin.front.product.repository.ProductSearchRepository;
 import store.ckin.front.product.service.ProductService;
 
 /**
@@ -30,15 +32,17 @@ public class ProductServiceImpl implements ProductService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final ProductAdapter productAdapter;
+    private final ProductSearchRepository productSearchRepository;
     public static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
     public static final String RECENT_BOOK = "NEW";
     public static final String BEST_BOOK = "BEST";
     public static final String RECOMMEND_BOOK = "RECOMMEND";
 
     public ProductServiceImpl(@Qualifier("mainPageRedisTemplate") RedisTemplate<String, Object> redisTemplate,
-                              ProductAdapter productAdapter) {
+                              ProductAdapter productAdapter, ProductSearchRepository productSearchRepository) {
         this.redisTemplate = redisTemplate;
         this.productAdapter = productAdapter;
+        this.productSearchRepository = productSearchRepository;
     }
 
     /**
@@ -71,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageDto<BookResponseDto> getRecentPublishBooks(Pageable pageable) {
-        return productAdapter.getRecentPublishedBook(pageable);
+        return null;
     }
 
     /**
@@ -153,6 +157,17 @@ public class ProductServiceImpl implements ProductService {
         List<BookMainPageResponseDto> recentBooks = productAdapter.getRecommendBooks(8);
         recentBooks.forEach(bookMainPageResponseDto
                 -> redisTemplate.opsForList().rightPush(key, bookMainPageResponseDto));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param keyword     검색할 키워드
+     * @param pageRequest 페이지 요청
+     * @return
+     */
+    public List<SearchProduct> findResultByKeyword(String keyword, PageRequest pageRequest) {
+        return productSearchRepository.findProductByKeyword(keyword, pageRequest);
     }
 
 }

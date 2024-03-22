@@ -2,6 +2,7 @@ package store.ckin.front.member.adapter;
 
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
@@ -14,6 +15,8 @@ import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
  * @version : 2024. 02. 16.
  */
 public interface MemberAdapter {
+    boolean isDuplicateEmail(MemberEmailOnlyRequestDto memberEmailOnlyRequestDto);
+
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     MemberAuthResponseDto getMemberAuthInfo(MemberAuthRequestDto memberAuthRequestDto);

@@ -22,7 +22,7 @@
     <div class="container-menu-desktop ">
 
         <div class="wrap-menu-desktop how-shadow1">
-            <nav class="limiter-menu-desktop container">
+            <nav class="limiter-menu-desktop container search-nav">
 
                 <!-- Logo desktop -->
                 <a href="/" class="logo flex-l ">
@@ -30,13 +30,13 @@
                 </a>
 
                 <!-- Menu desktop -->
-                <div class="search-container mx-auto">
+                <div class="search-container margin-container-250">
                     <div class="search">
                         <a href="/" class="search-image-container">
                             <img src="/images/logo.png" alt="IMG-LOGO" class="search-image">
                         </a>
                         <form id="searchForm" class="searchForm" th:action="@{/product/search(keyword=${keyword})}"
-                              method="get">
+                              method="get" onsubmit="clickSearchBtn()">
                             <input name="keyword" id="keyword" type="text" class="searchInputText inherit"
                                    placeholder="검색어를 입력해 주세요">
                         </form>

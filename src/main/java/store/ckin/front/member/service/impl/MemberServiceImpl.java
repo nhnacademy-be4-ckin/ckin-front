@@ -9,11 +9,9 @@ import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
+import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
-import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 import store.ckin.front.member.exception.MemberAlreadyExistsException;
-import store.ckin.front.member.exception.MemberNotFoundException;
 import store.ckin.front.member.service.MemberService;
 
 /**
@@ -29,6 +27,11 @@ public class MemberServiceImpl implements MemberService {
     private final MemberAdapter memberAdapter;
 
     private final BCryptPasswordEncoder bcryptPasswordEncoder;
+
+    @Override
+    public boolean isDuplicateEmail(MemberEmailOnlyRequestDto memberEmailOnlyRequestDto) {
+        return memberAdapter.isDuplicateEmail(memberEmailOnlyRequestDto);
+    }
 
     @Override
     public void createMember(MemberCreateRequestDto memberCreateRequestDto) {

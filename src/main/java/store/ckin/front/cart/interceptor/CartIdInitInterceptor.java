@@ -21,6 +21,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Slf4j
 @Component
 public class CartIdInitInterceptor implements HandlerInterceptor {
+    private static int COOKIE_EXPIRE = (int) Duration.ofDays(2).toSeconds();
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -44,10 +45,10 @@ public class CartIdInitInterceptor implements HandlerInterceptor {
             // 브라우저(JS)에서 쿠키 접근 불가
             userUuidCookie.setSecure(true);
             // HTTPS 일때에만 쿠키 사용
-            userUuidCookie.setMaxAge((int) Duration.ofDays(2).toSeconds());
+            userUuidCookie.setMaxAge(COOKIE_EXPIRE);
             response.addCookie(userUuidCookie);
             log.debug("preHandle(): saved user uuid is -> {}", userUuidCookie.getValue());
-            response.sendRedirect("/cart");
+            response.sendRedirect(request.getRequestURI());
             return false;
         }
         return true;

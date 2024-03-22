@@ -14,6 +14,7 @@ import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
@@ -32,6 +33,20 @@ public class MemberAdapterImpl implements MemberAdapter {
     private final RestTemplate restTemplate;
 
     private final GatewayProperties gatewayProperties;
+
+    @Override
+    public boolean isDuplicateEmail(MemberEmailOnlyRequestDto memberEmailOnlyRequestDto) {
+        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
+        HttpEntity<MemberEmailOnlyRequestDto> requestEntity = new HttpEntity<>(memberEmailOnlyRequestDto, headers);
+
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/checkEmail",
+                HttpMethod.POST,
+                requestEntity,
+                Boolean.class);
+
+        return Boolean.TRUE.equals(responseEntity.getBody());
+    }
 
     @Override
     public void createMember(MemberCreateRequestDto memberCreateRequestDto) {
@@ -84,7 +99,7 @@ public class MemberAdapterImpl implements MemberAdapter {
 
         ResponseEntity<MemberOauthLoginResponseDto> exchange = restTemplate.exchange(
                 gatewayProperties.getGatewayUri() + "/api/login/oauth",
-                HttpMethod.GET,
+                HttpMethod.POST,
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });

@@ -4,16 +4,9 @@
       layout:decorate="~{layouts/default}">
 <head>
     <title>CKIN | Shopping Cart</title>
-    <script>
-        function clickUpdateBtn(id) {
-            document.getElementById('updateItemId').value = id;
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/cart.js"></script>
     <style>
-        .container {
-            width: 80%;
-        }
-
         p {
             width: 100%;
             text-align: center;
@@ -30,7 +23,10 @@
                     <div class="wrap-table-shopping-cart">
                         <table class="table-shopping-cart" style="text-align: center;">
                             <tr class="table_head">
-                                <th class="column-0"></th>
+                                <th class="column-0">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkAll"
+                                           onchange="checkAll(this)" checked>
+                                </th>
                                 <th class="column-1">이미지</th>
                                 <th class="column-2">상품명</th>
                                 <th class="column-3">정상가</th>
@@ -47,10 +43,13 @@
                             </tr>
                             <tr class="table_row" th:each="item: ${CART_ITEMS}">
                                 <td class="column-0">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkBox">
+                                    <input id="order_id" name="id" th:value="${item.id}" hidden>
+                                    <input id="order_quantity" name="quantity" th:value="${item.quantity}" hidden>
+                                    <input id="order_name" name="name" th:value="${item.name}" hidden>
+                                    <input class="form-check-input" type="checkbox" value="" id="checkBox" checked>
                                 </td>
                                 <td class="column-1">
-                                    <div style="position: relative; width: 100%; height: 100%; justify-content: center; align-items: center">
+                                    <div style="position: relative; width: 110px; height: 160px; justify-content: center; align-items: center">
                                         <img style="width: 100%; height: 100%"
                                              th:src="${item.thumbnail}"
                                              th:data-src="${item.thumbnail}"
@@ -58,57 +57,29 @@
                                     </div>
                                 </td>
                                 <td class="column-2" th:text="${item.name}"></td>
-                                <td class="column-3" th:text="${#numbers.formatInteger(item.regularPrice, 3, 'COMMA')} + '원'"></td>
-                                <td class="column-6" th:text="${#numbers.formatInteger(item.salePrice, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-3"
+                                    th:text="${#numbers.formatInteger(item.regularPrice, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-6"
+                                    th:text="${#numbers.formatInteger(item.salePrice, 3, 'COMMA')} + '원'"></td>
                                 <td class="column-4" th:text="${item.quantity} + '개'"></td>
-                                <td class="column-6" th:text="${#numbers.formatInteger(item.salePrice * item.quantity, 3, 'COMMA')} + '원'"></td>
+                                <td class="column-6"
+                                    th:text="${#numbers.formatInteger(item.salePrice * item.quantity, 3, 'COMMA')} + '원'"></td>
                                 <td class="row-col-5 ">
-                                    <button type="button"
-                                            class="shop-btn"
-                                            data-toggle="modal" data-target="#updateQuantityModal"
-                                            th:onclick="clickUpdateBtn([[${item.id}]])">
-                                        수량 변경
-                                    </button>
-                                    <!-- Quantity Update Modal -->
-                                    <div class="modal fade" id="updateQuantityModal" tabindex="-1" role="dialog"
-                                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalTitle">
-                                                        수량 변경</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form method="post" action="cart/update">
-                                                    <div class="modal-body">
-                                                        <div class="input-group-cart mb-3">
-                                                            <p>
-                                                                <input type="text" class="form-control" name="quantity"
-                                                                       placeholder="변경할 수량을 입력하세요"
-                                                                       aria-label="quantity"
-                                                                       aria-describedby="basic-addon2"
-                                                                >
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">취소
-                                                        </button>
-                                                        <input id="updateItemId" name="id" hidden>
-                                                        <button type="submit" class="btn btn-dark">수량 변경</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <form method="post" action="cart/update">
+                                        <input name="id" th:value="${item.id}" hidden>
+                                        <input name="quantity" th:value="${item.quantity}" hidden>
+                                        <button type="button"
+                                                class="shop-btn"
+                                                data-toggle="modal" data-target="#updateQuantityModal"
+                                                onclick="clickUpdateBtn(this)">
+                                            수량 변경
+                                        </button>
+                                    </form>
                                     <form method="post" action="cart/delete">
                                         <input th:value="${item.id}" id="deleteItemId" name="id" hidden>
-                                        <button type="submit"
-                                                class="shop-btn">
+                                        <button type="button"
+                                                class="shop-btn"
+                                                onclick="clickDeleteBtn(this)">
                                             삭제
                                         </button>
                                     </form>
@@ -127,11 +98,23 @@
                         </ul>
                     </div>
                     <div style="text-align: center">
-                        <form th:unless="${CART_ITEMS.isEmpty()}" action="cart/order" method="get">
-                            <button class="flex-c-m stext-101 cl0 size-117 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-b-50 m-t-30 d-inline-block">
-                                주문하기
-                            </button>
-                        </form>
+                        <div style="margin-top: 30px !important;">
+                            <em style="font-size: large !important">
+                                총 주문 금액은
+                            </em>
+                            <em class="shopping-cart-result">
+                                0
+                            </em>
+                            <em style="font-size: large !important">
+                                원 입니다
+                            </em>
+                        </div>
+                        <button onclick="clickOrderBtn(this)"
+                                th:unless="${CART_ITEMS.isEmpty()}"
+                                type="button"
+                                class="flex-c-m stext-101 cl0 size-117 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-b-50 m-t-10 d-inline-block">
+                            주문하기
+                        </button>
                     </div>
                 </div>
             </div>
