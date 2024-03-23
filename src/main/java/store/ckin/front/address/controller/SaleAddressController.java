@@ -63,7 +63,7 @@ public class SaleAddressController {
      */
     @GetMapping("/update/{addressId}")
     public String getUpdateAddress(@PathVariable("addressId") Long addressId,
-                                         Model model) {
+                                   Model model) {
         List<MemberAddressResponseDto> addressList = addressService.getMemberAddressList(getMemberId());
         addressList.stream()
                 .filter(responseDto -> responseDto.getAddressId().equals(addressId))
@@ -78,7 +78,7 @@ public class SaleAddressController {
      */
     @PutMapping("/update/{addressId}")
     public String updateAddress(@PathVariable("addressId") Long addressId,
-                                      @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
+                                @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
         addressService.updateAddress(getMemberId(), addressId, addressUpdateRequestDto);
 
         return "redirect:/sale/address/list";

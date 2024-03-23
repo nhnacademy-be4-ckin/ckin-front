@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.category.adapter.CategoryAdapter;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
-import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
 

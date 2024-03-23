@@ -3,7 +3,6 @@ package store.ckin.front.category.adapter;
 import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
-import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 
 /**

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import store.ckin.front.address.domain.request.AddressAddRequestDto;
 import store.ckin.front.address.domain.request.AddressUpdateRequestDto;
@@ -29,11 +28,11 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
+import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.service.ReviewService;
-import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
-import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.service.SaleService;
@@ -149,7 +148,7 @@ public class MemberMyPageController {
         model.addAttribute("couponPage", couponResponseDtoPageDto);
         return "member/coupon/used-coupon";
     }
-  
+
     /**
      * 회원 포인트 내역 조회 메서드입니다.
      *
@@ -173,8 +172,8 @@ public class MemberMyPageController {
         model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
         return "member/mypage/point-history";
     }
-  
-  
+
+
     @Member
     @GetMapping("/review")
     public String getMyReviews(@PageableDefault(page = 0, size = 5) Pageable pageable,
@@ -188,7 +187,6 @@ public class MemberMyPageController {
         return "member/mypage/review/main";
 
     }
-
 
 
     private Long getMemberId() {
@@ -225,7 +223,7 @@ public class MemberMyPageController {
     @Member
     @GetMapping("/address/update/{addressId}")
     public String getUpdateAddress(@PathVariable("addressId") Long addressId,
-                                         Model model) {
+                                   Model model) {
         List<MemberAddressResponseDto> addressList = addressService.getMemberAddressList(getMemberId());
         addressList.stream()
                 .filter(responseDto -> responseDto.getAddressId().equals(addressId))
@@ -240,7 +238,7 @@ public class MemberMyPageController {
      */
     @PutMapping("/address/update/{addressId}")
     public String updateAddress(@PathVariable("addressId") Long addressId,
-                                      @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
+                                @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
         addressService.updateAddress(getMemberId(), addressId, addressUpdateRequestDto);
 
         return "redirect:/member/mypage/address/list";

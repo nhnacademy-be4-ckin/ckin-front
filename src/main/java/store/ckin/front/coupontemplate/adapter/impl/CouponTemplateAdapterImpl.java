@@ -84,10 +84,10 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
         HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
 
         restTemplate.exchange(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId,
-                        HttpMethod.DELETE,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
+                HttpMethod.DELETE,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
     }
 
     /**
@@ -97,16 +97,17 @@ public class CouponTemplateAdapterImpl implements CouponTemplateAdapter {
     public void updateCouponTemplateStatus(Long templateId, Boolean state) {
         HttpEntity<Long> requestEntity = new HttpEntity<>(templateId, getHttpHeaders());
 
-        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId)
+        String url = UriComponentsBuilder.fromHttpUrl(
+                        gatewayProperties.getGatewayUri() + "/coupon/couponTemplate/" + templateId)
                 .queryParam("state", state)
                 .encode()
                 .toUriString();
 
         restTemplate.exchange(url,
-                        HttpMethod.PUT,
-                        requestEntity,
-                        new ParameterizedTypeReference<>() {
-                        });
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
     }
 }
 

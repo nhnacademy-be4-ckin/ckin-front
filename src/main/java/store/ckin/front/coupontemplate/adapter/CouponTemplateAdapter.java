@@ -38,8 +38,9 @@ public interface CouponTemplateAdapter {
 
     /**
      * 쿠폰 템플릿의 상태를 변경하는 메서드 입니다.
+     *
      * @param templateId 템플릿 아이디
-     * @param state 쿠폰 템플릿 사용 여부
+     * @param state      쿠폰 템플릿 사용 여부
      */
     void updateCouponTemplateStatus(Long templateId, Boolean state);
 }
