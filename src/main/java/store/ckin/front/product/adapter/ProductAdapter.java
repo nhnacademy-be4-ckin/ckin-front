@@ -1,7 +1,6 @@
 package store.ckin.front.product.adapter;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.dto.response.BookListResponseDto;
@@ -46,7 +45,7 @@ public interface ProductAdapter {
      * @param limit 최대로 가져올 도서의 개수
      * @return 도서 목록
      */
-    List<BookMainPageResponseDto> getBestBooks(Integer limit);
+    List<BookMainPageResponseDto> getBooksByTagName(Integer limit, String tagName);
 
     /**
      * 추천 도서에 대한 정보를 가져옵니다.
@@ -62,4 +61,13 @@ public interface ProductAdapter {
      * @return 최근 출판된 도서 페이지 목록
      */
     PageDto<BookResponseDto> getRecentPublishedBook(Pageable pageable);
+
+    /**
+     * 태그별로 보여줄 도서 목록을 가져오는 메소드 입니다.
+     *
+     * @param pageable 페이지 정보
+     * @param tagName  태그 이름
+     * @return 도서 페이지 DTO 반환
+     */
+    PageDto<BookResponseDto> getBookPageByTagName(Pageable pageable, String tagName);
 }

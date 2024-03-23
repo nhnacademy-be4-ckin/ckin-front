@@ -2,7 +2,6 @@ package store.ckin.front.review.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * UpdateReviewRequestDto.

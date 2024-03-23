@@ -58,6 +58,7 @@ public class CreateCouponTemplateRequestDto {
     public void updateBookId(Long value) {
         this.bookId = value;
     }
+
     public void updateCategoryId(Long value) {
         this.categoryId = value;
     }

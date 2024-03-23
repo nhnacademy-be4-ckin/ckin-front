@@ -1,6 +1,7 @@
 package store.ckin.front.coupon.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import store.ckin.front.coupon.service.CouponService;
  * @author : 이가은
  * @version : 2024. 03. 14
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CouponRestController {
@@ -41,8 +43,9 @@ public class CouponRestController {
     public Boolean postWelcomeCoupon() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long memberId = Long.valueOf(authentication.getName());
-        System.out.println("test: !!!!!!!!!" + memberId);
-         Boolean isSuccess = couponService.postWelcomeCoupon(memberId);
+        log.debug("memberID: {}", memberId);
+
+        Boolean isSuccess = couponService.postWelcomeCoupon(memberId);
         return isSuccess;
     }
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * BookResponseDto 단일 조회 dto클래스.
@@ -12,14 +13,14 @@ import lombok.Getter;
  * @version 2024. 03. 07.
  */
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class BookResponseDto {
     private Long bookId;
     private String bookIsbn;
     private String bookTitle;
     private String bookDescription;
     private String bookPublisher;
-    private LocalDate bookPublicationDate;
+    private String bookPublicationDate;
     private String bookIndex;
     private Boolean bookPackaging;
     private Integer bookStock;
