@@ -45,7 +45,7 @@ public interface ProductAdapter {
      * @param limit 최대로 가져올 도서의 개수
      * @return 도서 목록
      */
-    List<BookMainPageResponseDto> getBestBooks(Integer limit);
+    List<BookMainPageResponseDto> getBooksByTagName(Integer limit, String tagName);
 
     /**
      * 추천 도서에 대한 정보를 가져옵니다.

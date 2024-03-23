@@ -27,9 +27,9 @@ import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
 
 /**
- * description:
+ * 상품 정보 조회를 위한 컨트롤러 입니다.
  *
- * @author : gaeun
+ * @author : 이가은
  * @version 2024. 03. 07.
  */
 @Slf4j
@@ -42,6 +42,15 @@ public class ProductController {
     private final CategoryService categoryService;
     private final ReviewService reviewService;
 
+    /**
+     * 부모 카테고리별로 상품의 이미지를 화면에 출력합니다.
+     *
+     * @param pageable     페이지 정보
+     * @param categoryId   부모 카테고리 아이디
+     * @param categoryName 부모 카테고리 이름
+     * @param model        화면에 가져갈 모델
+     * @return 카테고리별 상품 이미지 페이지
+     */
     @GetMapping("/{categoryId}")
     public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
                                  @PathVariable("categoryId") Long categoryId,
@@ -62,20 +71,22 @@ public class ProductController {
     /**
      * bookId로 상품 상세 정보 페이지를 보여주는 메서드 입니다.
      *
-     * @param bookId
+     * @param bookId 도서 아이디
      * @return 상품 상세 정보 DTO
      */
     @GetMapping("/view/{bookId}")
     public String getProductById(@PathVariable("bookId") Long bookId,
-                                 @PageableDefault(page = 0, size = 5) Pageable pageable,
+                                 @PageableDefault(size = 5) Pageable pageable,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
         PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
+
         String authorNames = bookResponseDto.getAuthorNames()
                 .stream().collect(Collectors.joining(", "));
-        String reviewRate = bookResponseDto.getBookReviewRate();
-        String formattedRate = "0".equals(reviewRate) ? "0" :
-                String.format("%.1f", Double.parseDouble(reviewRate) / reviewListDtoPageDto.getTotalElements());
+
+        String formattedRate = "0".equals(bookResponseDto.getBookReviewRate()) ? "0" :
+                String.format("%.1f", Double.parseDouble(bookResponseDto.getBookReviewRate()) /
+                        reviewListDtoPageDto.getTotalElements());
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
@@ -114,12 +125,11 @@ public class ProductController {
     }
 
     /**
-     * //TODO: 미정
      * section 화면으로 이동하는 메소드 입니다.
      *
      * @return section View로 이동
      */
-    @GetMapping("/section")
+    @GetMapping("/recent")
     public String sectionView(@PageableDefault(page = 0, size = 5) Pageable pageable,
                               Model model) {
         PageDto<BookResponseDto> bookPageDto = productService.getRecentPublishBooks(pageable);
@@ -128,7 +138,7 @@ public class ProductController {
         model.addAttribute("pagination", bookPageDto);
         model.addAttribute("totalRate", "4.5");
         //TODO: 리뷰 점수
-        return "product/section";
+        return "product/recent";
     }
 
     /**
@@ -146,6 +156,6 @@ public class ProductController {
         model.addAttribute("totalRate", "4.5");
         //TODO: 리뷰 점수
 
-        return "product/best-section";
+        return "product/" + tagName.toLowerCase();
     }
 }

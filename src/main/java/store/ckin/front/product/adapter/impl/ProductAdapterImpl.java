@@ -98,11 +98,11 @@ public class ProductAdapterImpl implements ProductAdapter {
      * {@inheritDoc}
      */
     @Override
-    public List<BookMainPageResponseDto> getBestBooks(Integer limit) {
+    public List<BookMainPageResponseDto> getBooksByTagName(Integer limit, String tagName) {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
         String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/main-page/tag")
                 .queryParam("limit", limit)
-                .queryParam("tagName", BEST_BOOK)
+                .queryParam("tagName", tagName)
                 .encode()
                 .toUriString();
 

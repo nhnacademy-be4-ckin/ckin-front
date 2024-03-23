@@ -131,10 +131,8 @@ public class ProductServiceImpl implements ProductService {
                     getRecentBooks(key);
                     break;
                 case BEST_BOOK:
-                    getBestBooks(key);
-                    break;
                 case RECOMMEND_BOOK:
-                    getRecommendBooks(key);
+                    getBookListByTagName(key);
                     break;
             }
         }
@@ -147,7 +145,6 @@ public class ProductServiceImpl implements ProductService {
      * @param key 신간 도서 키
      */
     private void getRecentBooks(String key) {
-        System.out.println("실행됨");
         List<BookMainPageResponseDto> recentBooks = productAdapter.findRecentBooks(8);
         recentBooks.forEach(bookMainPageResponseDto -> System.out.println(bookMainPageResponseDto.toString()));
         recentBooks.forEach(bookMainPageResponseDto
@@ -155,23 +152,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 인기 도서에 대한 정보를 레디스로 가져옵니다.
+     * 해당 태그를 가진 도서 목록에 대한 정보를 레디스로 가져옵니다.
      *
-     * @param key 인기 도서 키
+     * @param key 태그 이름
      */
-    private void getBestBooks(String key) {
-        List<BookMainPageResponseDto> recentBooks = productAdapter.getBestBooks(8);
-        recentBooks.forEach(bookMainPageResponseDto
-                -> redisTemplate.opsForList().rightPush(key, bookMainPageResponseDto));
-    }
-
-    /**
-     * 추천 도서에 대한 정보를 레디스로 가져옵니다.
-     *
-     * @param key 추천 도서 키
-     */
-    private void getRecommendBooks(String key) {
-        List<BookMainPageResponseDto> recentBooks = productAdapter.getRecommendBooks(8);
+    private void getBookListByTagName(String key) {
+        List<BookMainPageResponseDto> recentBooks = productAdapter.getBooksByTagName(8, key);
         recentBooks.forEach(bookMainPageResponseDto
                 -> redisTemplate.opsForList().rightPush(key, bookMainPageResponseDto));
     }
