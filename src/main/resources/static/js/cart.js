@@ -1,3 +1,31 @@
+var totalPrice = 0;
+document.addEventListener(`DOMContentLoaded`, function () {
+    const checkboxes = document.querySelectorAll('.form-check-input');
+    checkboxes.forEach((checkbox, index) => {
+        if (index !== 0) {
+            checkbox.addEventListener('change', function (event) {
+                const element = event.target.parentNode;
+                const selectedPriceElement = element.querySelector('#order_total_price');
+
+                const selectedPrice = parseInt(selectedPriceElement.value);
+                console.log("selected: " + selectedPrice);
+                const totalPriceElement = document.querySelector('.shopping-cart-result');
+                console.log("total Price : " + totalPrice)
+                if (event.target.checked) {
+                    totalPrice += selectedPrice;
+                    totalPriceElement.innerText = (totalPrice).toLocaleString();
+                } else {
+                    totalPrice -= selectedPrice;
+                    totalPriceElement.innerText = (totalPrice).toLocaleString();
+                }
+            })
+        }
+    })
+    const selectAllCheckBox = document.querySelector('.form-check-input[id=checkAll]');
+    selectAllCheckBox.checked = true;
+    checkAll(selectAllCheckBox);
+})
+
 function clickUpdateBtn(btn) {
     const form = btn.parentNode;
     const currentQuantity = form.querySelector('input[name=quantity]').value;
@@ -13,7 +41,7 @@ function clickUpdateBtn(btn) {
         inputValue: currentQuantity
     }).then(
         (result) => {
-            if(result.isConfirmed) {
+            if (result.isConfirmed) {
                 const inputValue = Swal.getInput().value;
                 form.querySelector('input[name=quantity]').value = inputValue;
                 Swal.fire({
@@ -99,7 +127,19 @@ function clickDeleteBtn(btn) {
 function checkAll(checkBox) {
     console.log(checkBox.checked);
     const checkboxes = document.querySelectorAll('.form-check-input');
-    checkboxes.forEach((checkbox) => {
-        checkbox.checked = checkBox.checked;
+    totalPrice = 0;
+    checkboxes.forEach((element, index) => {
+        if (index !== 0) {
+            element.checked = checkBox.checked;
+            const totalPriceElement = element.parentNode.querySelector('#order_total_price');
+            console.log(totalPriceElement.value);
+            totalPrice += parseInt(element.parentNode.querySelector('#order_total_price').value);
+        }
     })
+    const totalPriceElement = document.querySelector('.shopping-cart-result');
+    if (checkBox.checked) {
+        totalPriceElement.innerText = totalPrice.toLocaleString();
+    } else {
+        totalPriceElement.innerText = 0;
+    }
 }
