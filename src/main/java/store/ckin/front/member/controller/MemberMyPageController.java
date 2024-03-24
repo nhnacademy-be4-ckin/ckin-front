@@ -30,6 +30,8 @@ import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.grade.domain.response.GradeResponseDto;
 import store.ckin.front.grade.service.GradeService;
+import store.ckin.front.member.domain.response.MemberDetailInfoResponseDto;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
 import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
@@ -50,6 +52,7 @@ import store.ckin.front.sale.service.SaleService;
 @RequiredArgsConstructor
 @RequestMapping("/member/mypage")
 public class MemberMyPageController {
+    private final MemberService memberService;
 
     private final SaleService saleService;
 
@@ -291,5 +294,18 @@ public class MemberMyPageController {
     @GetMapping("/password")
     public String getPasswordUpdatePage(Model model) {
         return "member/mypage/password-update";
+    }
+
+    /**
+     * 계정 정보 수정 페이지를 호출하는 메서드 입니다.
+     */
+    @Member
+    @GetMapping("/info")
+    public String getMemberInfoUpdatePage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberDetailInfoResponseDto info = memberService.getMemberDetailInfo(authentication.getName());
+        model.addAttribute("info", info);
+
+        return "member/mypage/member-info";
     }
 }

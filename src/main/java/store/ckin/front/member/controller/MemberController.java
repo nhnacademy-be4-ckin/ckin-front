@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberPasswordRequestDto;
+import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
 import store.ckin.front.member.exception.CannotChangePasswordException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.member.service.MemberService;
@@ -131,5 +132,17 @@ public class MemberController {
         }
 
         return "redirect:/logout";
+    }
+
+    /**
+     * 계정 정보를 업데이트 하는 메서드 입니다.
+     */
+    @PutMapping("/member/info")
+    public String updateMemberInfo(@Valid MemberUpdateRequestDto memberUpdateRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        memberService.updateMemberInfo(authentication.getName(), memberUpdateRequestDto);
+
+        return "redirect:/member/mypage/info?success=true";
     }
 }

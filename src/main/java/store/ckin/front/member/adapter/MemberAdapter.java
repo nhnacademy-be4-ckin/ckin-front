@@ -1,7 +1,13 @@
 package store.ckin.front.member.adapter;
 
-import store.ckin.front.member.domain.request.*;
+import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.request.MemberChangePasswordRequestDto;
+import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
+import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
+import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
+import store.ckin.front.member.domain.response.MemberDetailInfoResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
 import store.ckin.front.member.domain.response.MemberPasswordResponseDto;
@@ -28,4 +34,8 @@ public interface MemberAdapter {
     void setDormant(String memberId);
 
     void changePassword(String memberId, MemberChangePasswordRequestDto memberChangePasswordRequestDto);
+
+    MemberDetailInfoResponseDto getMemberDetailInfo(String memberId);
+
+    void updateMemberInfo(String memberId, MemberUpdateRequestDto memberUpdateRequestDto);
 }
