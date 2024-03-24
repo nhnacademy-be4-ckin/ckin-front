@@ -2,6 +2,7 @@ package store.ckin.front.coupon.adapter;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import store.ckin.front.coupon.dto.response.CouponCountResponseDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
@@ -79,4 +80,6 @@ public interface CouponAdapter {
      * @return 쿠폰 목록 페이지 DTO
      */
     PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId);
+
+    CouponCountResponseDto getCountCouponByMember(Long memberId);
 }

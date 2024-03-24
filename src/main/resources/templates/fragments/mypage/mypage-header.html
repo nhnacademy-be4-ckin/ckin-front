@@ -1,7 +1,6 @@
 <!DOCTYPE html>
     <html lang="en"
-          xmlns:th="http://www.thymeleaf.org"
-          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+          xmlns:th="http://www.thymeleaf.org">
     <header class="header-v4 my-page-header" th:fragment="mypage-fragment-header">
         <h1 class="mt-4" th:text="${member.name + '님 환영합니다!'}"></h1>
 
@@ -19,25 +18,54 @@
                 </div>
             </div>
 
+            <div class="my-page-header-nav_element" style="display: flex; flex-direction: column; justify-content: center">
+                <div th:if="${member.accumulateAmount ge member.gradeCondition}" style="display: flex; flex-direction: column">
+                    <span>등급 조건을 만족하였습니다!</span>
+                    <span>다음 달 등급이 업데이트 됩니다.</span>
+                </div>
+                <div th:if="${member.gradeCondition gt member.accumulateAmount}">
+                    <span>다음 등급까지</span>
+                    <span th:text="${#numbers.formatInteger(member.gradeCondition - member.accumulateAmount, 3, 'COMMA')}" class="memberName"></span>
+                    <span>원 남았습니다.</span>
+                </div>
+                <a href="/member/mypage/grade-policy" style="text-decoration: none; color: darkgray; display: flex; align-items: center; justify-content: left; margin-top: 5px;">
+                    <span>등급혜택</span>
+                    <i class="fas fa-angle-right"></i>
+                </a>
+            </div>
+
             <div class="my-page-header-nav_element">
-                <a href="#" style="text-decoration: none; color: black; display: flex; justify-content: center;">
+                <a href="/member/mypage/point-history" style="text-decoration: none; color: black; display: flex; justify-content: center;">
                     <div>
                         <div><span class="material-symbols-sharp" style="color: black;">local_parking</span></div>
                         <div style="color: black;">
                             <span>포인트</span>
                             <i class="fas fa-angle-right"></i>
                         </div>
-                        <div th:text="${member.point}" style="color: black;"></div>
+                        <div th:text="${#numbers.formatInteger(member.point, 3, 'COMMA')}" style="color: black;"></div>
                     </div>
                 </a>
             </div>
 
             <div class="my-page-header-nav_element">
-                <a href="#" style="text-decoration: none; color: black; display: flex; justify-content: center;">
+                <a href="/member/mypage/coupon" style="text-decoration: none; color: black; display: flex; justify-content: center;">
                     <div>
                         <div><span class="material-symbols-sharp" style="color: black;">local_activity</span></div>
                         <div style="color: black;">
                             <span>보유쿠폰</span>
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                        <div th:text="${countCoupon}" style="color: black;"></div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="my-page-header-nav_element">
+                <a href="/member/mypage/review" style="text-decoration: none; color: black; display: flex; justify-content: center;">
+                    <div>
+                        <div><span class="material-symbols-sharp" style="color: black;">edit</span></div>
+                        <div style="color: black;">
+                            <span>리뷰작성</span>
                             <i class="fas fa-angle-right"></i>
                         </div>
                         <div th:text="${member.countReview}" style="color: black;"></div>
