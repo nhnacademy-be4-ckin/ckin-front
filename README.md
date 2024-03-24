@@ -8,7 +8,7 @@
 git clone https://github.com/nhnacademy-be4-ckin/ckin-front
 ```
 
-2. ckin-api 폴더로 이동
+2. ckin-front 폴더로 이동
 
 ```bash
 cd ckin-front
