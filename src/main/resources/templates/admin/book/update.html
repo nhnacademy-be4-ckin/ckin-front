@@ -107,6 +107,7 @@
             color: #ffffff;
             border-radius: 15px;
         }
+
         .remove-author-button {
             margin-left: 8px;
             color: #007bff; /* 기본 색상을 파란색으로 변경 */
@@ -228,7 +229,7 @@
 
     <div class="w-full p-all-60">
         <form id="book-form">
-            <input type="hidden" id="bookId" th:value="${storedBook.bookId}" />
+            <input type="hidden" id="bookId" th:value="${storedBook.bookId}"/>
             <div style="margin-top: 20px; font-size: 20px; font-weight: bold;">
                 <div id="editingBookTitle" th:text="|'${storedBook.bookTitle}' 수정 페이지|"></div>
                 <img th:if="${storedBook.thumbnail}" th:src="@{${storedBook.thumbnail}}" alt="Thumbnail"
@@ -288,7 +289,9 @@
             <div class="form-group">
                 <label for="bookPublisher">출판사:</label>
                 <input type="text" class="form-control" id="bookPublisher" th:value="${storedBook.bookPublisher}"
-                       placeholder="출판사를 입력해주세요..."/>
+                       placeholder="출판사를 입력해주세요..."
+                       required
+                />
             </div>
 
             <div class="form-group">
@@ -312,7 +315,8 @@
 
             <div class="form-group">
                 <label for="bookIndex">책 목차:</label>
-                <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..." th:text="${storedBook.bookIndex}"></textarea>
+                <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..."
+                          th:text="${storedBook.bookIndex}"></textarea>
             </div>
             <div class="form-group">
                 <label for="bookPackaging">포장 여부:</label>
@@ -343,8 +347,11 @@
             <div class="form-group">
                 <label for="bookRegularPrice">정가:</label>
                 <input type="number" class="form-control" id="bookRegularPrice"
-                       th:value="${storedBook.bookRegularPrice}" min="0" step="100"
-                       placeholder="정가를 입력해주세요..." required/>
+                       th:value="${storedBook.bookRegularPrice}"
+                       min="0"
+                       step="100"
+                       placeholder="정가를 입력해주세요..."
+                       required/>
             </div>
 
             <!-- 할인율 입력 필드 -->
@@ -653,15 +660,16 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadTags);
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             initializeSelectedAuthors();
             initializeSelectedTags();
             loadTags();
         });
+
         // selectedAuthors 초기화 함수
         function initializeSelectedAuthors() {
             var authorNames = /*[[${storedBook.authorNames}]]*/ [];
-            authorNames.forEach(function(name, index) {
+            authorNames.forEach(function (name, index) {
                 selectedAuthors[index] = name;
             });
             updateSelectedAuthorsDisplay();
@@ -669,17 +677,19 @@
 
         function initializeSelectedTags() {
             var tagNames = /*[[${storedBook.tagNames}]]*/ [];
-            tagNames.forEach(function(name, index) {
+            tagNames.forEach(function (name, index) {
                 selectedTags[index] = name;
             });
             updateSelectedTagsDisplay();
         }
+
         function checkSelections() {
             const selectedAuthorsCount = Object.keys(selectedAuthors).length;
             const categorySelected = $("#category1").val() !== "" || $("#category2").val() !== "" || $("#category3").val() !== "";
 
             return selectedAuthorsCount > 0 && categorySelected;
         }
+
         function updateSubmitButtonState() {
             const isEligibleForSubmission = checkSelections();
             $(".btn.btn-primary").prop('disabled', !isEligibleForSubmission);
