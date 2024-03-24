@@ -280,4 +280,10 @@ public class MemberMyPageController {
 
         return "member/mypage/grade-policy";
     }
+
+    @Member
+    @GetMapping("/dormant")
+    public String getDormantPage(Model model) {
+        return "member/mypage/dormant";
+    }
 }

@@ -106,4 +106,17 @@ public class MemberAdapterImpl implements MemberAdapter {
 
         return exchange.getBody();
     }
+
+    @Override
+    public void setDormant(String memberId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/dormant",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
+    }
 }

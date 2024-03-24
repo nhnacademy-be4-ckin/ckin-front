@@ -53,4 +53,9 @@ public class MemberServiceImpl implements MemberService {
     public MemberMyPageResponseDto getMyPageInfo(String memberId) {
         return memberAdapter.getMyPageInfo(memberId);
     }
+
+    @Override
+    public void setDormant(String memberId) {
+        memberAdapter.setDormant(memberId);
+    }
 }

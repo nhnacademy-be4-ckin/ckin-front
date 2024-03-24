@@ -16,4 +16,6 @@ public interface MemberService {
     void createMember(MemberCreateRequestDto memberCreateRequestDto);
 
     MemberMyPageResponseDto getMyPageInfo(String memberId);
+
+    void setDormant(String memberId);
 }

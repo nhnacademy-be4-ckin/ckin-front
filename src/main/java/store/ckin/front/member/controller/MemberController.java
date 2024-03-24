@@ -100,4 +100,16 @@ public class MemberController {
 
         return "redirect:/member/mypage/review";
     }
+
+    /**
+     * 휴면 계정 전환을 처리하는 메서드 입니다.
+     */
+    @PutMapping("/member/dormant")
+    public String setDormant() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        memberService.setDormant(authentication.getName());
+
+        return "redirect:/logout";
+    }
 }

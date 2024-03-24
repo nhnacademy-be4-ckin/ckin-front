@@ -24,4 +24,6 @@ public interface MemberAdapter {
     MemberMyPageResponseDto getMyPageInfo(String memberId);
 
     MemberOauthLoginResponseDto getOauthMemberInfO(MemberOauthIdOnlyRequestDto memberOauthIdOnlyRequestDto);
+
+    void setDormant(String memberId);
 }
