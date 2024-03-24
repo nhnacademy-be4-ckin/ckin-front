@@ -28,6 +28,8 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.grade.domain.response.GradeResponseDto;
+import store.ckin.front.grade.service.GradeService;
 import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
 import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
@@ -58,6 +60,8 @@ public class MemberMyPageController {
     private final PointHistoryService pointHistoryService;
 
     private final AddressService addressService;
+
+    private final GradeService gradeService;
 
     /**
      * 회원 마이페이지 메인 화면을 요청하는 메서드입니다.
@@ -257,10 +261,23 @@ public class MemberMyPageController {
     /**
      * 기본 배송지로 변경할 때 호출되는 메서드 입니다.
      */
-    @PutMapping("address/{addressId}/default")
+    @PutMapping("/address/{addressId}/default")
     public String setDefaultAddress(@PathVariable("addressId") Long addressId) {
         addressService.setDefaultAddress(getMemberId(), addressId);
 
         return "redirect:/member/mypage/address/list";
+    }
+
+    /**
+     * 등급 정책 페이지를 요청하는 메서드 입니다.
+     */
+    @Member
+    @GetMapping("/grade-policy")
+    public String getGradePolicy(Model model) {
+        List<GradeResponseDto> gradeList = gradeService.getGradeList();
+
+        model.addAttribute("gradeList", gradeList);
+
+        return "member/mypage/grade-policy";
     }
 }
