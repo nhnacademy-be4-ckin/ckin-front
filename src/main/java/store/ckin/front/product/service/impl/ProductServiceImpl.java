@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<BookMainPageResponseDto> getRecentPublishBooks() {
-        initCartAndUpdateExpire(RECENT_BOOK);
+        initBookAndUpdateExpire(RECENT_BOOK);
         List<BookMainPageResponseDto> responseList = new ArrayList<>();
         Objects.requireNonNull(redisTemplate.opsForList().range(RECENT_BOOK, 0, 7))
                 .forEach(o -> responseList.add((BookMainPageResponseDto) o));
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<BookMainPageResponseDto> getBestBooks() {
-        initCartAndUpdateExpire(BEST_BOOK);
+        initBookAndUpdateExpire(BEST_BOOK);
         List<BookMainPageResponseDto> responseList = new ArrayList<>();
         Objects.requireNonNull(redisTemplate.opsForList().range(BEST_BOOK, 0, 7))
                 .forEach(o -> responseList.add((BookMainPageResponseDto) o));
@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public List<BookMainPageResponseDto> getRecommendBooks() {
-        initCartAndUpdateExpire(RECOMMEND_BOOK);
+        initBookAndUpdateExpire(RECOMMEND_BOOK);
         List<BookMainPageResponseDto> responseList = new ArrayList<>();
         Objects.requireNonNull(redisTemplate.opsForList().range(RECOMMEND_BOOK, 0, 7))
                 .forEach(o -> responseList.add((BookMainPageResponseDto) o));
@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
      *
      * @param key 레디스에 정보를 담고 있는 리스트의 키
      */
-    private void initCartAndUpdateExpire(String key) {
+    private void initBookAndUpdateExpire(String key) {
         ListOperations<String, Object> opsForList = redisTemplate.opsForList();
         if (Objects.isNull(opsForList.range(key, 0, 7))
                 || (opsForList.range(key, 0, 7)).isEmpty()) {
