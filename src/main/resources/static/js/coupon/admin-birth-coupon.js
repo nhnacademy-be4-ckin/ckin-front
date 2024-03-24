@@ -52,19 +52,27 @@ document.getElementById("formSubmitBook").addEventListener("click", function (ev
 
     if (parseInt(duration.value) < 0) {
         event.preventDefault(); // 기본 동작 중단
-        alert("사용기한은 음수가 될 수 없습니다.");
+        showErrorAlert("사용기한은 음수가 될 수 없습니다.");
         return false; // 폼 제출 중단
     } else if (date.value === "" && duration.value === "") {
         event.preventDefault(); // 기본 동작 중단
-        alert("사용기한 혹은 날짜를 작성 후 제출해주세요.");
+        showErrorAlert("사용기한 혹은 날짜를 작성 후 제출해주세요.");
         return false; // 폼 제출 중단
     } else if (date.value && duration.value) {
         event.preventDefault(); // 기본 동작 중단
-        alert("사용기한과 만료일을 같이 입력할 수 없습니다.");
+        showErrorAlert("사용기한과 만료일을 같이 입력할 수 없습니다.");
         return false; // 둘 다 값이 있으면 제출 중단
     } else if ($("#policy").is(":checked")==true && isUsageTextPresent) {
         event.preventDefault(); // 기본 동작 중단
-        alert("이미 사용중인 정책이 있습니다. \n새로운 정책을 등록하시려면 기존 정책을 해지한 이후에 다시 시도하세요.");
+        showErrorAlert("이미 사용중인 정책이 있습니다. \n새로운 정책을 등록하시려면 기존 정책을 해지한 이후에 다시 시도하세요.");
         return false; // 폼 제출 중단
     }
 });
+
+function showErrorAlert(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '알림',
+        text: message
+    });
+}

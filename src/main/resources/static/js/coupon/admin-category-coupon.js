@@ -26,15 +26,15 @@ document.getElementById("formSubmitCategory").addEventListener("click", function
 
     if (!checkValidCategory.classList.contains("ok")) {
         event.preventDefault(); // 기본 동작 중단
-        alert("도서가 존재하는지 확인 후 제출해주세요.");
+        showErrorAlert("도서가 존재하는지 확인 후 제출해주세요.");
         return false; // 폼 제출 중단
     } else if(dateCategory.value === "" && durationCategory.value === "") {
         event.preventDefault(); // 기본 동작 중단
-        alert("사용기한 혹은 만료일을 작성 후 제출해주세요.");
+        showErrorAlert("사용기한 혹은 만료일을 작성 후 제출해주세요.");
         return false; // 폼 제출 중단
     } else if (dateCategory.value && durationCategory.value) {
         event.preventDefault(); // 기본 동작 중단
-        alert("사용기한과 만료일을 같이 입력할 수 없습니다.");
+        showErrorAlert("사용기한과 만료일을 같이 입력할 수 없습니다.");
         return false; // 둘 다 값이 있으면 제출 중단
     }
 });
@@ -80,4 +80,12 @@ function submitCategoryId() {
         }
     });
 
+}
+
+function showErrorAlert(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '알림',
+        text: message
+    });
 }
