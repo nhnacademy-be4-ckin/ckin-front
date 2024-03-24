@@ -8,9 +8,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.member.adapter.MemberAdapter;
-import store.ckin.front.member.domain.request.MemberCreateRequestDto;
-import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
+import store.ckin.front.member.domain.request.*;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
+import store.ckin.front.member.domain.response.MemberPasswordResponseDto;
+import store.ckin.front.member.exception.CannotChangePasswordException;
 import store.ckin.front.member.exception.MemberAlreadyExistsException;
 import store.ckin.front.member.service.MemberService;
 
@@ -57,5 +58,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void setDormant(String memberId) {
         memberAdapter.setDormant(memberId);
+    }
+
+    @Override
+    public void changePassword(String memberId, MemberPasswordRequestDto memberPasswordRequestDto) {
+        MemberPasswordResponseDto memberPasswordResponseDto =
+                memberAdapter.getPassword(memberId);
+
+        if (!bcryptPasswordEncoder.matches(
+                memberPasswordRequestDto.getOldPassword(),
+                memberPasswordResponseDto.getPassword()
+        )) {
+            throw new CannotChangePasswordException(memberId);
+        }
+
+        memberAdapter.changePassword(
+                memberId,
+                new MemberChangePasswordRequestDto(
+                        bcryptPasswordEncoder.encode(memberPasswordRequestDto.getNewPassword())
+                ));
     }
 }

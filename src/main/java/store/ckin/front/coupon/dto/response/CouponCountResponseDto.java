@@ -14,5 +14,5 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @Jacksonized
 public class CouponCountResponseDto {
-    Long countCoupon;
+    private Long countCoupon;
 }

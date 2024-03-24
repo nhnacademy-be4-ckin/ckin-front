@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberPasswordRequestDto;
+import store.ckin.front.member.exception.CannotChangePasswordException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
@@ -109,6 +111,24 @@ public class MemberController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         memberService.setDormant(authentication.getName());
+
+        return "redirect:/logout";
+    }
+
+    /**
+     * 비밀번호 변경을 요청하는 메서드 입니다.
+     */
+    @PutMapping("/member/password/change")
+    public String changePassword(@Valid MemberPasswordRequestDto memberPasswordRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+            memberService.changePassword(authentication.getName(), memberPasswordRequestDto);
+        } catch (CannotChangePasswordException ex) {
+            log.debug(ex.getMessage());
+
+            return "redirect:/member/mypage/password?error=invalid";
+        }
 
         return "redirect:/logout";
     }

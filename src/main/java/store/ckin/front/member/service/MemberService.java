@@ -2,6 +2,8 @@ package store.ckin.front.member.service;
 
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
+import store.ckin.front.member.domain.request.MemberPasswordRequestDto;
+import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 
 /**
@@ -18,4 +20,6 @@ public interface MemberService {
     MemberMyPageResponseDto getMyPageInfo(String memberId);
 
     void setDormant(String memberId);
+
+    void changePassword(String memberId, MemberPasswordRequestDto memberPasswordRequestDto);
 }

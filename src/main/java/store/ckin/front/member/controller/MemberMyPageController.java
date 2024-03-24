@@ -286,4 +286,10 @@ public class MemberMyPageController {
     public String getDormantPage(Model model) {
         return "member/mypage/dormant";
     }
+
+    @Member
+    @GetMapping("/password")
+    public String getPasswordUpdatePage(Model model) {
+        return "member/mypage/password-update";
+    }
 }
