@@ -2,6 +2,7 @@ package store.ckin.front.coupon.service;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import store.ckin.front.coupon.dto.response.CouponCountResponseDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
@@ -73,6 +74,8 @@ public interface CouponService {
      * @return 쿠폰 목록 페이지 DTO
      */
     PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId);
+
+    CouponCountResponseDto getCountCouponByMember(Long memberId);
 
     /**
      * Welcome 쿠폰을 발급받는 메서드 입니다.

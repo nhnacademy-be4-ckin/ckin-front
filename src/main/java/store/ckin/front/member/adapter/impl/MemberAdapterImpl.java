@@ -13,12 +13,16 @@ import org.springframework.web.client.RestTemplate;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.member.adapter.MemberAdapter;
 import store.ckin.front.member.domain.request.MemberAuthRequestDto;
+import store.ckin.front.member.domain.request.MemberChangePasswordRequestDto;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberEmailOnlyRequestDto;
 import store.ckin.front.member.domain.request.MemberOauthIdOnlyRequestDto;
+import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
 import store.ckin.front.member.domain.response.MemberAuthResponseDto;
+import store.ckin.front.member.domain.response.MemberDetailInfoResponseDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.domain.response.MemberOauthLoginResponseDto;
+import store.ckin.front.member.domain.response.MemberPasswordResponseDto;
 
 /**
  * MemberAdapter 에 대한 구현체 입니다.
@@ -46,6 +50,22 @@ public class MemberAdapterImpl implements MemberAdapter {
                 Boolean.class);
 
         return Boolean.TRUE.equals(responseEntity.getBody());
+    }
+
+    @Override
+    public MemberPasswordResponseDto getPassword(String memberId) {
+        HttpHeaders headers = new HttpHeaders(getHttpHeaders());
+        HttpEntity<Void> requestEntity =
+                new HttpEntity<>(headers);
+
+        ResponseEntity<MemberPasswordResponseDto> responseEntity = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/checkPassword",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {},
+                memberId);
+
+        return responseEntity.getBody();
     }
 
     @Override
@@ -105,5 +125,59 @@ public class MemberAdapterImpl implements MemberAdapter {
                 });
 
         return exchange.getBody();
+    }
+
+    @Override
+    public void setDormant(String memberId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/dormant",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
+    }
+
+    @Override
+    public void changePassword(String memberId, MemberChangePasswordRequestDto memberChangePasswordRequestDto) {
+        HttpEntity<MemberChangePasswordRequestDto> requestEntity =
+                new HttpEntity<>(memberChangePasswordRequestDto, getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/password",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
+    }
+
+    @Override
+    public MemberDetailInfoResponseDto getMemberDetailInfo(String memberId) {
+        ResponseEntity<MemberDetailInfoResponseDto> responseEntity = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/info",
+                HttpMethod.GET,
+                new HttpEntity<>(getHttpHeaders()),
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
+
+        return responseEntity.getBody();
+    }
+
+    @Override
+    public void updateMemberInfo(String memberId, MemberUpdateRequestDto memberUpdateRequestDto) {
+        HttpEntity<MemberUpdateRequestDto> requestEntity =
+                new HttpEntity<>(memberUpdateRequestDto, getHttpHeaders());
+
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/update-info",
+                HttpMethod.PUT,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
     }
 }

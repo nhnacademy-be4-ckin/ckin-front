@@ -33,6 +33,16 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @RequiredArgsConstructor
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
+    private static final String ATTRIBUTE_NAME_MEMBER = "member";
+
+    private static final String ATTRIBUTE_NAME_OAUTH_ID = "oauthId";
+
+    private static final String ATTRIBUTE_NAME_EMAIL = "email";
+
+    private static final String ATTRIBUTE_NAME_USER_NAME = "name";
+
+    private static final String ATTRIBUTE_NAME_CONTACT = "contact";
+
     private final RestTemplate restTemplate;
 
     private final Converter<OAuth2UserRequest, RequestEntity<?>> requestEntityConverter
@@ -71,30 +81,30 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
             authorities.add(new SimpleGrantedAuthority("SCOPE_" + authority));
         }
 
-        return new DefaultOAuth2User(authorities, getPaycoAttributes(userAttributes), "member");
+        return new DefaultOAuth2User(authorities, getPaycoAttributes(userAttributes), ATTRIBUTE_NAME_MEMBER);
     }
 
     private Map<String, Object> getPaycoAttributes(Map<String, Object> userAttributes) {
         log.debug("getPaycoAttributes Start");
         log.debug("userAttributes : {}", userAttributes.toString());
-        Map<String, Object> memberAttributes = (Map) userAttributes.get("member");
+        Map<String, Object> memberAttributes = (Map) userAttributes.get(ATTRIBUTE_NAME_MEMBER);
 
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put("oauthId", memberAttributes.get("idNo"));
-        if (memberAttributes.containsKey("email")) {
-            attributes.put("email", memberAttributes.get("email"));
+        attributes.put(ATTRIBUTE_NAME_OAUTH_ID, memberAttributes.get("idNo"));
+        if (memberAttributes.containsKey(ATTRIBUTE_NAME_EMAIL)) {
+            attributes.put(ATTRIBUTE_NAME_EMAIL, memberAttributes.get(ATTRIBUTE_NAME_EMAIL));
         }
 
-        if (memberAttributes.containsKey("name")) {
-            attributes.put("name", memberAttributes.get("name"));
+        if (memberAttributes.containsKey(ATTRIBUTE_NAME_USER_NAME)) {
+            attributes.put(ATTRIBUTE_NAME_USER_NAME, memberAttributes.get(ATTRIBUTE_NAME_USER_NAME));
         }
 
         if (memberAttributes.containsKey("mobile")) {
-            attributes.put("contact", memberAttributes.get("mobile"));
+            attributes.put(ATTRIBUTE_NAME_CONTACT, memberAttributes.get("mobile"));
         }
 
         Map<String, Object> result = new HashMap<>();
-        result.put("member", attributes);
+        result.put(ATTRIBUTE_NAME_MEMBER, attributes);
 
         return result;
     }

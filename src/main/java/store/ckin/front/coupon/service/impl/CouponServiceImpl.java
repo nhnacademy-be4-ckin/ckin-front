@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import store.ckin.front.coupon.adapter.CouponAdapter;
+import store.ckin.front.coupon.dto.response.CouponCountResponseDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
@@ -95,8 +96,12 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public CouponCountResponseDto getCountCouponByMember(Long memberId) {
+        return couponAdapter.getCountCouponByMember(memberId);
+    }
+  
+    @Override
     public Boolean postWelcomeCoupon(Long memberId) {
         return couponAdapter.postWelcomeCoupon(memberId);
     }
-
 }

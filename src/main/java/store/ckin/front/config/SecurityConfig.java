@@ -148,8 +148,8 @@ public class SecurityConfig {
 
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
-        return (serverFactory) -> serverFactory.addContextCustomizers(
-                (context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
+        return serverFactory -> serverFactory.addContextCustomizers(
+                context -> context.setCookieProcessor(new LegacyCookieProcessor()));
     }
 
     @Bean

@@ -32,6 +32,16 @@ import store.ckin.front.util.JwtUtil;
 @Component
 @RequiredArgsConstructor
 public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private static final String ATTRIBUTE_NAME_OAUTH_ID = "oauthId";
+
+    private static final String ATTRIBUTE_NAME_EMAIL = "email";
+
+    private static final String ATTRIBUTE_NAME_USER_NAME = "name";
+
+    private static final String ATTRIBUTE_NAME_CONTACT = "contact";
+
+    private static final String INTERNATIONAL_PHONE_NUMBER_KOREA = "82";
+
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
@@ -43,7 +53,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             throws IOException, ServletException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = (Map) oauth2User.getAttributes().get("member");
-        String oauthId = String.valueOf(attributes.get("oauthId"));
+        String oauthId = String.valueOf(attributes.get(ATTRIBUTE_NAME_OAUTH_ID));
         log.debug("onAuthenticationSuccess : OAuth ID [{}]", oauthId);
 
         try {
@@ -77,23 +87,23 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void setQueryParams(Map<String, Object> attributes, UriComponentsBuilder targetUrl) {
-        targetUrl.queryParam("oauthId", String.valueOf(attributes.get("oauthId")));
+        targetUrl.queryParam(ATTRIBUTE_NAME_OAUTH_ID, String.valueOf(attributes.get(ATTRIBUTE_NAME_OAUTH_ID)));
 
-        if (attributes.containsKey("email")) {
-            targetUrl.queryParam("email", String.valueOf(attributes.get("email")));
+        if (attributes.containsKey(ATTRIBUTE_NAME_EMAIL)) {
+            targetUrl.queryParam(ATTRIBUTE_NAME_EMAIL, String.valueOf(attributes.get(ATTRIBUTE_NAME_EMAIL)));
         }
 
-        if (attributes.containsKey("name")) {
-            targetUrl.queryParam("name", String.valueOf(attributes.get("name")));
+        if (attributes.containsKey(ATTRIBUTE_NAME_USER_NAME)) {
+            targetUrl.queryParam(ATTRIBUTE_NAME_USER_NAME, String.valueOf(attributes.get(ATTRIBUTE_NAME_USER_NAME)));
         }
 
-        if (attributes.containsKey("contact")) {
-            String contact = String.valueOf(attributes.get("contact"));
-            if (contact.startsWith("82")) {
-                contact = contact.replace("82", "0");
+        if (attributes.containsKey(ATTRIBUTE_NAME_CONTACT)) {
+            String contact = String.valueOf(attributes.get(ATTRIBUTE_NAME_CONTACT));
+            if (contact.startsWith(INTERNATIONAL_PHONE_NUMBER_KOREA)) {
+                contact = contact.replace(INTERNATIONAL_PHONE_NUMBER_KOREA, "0");
             }
 
-            targetUrl.queryParam("contact", contact);
+            targetUrl.queryParam(ATTRIBUTE_NAME_CONTACT, contact);
         }
     }
 }

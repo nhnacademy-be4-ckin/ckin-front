@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
+import store.ckin.front.member.domain.request.MemberPasswordRequestDto;
+import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
+import store.ckin.front.member.exception.CannotChangePasswordException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.review.service.ReviewService;
@@ -39,8 +41,6 @@ public class MemberController {
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
-
-    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * [GET] 회원가입 페이지.
@@ -93,5 +93,45 @@ public class MemberController {
         return "member/login";
     }
 
+    /**
+     * 휴면 계정 전환을 처리하는 메서드 입니다.
+     */
+    @PutMapping("/member/dormant")
+    public String setDormant() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        memberService.setDormant(authentication.getName());
+
+        return "redirect:/logout";
+    }
+
+    /**
+     * 비밀번호 변경을 요청하는 메서드 입니다.
+     */
+    @PutMapping("/member/password/change")
+    public String changePassword(@Valid MemberPasswordRequestDto memberPasswordRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+            memberService.changePassword(authentication.getName(), memberPasswordRequestDto);
+        } catch (CannotChangePasswordException ex) {
+            log.debug(ex.getMessage());
+
+            return "redirect:/member/mypage/password?error=invalid";
+        }
+
+        return "redirect:/logout";
+    }
+
+    /**
+     * 계정 정보를 업데이트 하는 메서드 입니다.
+     */
+    @PutMapping("/member/info")
+    public String updateMemberInfo(@Valid MemberUpdateRequestDto memberUpdateRequestDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        memberService.updateMemberInfo(authentication.getName(), memberUpdateRequestDto);
+
+        return "redirect:/member/mypage/info?success=true";
+    }
 }
