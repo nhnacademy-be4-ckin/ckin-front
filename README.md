@@ -5,7 +5,7 @@
 1. Repository 클론
 
 ```bash
-git clone https://github.com/nhnacademy-be4-ckin/ckin-front
+git clone https://github.com/nhnacademy-be4-ckin/ckin-front
 ```
 
 2. ckin-api 폴더로 이동
