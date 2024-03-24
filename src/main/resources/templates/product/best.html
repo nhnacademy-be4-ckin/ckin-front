@@ -36,12 +36,11 @@
                                 <span class="hidden">이전</span>
                             </button>
                             <div class="page_num">
-                                <th:block
-                                        th:with="start=1, end=${(pagination.totalPages == 0) ? 1 : pagination.totalPages}">
+                                <div th:with="start=1, end=${(pagination.totalPages == 0) ? 1 : pagination.totalPages}">
                                     <a th:each="page: ${#numbers.sequence(start, end)}"
                                        th:href="@{'/product/tag/BEST'(page=${page - 1})}" th:data-index="${page}"
                                        class="btn_page_num" data-role="middle" th:text="${page}"></a>
-                                </th:block>
+                                </div>
                             </div>
                             <button class="btn_page next"
                                     th:onclick="|javascript:location.href='/product/tag/BEST?page=' + (${pagination.getNumber() + 1})|"
