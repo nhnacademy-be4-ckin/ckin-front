@@ -3,6 +3,7 @@ package store.ckin.front.category.service;
 import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
+import store.ckin.front.category.dto.response.CategoryCacheResponseDto;
 import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 
@@ -51,6 +52,7 @@ public interface CategoryService {
      * @return the subcategories
      */
     List<CategoryResponseDto> getSubcategories(Long parentId);
+    List<CategoryResponseDto> getSubcategoriesFromRedis(Long parentId);
 
     CategoryNameResponseDto getCategoryById(Long categoryId);
 }
