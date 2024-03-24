@@ -79,7 +79,9 @@
                                     url: '/coupon/welcome',
                                     dataType: 'json',
                                     success: function (result) {
-                                        welcome_alert.style.display = "contents";
+                                        if(result) {
+                                            welcome_alert.style.display = "contents";
+                                        }
                                     },
                                     error: function (error) {
                                         console.error("Welcome Coupon Failed");

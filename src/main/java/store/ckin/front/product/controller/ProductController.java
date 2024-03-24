@@ -158,4 +158,14 @@ public class ProductController {
 
         return "product/" + tagName.toLowerCase();
     }
+
+    /**
+     * event 페이지로 이동합니다.
+     *
+     * @return 이벤트 페이지
+     */
+    @GetMapping("/event")
+    public String eventView() {
+        return "event";
+    }
 }
