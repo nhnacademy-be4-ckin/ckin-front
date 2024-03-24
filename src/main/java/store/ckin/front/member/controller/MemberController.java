@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,8 +41,6 @@ public class MemberController {
     private final MemberDetailsService memberDetailsService;
 
     private final TokenService tokenService;
-
-    private final RedisTemplate<String, Object> redisTemplate;
 
     /**
      * [GET] 회원가입 페이지.
