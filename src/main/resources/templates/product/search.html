@@ -24,19 +24,19 @@
                                 <dd>
                                     <ul>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchByTitle" type="checkbox" value="" checked>
+                                            <input name="filter" id="searchByTitle" type="checkbox" value="title">
                                             <label for="searchByTitle">책 제목</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchByAuthor" type="checkbox" value="" checked>
+                                            <input name="filter" id="searchByAuthor" type="checkbox" value="author">
                                             <label for="searchByAuthor">저자</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchByPublisher" type="checkbox" value="" checked>
+                                            <input name="filter" id="searchByPublisher" type="checkbox" value="publisher">
                                             <label for="searchByPublisher">출판사</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchByDescription" type="checkbox" value="" checked>
+                                            <input name="filter" id="searchByDescription" type="checkbox" value="description">
                                             <label for="searchByDescription">책 설명</label>
                                         </li>
                                     </ul>
@@ -49,11 +49,11 @@
                                 <dd>
                                     <ul>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchWithInternal" type="checkbox" value="" checked>
+                                            <input name="category" id="searchWithInternal" type="checkbox" value="국내도서" >
                                             <label for="searchWithInternal">국내 도서</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input id="searchWithOverseas" type="checkbox" value="" checked>
+                                            <input name="category" id="searchWithOverseas" type="checkbox" value="해외도서">
                                             <label for="searchWithOverseas">해외 도서</label>
                                         </li>
                                     </ul>
@@ -125,6 +125,7 @@
                                                aria-disabled="true">Previous</a>
                                         </li>
                                         <li class="page-item"
+                                            th:if="${RESULT_PAGE_INFO.totalPages!=0}"
                                             th:each="num : ${#numbers.sequence(1, RESULT_PAGE_INFO.totalPages)}">
                                             <a class="page-link"
                                                th:href="@{/product/search(page=${num},keyword=${keyword})}"
