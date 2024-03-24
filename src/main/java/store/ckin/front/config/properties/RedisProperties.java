@@ -20,4 +20,5 @@ public class RedisProperties {
     private String password;
     private int cartDatabaseIndex;
     private int authDatabaseIndex;
+    private int mainPageDatabaseIndex;
 }

@@ -99,4 +99,9 @@ public class CouponServiceImpl implements CouponService {
     public CouponCountResponseDto getCountCouponByMember(Long memberId) {
         return couponAdapter.getCountCouponByMember(memberId);
     }
+  
+    @Override
+    public Boolean postWelcomeCoupon(Long memberId) {
+        return couponAdapter.postWelcomeCoupon(memberId);
+    }
 }

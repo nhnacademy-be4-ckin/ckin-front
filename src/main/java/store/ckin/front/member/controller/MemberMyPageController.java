@@ -34,6 +34,7 @@ import store.ckin.front.member.domain.response.MemberDetailInfoResponseDto;
 import store.ckin.front.member.service.MemberService;
 import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
 import store.ckin.front.pointhistory.service.PointHistoryService;
+import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.service.ReviewService;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
@@ -154,7 +155,7 @@ public class MemberMyPageController {
         model.addAttribute("couponPage", couponResponseDtoPageDto);
         return "member/coupon/used-coupon";
     }
-  
+
     /**
      * 회원 포인트 내역 조회 메서드입니다.
      *
@@ -178,8 +179,8 @@ public class MemberMyPageController {
         model.addAttribute("pageInfo", pointHistoryList.getPageInfo());
         return "member/mypage/point-history";
     }
-  
-  
+
+
     @Member
     @GetMapping("/review")
     public String getMyReviews(@PageableDefault(page = 0, size = 5) Pageable pageable,
@@ -193,7 +194,6 @@ public class MemberMyPageController {
         return "member/mypage/review/main";
 
     }
-
 
 
     private Long getMemberId() {
@@ -230,7 +230,7 @@ public class MemberMyPageController {
     @Member
     @GetMapping("/address/update/{addressId}")
     public String getUpdateAddress(@PathVariable("addressId") Long addressId,
-                                         Model model) {
+                                   Model model) {
         List<MemberAddressResponseDto> addressList = addressService.getMemberAddressList(getMemberId());
         addressList.stream()
                 .filter(responseDto -> responseDto.getAddressId().equals(addressId))
@@ -245,7 +245,7 @@ public class MemberMyPageController {
      */
     @PutMapping("/address/update/{addressId}")
     public String updateAddress(@PathVariable("addressId") Long addressId,
-                                      @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
+                                @Valid @ModelAttribute AddressUpdateRequestDto addressUpdateRequestDto) {
         addressService.updateAddress(getMemberId(), addressId, addressUpdateRequestDto);
 
         return "redirect:/member/mypage/address/list";
@@ -307,5 +307,12 @@ public class MemberMyPageController {
         model.addAttribute("info", info);
 
         return "member/mypage/member-info";
+    }
+
+    @PostMapping("/review")
+    public String updateReview(@ModelAttribute UpdateReviewRequestDto updateReviewRequestDto) {
+        reviewService.updateReview(updateReviewRequestDto, getMemberId());
+
+        return "redirect:/member/mypage/review";
     }
 }

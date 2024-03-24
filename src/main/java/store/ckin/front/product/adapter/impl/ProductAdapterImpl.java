@@ -1,5 +1,7 @@
 package store.ckin.front.product.adapter.impl;
 
+import static store.ckin.front.product.service.impl.ProductServiceImpl.BEST_BOOK;
+import static store.ckin.front.product.service.impl.ProductServiceImpl.RECOMMEND_BOOK;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
 import java.util.List;
@@ -32,17 +34,18 @@ public class ProductAdapterImpl implements ProductAdapter {
 
     private final RestTemplate restTemplate;
 
-    private final GatewayProperties portProperties;
+    private final GatewayProperties gatewayProperties;
 
     @Override
     public PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/search/by-category")
-                .queryParam("categoryId", categoryId)
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .encode()
-                .toUriString();
+        String url =
+                UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/search/by-category")
+                        .queryParam("categoryId", categoryId)
+                        .queryParam("page", pageable.getPageNumber())
+                        .queryParam("size", pageable.getPageSize())
+                        .encode()
+                        .toUriString();
 
         ResponseEntity<PageDto<BookListResponseDto>> exchange =
                 restTemplate.exchange(url,
@@ -62,7 +65,7 @@ public class ProductAdapterImpl implements ProductAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<BookResponseDto> exchange =
-                restTemplate.exchange(portProperties.getGatewayUri() + "/api/books/" + bookId,
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + "/api/books/" + bookId,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {
@@ -70,10 +73,13 @@ public class ProductAdapterImpl implements ProductAdapter {
         return exchange.getBody();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<BookMainPageResponseDto> findRecentBooks(Integer limit) {
         HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(portProperties.getGatewayUri() + "/api/books/main-page")
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/main-page")
                 .queryParam("limit", limit)
                 .encode()
                 .toUriString();
@@ -88,18 +94,81 @@ public class ProductAdapterImpl implements ProductAdapter {
         return exchange.getBody();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<BookMainPageResponseDto> findRecentBooksByCategoryId(Long categoryId, Integer limit) {
-        HttpEntity<Pageable> requestEntity = new HttpEntity<>(getHttpHeaders());
-        String url = UriComponentsBuilder.fromHttpUrl(
-                        portProperties.getGatewayUri() + "/api/books/main-page/category/" + categoryId)
+    public List<BookMainPageResponseDto> getBooksByTagName(Integer limit, String tagName) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/main-page/tag")
                 .queryParam("limit", limit)
+                .queryParam("tagName", tagName)
                 .encode()
                 .toUriString();
 
         ResponseEntity<List<BookMainPageResponseDto>> exchange =
                 restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<BookMainPageResponseDto> getRecommendBooks(Integer limit) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/main-page/tag")
+                .queryParam("limit", limit)
+                .queryParam("tagName", RECOMMEND_BOOK)
+                .encode()
+                .toUriString();
+
+        ResponseEntity<List<BookMainPageResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PageDto<BookResponseDto> getRecentPublishedBook(Pageable pageable) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+        String url = UriComponentsBuilder.fromHttpUrl(gatewayProperties.getGatewayUri() + "/api/books/recent")
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize())
+                .encode()
+                .toUriString();
+
+        ResponseEntity<PageDto<BookResponseDto>> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+
+        return exchange.getBody();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PageDto<BookResponseDto> getBookPageByTagName(Pageable pageable, String tagName) {
+        HttpEntity<Pageable> requestEntity = new HttpEntity<>(pageable, getHttpHeaders());
+
+        ResponseEntity<PageDto<BookResponseDto>> exchange =
+                restTemplate.exchange(gatewayProperties.getGatewayUri() + "/api/books/tag/" + tagName,
                         HttpMethod.GET,
                         requestEntity,
                         new ParameterizedTypeReference<>() {

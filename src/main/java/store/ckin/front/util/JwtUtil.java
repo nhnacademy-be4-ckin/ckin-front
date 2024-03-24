@@ -42,10 +42,10 @@ public class JwtUtil {
     public static void addTokenCookie(HttpServletResponse response, TokenResponseDto tokenResponseDto) {
         String accessToken = tokenResponseDto.getAccessToken();
         String refreshToken = tokenResponseDto.getRefreshToken();
-        int maxAge = Long.valueOf(REFRESH_EXPIRATION_TIME).intValue();
+        long maxAge = REFRESH_EXPIRATION_TIME;
 
-        CookieUtil.makeCookie(response, HEADER_ACCESS_TOKEN, accessToken, maxAge);
-        CookieUtil.makeCookie(response, HEADER_REFRESH_TOKEN, refreshToken, maxAge);
+        CookieUtil.makeCookie(response, HEADER_ACCESS_TOKEN, accessToken, (int) maxAge);
+        CookieUtil.makeCookie(response, HEADER_REFRESH_TOKEN, refreshToken, (int) maxAge);
     }
 
     /**
@@ -54,14 +54,14 @@ public class JwtUtil {
      * @param tokenResponseDto Access Token, Refresh Token 이 담긴 DTO
      */
     public static void updateJwtTokenCookie(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      TokenResponseDto tokenResponseDto) {
+                                            HttpServletResponse response,
+                                            TokenResponseDto tokenResponseDto) {
         String reissuedAccessToken = tokenResponseDto.getAccessToken();
         String reissuedRefreshToken = tokenResponseDto.getRefreshToken();
-        int maxAge = Long.valueOf(REFRESH_EXPIRATION_TIME).intValue();
+        long maxAge = REFRESH_EXPIRATION_TIME;
 
-        CookieUtil.updateCookie(request, response, HEADER_ACCESS_TOKEN, reissuedAccessToken, maxAge);
-        CookieUtil.updateCookie(request, response, HEADER_REFRESH_TOKEN, reissuedRefreshToken, maxAge);
+        CookieUtil.updateCookie(request, response, HEADER_ACCESS_TOKEN, reissuedAccessToken, (int) maxAge);
+        CookieUtil.updateCookie(request, response, HEADER_REFRESH_TOKEN, reissuedRefreshToken, (int) maxAge);
     }
 
     /**

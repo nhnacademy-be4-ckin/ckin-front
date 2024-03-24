@@ -48,6 +48,7 @@
 .my-page-content {
     width: 100%;
     height: 80%;
+    min-height: 80vh;
 }
 
 .my-page-body {

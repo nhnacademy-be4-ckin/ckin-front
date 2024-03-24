@@ -70,11 +70,11 @@ public class AddressAdapterImpl implements AddressAdapter {
 
         ResponseEntity<List<MemberAddressResponseDto>> responseEntity =
                 restTemplate.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    requestEntity,
-                    new ParameterizedTypeReference<>() {
-                    });
+                        uri,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
 
         return responseEntity.getBody();
     }

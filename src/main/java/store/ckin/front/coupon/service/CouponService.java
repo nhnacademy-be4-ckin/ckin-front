@@ -76,4 +76,11 @@ public interface CouponService {
     PageDto<GetCouponResponseDto> getUsedCouponByMember(Pageable pageable, Long memberId);
 
     CouponCountResponseDto getCountCouponByMember(Long memberId);
+
+    /**
+     * Welcome 쿠폰을 발급받는 메서드 입니다.
+     *
+     * @return 성공여부
+     */
+    Boolean postWelcomeCoupon(Long memberId);
 }

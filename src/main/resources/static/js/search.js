@@ -30,7 +30,7 @@ function placeOrderOne(btn) {
     const quantityElement = element.querySelector('input[name=quantity]');
     let quantityInput = btn.parentNode.parentNode.querySelector('.search-result-quantity-number').value;
     console.log(quantityInput)
-    if(id==null || quantityInput==null || quantityInput < 1 || quantityInput > 100) {
+    if (id == null || quantityInput == null || quantityInput < 1 || quantityInput > 100) {
         showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
         return;
     }
@@ -84,4 +84,59 @@ function showErrorAlert(message) {
         title: '알림',
         text: message
     });
+}
+
+
+// 상품 상세에서 장바구니로 담는 함수
+function saveItemToCartFromProductDetail(btn) {
+
+    let quantityInput = document.getElementById('productQuantity').value;
+    let quantity = document.getElementById('quantity');
+    let form = btn.parentNode;
+    if (quantityInput >= 1 && quantityInput <= 100) {
+        quantity.value = quantityInput;
+        form.submit();
+    } else {
+        showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
+    }
+}
+
+
+function orderFromProductDetail(btn) {
+
+    const form = btn.parentNode;
+    const id = form.querySelector('input[name=id]').value;
+    const name = form.querySelector('input[name=name]').value;
+    const quantityElement = form.querySelector('input[name=quantity]');
+
+    const quantityInput = document.getElementById('productQuantity').value;
+
+    if (id == null || quantityInput == null || quantityInput < 1 || quantityInput > 100) {
+        showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
+        return;
+    }
+    quantityElement.value = quantityInput;
+    const quantity = quantityElement.value;
+    orderList = [];
+    orderList.push({id, quantity, name});
+
+    showConfirmAlert("해당 상품을 주문하시겠습니까?", "주문", "question")
+        .then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'post',
+                    url: '/cart/order',
+                    async: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    dataType: 'json',
+                    data: JSON.stringify(orderList),
+                    complete: function () {
+                        window.location.href = "/sale";
+                    }
+                })
+            }
+        })
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
+import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.product.domain.SearchProduct;
 import store.ckin.front.product.dto.response.BookListResponseDto;
@@ -26,9 +27,9 @@ import store.ckin.front.review.dto.response.ReviewDto;
 import store.ckin.front.review.service.ReviewService;
 
 /**
- * description:
+ * 상품 정보 조회를 위한 컨트롤러 입니다.
  *
- * @author : gaeun
+ * @author : 이가은
  * @version 2024. 03. 07.
  */
 @Slf4j
@@ -41,6 +42,15 @@ public class ProductController {
     private final CategoryService categoryService;
     private final ReviewService reviewService;
 
+    /**
+     * 부모 카테고리별로 상품의 이미지를 화면에 출력합니다.
+     *
+     * @param pageable     페이지 정보
+     * @param categoryId   부모 카테고리 아이디
+     * @param categoryName 부모 카테고리 이름
+     * @param model        화면에 가져갈 모델
+     * @return 카테고리별 상품 이미지 페이지
+     */
     @GetMapping("/{categoryId}")
     public String getProductPage(@PageableDefault(page = 0, size = 12) Pageable pageable,
                                  @PathVariable("categoryId") Long categoryId,
@@ -49,7 +59,6 @@ public class ProductController {
 
         PageDto<BookListResponseDto> bookPageDto = productService.findByCategoryId(categoryId, pageable);
         List<CategoryResponseDto> categoryList = categoryService.getSubcategories(categoryId);
-        //TODO: categoryId로 단일 조회
 
         model.addAttribute("pagination", bookPageDto);
         model.addAttribute("categoryList", categoryList);
@@ -62,20 +71,22 @@ public class ProductController {
     /**
      * bookId로 상품 상세 정보 페이지를 보여주는 메서드 입니다.
      *
-     * @param bookId
+     * @param bookId 도서 아이디
      * @return 상품 상세 정보 DTO
      */
     @GetMapping("/view/{bookId}")
     public String getProductById(@PathVariable("bookId") Long bookId,
-                                 @PageableDefault(page = 0, size = 5) Pageable pageable,
+                                 @PageableDefault(size = 5) Pageable pageable,
                                  Model model) {
         BookResponseDto bookResponseDto = productService.findProductById(bookId);
         PageDto<ReviewDto> reviewListDtoPageDto = reviewService.getReviewListByBookId(pageable, bookId);
+
         String authorNames = bookResponseDto.getAuthorNames()
                 .stream().collect(Collectors.joining(", "));
-        String reviewRate = bookResponseDto.getBookReviewRate();
-        String formattedRate = "0".equals(reviewRate) ? "0" :
-                String.format("%.1f", Double.parseDouble(reviewRate) / reviewListDtoPageDto.getTotalElements());
+
+        String formattedRate = "0".equals(bookResponseDto.getBookReviewRate()) ? "0" :
+                String.format("%.1f", Double.parseDouble(bookResponseDto.getBookReviewRate()) /
+                        reviewListDtoPageDto.getTotalElements());
 
         model.addAttribute("book", bookResponseDto);
         model.addAttribute("authorNames", authorNames);
@@ -99,14 +110,52 @@ public class ProductController {
                                 @Positive @RequestParam(defaultValue = "1") int page,
                                 @Positive @RequestParam(required = false, defaultValue = "10") int size, Model model) {
 
-        List<SearchProduct> searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size));
+        PagedResponse<List<SearchProduct>>
+                searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size));
 
         model.addAttribute("KEY_WORD", keyword);
-        for (SearchProduct book : searchResults) {
+        for (SearchProduct book : searchResults.getData()) {
             log.debug("book info: {}", book);
         }
-        model.addAttribute("SEARCH_RESULT", searchResults);
+        model.addAttribute("SEARCH_RESULT", searchResults.getData());
+        model.addAttribute("RESULT_PAGE_INFO", searchResults.getPageInfo());
+        model.addAttribute("keyword", keyword);
 
         return "product/search";
+    }
+
+    /**
+     * section 화면으로 이동하는 메소드 입니다.
+     *
+     * @return section View로 이동
+     */
+    @GetMapping("/recent")
+    public String sectionView(@PageableDefault(page = 0, size = 5) Pageable pageable,
+                              Model model) {
+        PageDto<BookResponseDto> bookPageDto = productService.getRecentPublishBooks(pageable);
+        log.debug("bookPageInfo: {}", bookPageDto.getContent());
+
+        model.addAttribute("pagination", bookPageDto);
+        model.addAttribute("totalRate", "4.5");
+        //TODO: 리뷰 점수
+        return "product/recent";
+    }
+
+    /**
+     * 태그별로 보여줄 도서 목록을 가져오는 메소드 입니다.
+     *
+     * @return 도서 리스트가 있는 화면으로 리턴
+     */
+    @GetMapping("/tag/{tagName}")
+    public String bestSellerView(@PageableDefault(size = 5) Pageable pageable,
+                                 @PathVariable("tagName") String tagName,
+                                 Model model) {
+        PageDto<BookResponseDto> bookPageDto = productService.getBookPageByTagName(pageable, tagName);
+
+        model.addAttribute("pagination", bookPageDto);
+        model.addAttribute("totalRate", "4.5");
+        //TODO: 리뷰 점수
+
+        return "product/" + tagName.toLowerCase();
     }
 }

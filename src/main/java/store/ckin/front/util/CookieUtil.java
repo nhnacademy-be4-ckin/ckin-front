@@ -22,7 +22,7 @@ public class CookieUtil {
     /**
      * 쿠키가 존재하는지 확인하는 메서드 입니다.
      *
-     * @param name    Cookie name
+     * @param name Cookie name
      * @return 존재여부
      */
     public static boolean isExists(HttpServletRequest request, String name) {

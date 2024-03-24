@@ -6,21 +6,18 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import store.ckin.front.member.domain.request.MemberCreateRequestDto;
 import store.ckin.front.member.domain.request.MemberPasswordRequestDto;
 import store.ckin.front.member.domain.request.MemberUpdateRequestDto;
 import store.ckin.front.member.exception.CannotChangePasswordException;
 import store.ckin.front.member.service.MemberDetailsService;
 import store.ckin.front.member.service.MemberService;
-import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.service.ReviewService;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
@@ -83,7 +80,7 @@ public class MemberController {
                 new UsernamePasswordAuthenticationToken(memberId, null, memberInfo.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(token);
 
-        return "redirect:/";
+        return "redirect:/?isWelcome=true";
     }
 
     /**
@@ -94,14 +91,6 @@ public class MemberController {
     @GetMapping("/login")
     public String getLogin() {
         return "member/login";
-    }
-
-    @PutMapping
-    public String updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long reviewId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        reviewService.updateReview(updateReviewRequestDto, reviewId, authentication.getName());
-
-        return "redirect:/member/mypage/review";
     }
 
     /**

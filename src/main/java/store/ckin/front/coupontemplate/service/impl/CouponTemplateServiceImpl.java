@@ -1,12 +1,10 @@
 package store.ckin.front.coupontemplate.service.impl;
 
 import java.sql.Date;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import store.ckin.front.coupontemplate.adapter.CouponTemplateAdapter;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateInfoDto;
 import store.ckin.front.coupontemplate.dto.request.CreateCouponTemplateRequestDto;
@@ -61,7 +59,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
                 .amount(0L)
                 .duration(couponTemplateInfoDto.getDuration())
                 .expirationDate(("").equals(couponTemplateInfoDto.getExpirationDate()) ?
-                       null :  Date.valueOf(couponTemplateInfoDto.getExpirationDate()) )
+                        null : Date.valueOf(couponTemplateInfoDto.getExpirationDate()))
                 .state(couponTemplateInfoDto.getState())
                 .build();
 
