@@ -58,7 +58,8 @@ img {
 .product-image {
     position: relative;
     overflow: hidden;
-    height: 400px;
+    height: 460px;
+    width: 100%;
 }
 
 .product-image img {
