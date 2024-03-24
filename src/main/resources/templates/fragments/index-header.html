@@ -35,7 +35,7 @@
                         <a href="/" class="search-image-container">
                             <img src="/images/logo.png" alt="IMG-LOGO" class="search-image">
                         </a>
-                        <form id="searchForm" class="searchForm" th:action="@{/product/search(keyword=${keyword})}"
+                        <form id="searchForm" class="searchForm" th:action="@{/search(keyword=${keyword})}"
                               method="get" onsubmit="clickSearchBtn()">
                             <input name="keyword" id="keyword" type="text" class="searchInputText inherit"
                                    placeholder="검색어를 입력해 주세요">

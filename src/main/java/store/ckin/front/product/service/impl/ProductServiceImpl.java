@@ -2,8 +2,11 @@ package store.ckin.front.product.service.impl;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
@@ -168,9 +171,12 @@ public class ProductServiceImpl implements ProductService {
      * @param keyword     검색할 키워드
      * @param pageRequest 페이지 요청
      * @return
+     * @author 김준현
      */
-    public PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest) {
-        return productSearchRepository.findProductByKeyword(keyword, pageRequest);
+    public PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest, String filter, String selectedCategory) {
+        List<String> filterList = Arrays.stream(filter.split(",")).collect(Collectors.toList());
+        List<String> categoryList = selectedCategory.isBlank() ? Collections.emptyList() : Arrays.stream(selectedCategory.split(",")).collect(Collectors.toList());
+        return productSearchRepository.findProductByKeyword(keyword, pageRequest, filterList, categoryList);
     }
 
 }
