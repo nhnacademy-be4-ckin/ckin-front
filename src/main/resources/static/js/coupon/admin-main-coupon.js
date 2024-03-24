@@ -1,5 +1,5 @@
 function handleOptionSelection(selectedValue) {
-    console.log("selectedValue" + selectedValue);
+
     var searchValue = document.getElementById('searchContent').value;
     if (selectedValue != 5 && searchValue > 0) {
         window.location.href = '/admin/coupon?id=' + searchValue;
