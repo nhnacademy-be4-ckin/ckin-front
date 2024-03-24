@@ -10,9 +10,9 @@ function checkCoupon(templateId) {
 
             if (response) {
                 // 쿠폰이 발급되었음을 사용자에게 알림
-                alert("쿠폰이 발급되었습니다.");
+                showSuccessAlert("쿠폰이 발급되었습니다.");
             } else {
-                alert("이미 발급된 쿠폰입니다.")
+                showErrorAlert("이미 발급된 쿠폰입니다.")
             }
 
         },
@@ -21,7 +21,23 @@ function checkCoupon(templateId) {
             console.error(xhr.responseText);
             // 사용자에게 로그인 후 이용 가능함을 알림
             // alert("쿠폰 발급에 실패했습니다.");
-            alert("로그인 후 이용 가능합니다.");
+            showErrorAlert('로그인 후 이용 가능합니다.');
         }
+    });
+}
+
+function showErrorAlert(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '알림',
+        text: message
+    });
+}
+
+function showSuccessAlert(message) {
+    Swal.fire({
+        icon: 'success',
+        title: '알림',
+        text: message
     });
 }

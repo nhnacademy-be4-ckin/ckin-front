@@ -105,9 +105,20 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${newBook.bookId}" hidden>
+                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
+                                                <input name="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
+                                                       hidden>
+                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -149,9 +160,22 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
+                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
+                                                <input name="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice"
+                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
+                                                <input name="salePrice"
+                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
+                                                       hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -206,9 +230,20 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${newBook.bookId}" hidden>
+                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
+                                                <input name="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
+                                                       hidden>
+                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -250,9 +285,22 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
+                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
+                                                <input name="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice"
+                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
+                                                <input name="salePrice"
+                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
+                                                       hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -309,9 +357,20 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${newBook.bookId}" hidden>
+                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
+                                                <input name="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
+                                                       hidden>
+                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -353,9 +412,22 @@
                                     <span>
                                         <a href="#" class="wish_icon"></a>
                                     </span>
-                                        <span>
-                                        <a href="#" class="mini_cart"></a>
-                                    </span>
+                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                            <div class="btn_wrap justify overlap" style="display: none;">
+                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
+                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
+                                                <input name="quantity" id="quantity" class="send-quantity" value="1">
+                                                <input name="regularPrice"
+                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
+                                                <input name="salePrice"
+                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
+                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
+                                                       hidden>
+                                            </div>
+                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
+                                                    data-target="#popStock">
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -368,6 +440,7 @@
         <script src="/js/plugin.js"></script>
         <script src="/js/template.js"></script>
         <script src="/js/script.js"></script>
+        <script src="/js/search.js"></script>
         <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>-->
         <script src="/js/main-index.js"></script>
     </div>

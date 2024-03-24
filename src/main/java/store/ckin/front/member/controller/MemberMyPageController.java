@@ -28,6 +28,10 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
+import store.ckin.front.grade.domain.response.GradeResponseDto;
+import store.ckin.front.grade.service.GradeService;
+import store.ckin.front.member.domain.response.MemberDetailInfoResponseDto;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.pointhistory.dto.response.PointHistoryResponseDto;
 import store.ckin.front.pointhistory.service.PointHistoryService;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
@@ -49,6 +53,7 @@ import store.ckin.front.sale.service.SaleService;
 @RequiredArgsConstructor
 @RequestMapping("/member/mypage")
 public class MemberMyPageController {
+    private final MemberService memberService;
 
     private final SaleService saleService;
 
@@ -59,6 +64,8 @@ public class MemberMyPageController {
     private final PointHistoryService pointHistoryService;
 
     private final AddressService addressService;
+
+    private final GradeService gradeService;
 
     /**
      * 회원 마이페이지 메인 화면을 요청하는 메서드입니다.
@@ -257,11 +264,49 @@ public class MemberMyPageController {
     /**
      * 기본 배송지로 변경할 때 호출되는 메서드 입니다.
      */
-    @PutMapping("address/{addressId}/default")
+    @PutMapping("/address/{addressId}/default")
     public String setDefaultAddress(@PathVariable("addressId") Long addressId) {
         addressService.setDefaultAddress(getMemberId(), addressId);
 
         return "redirect:/member/mypage/address/list";
+    }
+
+    /**
+     * 등급 정책 페이지를 요청하는 메서드 입니다.
+     */
+    @Member
+    @GetMapping("/grade-policy")
+    public String getGradePolicy(Model model) {
+        List<GradeResponseDto> gradeList = gradeService.getGradeList();
+
+        model.addAttribute("gradeList", gradeList);
+
+        return "member/mypage/grade-policy";
+    }
+
+    @Member
+    @GetMapping("/dormant")
+    public String getDormantPage(Model model) {
+        return "member/mypage/dormant";
+    }
+
+    @Member
+    @GetMapping("/password")
+    public String getPasswordUpdatePage(Model model) {
+        return "member/mypage/password-update";
+    }
+
+    /**
+     * 계정 정보 수정 페이지를 호출하는 메서드 입니다.
+     */
+    @Member
+    @GetMapping("/info")
+    public String getMemberInfoUpdatePage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberDetailInfoResponseDto info = memberService.getMemberDetailInfo(authentication.getName());
+        model.addAttribute("info", info);
+
+        return "member/mypage/member-info";
     }
 
     @PostMapping("/review")

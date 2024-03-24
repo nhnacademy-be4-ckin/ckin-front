@@ -55,8 +55,9 @@ public interface ProductService {
      * @param keyword     검색할 키워드
      * @param pageRequest 페이지 요청
      * @return 연관된 도서 목록
+     * @author 김준현
      */
-    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest);
+    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest, String filter, String selectedCategory);
 
     /**
      * 관리자가 지정한 인기 도서를 가져옵니다.

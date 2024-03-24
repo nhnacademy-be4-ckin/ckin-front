@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mypage-default}">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 | 등급 혜택</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+        }
+
+        span {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<div layout:fragment="mypage-content" style="padding: 30px;">
+    <h3>등급 혜택</h3>
+
+    <ul style="display: flex; flex-direction: column; color: dimgray; padding-left: 0">
+        <li>* 회원 등급은 매달 1일 갱신됩니다.</li>
+        <li>* 누적 구매금액은 최근 3개월간 '결제 완료'주문 기준으로, 매달 1일 집계됩니다. (교환, 환불건은 제외)</li>
+        <li>* 회원 등급 기준 및 혜택은 CKIN 정책에 의해 변경될 수 있습니다.</li>
+    </ul>
+
+    <table class="table table-bordered" style="text-align: center; vertical-align: middle; margin-top: 50px">
+        <thead class="table-light table-bordered">
+            <tr>
+                <th scope="col">등급 이름</th>
+                <th scope="col">적립률</th>
+                <th scope="col">등급 조건</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="grade : ${gradeList}">
+                <td th:text="${grade.name}"></td>
+                <td th:text="${grade.pointRatio} + '%'"></td>
+                <td>
+                    <span th:text="${#numbers.formatInteger(grade.condition, 3, 'COMMA')}"></span>
+                    <span>원 이상</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</html>

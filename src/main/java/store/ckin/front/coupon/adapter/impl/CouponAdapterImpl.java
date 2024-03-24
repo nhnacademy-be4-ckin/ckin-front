@@ -2,6 +2,7 @@ package store.ckin.front.coupon.adapter.impl;
 
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 
+import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.config.properties.GatewayProperties;
 import store.ckin.front.coupon.adapter.CouponAdapter;
+import store.ckin.front.coupon.dto.response.CouponCountResponseDto;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 
@@ -194,6 +196,27 @@ public class CouponAdapterImpl implements CouponAdapter {
     }
 
     @Override
+    public CouponCountResponseDto getCountCouponByMember(Long memberId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        URI url = UriComponentsBuilder
+                .fromUriString(gatewayProperties.getGatewayUri())
+                .path("/coupon/members/{memberId}/count")
+                .encode()
+                .buildAndExpand(memberId)
+                .toUri();
+
+        ResponseEntity<CouponCountResponseDto> exchange =
+                restTemplate.exchange(url,
+                        HttpMethod.GET,
+                        requestEntity,
+                        new ParameterizedTypeReference<>() {
+                        });
+      
+        return exchange.getBody();
+    }
+                                      
+    @Override
     public Boolean postWelcomeCoupon(Long memberId) {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
@@ -206,5 +229,4 @@ public class CouponAdapterImpl implements CouponAdapter {
 
         return exchange.getBody();
     }
-
 }

@@ -1,3 +1,58 @@
+let selectedFilter = [];
+let selectedFilterStr = "";
+let keyword = "";
+
+document.addEventListener(`DOMContentLoaded`, function () {
+    var currentURL = window.location.search.replace('?', '');
+    console.log(currentURL)
+    if(currentURL !== "") {
+        var params = {};
+        currentURL.split('&').forEach(function (param) {
+            var keyValue = param.split('=');
+            params[keyValue[0]] = keyValue[1];
+        });
+        const filterParam = params['filter'];
+        const keywordParam = params['keyword'];
+        keyword = keywordParam;
+        if(typeof filterParam == "undefined" || filterParam == null || filterParam == "") {
+            selectedFilter = [];
+        } else {
+            selectedFilter = filterParam.split(',');
+            selectedFilterStr = filterParam;
+        }
+    }
+    const checkboxes = document.querySelectorAll('input[name=filter]');
+    checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function (event) {
+            selectFilter(checkbox);
+        })
+        if(selectedFilterStr.indexOf(checkbox.value) !== -1) {
+            checkbox.checked = true;
+        }
+    })
+    console.log(selectedFilter)
+})
+
+function selectFilter(input) {
+    console.log(selectedFilter)
+    if(input.checked) {
+        selectedFilter.push(input.value);
+    } else {
+        const index = selectedFilter.indexOf(input.value);
+        if(index !== -1) {
+            selectedFilter.splice(index, 1);
+        }
+    }
+
+    let url = "/search?keyword=" + keyword;
+    if (selectedFilter.length !== 0) {
+        url += "&filter=";
+        const addfilter = selectedFilter.join(',');
+        url += addfilter;
+    }
+    window.location.href = url;
+}
+
 function showConfirmAlert(message, confirmText, icon) {
     return Swal.fire({
         title: "알림",
