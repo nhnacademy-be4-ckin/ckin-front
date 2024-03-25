@@ -304,7 +304,7 @@
                 <div id="selectedTags"></div>
             </div>
             <div class="form-group">
-                <label for="bookPublicationDate">출판일:</label>
+                <label for="bookPublicationDate">출판일:</label>bookRegularPrice
                 <input type="date" class="form-control" id="bookPublicationDate"
                        th:value="${storedBook.bookPublicationDate}"/>
             </div>
@@ -343,16 +343,22 @@
                        placeholder="재고를 입력해주세요..." required/>
             </div>
 
-            <!-- 정가 입력 필드 -->
             <div class="form-group">
                 <label for="bookRegularPrice">정가:</label>
-                <input type="number" class="form-control" id="bookRegularPrice"
-                       th:value="${storedBook.bookRegularPrice}"
-                       min="0"
-                       step="100"
-                       placeholder="정가를 입력해주세요..."
-                       required/>
+                <div class="input-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="bookRegularPrice"
+                            placeholder="정가를 입력해주세요..."
+                            required
+                    />
+                    <div class="input-group-append">
+                        <span class="input-group-text">원</span>
+                    </div>
+                </div>
             </div>
+
 
             <!-- 할인율 입력 필드 -->
             <div class="form-group">
@@ -447,6 +453,12 @@
                         window.location.href = '/error';
                     });
             });
+        document.getElementById('book-form').addEventListener('submit', function () {
+            // 숫자 입력 필드의 값을 콤마 없는 형태로 변경
+            const priceInput = document.getElementById('bookRegularPrice');
+            priceInput.value = priceInput.value.replace(/,/g, '');
+        });
+
 
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -504,14 +516,10 @@
             }
         }
 
-        document
-            .getElementById("bookRegularPrice")
-            .addEventListener("input", function (e) {
-                let value = parseInt(e.target.value, 10);
-                value = Math.round(value / 100) * 100;
-                e.target.value = isNaN(value) ? "" : value;
-            });
-
+        document.getElementById("bookRegularPrice").addEventListener("input", function (e) {
+            const value = e.target.value;
+            e.target.value = value;
+        });
         function searchAuthors(name) {
             if (name.length < 2) {
                 return;
@@ -702,6 +710,13 @@
         // 초기 상태 설정
         $(document).ready(function () {
             updateSubmitButtonState();
+        });
+        document.getElementById('bookRegularPrice').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/[^\d]/g, '');
+            if (!value) return;
+
+            const number = parseInt(value, 10);
+            e.target.value = isNaN(number) ? "" : number.toLocaleString();
         });
 
     </script>

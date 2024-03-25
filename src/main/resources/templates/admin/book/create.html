@@ -376,14 +376,11 @@
                 <label for="bookRegularPrice">정가:</label>
                 <div class="input-group">
                     <input
-                            type="number"
+                            type="text"
                             class="form-control"
                             id="bookRegularPrice"
-                            value="10000"
-                            step="100"
-                            min="0"
-                    placeholder="정가를 입력해주세요..."
-                    required
+                            placeholder="정가를 입력해주세요..."
+                            required
                     />
                     <div class="input-group-append">
                         <span class="input-group-text">원</span>
@@ -575,13 +572,11 @@
                     reader.readAsDataURL(event.target.files[0]);
                 }
             });
-        document
-            .getElementById("bookRegularPrice")
-            .addEventListener("input", function (e) {
-                let value = parseInt(e.target.value, 10);
-                value = Math.round(value / 100) * 100;
-                e.target.value = isNaN(value) ? "" : value;
-            });
+        document.getElementById("bookRegularPrice").addEventListener("input", function (e) {
+            const value = e.target.value;
+            e.target.value = value;
+        });
+
 
         function searchAuthors(name) {
             if (name.length < 2) {
@@ -750,6 +745,14 @@
         // 초기 상태 설정
         $(document).ready(function () {
             updateSubmitButtonState();
+        });
+
+        document.getElementById('bookRegularPrice').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/[^\d]/g, '');
+            if (!value) return;
+
+            const number = parseInt(value, 10);
+            e.target.value = isNaN(number) ? "" : number.toLocaleString();
         });
 
     </script>
