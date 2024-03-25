@@ -4015,7 +4015,7 @@ input.num-product::-webkit-inner-spin-button {
     margin-left: 20px;
 }
 
-.search-result-info a {
+.search-result-info-title {
     font-size: large;
     font-weight: bold;
     margin-bottom: 10px;
