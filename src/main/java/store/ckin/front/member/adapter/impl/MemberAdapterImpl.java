@@ -180,4 +180,15 @@ public class MemberAdapterImpl implements MemberAdapter {
                 },
                 memberId);
     }
+
+    @Override
+    public void updateLog(String memberId) {
+        restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/members/{memberId}/update-log",
+                HttpMethod.PUT,
+                new HttpEntity<>(getHttpHeaders()),
+                new ParameterizedTypeReference<>() {
+                },
+                memberId);
+    }
 }
