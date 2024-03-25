@@ -280,14 +280,14 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     justify-content: center;
     align-items: flex-end;
     margin: 0 auto;
-    !important;
+!important;
 }
 
 .margin-container-250 {
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-    !important;
+!important;
 }
 
 .search {
@@ -305,7 +305,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     align-items: center;
     width: 600px;
     height: 60px;
-    !important;
+!important;
 }
 
 .search-image-container {
@@ -331,6 +331,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     justify-content: center;
     margin-right: 20px;
 }
+
 .search-button-container {
     height: 30px;
     width: 30px;
@@ -1992,7 +1993,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table_head {
     width: 50px;
-    !important;
+!important;
 }
 
 .table-shopping-cart .column-0 {
@@ -2004,7 +2005,7 @@ input.num-product::-webkit-inner-spin-button {
 .table-shopping-cart .column-0 .form-check-input {
     margin: 0 auto;
     position: relative;
-    !important;
+!important;
 }
 
 .table-shopping-cart .column-1 {
@@ -2074,7 +2075,7 @@ input.num-product::-webkit-inner-spin-button {
 .shopping-cart-result {
     font-size: x-large;
     font-weight: bold;
-    !important;
+!important;
 }
 
 
@@ -3822,6 +3823,7 @@ input.num-product::-webkit-inner-spin-button {
     }
 
 }
+
 /*////////////////////////////////////////////////////////////////////// */
 /* [error page] */
 .main-error {
@@ -3831,6 +3833,7 @@ input.num-product::-webkit-inner-spin-button {
     align-items: flex-start;
     flex-direction: column;
 }
+
 .error-wrap {
     display: flex;
     justify-content: center;
@@ -3860,7 +3863,7 @@ input.num-product::-webkit-inner-spin-button {
 .main {
     margin-top: 120px;
     display: block;
-    !important;
+!important;
 }
 
 .search-page-wrap {
@@ -3881,6 +3884,12 @@ input.num-product::-webkit-inner-spin-button {
     height: 150px;
     font-size: 25px;
     font-style: initial;
+}
+
+.search-page-title-head {
+    font-size: 30px;
+    font-weight: bold;
+!important;
 }
 
 .search-result-wrap {
@@ -3945,7 +3954,7 @@ input.num-product::-webkit-inner-spin-button {
     width: 98%;
     height: 200px;
     margin-bottom: 10px;
-    !important;
+!important;
 }
 
 .search-result-col {
@@ -3978,7 +3987,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .search-filter-items-wrap label {
     margin: 0;
-    !important;
+!important;
 }
 
 .search-result-right {
@@ -4060,7 +4069,7 @@ input.num-product::-webkit-inner-spin-button {
     margin: 0;
     padding: 0;
     text-align: center;
-    !important;
+!important;
 }
 
 .search-result-quantity-number {
@@ -4071,6 +4080,7 @@ input.num-product::-webkit-inner-spin-button {
     font-size: 16px;
     font-weight: bold;
 }
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -4098,7 +4108,7 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #fff;
     cursor: pointer;
     height: 40px;
-    text-align:center;
+    text-align: center;
     border: none;
     background-size: 300% 100%;
 
@@ -4120,12 +4130,15 @@ input[type="number"]::-webkit-inner-spin-button {
 .btn-hover:focus {
     outline: none;
 }
+
 .btn-hover.color-8 {
     background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
 }
+
 .btn-hover.color-7 {
     background-color: #0c63e4;
 }
+
 /*////////////////////////////////////////////////////////////////////// */
 
 /*//////////////////////////////////////////////////////////////////
@@ -4213,5 +4226,5 @@ input[type="number"]::-webkit-inner-spin-button {
     color: #ffffff;
     border-radius: 30px;
     font-size: 15px;
-    !important;
+!important;
 }

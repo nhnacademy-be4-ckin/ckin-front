@@ -1,56 +1,139 @@
-let selectedFilter = [];
-let selectedFilterStr = "";
-let keyword = "";
-
 document.addEventListener(`DOMContentLoaded`, function () {
-    var currentURL = window.location.search.replace('?', '');
-    console.log(currentURL)
-    if(currentURL !== "") {
-        var params = {};
-        currentURL.split('&').forEach(function (param) {
-            var keyValue = param.split('=');
-            params[keyValue[0]] = keyValue[1];
-        });
-        const filterParam = params['filter'];
-        const keywordParam = params['keyword'];
-        keyword = keywordParam;
-        if(typeof filterParam == "undefined" || filterParam == null || filterParam == "") {
-            selectedFilter = [];
-        } else {
-            selectedFilter = filterParam.split(',');
-            selectedFilterStr = filterParam;
-        }
-    }
+    var currentURL = new URL(window.location.href);
+    const filterList = currentURL.searchParams.getAll('filter');
+
     const checkboxes = document.querySelectorAll('input[name=filter]');
     checkboxes.forEach((checkbox, index) => {
         checkbox.addEventListener('change', function (event) {
             selectFilter(checkbox);
         })
-        if(selectedFilterStr.indexOf(checkbox.value) !== -1) {
+        if (filterList !== null && filterList.indexOf(checkbox.value) !== -1) {
             checkbox.checked = true;
         }
     })
-    console.log(selectedFilter)
+
+
+    $.ajax({
+        type: 'get',
+        url: '/categories/topCategories',
+        async: true,
+        headers: {
+            "Content-Type": "application/json",
+            "X-HTTP-Method-Override": "GET"
+        },
+        dataType: 'json',
+        success: function (data) {
+            let addElement = '';
+            data.forEach((item) => {
+                addElement += '<li class="search-filter-items-wrap" value="' + item.categoryId + '" data-clicked="false" data-step="1">';
+                addElement += '<input name="category" type="checkbox" value="' + item.categoryName + '" id="' + item.categoryId + '" onclick="selectCategory(this)">';
+                addElement += '<label value="' + item.categoryId + '" onclick="getSubCategories(this.parentNode)">';
+                addElement += item.categoryName;
+                addElement += '</label>';
+                addElement += '</li>';
+            })
+            const a = document.querySelector('.filter-category-main');
+            a.insertAdjacentHTML('afterend', addElement);
+        }
+    }).then(function () {
+        updateCategoryInputStat();
+    });
 })
 
-function selectFilter(input) {
-    console.log(selectedFilter)
-    if(input.checked) {
-        selectedFilter.push(input.value);
-    } else {
-        const index = selectedFilter.indexOf(input.value);
-        if(index !== -1) {
-            selectedFilter.splice(index, 1);
-        }
-    }
+function updateCategoryInputStat() {
+    var currentURL = new URL(window.location.href);
+    const categoryList = currentURL.searchParams.getAll('category');
 
-    let url = "/search?keyword=" + keyword;
-    if (selectedFilter.length !== 0) {
-        url += "&filter=";
-        const addfilter = selectedFilter.join(',');
-        url += addfilter;
+    const categoryFilters = document.querySelectorAll('input[name=category]');
+    categoryFilters.forEach((checkbox) => {
+        if (categoryList !== null && categoryList.indexOf(checkbox.value) !== -1) {
+            checkbox.checked = true;
+        }
+    })
+}
+
+function getSubCategories(label) {
+    const currentStep = parseInt(label.getAttribute("data-step")) + 1;
+    const currentMargin = currentStep * 20;
+    if (label.getAttribute("data-clicked") === "false") {
+        label.setAttribute("data-clicked", "true");
+        $.ajax({
+            type: 'get',
+            url: '/categories/' + label.value,
+            async: true,
+            headers: {
+                "Content-Type": "application/json",
+                "X-HTTP-Method-Override": "GET"
+            },
+            dataType: 'json',
+            success: function (data) {
+                let addElement = '';
+                data.forEach((item) => {
+                    addElement += '<li class="search-filter-items-wrap" value="' + item.categoryId + '" data-clicked="false" data-step="' + currentStep + '" style="margin-left: ' + currentMargin + 'px !important;">';
+                    addElement += '<input name="category" type="checkbox" value="' + item.categoryName + '" id="' + item.categoryId + '" onclick="selectCategory(this)">';
+                    addElement += '<label value="' + item.categoryId + '" onclick="getSubCategories(this.parentNode)">';
+                    addElement += item.categoryName;
+                    addElement += '</label>';
+                    addElement += '</li>';
+                })
+                label.insertAdjacentHTML('afterend', addElement);
+            }
+        }).then(function () {
+            updateCategoryInputStat();
+        });
     }
-    window.location.href = url;
+}
+
+function getNavAndRedirect(move) {
+    var currentURL = new URL(window.location.href);
+    const currentPage = currentURL.searchParams.get('page');
+    let page;
+    if (currentPage !== null) {
+        page = parseInt(currentPage) + parseInt(move);
+    } else {
+        page = 1 + parseInt(move);
+    }
+    movePage(page.toString());
+}
+
+function getPageAndRedirect(a) {
+    movePage(a.text);
+}
+
+function movePage(page) {
+    var currentURL = new URL(window.location.href);
+    currentURL.searchParams.set('page', page);
+    window.location.href = currentURL.toString();
+}
+
+function selectCategory(input) {
+    var url = new URL(window.location.href);
+    if (input.checked) {
+        const filterStr = url.searchParams.get('category');
+        if (filterStr !== null) {
+            url.searchParams.append('category', input.value);
+        } else {
+            url.searchParams.set('category', input.value);
+        }
+    } else {
+        url.searchParams.delete('category', input.value);
+    }
+    window.location.href = url.toString();
+}
+
+function selectFilter(input) {
+    var url = new URL(window.location.href);
+    if (input.checked) {
+        const filterStr = url.searchParams.get('filter');
+        if (filterStr !== null) {
+            url.searchParams.append('filter', input.value);
+        } else {
+            url.searchParams.set('filter', input.value);
+        }
+    } else {
+        url.searchParams.delete('filter', input.value);
+    }
+    window.location.href = url.toString();
 }
 
 function showConfirmAlert(message, confirmText, icon) {
@@ -84,7 +167,6 @@ function placeOrderOne(btn) {
     const name = element.querySelector('input[name=name]').value;
     const quantityElement = element.querySelector('input[name=quantity]');
     let quantityInput = btn.parentNode.parentNode.querySelector('.search-result-quantity-number').value;
-    console.log(quantityInput)
     if (id == null || quantityInput == null || quantityInput < 1 || quantityInput > 100) {
         showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
         return;
