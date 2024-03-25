@@ -70,7 +70,7 @@ public class CategoryRestController {
      */
     @GetMapping("/{parentId}")
     public List<CategoryResponseDto> getSubcategories(@PathVariable("parentId") Long parentId) {
-        return categoryService.getSubcategories(parentId);
+        return categoryService.getSubcategoriesFromRedis(parentId);
     }
 
     /**

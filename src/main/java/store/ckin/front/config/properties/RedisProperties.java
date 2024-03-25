@@ -21,4 +21,5 @@ public class RedisProperties {
     private int cartDatabaseIndex;
     private int authDatabaseIndex;
     private int mainPageDatabaseIndex;
+    private int categoryDatabaseIndex;
 }
