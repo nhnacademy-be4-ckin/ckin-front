@@ -149,9 +149,6 @@
                     </button>
                 </th:block>
 
-                <span th:text="${saleDetail.saleResponseDto.salePaymentStatus.name()}">
-                </span>
-
                 <th:block th:if="${saleDetail.saleResponseDto.salePaymentStatus.name() != 'CANCEL'}">
                     <button class="m-t-50 btn-outline-danger btn float-r"
                             th:onclick="cancelOrder()">
