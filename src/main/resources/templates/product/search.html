@@ -32,11 +32,13 @@
                                             <label for="searchByAuthor">저자</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input name="filter" id="searchByPublisher" type="checkbox" value="publisher">
+                                            <input name="filter" id="searchByPublisher" type="checkbox"
+                                                   value="publisher">
                                             <label for="searchByPublisher">출판사</label>
                                         </li>
                                         <li class="search-filter-items-wrap">
-                                            <input name="filter" id="searchByDescription" type="checkbox" value="description">
+                                            <input name="filter" id="searchByDescription" type="checkbox"
+                                                   value="description">
                                             <label for="searchByDescription">책 설명</label>
                                         </li>
                                     </ul>
@@ -47,15 +49,7 @@
                                     <a>분류</a>
                                 </dt>
                                 <dd>
-                                    <ul>
-                                        <li class="search-filter-items-wrap">
-                                            <input name="category" id="searchWithInternal" type="checkbox" value="국내도서" >
-                                            <label for="searchWithInternal">국내 도서</label>
-                                        </li>
-                                        <li class="search-filter-items-wrap">
-                                            <input name="category" id="searchWithOverseas" type="checkbox" value="해외도서">
-                                            <label for="searchWithOverseas">해외 도서</label>
-                                        </li>
+                                    <ul class="filter-category-main">
                                     </ul>
                                 </dd>
                             </dl>
@@ -120,19 +114,33 @@
                                 </div>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"
-                                               aria-disabled="true">Previous</a>
+                                        <li class="page-item disabled" th:if="${RESULT_PAGE_INFO.getPage() == 0 ||
+                                        RESULT_PAGE_INFO.getTotalPages() == 0}">
+                                            <a class="page-link" tabindex="-1"
+                                               aria-disabled="true">이전</a>
+                                        </li>
+                                        <li class="page-item" th:unless="${RESULT_PAGE_INFO.getPage() == 0 ||
+                                        RESULT_PAGE_INFO.getTotalPages() == 0}">
+                                            <a class="page-link" tabindex="-1" onclick="getNavAndRedirect(-1)"
+                                            >이전</a>
                                         </li>
                                         <li class="page-item"
                                             th:if="${RESULT_PAGE_INFO.totalPages!=0}"
                                             th:each="num : ${#numbers.sequence(1, RESULT_PAGE_INFO.totalPages)}">
                                             <a class="page-link"
-                                               th:href="@{/product/search(page=${num},keyword=${keyword})}"
+                                               onclick="getPageAndRedirect(this, 0)"
                                                th:text="${num}"></a>
                                         </li>
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#">Next</a>
+                                        <li class="page-item disabled"
+                                            th:if="${(RESULT_PAGE_INFO.getPage() == RESULT_PAGE_INFO.getTotalPages()-1) ||
+                                            RESULT_PAGE_INFO.getTotalPages() == 0}">
+                                            <a class="page-link" href="#" tabindex="1" aria-disabled="true">다음</a>
+                                        </li>
+                                        <li class="page-item"
+                                            th:unless="${(RESULT_PAGE_INFO.getPage() == RESULT_PAGE_INFO.getTotalPages()-1) ||
+                                            RESULT_PAGE_INFO.getTotalPages() == 0}">
+                                            <a class="page-link" tabindex="1"
+                                               onclick="getNavAndRedirect(1)">다음</a>
                                         </li>
                                     </ul>
                                 </nav>
