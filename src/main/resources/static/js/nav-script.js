@@ -154,7 +154,6 @@ function tabAndCategorySub02() {
                 let html = "";
 
                 data.forEach(function (category) {
-                    console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header" onmouseover="category2(` + category.categoryId + `)" id="category` +
                         category.categoryId + `"><a href="/product/` +
                         category.categoryId + `?categoryName=` + category.categoryName + `">`
@@ -229,7 +228,6 @@ function category(categoryId) {
                 let html = "";
 
                 data.forEach(function (category) {
-                    console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
                         category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`
@@ -261,7 +259,6 @@ function category2(categoryId) {
                 let html = "";
 
                 data.forEach(function (category) {
-                    console.log(category.categoryName);
                     html += `<li class="fold_box"><div class="fold_box_header"><a href="/product/` +
                         category.categoryId + `?categoryName=` + category.categoryName + `">`
                         + category.categoryName + `</a></div></li>`

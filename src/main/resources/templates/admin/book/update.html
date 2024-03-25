@@ -107,6 +107,7 @@
             color: #ffffff;
             border-radius: 15px;
         }
+
         .remove-author-button {
             margin-left: 8px;
             color: #007bff; /* 기본 색상을 파란색으로 변경 */
@@ -228,7 +229,7 @@
 
     <div class="w-full p-all-60">
         <form id="book-form">
-            <input type="hidden" id="bookId" th:value="${storedBook.bookId}" />
+            <input type="hidden" id="bookId" th:value="${storedBook.bookId}"/>
             <div style="margin-top: 20px; font-size: 20px; font-weight: bold;">
                 <div id="editingBookTitle" th:text="|'${storedBook.bookTitle}' 수정 페이지|"></div>
                 <img th:if="${storedBook.thumbnail}" th:src="@{${storedBook.thumbnail}}" alt="Thumbnail"
@@ -288,7 +289,9 @@
             <div class="form-group">
                 <label for="bookPublisher">출판사:</label>
                 <input type="text" class="form-control" id="bookPublisher" th:value="${storedBook.bookPublisher}"
-                       placeholder="출판사를 입력해주세요..."/>
+                       placeholder="출판사를 입력해주세요..."
+                       required
+                />
             </div>
 
             <div class="form-group">
@@ -301,7 +304,7 @@
                 <div id="selectedTags"></div>
             </div>
             <div class="form-group">
-                <label for="bookPublicationDate">출판일:</label>
+                <label for="bookPublicationDate">출판일:</label>bookRegularPrice
                 <input type="date" class="form-control" id="bookPublicationDate"
                        th:value="${storedBook.bookPublicationDate}"/>
             </div>
@@ -312,7 +315,8 @@
 
             <div class="form-group">
                 <label for="bookIndex">책 목차:</label>
-                <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..." th:text="${storedBook.bookIndex}"></textarea>
+                <textarea class="form-control" id="bookIndex" rows="5" placeholder="책 목차를 입력해주세요..."
+                          th:text="${storedBook.bookIndex}"></textarea>
             </div>
             <div class="form-group">
                 <label for="bookPackaging">포장 여부:</label>
@@ -339,13 +343,22 @@
                        placeholder="재고를 입력해주세요..." required/>
             </div>
 
-            <!-- 정가 입력 필드 -->
             <div class="form-group">
                 <label for="bookRegularPrice">정가:</label>
-                <input type="number" class="form-control" id="bookRegularPrice"
-                       th:value="${storedBook.bookRegularPrice}" min="0" step="100"
-                       placeholder="정가를 입력해주세요..." required/>
+                <div class="input-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="bookRegularPrice"
+                            placeholder="정가를 입력해주세요..."
+                            required
+                    />
+                    <div class="input-group-append">
+                        <span class="input-group-text">원</span>
+                    </div>
+                </div>
             </div>
+
 
             <!-- 할인율 입력 필드 -->
             <div class="form-group">
@@ -440,6 +453,12 @@
                         window.location.href = '/error';
                     });
             });
+        document.getElementById('book-form').addEventListener('submit', function () {
+            // 숫자 입력 필드의 값을 콤마 없는 형태로 변경
+            const priceInput = document.getElementById('bookRegularPrice');
+            priceInput.value = priceInput.value.replace(/,/g, '');
+        });
+
 
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -497,16 +516,12 @@
             }
         }
 
-        document
-            .getElementById("bookRegularPrice")
-            .addEventListener("input", function (e) {
-                let value = parseInt(e.target.value, 10);
-                value = Math.round(value / 100) * 100;
-                e.target.value = isNaN(value) ? "" : value;
-            });
-
+        document.getElementById("bookRegularPrice").addEventListener("input", function (e) {
+            const value = e.target.value;
+            e.target.value = value;
+        });
         function searchAuthors(name) {
-            if (name.length < 1) {
+            if (name.length < 2) {
                 return;
             }
 
@@ -653,15 +668,16 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadTags);
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             initializeSelectedAuthors();
             initializeSelectedTags();
             loadTags();
         });
+
         // selectedAuthors 초기화 함수
         function initializeSelectedAuthors() {
             var authorNames = /*[[${storedBook.authorNames}]]*/ [];
-            authorNames.forEach(function(name, index) {
+            authorNames.forEach(function (name, index) {
                 selectedAuthors[index] = name;
             });
             updateSelectedAuthorsDisplay();
@@ -669,17 +685,19 @@
 
         function initializeSelectedTags() {
             var tagNames = /*[[${storedBook.tagNames}]]*/ [];
-            tagNames.forEach(function(name, index) {
+            tagNames.forEach(function (name, index) {
                 selectedTags[index] = name;
             });
             updateSelectedTagsDisplay();
         }
+
         function checkSelections() {
             const selectedAuthorsCount = Object.keys(selectedAuthors).length;
             const categorySelected = $("#category1").val() !== "" || $("#category2").val() !== "" || $("#category3").val() !== "";
 
             return selectedAuthorsCount > 0 && categorySelected;
         }
+
         function updateSubmitButtonState() {
             const isEligibleForSubmission = checkSelections();
             $(".btn.btn-primary").prop('disabled', !isEligibleForSubmission);
@@ -692,6 +710,13 @@
         // 초기 상태 설정
         $(document).ready(function () {
             updateSubmitButtonState();
+        });
+        document.getElementById('bookRegularPrice').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/[^\d]/g, '');
+            if (!value) return;
+
+            const number = parseInt(value, 10);
+            e.target.value = isNaN(number) ? "" : number.toLocaleString();
         });
 
     </script>

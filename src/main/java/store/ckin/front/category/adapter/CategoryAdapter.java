@@ -3,6 +3,7 @@ package store.ckin.front.category.adapter;
 import java.util.List;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
+import store.ckin.front.category.dto.response.CategoryCacheResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 
 /**
@@ -61,4 +62,5 @@ public interface CategoryAdapter {
      */
     String getCategoryName(Long bookId);
 
+    List<CategoryCacheResponseDto> getAllCategories();
 }

@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import store.ckin.front.category.adapter.CategoryAdapter;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
+import store.ckin.front.category.dto.response.CategoryCacheResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.config.properties.GatewayProperties;
 
@@ -111,5 +112,17 @@ public class CategoryAdapterImpl implements CategoryAdapter {
                         new ParameterizedTypeReference<>() {
                         });
         return exchange.getBody();
+    }
+
+    @Override
+    public List<CategoryCacheResponseDto> getAllCategories() {
+        String url = gatewayProperties.getGatewayUri() + CATEGORY_URL + "/redis";
+        ResponseEntity<List<CategoryCacheResponseDto>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(getHttpHeaders()),
+                new ParameterizedTypeReference<>() {
+                });
+        return response.getBody();
     }
 }
