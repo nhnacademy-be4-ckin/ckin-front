@@ -350,6 +350,7 @@
                             type="text"
                             class="form-control"
                             id="bookRegularPrice"
+                            th:value="${storedBook.getBookRegularPrice()}"
                             placeholder="정가를 입력해주세요..."
                             required
                     />
@@ -453,11 +454,6 @@
                         window.location.href = '/error';
                     });
             });
-        document.getElementById('book-form').addEventListener('submit', function () {
-            // 숫자 입력 필드의 값을 콤마 없는 형태로 변경
-            const priceInput = document.getElementById('bookRegularPrice');
-            priceInput.value = priceInput.value.replace(/,/g, '');
-        });
 
 
     </script>
@@ -516,10 +512,7 @@
             }
         }
 
-        document.getElementById("bookRegularPrice").addEventListener("input", function (e) {
-            const value = e.target.value;
-            e.target.value = value;
-        });
+
         function searchAuthors(name) {
             if (name.length < 2) {
                 return;
@@ -711,13 +704,16 @@
         $(document).ready(function () {
             updateSubmitButtonState();
         });
+
         document.getElementById('bookRegularPrice').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/[^\d]/g, '');
-            if (!value) return;
+            let value = e.target.value.replace(/,/g, ''); // 콤마 제거
 
             const number = parseInt(value, 10);
-            e.target.value = isNaN(number) ? "" : number.toLocaleString();
+            e.target.value = number;
         });
+
+
+
 
     </script>
 </div>
