@@ -93,4 +93,9 @@ public class MemberServiceImpl implements MemberService {
     public void updateMemberInfo(String memberId, MemberUpdateRequestDto memberUpdateRequestDto) {
         memberAdapter.updateMemberInfo(memberId, memberUpdateRequestDto);
     }
+
+    @Override
+    public void updateLog(String memberId) {
+        memberAdapter.updateLog(memberId);
+    }
 }
