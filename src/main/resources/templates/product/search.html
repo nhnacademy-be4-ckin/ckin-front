@@ -12,7 +12,8 @@
         <div class="search-page-wrap p-t-15">
             <div class="search-content-wrap">
                 <div class="search-page-title">
-                    <em th:text="|${KEY_WORD} 에 대한 검색 결과가 ${SEARCH_RESULT.size()}건 있습니다|"></em>
+                    <em class="search-page-title-head" th:text="${KEY_WORD}"></em>
+                    <em th:text="| 에 대한 검색 결과가 ${SEARCH_RESULT.size()}건 있습니다|"></em>
                 </div>
                 <div class="search-result-wrap">
                     <div class="search-result-filter-wrap">
