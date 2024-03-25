@@ -67,13 +67,16 @@
                                                      alt="result-img">
                                             </a>
                                             <div class="search-result-info">
-                                                <a th:href="|/product/view/${book.id}|" th:text="${book.title}"></a>
+                                                <a class="search-result-info-title" th:href="|/product/view/${book.id}|"
+                                                   th:text="${book.title}"></a>
                                                 <div class="search-result-author-info">
                                                     <em class="author-title">저자</em>
-                                                    <em th:text="${book.author}"></em>
+                                                    <a th:text="${book.author}"
+                                                       th:href="@{/search(keyword=${book.author},filter=author)}"></a>
                                                 </div>
-                                                <em class="search-result-publisher-info"
-                                                    th:text="${book.publisher}"></em>
+                                                <a class="search-result-publisher-info"
+                                                   th:text="${book.publisher}"
+                                                   th:href="@{/search(keyword=${book.publisher},filter=publisher)}"></a>
                                                 <div class="search-result-price-info">
                                                     <em class="result-discount-rate"
                                                         th:text="|${book.discountRate}%|"></em>
