@@ -572,10 +572,7 @@
                     reader.readAsDataURL(event.target.files[0]);
                 }
             });
-        document.getElementById("bookRegularPrice").addEventListener("input", function (e) {
-            const value = e.target.value;
-            e.target.value = value;
-        });
+
 
 
         function searchAuthors(name) {
@@ -748,11 +745,10 @@
         });
 
         document.getElementById('bookRegularPrice').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/[^\d]/g, '');
-            if (!value) return;
+            let value = e.target.value.replace(/,/g, ''); // 콤마 제거
 
             const number = parseInt(value, 10);
-            e.target.value = isNaN(number) ? "" : number.toLocaleString();
+            e.target.value = number;
         });
 
     </script>
