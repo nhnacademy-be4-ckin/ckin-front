@@ -59,7 +59,7 @@
                     <td th:id="${grade.id} + '-id'" th:text="${grade.id}"></td>
                     <td th:id="${grade.id} + '-name'" th:text="${grade.name}"></td>
                     <td th:id="${grade.id} + '-pointRatio'" th:text="${grade.pointRatio} + '%'"></td>
-                    <td th:id="${grade.id} + '-condition'" th:text="${grade.condition}"></td>
+                    <td th:id="${grade.id} + '-condition'" th:text="${#numbers.formatInteger(grade.condition, 3, 'COMMA')}"></td>
                     <td>
                         <input th:value="${grade.id}" hidden>
                         <button type="button"
