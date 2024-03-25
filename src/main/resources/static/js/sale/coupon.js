@@ -12,6 +12,7 @@ $(document).ready(function () {
         success: function (coupons) {
             coupons.forEach(coupon => {
                 couponList.push(coupon);
+                console.log(coupon);
             });
         },
         error: function (xhr, status, error) {
@@ -88,11 +89,12 @@ function renderCoupon(bookId) {
                 '<td style="color: dodgerblue" id=' + discountPriceId + '>' + price + '원 </td>'
         } else {
 
+            let price = (bookSalePrice * (coupon.discountRate / 100)).toFixed();
+
             if (price > coupon.maxDiscountPrice) {
                 price = coupon.maxDiscountPrice;
             }
 
-            let price = (bookSalePrice * (coupon.discountRate / 100)).toFixed();
 
             priceRow = '<td>' + coupon.discountRate + '%' + '<br/>' + '<span>' + '최대 할인 금액 ' + coupon.maxDiscountPrice + '원' + '</span></td>' +
                 '<td style="color: dodgerblue" id=' + discountPriceId + '>' + price + '원 </td>';
