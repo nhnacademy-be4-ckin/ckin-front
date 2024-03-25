@@ -442,152 +442,152 @@
     <h1>CKIN Coupon API docs</h1>
     <div id="toc" class="toc2">
         <div id="toctitle">목차</div>
-        <ul class="sectlevel0">
-            <li><a href="#_1_개요">1. 개요</a>
+        <ul class="sectlevel1">
+            <li><a href="#_개요">1. 개요</a>
                 <ul class="sectlevel2">
-                    <li><a href="#_1_1_api_구성">1.1 API 구성</a></li>
-                    <li><a href="#_1_2_domain_name_구성">1.2 Domain Name 구성</a></li>
-                    <li><a href="#_1_3_참여_인원">1.3 참여 인원</a></li>
+                    <li><a href="#_api_구성">1.1. API 구성</a></li>
+                    <li><a href="#_domain_name_구성">1.2. Domain Name 구성</a></li>
+                    <li><a href="#_참여_인원">1.3. 참여 인원</a></li>
                 </ul>
             </li>
-            <li><a href="#_2_api">2. API</a>
+            <li><a href="#_api">API</a>
                 <ul class="sectlevel1">
-                    <li><a href="#_쿠폰">쿠폰</a>
+                    <li><a href="#_쿠폰">2. 쿠폰</a>
                         <ul class="sectlevel2">
-                            <li><a href="#_쿠폰_생성">쿠폰 생성</a>
+                            <li><a href="#_쿠폰_생성">2.1. 쿠폰 생성</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request">Request</a></li>
-                                    <li><a href="#_parameters">Parameters</a></li>
-                                    <li><a href="#_response">Response</a></li>
+                                    <li><a href="#_request">2.1.1. Request</a></li>
+                                    <li><a href="#_parameters">2.1.2. Parameters</a></li>
+                                    <li><a href="#_response">2.1.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_welcome_쿠폰_생성">Welcome 쿠폰 생성</a>
+                            <li><a href="#_welcome_쿠폰_생성">2.2. Welcome 쿠폰 생성</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_2">Request</a></li>
-                                    <li><a href="#_parameters_2">Parameters</a></li>
-                                    <li><a href="#_response_2">Response</a></li>
+                                    <li><a href="#_request_2">2.2.1. Request</a></li>
+                                    <li><a href="#_parameters_2">2.2.2. Parameters</a></li>
+                                    <li><a href="#_response_2">2.2.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_발급_중복_여부_검사_후_발급">쿠폰 발급: 중복 여부 검사 후 발급</a>
+                            <li><a href="#_쿠폰_발급_중복_여부_검사_후_발급">2.3. 쿠폰 발급: 중복 여부 검사 후 발급</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_3">Request</a></li>
-                                    <li><a href="#_parameters_3">Parameters</a></li>
-                                    <li><a href="#_response_3">Response</a></li>
+                                    <li><a href="#_request_3">2.3.1. Request</a></li>
+                                    <li><a href="#_parameters_3">2.3.2. Parameters</a></li>
+                                    <li><a href="#_response_3">2.3.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_목록_조회_typeid가_있는_경우">쿠폰 목록 조회 : typeId가 있는 경우</a>
+                            <li><a href="#_쿠폰_목록_조회_typeid가_있는_경우">2.4. 쿠폰 목록 조회 : typeId가 있는 경우</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_4">Request</a></li>
-                                    <li><a href="#_parameters_4">Parameters</a></li>
-                                    <li><a href="#_response_4">Response</a></li>
+                                    <li><a href="#_request_4">2.4.1. Request</a></li>
+                                    <li><a href="#_parameters_4">2.4.2. Parameters</a></li>
+                                    <li><a href="#_response_4">2.4.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_목록_조회_typeid가_없는_경우">쿠폰 목록 조회 : typeId가 없는 경우</a>
+                            <li><a href="#_쿠폰_목록_조회_typeid가_없는_경우">2.5. 쿠폰 목록 조회 : typeId가 없는 경우</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_5">Request</a></li>
-                                    <li><a href="#_response_5">Response</a></li>
+                                    <li><a href="#_request_5">2.5.1. Request</a></li>
+                                    <li><a href="#_response_5">2.5.2. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_조회_쿠폰_아이디">쿠폰 조회 : 쿠폰 아이디</a>
+                            <li><a href="#_쿠폰_조회_쿠폰_아이디">2.6. 쿠폰 조회 : 쿠폰 아이디</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_6">Request</a></li>
-                                    <li><a href="#_parameters_5">Parameters</a></li>
-                                    <li><a href="#_response_6">Response</a></li>
+                                    <li><a href="#_request_6">2.6.1. Request</a></li>
+                                    <li><a href="#_parameters_5">2.6.2. Parameters</a></li>
+                                    <li><a href="#_response_6">2.6.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_조회_회원_아이디">쿠폰 조회 : 회원 아이디</a>
+                            <li><a href="#_쿠폰_조회_회원_아이디">2.7. 쿠폰 조회 : 회원 아이디</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_7">Request</a></li>
-                                    <li><a href="#_parameters_6">Parameters</a></li>
-                                    <li><a href="#_response_7">Response</a></li>
+                                    <li><a href="#_request_7">2.7.1. Request</a></li>
+                                    <li><a href="#_parameters_6">2.7.2. Parameters</a></li>
+                                    <li><a href="#_response_7">2.7.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_사용된_쿠폰_조회_회원_아이디">사용된 쿠폰 조회 : 회원 아이디</a>
+                            <li><a href="#_사용된_쿠폰_조회_회원_아이디">2.8. 사용된 쿠폰 조회 : 회원 아이디</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_8">Request</a></li>
-                                    <li><a href="#_parameters_7">Parameters</a></li>
-                                    <li><a href="#_response_8">Response</a></li>
+                                    <li><a href="#_request_8">2.8.1. Request</a></li>
+                                    <li><a href="#_parameters_7">2.8.2. Parameters</a></li>
+                                    <li><a href="#_response_8">2.8.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_미사용인_쿠폰_조회_회원_아이디">미사용인 쿠폰 조회 : 회원 아이디</a>
+                            <li><a href="#_미사용인_쿠폰_조회_회원_아이디">2.9. 미사용인 쿠폰 조회 : 회원 아이디</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_9">Request</a></li>
-                                    <li><a href="#_parameters_8">Parameters</a></li>
-                                    <li><a href="#_response_9">Response</a></li>
+                                    <li><a href="#_request_9">2.9.1. Request</a></li>
+                                    <li><a href="#_parameters_8">2.9.2. Parameters</a></li>
+                                    <li><a href="#_response_9">2.9.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_수정">쿠폰 수정</a>
+                            <li><a href="#_쿠폰_수정">2.10. 쿠폰 수정</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_10">Request</a></li>
-                                    <li><a href="#_parameters_9">Parameters</a></li>
-                                    <li><a href="#_response_10">Response</a></li>
+                                    <li><a href="#_request_10">2.10.1. Request</a></li>
+                                    <li><a href="#_parameters_9">2.10.2. Parameters</a></li>
+                                    <li><a href="#_response_10">2.10.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_도서에_해당하는_쿠폰_리스트_반환">도서에 해당하는 쿠폰 리스트 반환</a>
+                            <li><a href="#_도서에_해당하는_쿠폰_리스트_반환">2.11. 도서에 해당하는 쿠폰 리스트 반환</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_11">Request</a></li>
-                                    <li><a href="#_parameters_10">Parameters</a></li>
-                                    <li><a href="#_response_11">Response</a></li>
+                                    <li><a href="#_request_11">2.11.1. Request</a></li>
+                                    <li><a href="#_parameters_10">2.11.2. Parameters</a></li>
+                                    <li><a href="#_response_11">2.11.3. Response</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#_쿠폰_템플릿">쿠폰 템플릿</a>
+                    <li><a href="#_쿠폰_템플릿">3. 쿠폰 템플릿</a>
                         <ul class="sectlevel2">
-                            <li><a href="#_쿠폰_템플릿_생성">쿠폰 템플릿 생성</a>
+                            <li><a href="#_쿠폰_템플릿_생성">3.1. 쿠폰 템플릿 생성</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_12">Request</a></li>
-                                    <li><a href="#_parameters_11">Parameters</a></li>
-                                    <li><a href="#_response_12">Response</a></li>
+                                    <li><a href="#_request_12">3.1.1. Request</a></li>
+                                    <li><a href="#_parameters_11">3.1.2. Parameters</a></li>
+                                    <li><a href="#_response_12">3.1.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_템플릿_단일_조회">쿠폰 템플릿 단일 조회</a>
+                            <li><a href="#_쿠폰_템플릿_단일_조회">3.2. 쿠폰 템플릿 단일 조회</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_13">Request</a></li>
-                                    <li><a href="#_parameters_12">Parameters</a></li>
-                                    <li><a href="#_response_13">Response</a></li>
+                                    <li><a href="#_request_13">3.2.1. Request</a></li>
+                                    <li><a href="#_parameters_12">3.2.2. Parameters</a></li>
+                                    <li><a href="#_response_13">3.2.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_템플릿_등록_성공">쿠폰 템플릿 등록: 성공</a>
+                            <li><a href="#_쿠폰_템플릿_등록_성공">3.3. 쿠폰 템플릿 등록: 성공</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_14">Request</a></li>
-                                    <li><a href="#_parameters_13">Parameters</a></li>
-                                    <li><a href="#_response_14">Response</a></li>
+                                    <li><a href="#_request_14">3.3.1. Request</a></li>
+                                    <li><a href="#_parameters_13">3.3.2. Parameters</a></li>
+                                    <li><a href="#_response_14">3.3.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_템플릿_등록_실패">쿠폰 템플릿 등록: 실패</a>
+                            <li><a href="#_쿠폰_템플릿_등록_실패">3.4. 쿠폰 템플릿 등록: 실패</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_15">Request</a></li>
-                                    <li><a href="#_response_15">Response</a></li>
+                                    <li><a href="#_request_15">3.4.1. Request</a></li>
+                                    <li><a href="#_response_15">3.4.2. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_템플릿_삭제">쿠폰 템플릿 삭제</a>
+                            <li><a href="#_쿠폰_템플릿_삭제">3.5. 쿠폰 템플릿 삭제</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_16">Request</a></li>
-                                    <li><a href="#_response_16">Response</a></li>
+                                    <li><a href="#_request_16">3.5.1. Request</a></li>
+                                    <li><a href="#_response_16">3.5.2. Response</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#_쿠폰_정책">쿠폰 정책</a>
+                    <li><a href="#_쿠폰_정책">4. 쿠폰 정책</a>
                         <ul class="sectlevel2">
-                            <li><a href="#_쿠폰_정책_목록_조회">쿠폰 정책 목록 조회</a>
+                            <li><a href="#_쿠폰_정책_목록_조회">4.1. 쿠폰 정책 목록 조회</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_17">Request</a></li>
-                                    <li><a href="#_response_17">Response</a></li>
+                                    <li><a href="#_request_17">4.1.1. Request</a></li>
+                                    <li><a href="#_response_17">4.1.2. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_정책_등록">쿠폰 정책 등록</a>
+                            <li><a href="#_쿠폰_정책_등록">4.2. 쿠폰 정책 등록</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_18">Request</a></li>
-                                    <li><a href="#_parameters_14">Parameters</a></li>
-                                    <li><a href="#_response_18">Response</a></li>
+                                    <li><a href="#_request_18">4.2.1. Request</a></li>
+                                    <li><a href="#_parameters_14">4.2.2. Parameters</a></li>
+                                    <li><a href="#_response_18">4.2.3. Response</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#_쿠폰_정책_등록_실패">쿠폰 정책 등록: 실패</a>
+                            <li><a href="#_쿠폰_정책_등록_실패">4.3. 쿠폰 정책 등록: 실패</a>
                                 <ul class="sectlevel3">
-                                    <li><a href="#_request_19">Request</a></li>
-                                    <li><a href="#_response_19">Response</a></li>
+                                    <li><a href="#_request_19">4.3.1. Request</a></li>
+                                    <li><a href="#_response_19">4.3.2. Response</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -598,9 +598,9 @@
     </div>
 </div>
 <div id="content">
-    <h1 id="_1_개요" class="sect0">1. 개요</h1>
-    <div class="openblock partintro">
-        <div class="content">
+    <div class="sect1">
+        <h2 id="_개요">1. 개요</h2>
+        <div class="sectionbody">
             <div class="paragraph">
                 <p>이 API 문서는 CKIN(체크인) 팀의 Coupon 문서를 유용하게 볼수 있게 도와줍니다.</p>
             </div>
@@ -616,57 +616,57 @@
                     </tr>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="sect2">
-        <h3 id="_1_1_api_구성">1.1 API 구성</h3>
-        <div class="listingblock">
-            <div class="content">
-                <pre class="highlightjs highlight"><code class="language-none hljs">/coupon/**</code></pre>
+            <div class="sect2">
+                <h3 id="_api_구성">1.1. API 구성</h3>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre class="highlightjs highlight"><code class="language-none hljs">/coupon/**</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="sect2">
+                <h3 id="_domain_name_구성">1.2. Domain Name 구성</h3>
+                <div class="listingblock">
+                    <div class="content">
+                        <pre class="highlightjs highlight"><code class="language-none hljs">ckin.store</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="sect2">
+                <h3 id="_참여_인원">1.3. 참여 인원</h3>
+                <table class="tableblock frame-all grid-all stretch">
+                    <colgroup>
+                        <col style="width: 50%;">
+                        <col style="width: 50%;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>이름</strong></p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>GitHub 주소</strong></p></td>
+                    </tr>
+                    <tr>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock">이가은</p></td>
+                        <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/nueag" class="bare">https://github.com/nueag</a></p></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
             </div>
         </div>
     </div>
-    <div class="sect2">
-        <h3 id="_1_2_domain_name_구성">1.2 Domain Name 구성</h3>
-        <div class="listingblock">
-            <div class="content">
-                <pre class="highlightjs highlight"><code class="language-none hljs">ckin.store</code></pre>
-            </div>
-        </div>
-    </div>
-    <div class="sect2">
-        <h3 id="_1_3_참여_인원">1.3 참여 인원</h3>
-        <table class="tableblock frame-all grid-all stretch">
-            <colgroup>
-                <col style="width: 50%;">
-                <col style="width: 50%;">
-            </colgroup>
-            <tbody>
-            <tr>
-                <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>이름</strong></p></td>
-                <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>GitHub 주소</strong></p></td>
-            </tr>
-            <tr>
-                <td class="tableblock halign-left valign-top"><p class="tableblock">이가은</p></td>
-                <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/nueag" class="bare">https://github.com/nueag</a></p></td>
-            </tr>
-            </tbody>
-        </table>
-        <hr>
-    </div>
-    <h1 id="_2_api" class="sect0">2. API</h1>
+    <h1 id="_api" class="sect0">API</h1>
     <div class="openblock partintro">
         <div class="content">
             <br>
         </div>
     </div>
     <div class="sect1">
-        <h2 id="_쿠폰">쿠폰</h2>
+        <h2 id="_쿠폰">2. 쿠폰</h2>
         <div class="sectionbody">
             <div class="sect2">
-                <h3 id="_쿠폰_생성">쿠폰 생성</h3>
+                <h3 id="_쿠폰_생성">2.1. 쿠폰 생성</h3>
                 <div class="sect3">
-                    <h4 id="_request">Request</h4>
+                    <h4 id="_request">2.1.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon?page=0&amp;size=5 HTTP/1.1
@@ -685,7 +685,7 @@ Host: localhost:8080
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters">Parameters</h4>
+                    <h4 id="_parameters">2.1.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -751,7 +751,7 @@ Host: localhost:8080
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response">Response</h4>
+                    <h4 id="_response">2.1.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
                             <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
@@ -763,9 +763,9 @@ Host: localhost:8080
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_welcome_쿠폰_생성">Welcome 쿠폰 생성</h3>
+                <h3 id="_welcome_쿠폰_생성">2.2. Welcome 쿠폰 생성</h3>
                 <div class="sect3">
-                    <h4 id="_request_2">Request</h4>
+                    <h4 id="_request_2">2.2.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/welcome HTTP/1.1
@@ -777,7 +777,7 @@ memberId=1</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_2">Parameters</h4>
+                    <h4 id="_parameters_2">2.2.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -798,7 +798,7 @@ memberId=1</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_2">Response</h4>
+                    <h4 id="_response_2">2.2.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -814,9 +814,9 @@ true</code></pre>
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_발급_중복_여부_검사_후_발급">쿠폰 발급: 중복 여부 검사 후 발급</h3>
+                <h3 id="_쿠폰_발급_중복_여부_검사_후_발급">2.3. 쿠폰 발급: 중복 여부 검사 후 발급</h3>
                 <div class="sect3">
-                    <h4 id="_request_3">Request</h4>
+                    <h4 id="_request_3">2.3.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/members/1/1 HTTP/1.1
@@ -825,7 +825,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_3">Parameters</h4>
+                    <h4 id="_parameters_3">2.3.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 1. /coupon/members/{memberId}/{couponTemplateId}</caption>
                         <colgroup>
@@ -851,7 +851,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_3">Response</h4>
+                    <h4 id="_response_3">2.3.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
@@ -867,9 +867,9 @@ true</code></pre>
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_목록_조회_typeid가_있는_경우">쿠폰 목록 조회 : typeId가 있는 경우</h3>
+                <h3 id="_쿠폰_목록_조회_typeid가_있는_경우">2.4. 쿠폰 목록 조회 : typeId가 있는 경우</h3>
                 <div class="sect3">
-                    <h4 id="_request_4">Request</h4>
+                    <h4 id="_request_4">2.4.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon?page=0&amp;size=5&amp;typeId=1 HTTP/1.1
@@ -879,7 +879,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_4">Parameters</h4>
+                    <h4 id="_parameters_4">2.4.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -908,7 +908,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_4">Response</h4>
+                    <h4 id="_response_4">2.4.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -936,16 +936,16 @@ Content-Length: 726
   } ],
   "pageable" : "INSTANCE",
   "last" : true,
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "first" : true,
   "size" : 1,
-  "number" : 0,
   "sort" : {
     "empty" : true,
     "unsorted" : true,
     "sorted" : false
   },
+  "number" : 0,
   "numberOfElements" : 1,
   "empty" : false
 }</code></pre>
@@ -957,9 +957,9 @@ Content-Length: 726
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_목록_조회_typeid가_없는_경우">쿠폰 목록 조회 : typeId가 없는 경우</h3>
+                <h3 id="_쿠폰_목록_조회_typeid가_없는_경우">2.5. 쿠폰 목록 조회 : typeId가 없는 경우</h3>
                 <div class="sect3">
-                    <h4 id="_request_5">Request</h4>
+                    <h4 id="_request_5">2.5.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon?page=0&amp;size=5 HTTP/1.1
@@ -969,7 +969,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_5">Response</h4>
+                    <h4 id="_response_5">2.5.2. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -997,16 +997,16 @@ Content-Length: 726
   } ],
   "pageable" : "INSTANCE",
   "last" : true,
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "first" : true,
   "size" : 1,
-  "number" : 0,
   "sort" : {
     "empty" : true,
     "unsorted" : true,
     "sorted" : false
   },
+  "number" : 0,
   "numberOfElements" : 1,
   "empty" : false
 }</code></pre>
@@ -1018,9 +1018,9 @@ Content-Length: 726
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_조회_쿠폰_아이디">쿠폰 조회 : 쿠폰 아이디</h3>
+                <h3 id="_쿠폰_조회_쿠폰_아이디">2.6. 쿠폰 조회 : 쿠폰 아이디</h3>
                 <div class="sect3">
-                    <h4 id="_request_6">Request</h4>
+                    <h4 id="_request_6">2.6.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/1 HTTP/1.1
@@ -1030,7 +1030,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_5">Parameters</h4>
+                    <h4 id="_parameters_5">2.6.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 2. /coupon/{couponId}</caption>
                         <colgroup>
@@ -1052,7 +1052,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_6">Response</h4>
+                    <h4 id="_response_6">2.6.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1085,9 +1085,9 @@ Content-Length: 408
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_조회_회원_아이디">쿠폰 조회 : 회원 아이디</h3>
+                <h3 id="_쿠폰_조회_회원_아이디">2.7. 쿠폰 조회 : 회원 아이디</h3>
                 <div class="sect3">
-                    <h4 id="_request_7">Request</h4>
+                    <h4 id="_request_7">2.7.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/members/1?page=0&amp;size=5 HTTP/1.1
@@ -1097,7 +1097,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_6">Parameters</h4>
+                    <h4 id="_parameters_6">2.7.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 3. /coupon/members/{memberId}</caption>
                         <colgroup>
@@ -1141,7 +1141,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_7">Response</h4>
+                    <h4 id="_response_7">2.7.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1169,16 +1169,16 @@ Content-Length: 726
   } ],
   "pageable" : "INSTANCE",
   "last" : true,
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "first" : true,
   "size" : 1,
-  "number" : 0,
   "sort" : {
     "empty" : true,
     "unsorted" : true,
     "sorted" : false
   },
+  "number" : 0,
   "numberOfElements" : 1,
   "empty" : false
 }</code></pre>
@@ -1190,9 +1190,9 @@ Content-Length: 726
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_사용된_쿠폰_조회_회원_아이디">사용된 쿠폰 조회 : 회원 아이디</h3>
+                <h3 id="_사용된_쿠폰_조회_회원_아이디">2.8. 사용된 쿠폰 조회 : 회원 아이디</h3>
                 <div class="sect3">
-                    <h4 id="_request_8">Request</h4>
+                    <h4 id="_request_8">2.8.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/members/used/1?page=0&amp;size=5 HTTP/1.1
@@ -1202,7 +1202,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_7">Parameters</h4>
+                    <h4 id="_parameters_7">2.8.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 4. /coupon/members/used/{memberId}</caption>
                         <colgroup>
@@ -1246,7 +1246,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_8">Response</h4>
+                    <h4 id="_response_8">2.8.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1274,16 +1274,16 @@ Content-Length: 734
   } ],
   "pageable" : "INSTANCE",
   "last" : true,
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "first" : true,
   "size" : 1,
-  "number" : 0,
   "sort" : {
     "empty" : true,
     "unsorted" : true,
     "sorted" : false
   },
+  "number" : 0,
   "numberOfElements" : 1,
   "empty" : false
 }</code></pre>
@@ -1295,9 +1295,9 @@ Content-Length: 734
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_미사용인_쿠폰_조회_회원_아이디">미사용인 쿠폰 조회 : 회원 아이디</h3>
+                <h3 id="_미사용인_쿠폰_조회_회원_아이디">2.9. 미사용인 쿠폰 조회 : 회원 아이디</h3>
                 <div class="sect3">
-                    <h4 id="_request_9">Request</h4>
+                    <h4 id="_request_9">2.9.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/sale?memberId=1&amp;bookId=1 HTTP/1.1
@@ -1306,7 +1306,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_8">Parameters</h4>
+                    <h4 id="_parameters_8">2.9.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 5. /coupon/members/unUsed/{memberId}</caption>
                         <colgroup>
@@ -1350,7 +1350,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_9">Response</h4>
+                    <h4 id="_response_9">2.9.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1383,9 +1383,9 @@ Content-Length: 412
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_수정">쿠폰 수정</h3>
+                <h3 id="_쿠폰_수정">2.10. 쿠폰 수정</h3>
                 <div class="sect3">
-                    <h4 id="_request_10">Request</h4>
+                    <h4 id="_request_10">2.10.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PUT /coupon?couponId=1 HTTP/1.1
@@ -1394,7 +1394,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_9">Parameters</h4>
+                    <h4 id="_parameters_9">2.10.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -1415,7 +1415,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_10">Response</h4>
+                    <h4 id="_response_10">2.10.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
                             <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK</code></pre>
@@ -1427,9 +1427,9 @@ Host: localhost:8080</code></pre>
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_도서에_해당하는_쿠폰_리스트_반환">도서에 해당하는 쿠폰 리스트 반환</h3>
+                <h3 id="_도서에_해당하는_쿠폰_리스트_반환">2.11. 도서에 해당하는 쿠폰 리스트 반환</h3>
                 <div class="sect3">
-                    <h4 id="_request_11">Request</h4>
+                    <h4 id="_request_11">2.11.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/sale?memberId=1&amp;bookId=1 HTTP/1.1
@@ -1438,7 +1438,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_10">Parameters</h4>
+                    <h4 id="_parameters_10">2.11.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -1463,7 +1463,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_11">Response</h4>
+                    <h4 id="_response_11">2.11.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1498,12 +1498,12 @@ Content-Length: 412
         </div>
     </div>
     <div class="sect1">
-        <h2 id="_쿠폰_템플릿">쿠폰 템플릿</h2>
+        <h2 id="_쿠폰_템플릿">3. 쿠폰 템플릿</h2>
         <div class="sectionbody">
             <div class="sect2">
-                <h3 id="_쿠폰_템플릿_생성">쿠폰 템플릿 생성</h3>
+                <h3 id="_쿠폰_템플릿_생성">3.1. 쿠폰 템플릿 생성</h3>
                 <div class="sect3">
-                    <h4 id="_request_12">Request</h4>
+                    <h4 id="_request_12">3.1.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/couponTemplate?page=0&amp;size=5&amp;type=1 HTTP/1.1
@@ -1513,7 +1513,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_11">Parameters</h4>
+                    <h4 id="_parameters_11">3.1.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 50%;">
@@ -1542,7 +1542,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_12">Response</h4>
+                    <h4 id="_response_12">3.1.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1573,22 +1573,22 @@ Content-Length: 851
       "sorted" : false
     },
     "offset" : 0,
-    "pageNumber" : 0,
     "pageSize" : 5,
+    "pageNumber" : 0,
     "paged" : true,
     "unpaged" : false
   },
   "last" : true,
-  "totalElements" : 1,
   "totalPages" : 1,
+  "totalElements" : 1,
   "first" : true,
   "size" : 5,
-  "number" : 0,
   "sort" : {
     "empty" : true,
     "unsorted" : true,
     "sorted" : false
   },
+  "number" : 0,
   "numberOfElements" : 1,
   "empty" : false
 }</code></pre>
@@ -1600,9 +1600,9 @@ Content-Length: 851
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_템플릿_단일_조회">쿠폰 템플릿 단일 조회</h3>
+                <h3 id="_쿠폰_템플릿_단일_조회">3.2. 쿠폰 템플릿 단일 조회</h3>
                 <div class="sect3">
-                    <h4 id="_request_13">Request</h4>
+                    <h4 id="_request_13">3.2.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/couponTemplate/1 HTTP/1.1
@@ -1611,7 +1611,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_12">Parameters</h4>
+                    <h4 id="_parameters_12">3.2.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <caption class="title">Table 6. /coupon/couponTemplate/{couponTemplateId}</caption>
                         <colgroup>
@@ -1633,7 +1633,7 @@ Host: localhost:8080</code></pre>
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_13">Response</h4>
+                    <h4 id="_response_13">3.2.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1664,9 +1664,9 @@ Content-Length: 348
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_템플릿_등록_성공">쿠폰 템플릿 등록: 성공</h3>
+                <h3 id="_쿠폰_템플릿_등록_성공">3.3. 쿠폰 템플릿 등록: 성공</h3>
                 <div class="sect3">
-                    <h4 id="_request_14">Request</h4>
+                    <h4 id="_request_14">3.3.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/couponTemplate HTTP/1.1
@@ -1689,7 +1689,7 @@ Host: localhost:8080
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_13">Parameters</h4>
+                    <h4 id="_parameters_13">3.3.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 33.3333%;">
@@ -1753,7 +1753,7 @@ Host: localhost:8080
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_14">Response</h4>
+                    <h4 id="_response_14">3.3.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
                             <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
@@ -1765,9 +1765,9 @@ Host: localhost:8080
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_템플릿_등록_실패">쿠폰 템플릿 등록: 실패</h3>
+                <h3 id="_쿠폰_템플릿_등록_실패">3.4. 쿠폰 템플릿 등록: 실패</h3>
                 <div class="sect3">
-                    <h4 id="_request_15">Request</h4>
+                    <h4 id="_request_15">3.4.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/couponTemplate HTTP/1.1
@@ -1790,7 +1790,7 @@ Host: localhost:8080
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_15">Response</h4>
+                    <h4 id="_response_15">3.4.2. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
@@ -1808,9 +1808,9 @@ Content-Length: 31
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_템플릿_삭제">쿠폰 템플릿 삭제</h3>
+                <h3 id="_쿠폰_템플릿_삭제">3.5. 쿠폰 템플릿 삭제</h3>
                 <div class="sect3">
-                    <h4 id="_request_16">Request</h4>
+                    <h4 id="_request_16">3.5.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /coupon/couponTemplate/1 HTTP/1.1
@@ -1819,7 +1819,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_16">Response</h4>
+                    <h4 id="_response_16">3.5.2. Response</h4>
                     <div class="listingblock">
                         <div class="content">
                             <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK</code></pre>
@@ -1833,12 +1833,12 @@ Host: localhost:8080</code></pre>
         </div>
     </div>
     <div class="sect1">
-        <h2 id="_쿠폰_정책">쿠폰 정책</h2>
+        <h2 id="_쿠폰_정책">4. 쿠폰 정책</h2>
         <div class="sectionbody">
             <div class="sect2">
-                <h3 id="_쿠폰_정책_목록_조회">쿠폰 정책 목록 조회</h3>
+                <h3 id="_쿠폰_정책_목록_조회">4.1. 쿠폰 정책 목록 조회</h3>
                 <div class="sect3">
-                    <h4 id="_request_17">Request</h4>
+                    <h4 id="_request_17">4.1.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /coupon/couponPolicy HTTP/1.1
@@ -1847,7 +1847,7 @@ Host: localhost:8080</code></pre>
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_17">Response</h4>
+                    <h4 id="_response_17">4.1.2. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
@@ -1875,9 +1875,9 @@ Content-Length: 250
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_정책_등록">쿠폰 정책 등록</h3>
+                <h3 id="_쿠폰_정책_등록">4.2. 쿠폰 정책 등록</h3>
                 <div class="sect3">
-                    <h4 id="_request_18">Request</h4>
+                    <h4 id="_request_18">4.2.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/couponPolicy HTTP/1.1
@@ -1896,7 +1896,7 @@ Host: localhost:8080
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_parameters_14">Parameters</h4>
+                    <h4 id="_parameters_14">4.2.2. Parameters</h4>
                     <table class="tableblock frame-all grid-all stretch">
                         <colgroup>
                             <col style="width: 33.3333%;">
@@ -1940,7 +1940,7 @@ Host: localhost:8080
                     </table>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_18">Response</h4>
+                    <h4 id="_response_18">4.2.3. Response</h4>
                     <div class="listingblock">
                         <div class="content">
                             <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created</code></pre>
@@ -1952,9 +1952,9 @@ Host: localhost:8080
                 </div>
             </div>
             <div class="sect2">
-                <h3 id="_쿠폰_정책_등록_실패">쿠폰 정책 등록: 실패</h3>
+                <h3 id="_쿠폰_정책_등록_실패">4.3. 쿠폰 정책 등록: 실패</h3>
                 <div class="sect3">
-                    <h4 id="_request_19">Request</h4>
+                    <h4 id="_request_19">4.3.1. Request</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /coupon/couponPolicy HTTP/1.1
@@ -1973,7 +1973,7 @@ Host: localhost:8080
                     </div>
                 </div>
                 <div class="sect3">
-                    <h4 id="_response_19">Response</h4>
+                    <h4 id="_response_19">4.3.2. Response</h4>
                     <div class="listingblock">
                         <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 400 Bad Request
@@ -1992,7 +1992,7 @@ Content-Length: 31
 </div>
 <div id="footer">
     <div id="footer-text">
-        Last updated 2024-03-25 14:07:01 +0900
+        Last updated 2024-03-25 14:22:22 +0900
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
