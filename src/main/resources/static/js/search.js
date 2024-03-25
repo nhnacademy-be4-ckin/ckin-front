@@ -23,18 +23,14 @@ document.addEventListener(`DOMContentLoaded`, function () {
         },
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             let addElement = '';
             data.forEach((item) => {
-                console.log(item);
-                console.log(item.categoryName);
                 addElement += '<li class="search-filter-items-wrap" value="' + item.categoryId + '" data-clicked="false" data-step="1">';
                 addElement += '<input name="category" type="checkbox" value="' + item.categoryName + '" id="' + item.categoryId + '" onclick="selectCategory(this)">';
                 addElement += '<label value="' + item.categoryId + '" onclick="getSubCategories(this.parentNode)">';
                 addElement += item.categoryName;
                 addElement += '</label>';
                 addElement += '</li>';
-                console.log(addElement);
             })
             const a = document.querySelector('.filter-category-main');
             a.insertAdjacentHTML('afterend', addElement);
@@ -57,11 +53,8 @@ function updateCategoryInputStat() {
 }
 
 function getSubCategories(label) {
-    console.log("click")
-    console.log(label.getAttribute("data-clicked"));
     const currentStep = parseInt(label.getAttribute("data-step")) + 1;
     const currentMargin = currentStep * 20;
-    console.log(currentStep + ", " + currentMargin);
     if (label.getAttribute("data-clicked") === "false") {
         label.setAttribute("data-clicked", "true");
         $.ajax({
@@ -74,18 +67,14 @@ function getSubCategories(label) {
             },
             dataType: 'json',
             success: function (data) {
-                console.log(data);
                 let addElement = '';
                 data.forEach((item) => {
-                    console.log(item);
-                    console.log(item.categoryName);
                     addElement += '<li class="search-filter-items-wrap" value="' + item.categoryId + '" data-clicked="false" data-step="' + currentStep + '" style="margin-left: ' + currentMargin + 'px !important;">';
                     addElement += '<input name="category" type="checkbox" value="' + item.categoryName + '" id="' + item.categoryId + '" onclick="selectCategory(this)">';
                     addElement += '<label value="' + item.categoryId + '" onclick="getSubCategories(this.parentNode)">';
                     addElement += item.categoryName;
                     addElement += '</label>';
                     addElement += '</li>';
-                    console.log(addElement);
                 })
                 label.insertAdjacentHTML('afterend', addElement);
             }
@@ -178,7 +167,6 @@ function placeOrderOne(btn) {
     const name = element.querySelector('input[name=name]').value;
     const quantityElement = element.querySelector('input[name=quantity]');
     let quantityInput = btn.parentNode.parentNode.querySelector('.search-result-quantity-number').value;
-    console.log(quantityInput)
     if (id == null || quantityInput == null || quantityInput < 1 || quantityInput > 100) {
         showErrorAlert('올바른 수량을 입력해 주세요(1개 이상, 100개 이하)');
         return;
