@@ -15,10 +15,14 @@
 .snb_link.fromLeft:after{  transform-origin:  0% 50%; }
 
 .contents_wrap.aside .aside_wrap {
-    width: 170px;
+    min-width: 170px;
     padding-right: 46px;
 }
 
 .section_wrap {
     width: calc(100% - 216px);
+}
+
+#initial_view {
+    width: 2300px;
 }
