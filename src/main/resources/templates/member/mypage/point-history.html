@@ -23,9 +23,9 @@
                 <td th:text="${pointHistory.pointHistoryReason}"></td>
                 <td th:with="point = ${pointHistory.pointHistoryPoint}">
                     <span th:if="${point < 0}" style="color: red;"
-                          th:text="${#numbers.formatInteger(point, 3, 'COMMA')} + '원'"></span>
+                          th:text="${#numbers.formatInteger(point, 1, 'COMMA')} + '원'"></span>
                     <span th:unless="${point < 0}" style="color: green;"
-                          th:text="${#numbers.formatInteger(point, 3, 'COMMA')} + '원'"></span>
+                          th:text="${#numbers.formatInteger(point, 1, 'COMMA')} + '원'"></span>
                 </td>
                 <td th:text="${#temporals.format(pointHistory.pointHistoryTime, 'yyyy-MM-dd')}"></td>
             </tr>
