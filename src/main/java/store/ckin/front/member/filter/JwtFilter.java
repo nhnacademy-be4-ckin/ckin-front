@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import store.ckin.front.exception.CookieNotFoundException;
 import store.ckin.front.exception.ServerErrorException;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.token.domain.TokenAuthRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.exception.TokenAuthenticationFailedException;
@@ -39,6 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final TokenService tokenService;
+
+    private final MemberService memberService;
 
     /**
      * 1. 정적 파일인지 확인
@@ -68,6 +71,8 @@ public class JwtFilter extends OncePerRequestFilter {
                         || request.getRequestURI().equals("/signup")) {
                     response.sendRedirect("/");
                 }
+                String uuid = JwtUtil.getUuid(accessToken);
+                memberService.updateLog(getMemberId(uuid));
 
                 setSecurityContextHolder(accessToken);
                 filterChain.doFilter(request, response);

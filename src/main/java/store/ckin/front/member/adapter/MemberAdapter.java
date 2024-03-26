@@ -38,4 +38,6 @@ public interface MemberAdapter {
     MemberDetailInfoResponseDto getMemberDetailInfo(String memberId);
 
     void updateMemberInfo(String memberId, MemberUpdateRequestDto memberUpdateRequestDto);
+
+    void updateLog(String memberId);
 }

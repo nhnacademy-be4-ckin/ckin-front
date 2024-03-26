@@ -23,6 +23,7 @@ import store.ckin.front.member.auth.CustomAuthenticationProvider;
 import store.ckin.front.member.filter.CustomLoginFilter;
 import store.ckin.front.member.filter.JwtFilter;
 import store.ckin.front.member.service.MemberDetailsService;
+import store.ckin.front.member.service.MemberService;
 import store.ckin.front.oauth.CustomOauth2UserService;
 import store.ckin.front.oauth.HttpCookieOauth2AuthorizationRequestRepository;
 import store.ckin.front.oauth.Oauth2SuccessHandler;
@@ -48,6 +49,10 @@ public class SecurityConfig {
 
     private final Oauth2SuccessHandler oauth2SuccessHandler;
 
+    private final MemberService memberService;
+
+    private final BCryptPasswordEncoder bcryptPasswordEncoder;
+
 
     /**
      * SecurityConfig 에 해당하는 Bean 들을 주입하는 생성자 메서드 입니다.
@@ -60,12 +65,16 @@ public class SecurityConfig {
                           MemberDetailsService memberDetailsService,
                           TokenService tokenService,
                           CustomOauth2UserService customOauth2UserService,
-                          Oauth2SuccessHandler oauth2SuccessHandler) {
+                          Oauth2SuccessHandler oauth2SuccessHandler,
+                          MemberService memberService,
+                          BCryptPasswordEncoder bcryptPasswordEncoder) {
         this.redisTemplate = redisTemplate;
         this.memberDetailsService = memberDetailsService;
         this.tokenService = tokenService;
         this.customOauth2UserService = customOauth2UserService;
         this.oauth2SuccessHandler = oauth2SuccessHandler;
+        this.memberService = memberService;
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
     }
 
 
@@ -112,7 +121,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtFilter jwtFilter() {
-        return new JwtFilter(redisTemplate, tokenService);
+        return new JwtFilter(redisTemplate, tokenService, memberService);
     }
 
     /**
@@ -131,11 +140,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder bcryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -143,7 +147,7 @@ public class SecurityConfig {
 
     @Bean
     public CustomAuthenticationProvider customAuthenticationProvider() {
-        return new CustomAuthenticationProvider(memberDetailsService, bcryptPasswordEncoder());
+        return new CustomAuthenticationProvider(memberDetailsService, bcryptPasswordEncoder);
     }
 
     @Bean
