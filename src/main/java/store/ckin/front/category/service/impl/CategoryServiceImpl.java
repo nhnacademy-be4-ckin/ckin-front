@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import store.ckin.front.category.adapter.CategoryAdapter;
 import store.ckin.front.category.dto.request.CategoryCreateRequestDto;
 import store.ckin.front.category.dto.request.CategoryUpdateRequestDto;
@@ -18,7 +16,6 @@ import store.ckin.front.category.dto.response.CategoryCacheResponseDto;
 import store.ckin.front.category.dto.response.CategoryNameResponseDto;
 import store.ckin.front.category.dto.response.CategoryResponseDto;
 import store.ckin.front.category.service.CategoryService;
-import store.ckin.front.product.dto.response.BookMainPageResponseDto;
 
 /**
  * CategoryService 구현 클래스.
@@ -35,7 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
     public static final String CATEGORIES = "categories";
 
 
-    public CategoryServiceImpl(@Qualifier("categoryRedisTemplate")RedisTemplate<String, Object> redisTemplate, CategoryAdapter categoryAdapter) {
+    public CategoryServiceImpl(@Qualifier("categoryRedisTemplate") RedisTemplate<String, Object> redisTemplate,
+                               CategoryAdapter categoryAdapter) {
         this.redisTemplate = redisTemplate;
         this.categoryAdapter = categoryAdapter;
     }
@@ -84,6 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long categoryId) {
         categoryAdapter.requestDeleteCategory(categoryId);
     }
+
     @Override
     public List<CategoryResponseDto> getSubcategoriesFromRedis(Long parentId) {
         initCategoriesAndUpdateExpire(CATEGORIES);

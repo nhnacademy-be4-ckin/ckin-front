@@ -36,8 +36,8 @@ public class ReviewRestController {
             SaleCheckResponseDto saleReportDto = saleService.checkSaleByMemberIdAndBookId(memberId, bookId);
             ReviewReportDto reviewReportDto = reviewService.isExistReport(memberId, Long.valueOf(bookId));
 
-            if(Objects.nonNull(saleReportDto) && saleReportDto.getIsExist()
-                && (Objects.isNull(reviewReportDto) || Objects.isNull(reviewReportDto.getReviewId()))) {
+            if (Objects.nonNull(saleReportDto) && saleReportDto.getIsExist()
+                    && (Objects.isNull(reviewReportDto) || Objects.isNull(reviewReportDto.getReviewId()))) {
                 return "true";
             }
         }

@@ -22,7 +22,7 @@ public interface ProductService {
      * 부모 카테고리의 하위에 속하는 도서 목록을 가져오는 메소드 입니다.
      *
      * @param categoryId 부모 카테고리 아이디
-     * @param pageable 페이지 정보
+     * @param pageable   페이지 정보
      * @return 도서 목록 DTO
      */
     PageDto<BookListResponseDto> findByCategoryId(Long categoryId, Pageable pageable);
@@ -57,7 +57,8 @@ public interface ProductService {
      * @return 연관된 도서 목록
      * @author 김준현
      */
-    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest, String filter, String selectedCategory);
+    PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest, String filter,
+                                                           String selectedCategory);
 
     /**
      * 관리자가 지정한 인기 도서를 가져옵니다.

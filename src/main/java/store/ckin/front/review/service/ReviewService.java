@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.review.dto.request.CreateReviewRequestDto;
-import store.ckin.front.review.dto.request.ReviewReportRequestDto;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
@@ -44,7 +43,7 @@ public interface ReviewService {
      * 리뷰 작성 권한을 확인하는 메소드 입니다.
      *
      * @param memberId 회원 아이디
-     * @param bookId 도서 아이디
+     * @param bookId   도서 아이디
      * @return 리뷰 기록이 남긴 DTO
      */
     ReviewReportDto isExistReport(Long memberId, Long bookId);

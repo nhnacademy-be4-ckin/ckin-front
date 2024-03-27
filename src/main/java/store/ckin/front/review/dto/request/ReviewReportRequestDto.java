@@ -2,7 +2,6 @@ package store.ckin.front.review.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * 리뷰를 등록한 기록이 있는지 확인하기 위한 요청 DTO 입니다.

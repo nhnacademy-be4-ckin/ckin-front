@@ -62,7 +62,8 @@ public class MemberAdapterImpl implements MemberAdapter {
                 gatewayProperties.getGatewayUri() + "/api/members/{memberId}/checkPassword",
                 HttpMethod.GET,
                 requestEntity,
-                new ParameterizedTypeReference<>() {},
+                new ParameterizedTypeReference<>() {
+                },
                 memberId);
 
         return responseEntity.getBody();

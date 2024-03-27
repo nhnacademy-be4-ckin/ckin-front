@@ -144,7 +144,7 @@ public class ReviewAdapterImpl implements ReviewAdapter {
         HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
 
         ResponseEntity<ReviewReportDto> exchange = restTemplate.exchange(
-                 gatewayProperties.getGatewayUri() + "/api/review/check/member/" + memberId + "/book/" + bookId,
+                gatewayProperties.getGatewayUri() + "/api/review/check/member/" + memberId + "/book/" + bookId,
                 HttpMethod.GET,
                 requestEntity,
                 new ParameterizedTypeReference<>() {

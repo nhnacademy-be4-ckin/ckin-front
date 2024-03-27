@@ -43,7 +43,7 @@ public interface ReviewAdapter {
      * 리뷰 작성 권한을 확인하는 메소드 입니다.
      *
      * @param memberId 회원 아이디
-     * @param bookId 도서 아이디
+     * @param bookId   도서 아이디
      * @return 리뷰 기록이 남긴 DTO
      */
     ReviewReportDto isExistReport(Long memberId, Long bookId);

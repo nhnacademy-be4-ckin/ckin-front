@@ -68,6 +68,7 @@ public class RedisConfig {
 
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
     }
+
     @Bean(name = "categoryRedisFactory")
     public RedisConnectionFactory categoryRedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration
@@ -115,6 +116,7 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(mainPageRedisConnectionFactory());
         return redisTemplate;
     }
+
     @Bean(name = "categoryRedisTemplate")
     public RedisTemplate<String, Object> categoryTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
