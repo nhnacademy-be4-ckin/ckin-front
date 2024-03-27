@@ -8,6 +8,7 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
+import store.ckin.front.sale.dto.response.SaleCheckResponseDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -149,6 +150,11 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public void cancelSale(Long saleId) {
         saleAdapter.requestCancelSale(saleId);
+    }
+
+    @Override
+    public SaleCheckResponseDto checkSaleByMemberIdAndBookId(Long memberId, String bookId) {
+        return saleAdapter.checkSaleByMemberIdAndBookId(memberId, bookId);
     }
 
 }

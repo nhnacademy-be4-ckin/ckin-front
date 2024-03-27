@@ -17,6 +17,7 @@ import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.adapter.SaleAdapter;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
+import store.ckin.front.sale.dto.response.SaleCheckResponseDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -269,5 +270,27 @@ public class SaleAdapterImpl implements SaleAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<Void>() {
                 }, saleId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param memberId 회원 ID
+     * @param bookId   도서 ID
+     * @return 주문 존재 여부 DTO
+     */
+    @Override
+    public SaleCheckResponseDto checkSaleByMemberIdAndBookId(Long memberId, String bookId) {
+        HttpEntity<String> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<SaleCheckResponseDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + SALE_URL
+                        + "/check/{memberId}/{bookId}",
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                }, memberId, bookId);
+
+        return exchange.getBody();
     }
 }

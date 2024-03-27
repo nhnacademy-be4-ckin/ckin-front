@@ -29,7 +29,6 @@ public class SearchController {
     private static final String SEARCH_FILTER_ALL = "title,author,publisher,description";
 
 
-
     /**
      * 해당 키워드로 연관된 상품들을 가져오는 메서드
      *
@@ -49,11 +48,13 @@ public class SearchController {
                                 Model model) {
 
         log.debug("searchBy : {}, category: {}", filter, category);
-        if(filter.isBlank())
+        if (filter.isBlank()) {
             filter = SEARCH_FILTER_ALL;
+        }
 
         PagedResponse<List<SearchProduct>>
-                searchResults = productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size), filter, category);
+                searchResults =
+                productService.findResultByKeyword(keyword, PageRequest.of(page - 1, size), filter, category);
 
         model.addAttribute("KEY_WORD", keyword);
         for (SearchProduct book : searchResults.getData()) {

@@ -66,22 +66,30 @@ function removeFileListItem(buttonElement) {
 }
 
 // 로그인 여부 확인 후 리뷰 작성란 활성화
+let bookId = document.getElementById("bookId").getAttribute("value");
+console.log("bookId : {}", bookId);
 $.ajax({
     type: "GET",
-    url: '/review/use',
-    dataType: 'json',
+    url: '/review/use/' + bookId,
+    dataType: 'text',
     success: function (data) {
         console.log(data);
-        if (data) {
+        if (data === "true") {
             let html = `<button type="button" class="btn btn_primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" >
+                                    data-bs-target="#exampleModal" id="review_button" onclick="review_check()">
                                 <span class="ico_review"></span>
                                 <span class="text">리뷰 작성</span>
                             </button>`;
             $("#reviewButton").append(html);
         }
+    },
+    error: function (request, status, error) {
+        console.log("code: " + request.status)
+        console.log("message: " + request.responseText)
+        console.log("error: " + error);
     }
 })
+
 
 //리뷰 사진 펼치기
 function toggleButton(button) {
