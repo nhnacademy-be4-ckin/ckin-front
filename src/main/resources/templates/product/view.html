@@ -384,16 +384,16 @@
                                                         <i class="glyphicon glyphicon-minus-sign"></i>
                                                     </div>
                                                     <div class="rating-stars" tabindex="0">
-                                                        <span class="empty-stars" th:if="${review.reviewRate != 5}">
-                                                            <span class="star"
-                                                                  th:each="i : ${#numbers.sequence(1, 5 - review.getReviewRate())}">
-                                                                <i class="glyphicon glyphicon-star-empty"></i>
-                                                            </span>
-                                                        </span>
                                                         <span class="filled-stars" th:if="${review.reviewRate > 0}">
                                                             <span class="star"
                                                                   th:each="i : ${#numbers.sequence(1, review.getReviewRate())}">
                                                                 <i class="glyphicon glyphicon-star"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="empty-stars" th:if="${review.reviewRate != 5}">
+                                                            <span class="star"
+                                                                  th:each="i : ${#numbers.sequence(1, 5 - review.getReviewRate())}">
+                                                                <i class="glyphicon glyphicon-star-empty"></i>
                                                             </span>
                                                         </span>
                                                     </div>
