@@ -337,14 +337,13 @@
                     <p class="title_heading" data-review-label="title"
                        th:text="'총 리뷰 ' + ${pagination.totalElements} + '건'"></p>
                     <div data-kbbfn-role="title">
-                        <div class="right_area" id="reviewButton">
+                        <div class="right_area" id="reviewButton" >
                             <p class="bul_item_asterisk font_size_xxs">리뷰 작성 시 200포인트 적립, 사진 포함 시 500포인트 적립</p>
-
                         </div>
                     </div>
                 </div>
 
-                <div class="klover_review_box">
+                <div class="klover_review_box" id="bookId" th:value="${book.bookId}">
                     <div class="klover_box_left">
                         <div class="rating-stars" tabindex="0">
                             <span class="filled-stars">
@@ -371,16 +370,6 @@
                                     <span class="tab_text">전체 리뷰</span></button>
                             </li>
                         </ul>
-                        <div class="right_area">
-                            <div class="form_sel type_sm"><select id="ui-id-40" style="display: none;">
-                                <option value="001" selected="selected">좋아요 순</option>
-                                <option value="002">최신순</option>
-                            </select><span tabindex="0" id="ui-id-40-button" role="combobox" aria-expanded="false"
-                                           aria-autocomplete="list" aria-owns="ui-id-40-menu" aria-haspopup="true"
-                                           class="ui-selectmenu-button ui-selectmenu-button-closed ui-corner-all ui-button ui-widget"><span
-                                    class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span><span
-                                    class="ui-selectmenu-text">좋아요 순</span></span></div>
-                        </div>
                     </div>
                     <div class="tab_content">
                         <div class="comment_wrap">

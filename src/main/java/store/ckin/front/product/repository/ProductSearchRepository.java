@@ -37,8 +37,8 @@ public class ProductSearchRepository {
 
     private Map<String, Float> getAdditionalFilter(List<String> filters) {
         Map<String, Float> result = new HashMap<>();
-        for(String filter: filters) {
-            if(filter.equals("title")) {
+        for (String filter : filters) {
+            if (filter.equals("title")) {
                 result.put("title.ngram", 5.0f);
                 result.put("title.nori", 5.0f);
             } else if (filter.equals("description")) {
@@ -53,13 +53,14 @@ public class ProductSearchRepository {
         return result;
     }
 
-    public PagedResponse<List<SearchProduct>> findProductByKeyword(String keyword, PageRequest pageRequest, List<String> filters, List<String> categories) {
+    public PagedResponse<List<SearchProduct>> findProductByKeyword(String keyword, PageRequest pageRequest,
+                                                                   List<String> filters, List<String> categories) {
         BoolQueryBuilder query = QueryBuilders.boolQuery()
                 .must(QueryBuilders.multiMatchQuery(keyword)
                         .fields(getAdditionalFilter(filters))
                 );
 
-        for(String category: categories) {
+        for (String category : categories) {
             query.must(addCategoryQuery(category));
         }
 

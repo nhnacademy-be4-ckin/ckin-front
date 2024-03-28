@@ -24,6 +24,7 @@ import store.ckin.front.review.dto.request.CreateReviewRequestDto;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
+import store.ckin.front.review.dto.response.ReviewReportDto;
 
 
 /**
@@ -136,6 +137,20 @@ public class ReviewAdapterImpl implements ReviewAdapter {
                 requestEntity,
                 new ParameterizedTypeReference<>() {
                 });
+    }
+
+    @Override
+    public ReviewReportDto isExistReport(Long memberId, Long bookId) {
+        HttpEntity<Void> requestEntity = new HttpEntity<>(getHttpHeaders());
+
+        ResponseEntity<ReviewReportDto> exchange = restTemplate.exchange(
+                gatewayProperties.getGatewayUri() + "/api/review/check/member/" + memberId + "/book/" + bookId,
+                HttpMethod.GET,
+                requestEntity,
+                new ParameterizedTypeReference<>() {
+                });
+
+        return exchange.getBody();
     }
 
 

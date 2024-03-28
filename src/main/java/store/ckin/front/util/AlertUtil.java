@@ -14,9 +14,10 @@ public class AlertUtil {
 
     /**
      * 성공 Alert 메시지를 띄움
-     * @param model 컨트롤러에서 주어지는 Model 객체
+     *
+     * @param model   컨트롤러에서 주어지는 Model 객체
      * @param message 알럿에 띄우고 싶은 메시지
-     * @param url 알럿 후 리다이렉트 할 페이지 주소
+     * @param url     알럿 후 리다이렉트 할 페이지 주소
      * @return 알럿이 포함된 HTML 페이지
      */
     public static String showSuccessAlert(Model model, String message, String url) {
@@ -28,9 +29,10 @@ public class AlertUtil {
 
     /**
      * 실패 Alert 메시지를 띄움
-     * @param model 컨트롤러에서 주어지는 Model 객체
+     *
+     * @param model   컨트롤러에서 주어지는 Model 객체
      * @param message 알럿에 띄우고 싶은 메시지
-     * @param url 알럿 후 리다이렉트 할 페이지 주소
+     * @param url     알럿 후 리다이렉트 할 페이지 주소
      * @return 알럿이 포함된 HTML 페이지
      */
     public static String showErrorAlert(Model model, String message, String url) {

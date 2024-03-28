@@ -1,6 +1,5 @@
 package store.ckin.front.product.adapter.impl;
 
-import static store.ckin.front.product.service.impl.ProductServiceImpl.BEST_BOOK;
 import static store.ckin.front.product.service.impl.ProductServiceImpl.RECOMMEND_BOOK;
 import static store.ckin.front.util.AdapterHeaderUtil.getHttpHeaders;
 

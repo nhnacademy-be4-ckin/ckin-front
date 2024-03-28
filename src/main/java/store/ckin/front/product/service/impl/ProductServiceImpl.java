@@ -173,9 +173,11 @@ public class ProductServiceImpl implements ProductService {
      * @return
      * @author 김준현
      */
-    public PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest, String filter, String selectedCategory) {
+    public PagedResponse<List<SearchProduct>> findResultByKeyword(String keyword, PageRequest pageRequest,
+                                                                  String filter, String selectedCategory) {
         List<String> filterList = Arrays.stream(filter.split(",")).collect(Collectors.toList());
-        List<String> categoryList = selectedCategory.isBlank() ? Collections.emptyList() : Arrays.stream(selectedCategory.split(",")).collect(Collectors.toList());
+        List<String> categoryList = selectedCategory.isBlank() ? Collections.emptyList() :
+                Arrays.stream(selectedCategory.split(",")).collect(Collectors.toList());
         return productSearchRepository.findProductByKeyword(keyword, pageRequest, filterList, categoryList);
     }
 

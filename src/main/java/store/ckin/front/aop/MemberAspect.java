@@ -12,9 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import store.ckin.front.coupon.dto.response.CouponCountResponseDto;
-import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.coupon.service.CouponService;
-import store.ckin.front.coupontemplate.dto.response.PageDto;
 import store.ckin.front.member.domain.response.MemberMyPageResponseDto;
 import store.ckin.front.member.service.MemberService;
 

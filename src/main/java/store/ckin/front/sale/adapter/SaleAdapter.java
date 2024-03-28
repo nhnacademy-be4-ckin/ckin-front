@@ -5,6 +5,7 @@ import store.ckin.front.common.dto.PagedResponse;
 import store.ckin.front.coupon.dto.response.GetCouponResponseDto;
 import store.ckin.front.sale.dto.request.SaleCreateRequestDto;
 import store.ckin.front.sale.dto.request.SaleDeliveryUpdateRequestDto;
+import store.ckin.front.sale.dto.response.SaleCheckResponseDto;
 import store.ckin.front.sale.dto.response.SaleDetailResponseDto;
 import store.ckin.front.sale.dto.response.SaleInfoResponseDto;
 import store.ckin.front.sale.dto.response.SaleResponseDto;
@@ -112,4 +113,13 @@ public interface SaleAdapter {
      * @param saleId 주문 ID
      */
     void requestCancelSale(Long saleId);
+
+    /**
+     * 회원 ID와 도서 ID를 통해 주문 리스트에 해당 주문이 존재하는지 확인하는 메서드입니다.
+     *
+     * @param memberId 회원 ID
+     * @param bookId   도서 ID
+     * @return 주문 존재 여부 DTO
+     */
+    SaleCheckResponseDto checkSaleByMemberIdAndBookId(Long memberId, String bookId);
 }

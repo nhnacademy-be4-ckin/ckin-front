@@ -11,6 +11,7 @@ import store.ckin.front.review.dto.request.CreateReviewRequestDto;
 import store.ckin.front.review.dto.request.UpdateReviewRequestDto;
 import store.ckin.front.review.dto.response.MyPageReviewResponseDto;
 import store.ckin.front.review.dto.response.ReviewDto;
+import store.ckin.front.review.dto.response.ReviewReportDto;
 import store.ckin.front.review.service.ReviewService;
 
 /**
@@ -55,6 +56,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void updateReview(UpdateReviewRequestDto updateReviewRequestDto, Long memberId) {
         reviewAdapter.updateReview(updateReviewRequestDto, memberId);
+    }
+
+    @Override
+    public ReviewReportDto isExistReport(Long memberId, Long bookId) {
+        return reviewAdapter.isExistReport(memberId, bookId);
     }
 
 
