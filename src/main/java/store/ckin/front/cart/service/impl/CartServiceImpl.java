@@ -35,7 +35,7 @@ import store.ckin.front.cart.service.CartService;
 public class CartServiceImpl implements CartService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final CartAdapter cartAdapter;
-    private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
+    private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(30);
     private static final String CART_HASH_KEY = "user_cart";
     private static final String ORDER_HASH_KEY = "user_order";
 
@@ -69,6 +69,7 @@ public class CartServiceImpl implements CartService {
         }
         currentUserCart.add(CartItem.toCartItem(item));
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -119,6 +120,7 @@ public class CartServiceImpl implements CartService {
         updatedItem.updateQuantity(cartItemUpdateRequestDto.getQuantity());
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -136,6 +138,7 @@ public class CartServiceImpl implements CartService {
         }
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -180,6 +183,7 @@ public class CartServiceImpl implements CartService {
 
         currentUserCart.removeAll(deletedCartItem);
         hashOperations.put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     @Override
