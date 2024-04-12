@@ -27,6 +27,8 @@ public class CustomLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request,
                        HttpServletResponse response,
                        Authentication authentication) {
+        // 유저의 장바구니 아이디를 삭제
+        CookieUtil.resetCookie(request, response, "CART_ID");
         deleteDataIfCookieExists(request, response, JwtUtil.HEADER_ACCESS_TOKEN);
         deleteDataIfCookieExists(request, response, JwtUtil.HEADER_REFRESH_TOKEN);
     }
