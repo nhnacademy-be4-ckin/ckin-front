@@ -2,6 +2,7 @@ package store.ckin.front.cart.interceptor;
 
 import static store.ckin.front.util.CookieUtil.findCookie;
 import static store.ckin.front.util.CookieUtil.isExists;
+import static store.ckin.front.util.CookieUtil.makeCookie;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import store.ckin.front.cart.dto.request.CartCreateRequestDto;
 import store.ckin.front.cart.dto.response.CartIdResponseDto;
 import store.ckin.front.cart.service.CartService;
 
@@ -28,60 +30,43 @@ import store.ckin.front.cart.service.CartService;
 @RequiredArgsConstructor
 public class CartIdInitInterceptor implements HandlerInterceptor {
     private final CartService cartService;
-    private static final int COOKIE_EXPIRE = (int) Duration.ofDays(2).toSeconds();
+    private static final int COOKIE_EXPIRE_NON_MEMBER = (int) Duration.ofDays(2).toSeconds();
+    private static final int COOKIE_EXPIRE_MEMBER = (int) Duration.ofHours(2).toSeconds();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        log.debug("preHandle(): called");
+        // SecurityContextHolder 통하여 사용자의 정보 가져오기
+        String memberInfo = SecurityContextHolder.getContext().getAuthentication().getName();
+        // 쿠키 존재하는 지 확인하고, 존재하면 리턴
+        if(isExists(request, "CART_ID")) {
+            Cookie existCookie = findCookie(request, "CART_ID");
+            if(existCookie.getMaxAge() != 0) {
+                return true;
+            }
+        }
 
-        String memberInfo = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // 로그인 한 상태라면?
         if (!memberInfo.equals("anonymousUser")) {
-            // 로그인 한 상태라면?
             Long memberId = Long.parseLong(memberInfo);
+            // 유저의 카트 아이디를 DB에서 불러온다
             CartIdResponseDto cartId = cartService.readMemberCartId(memberId);
             // 유저의 장바구니 아이디가 DB에 존재한다면
             if (Objects.nonNull(cartId)) {
-
-            }
-
-        }
-
-        if (isExists(request, "CART_ID")) {
-            // CART_ID 쿠키가 존재한다면
-            Cookie cartCookie = findCookie(request, "CART_ID");
-            if (!memberInfo.equals("anonymousUser")) {
-                // 로그인 한 상태라면?
-                Long memberId = Long.parseLong(memberInfo);
-                CartIdResponseDto cartId = cartService.readMemberCartId(memberId);
-                // 유저의 장바구니 아이디가 DB에 존재한다면
-                if (Objects.nonNull(cartId)) {
-
-                }
+                makeCookie(response, "CART_ID", cartId.getCartId(), COOKIE_EXPIRE_MEMBER);
             } else {
-                // 로그인 하지 않은 상태라면? 성공
-                return true;
+                // 유저의 장바구니 아이디가 DB에 존재하지 않다면
+                // 랜덤 문자열 생성 후 장바구니 아이디로 지정, DB에 보관
+                String userRandomCartId = UUID.randomUUID().toString();
+                makeCookie(response, "CART_ID", userRandomCartId, COOKIE_EXPIRE_MEMBER);
+                cartService.createMemberCart(new CartCreateRequestDto(memberId, userRandomCartId));
             }
         } else {
-            // CART_ID 쿠키가 존재하지 않다면
+            // 로그인 하지 않았다면?
+            String userRandomCartId = UUID.randomUUID().toString();
+            makeCookie(response, "CART_ID", userRandomCartId, COOKIE_EXPIRE_NON_MEMBER);
         }
-
-
-        // Check cookie is empty
-        if (userUuidCookieWrapped.isEmpty()) {
-            log.debug("preHandle(): user uuid cookie is null");
-            Cookie userUuidCookie = new Cookie("CART_ID", UUID.randomUUID().toString());
-            userUuidCookie.setHttpOnly(true);
-            userUuidCookie.setPath("/");
-            // 브라우저(JS)에서 쿠키 접근 불가
-            userUuidCookie.setSecure(true);
-            // HTTPS 일때에만 쿠키 사용
-            userUuidCookie.setMaxAge(COOKIE_EXPIRE);
-            response.addCookie(userUuidCookie);
-            log.debug("preHandle(): saved user uuid is -> {}", userUuidCookie.getValue());
-            response.sendRedirect(request.getRequestURI());
-            return false;
-        }
-        return true;
+        response.sendRedirect(request.getRequestURI());
+        return false;
     }
 }
