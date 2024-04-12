@@ -11,12 +11,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import store.ckin.front.cart.adapter.CartAdapter;
 import store.ckin.front.cart.dto.domain.CartItem;
+import store.ckin.front.cart.dto.request.CartCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemCreateRequestDto;
 import store.ckin.front.cart.dto.request.CartItemDeleteRequestDto;
 import store.ckin.front.cart.dto.request.CartItemOrderDto;
 import store.ckin.front.cart.dto.request.CartItemUpdateRequestDto;
+import store.ckin.front.cart.dto.response.CartIdResponseDto;
 import store.ckin.front.cart.exception.CartItemNotFoundException;
+import store.ckin.front.cart.exception.CartNotFoundException;
 import store.ckin.front.cart.exception.ItemAlreadyExistException;
 import store.ckin.front.cart.exception.OrderFailedException;
 import store.ckin.front.cart.service.CartService;
@@ -30,12 +34,15 @@ import store.ckin.front.cart.service.CartService;
 @Service
 public class CartServiceImpl implements CartService {
     private final RedisTemplate<String, Object> redisTemplate;
-    private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(2);
+    private final CartAdapter cartAdapter;
+    private static final Duration EXPIRE_CART_ITEMS = Duration.ofDays(30);
     private static final String CART_HASH_KEY = "user_cart";
     private static final String ORDER_HASH_KEY = "user_order";
 
-    public CartServiceImpl(@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate) {
+    public CartServiceImpl(@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate,
+                           CartAdapter cartAdapter) {
         this.redisTemplate = redisTemplate;
+        this.cartAdapter = cartAdapter;
     }
 
     /**
@@ -62,6 +69,7 @@ public class CartServiceImpl implements CartService {
         }
         currentUserCart.add(CartItem.toCartItem(item));
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -112,6 +120,7 @@ public class CartServiceImpl implements CartService {
         updatedItem.updateQuantity(cartItemUpdateRequestDto.getQuantity());
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -129,6 +138,7 @@ public class CartServiceImpl implements CartService {
         }
 
         redisTemplate.opsForHash().put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
     }
 
     /**
@@ -173,6 +183,21 @@ public class CartServiceImpl implements CartService {
 
         currentUserCart.removeAll(deletedCartItem);
         hashOperations.put(key, CART_HASH_KEY, currentUserCart);
+        redisTemplate.expire(key, EXPIRE_CART_ITEMS);
+    }
+
+    @Override
+    public void createMemberCart(CartCreateRequestDto cartCreateRequestDto) {
+        cartAdapter.insertCart(cartCreateRequestDto);
+    }
+
+    @Override
+    public CartIdResponseDto readMemberCartId(Long memberId) {
+        try {
+            return cartAdapter.selectCartIdByMemberId(memberId);
+        } catch (CartNotFoundException e) {
+            return null;
+        }
     }
 
     /**

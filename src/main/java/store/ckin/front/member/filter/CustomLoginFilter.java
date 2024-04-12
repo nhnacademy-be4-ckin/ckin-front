@@ -16,6 +16,7 @@ import store.ckin.front.exception.ServerErrorException;
 import store.ckin.front.token.domain.TokenRequestDto;
 import store.ckin.front.token.domain.TokenResponseDto;
 import store.ckin.front.token.service.TokenService;
+import store.ckin.front.util.CookieUtil;
 import store.ckin.front.util.JwtUtil;
 
 /**
@@ -60,6 +61,8 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
             TokenResponseDto tokenResponseDto = tokenService.getToken(new TokenRequestDto(id, authority));
             JwtUtil.addTokenCookie(response, tokenResponseDto);
 
+            // 로그인 시 기존 장바구니 아이디 쿠키 삭제
+            CookieUtil.resetCookie(request, response, "CART_ID");
             response.sendRedirect("/");
         } catch (ServerErrorException ex) {
             log.error("CustomLoginFilter.successfulAuthentication() : Internal Server Error");
