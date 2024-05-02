@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}">
+      layout:decorate="~{layouts/default}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <link rel="stylesheet" href="/css/main-index.css">
+    <link href="/css/main-index.css" rel="stylesheet">
 </head>
 
 <!-- 본문 내용 -->
@@ -13,37 +13,37 @@
         <!-- 캐러셀 이미지 삽입 -->
         <div class="carousel_wrapper">
             <div class="carousel_slide">
-                <img src="/images/main/004.jpg" alt="#"/>
+                <img alt="#" src="/images/main/004.jpg"/>
             </div>
             <div class="carousel_slide">
-                <img src="/images/main/005.jpg" alt="#"/>
+                <img alt="#" src="/images/main/005.jpg"/>
             </div>
             <div class="carousel_slide">
-                <img src="/images/main/006.jpg" alt="#"/>
+                <img alt="#" src="/images/main/006.jpg"/>
             </div>
             <div class="carousel_slide">
-                <img src="/images/main/007.jpg" alt="#"/>
+                <img alt="#" src="/images/main/007.jpg"/>
             </div>
         </div>
 
         <!-- 캐러셀 사이드 버튼 -->
         <div class="carousel_button_container">
-            <button type="button" class="carousel_prev">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-chevron-double-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    <path fill-rule="evenodd"
-                          d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+            <button class="carousel_prev" type="button">
+                <svg class="bi bi-chevron-double-left" fill="currentColor" height="20" viewBox="0 0 16 16"
+                     width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                          fill-rule="evenodd"/>
+                    <path d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                          fill-rule="evenodd"/>
                 </svg>
             </button>
-            <button type="button" class="carousel_next">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                     class="bi bi-chevron-double-right" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    <path fill-rule="evenodd"
-                          d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+            <button class="carousel_next" type="button">
+                <svg class="bi bi-chevron-double-right" fill="currentColor" height="20" viewBox="0 0 16 16"
+                     width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"
+                          fill-rule="evenodd"/>
+                    <path d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"
+                          fill-rule="evenodd"/>
                 </svg>
             </button>
         </div>
@@ -65,17 +65,17 @@
                     <p class="title">
                         신간 도서
                     </p>
-                    <p class="title-enter">
+                    <a class="title-enter" href="/product/recent">
                         자세히 보기 >
-                    </p>
+                    </a>
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
                          th:each="newBook : ${recentPublishBooks}">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
-                                     alt="#">
+                                <img alt="#" th:href="@{'/product/view/' + ${newBook.bookId}}"
+                                     th:src="${newBook.thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
@@ -103,20 +103,21 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${newBook.bookId}" hidden>
-                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
-                                                <input name="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
-                                                       hidden>
-                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                                <input hidden name="id" th:value="${newBook.bookId}">
+                                                <input hidden name="name" th:value="${newBook.bookTitle}">
+                                                <input class="send-quantity" name="quantity" value="1">
+                                                <input hidden name="regularPrice"
+                                                       th:value="${newBook.bookRegularPrice}">
+                                                <input hidden name="salePrice" th:value="${newBook.bookSalePrice}">
+                                                <input hidden name="thumbnail" th:value="${newBook.thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
@@ -127,9 +128,9 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${recentPublishBooks.get(0).thumbnail}"
+                                <img alt="#"
                                      th:href="@{'/product/view/' + ${recentPublishBooks.get(0).bookId}}"
-                                     alt="#">
+                                     th:src="${recentPublishBooks.get(0).thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
@@ -158,22 +159,23 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
-                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
-                                                <input name="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice"
-                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
-                                                <input name="salePrice"
-                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
-                                                       hidden>
+                                                <input hidden name="id" th:value="${recommendBooks.get(0).bookId}">
+                                                <input hidden name="name" th:value="${recommendBooks.get(0).bookTitle}">
+                                                <input class="send-quantity" name="quantity" value="1">
+                                                <input hidden
+                                                       name="regularPrice" th:value="${recommendBooks.get(0).bookRegularPrice}">
+                                                <input hidden
+                                                       name="salePrice" th:value="${recommendBooks.get(0).bookSalePrice}">
+                                                <input hidden name="thumbnail"
+                                                       th:value="${recommendBooks.get(0).thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
@@ -190,17 +192,17 @@
                     <p class="title">
                         인기 도서
                     </p>
-                    <p class="title-enter">
+                    <a class="title-enter" href="/product/tag/BEST">
                         자세히 보기 >
-                    </p>
+                    </a>
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
                          th:each="newBook : ${bestBooks}">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
-                                     alt="#">
+                                <img alt="#" th:href="@{'/product/view/' + ${newBook.bookId}}"
+                                     th:src="${newBook.thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
@@ -228,20 +230,21 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${newBook.bookId}" hidden>
-                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
-                                                <input name="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
-                                                       hidden>
-                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                                <input hidden name="id" th:value="${newBook.bookId}">
+                                                <input hidden name="name" th:value="${newBook.bookTitle}">
+                                                <input class="send-quantity" name="quantity" value="1">
+                                                <input hidden name="regularPrice"
+                                                       th:value="${newBook.bookRegularPrice}">
+                                                <input hidden name="salePrice" th:value="${newBook.bookSalePrice}">
+                                                <input hidden name="thumbnail" th:value="${newBook.thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
@@ -252,9 +255,9 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${bestBooks.get(0).thumbnail}"
+                                <img alt="#"
                                      th:href="@{'/product/view/' + ${bestBooks.get(0).bookId}}"
-                                     alt="#">
+                                     th:src="${bestBooks.get(0).thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
@@ -283,22 +286,23 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
-                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
-                                                <input name="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice"
-                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
-                                                <input name="salePrice"
-                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
-                                                       hidden>
+                                                <input hidden name="id" th:value="${recommendBooks.get(0).bookId}">
+                                                <input hidden name="name" th:value="${recommendBooks.get(0).bookTitle}">
+                                                <input class="send-quantity" name="quantity" value="1">
+                                                <input hidden
+                                                       name="regularPrice" th:value="${recommendBooks.get(0).bookRegularPrice}">
+                                                <input hidden
+                                                       name="salePrice" th:value="${recommendBooks.get(0).bookSalePrice}">
+                                                <input hidden name="thumbnail"
+                                                       th:value="${recommendBooks.get(0).thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
@@ -317,17 +321,14 @@
                     <p class="title">
                         추천 도서
                     </p>
-                    <p class="title-enter">
-                        자세히 보기 >
-                    </p>
                 </div>
                 <div class="owl-carousel vegetable-carousel justify-content-center">
                     <div class="border border-primary rounded position-relative vesitable-item"
                          th:each="newBook : ${recommendBooks}">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${newBook.thumbnail}" th:href="@{'/product/view/' + ${newBook.bookId}}"
-                                     alt="#">
+                                <img alt="#" th:href="@{'/product/view/' + ${newBook.bookId}}"
+                                     th:src="${newBook.thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text" th:text="${newBook.bookDiscountRate} + '%'"></span>
@@ -355,20 +356,21 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${newBook.bookId}" hidden>
-                                                <input name="name" th:value="${newBook.bookTitle}" hidden>
-                                                <input name="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice" th:value="${newBook.bookRegularPrice}"
-                                                       hidden>
-                                                <input name="salePrice" th:value="${newBook.bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${newBook.thumbnail}" hidden>
+                                                <input hidden name="id" th:value="${newBook.bookId}">
+                                                <input hidden name="name" th:value="${newBook.bookTitle}">
+                                                <input class="send-quantity" name="quantity" value="1">
+                                                <input hidden name="regularPrice"
+                                                       th:value="${newBook.bookRegularPrice}">
+                                                <input hidden name="salePrice" th:value="${newBook.bookSalePrice}">
+                                                <input hidden name="thumbnail" th:value="${newBook.thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
@@ -379,9 +381,9 @@
                     <div class="border border-primary rounded position-relative vesitable-item">
                         <div class="product">
                             <div class="product-image">
-                                <img th:src="${recommendBooks.get(0).thumbnail}"
+                                <img alt="#"
                                      th:href="@{'/product/view/' + ${recommendBooks.get(0).bookId}}"
-                                     alt="#">
+                                     th:src="${recommendBooks.get(0).thumbnail}">
                                 <div class="badge_list_box">
                                     <span class="badge_md sale-tag">
                                         <span class="text"
@@ -410,22 +412,23 @@
                                     </div>
                                     <div class="tool_div">
                                     <span>
-                                        <a href="#" class="wish_icon"></a>
+                                        <a class="wish_icon" href="#"></a>
                                     </span>
-                                        <form action="/cart/create" method="post" style="margin: 0; padding: 0; !important;">
+                                        <form action="/cart/create" method="post"
+                                              style="margin: 0; padding: 0; !important;">
                                             <div class="btn_wrap justify overlap" style="display: none;">
-                                                <input name="id" th:value="${recommendBooks.get(0).bookId}" hidden>
-                                                <input name="name" th:value="${recommendBooks.get(0).bookTitle}" hidden>
-                                                <input name="quantity" id="quantity" class="send-quantity" value="1">
-                                                <input name="regularPrice"
-                                                       th:value="${recommendBooks.get(0).bookRegularPrice}" hidden>
-                                                <input name="salePrice"
-                                                       th:value="${recommendBooks.get(0).bookSalePrice}" hidden>
-                                                <input name="thumbnail" th:value="${recommendBooks.get(0).thumbnail}"
-                                                       hidden>
+                                                <input hidden name="id" th:value="${recommendBooks.get(0).bookId}">
+                                                <input hidden name="name" th:value="${recommendBooks.get(0).bookTitle}">
+                                                <input class="send-quantity" id="quantity" name="quantity" value="1">
+                                                <input hidden
+                                                       name="regularPrice" th:value="${recommendBooks.get(0).bookRegularPrice}">
+                                                <input hidden
+                                                       name="salePrice" th:value="${recommendBooks.get(0).bookSalePrice}">
+                                                <input hidden name="thumbnail"
+                                                       th:value="${recommendBooks.get(0).thumbnail}">
                                             </div>
-                                            <button type="submit" class="mini_cart" data-role="btn-dialog"
-                                                    data-target="#popStock">
+                                            <button class="mini_cart" data-role="btn-dialog" data-target="#popStock"
+                                                    type="submit">
                                             </button>
                                         </form>
                                     </div>
